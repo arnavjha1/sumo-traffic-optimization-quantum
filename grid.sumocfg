@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <input>
+        <net-file value="grid.net.xml"/>
+        <route-files value="grid.rou.xml"/>
+        <additional-files value="tls.add.xml"/>
+    </input>
+</configuration>

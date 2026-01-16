@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="car" accel="2.6" decel="4.5" length="5" maxSpeed="13.9"/>
+
+    <flow id="traffic"
+          type="car"
+          begin="0"
+          end="3600"
+          vehsPerHour="1800"
+          from="left0to1"
+          to="right48to49"/>
+</routes>
