@@ -26,13 +26,41 @@ with open("grid_tls_logic.xml", "w") as f:
                     f.write(f'    <tlLogic id="{junction_id}" type="static" programID="0" offset="0">\n')
                     f.write(f'        <phase duration="90" state="GG"/>\n')
                     f.write(f'    </tlLogic>\n\n')
-                else:
-                    # Regular 4-phase template
+                elif (l1 == 'A' and l2 == 'A'):
+                    f.write(f'    <tlLogic id="{junction_id}" type="static" programID="0" offset="0">\n')
+                    f.write(f'        <phase duration="42" state="GggrrrGGg"/>\n')
+                    f.write(f'        <phase duration="3"  state="yyyrrrGyy"/>\n')
+                    f.write(f'        <phase duration="42" state="rrrGGgGrr"/>\n')
+                    f.write(f'        <phase duration="3"  state="rrryyyGrr"/>\n')
+                    f.write(f'    </tlLogic>\n\n')
+                elif (l1 == 'B' and l2 == 'X'):
                     f.write(f'    <tlLogic id="{junction_id}" type="static" programID="0" offset="0">\n')
                     f.write(f'        <phase duration="42" state="GGgGggrrr"/>\n')
                     f.write(f'        <phase duration="3"  state="Gyyyyyrrr"/>\n')
                     f.write(f'        <phase duration="42" state="GrrrrrGGg"/>\n')
                     f.write(f'        <phase duration="3"  state="Grrrrryyy"/>\n')
+                    f.write(f'    </tlLogic>\n\n')
+                elif (row == 0):
+                    f.write(f'    <tlLogic id="{junction_id}" type="static" programID="0" offset="0">\n')
+                    f.write(f'        <phase duration="42" state="rrrGGgGgg"/>\n')
+                    f.write(f'        <phase duration="3"  state="rrrGyyyyy"/>\n')
+                    f.write(f'        <phase duration="42" state="GGgGrrrrr"/>\n')
+                    f.write(f'        <phase duration="3"  state="yyyGrrrrr"/>\n')
+                    f.write(f'    </tlLogic>\n\n')
+                elif (row == 49):
+                    f.write(f'    <tlLogic id="{junction_id}" type="static" programID="0" offset="0">\n')
+                    f.write(f'        <phase duration="42" state="GggrrrGGg"/>\n')
+                    f.write(f'        <phase duration="3"  state="yyyrrrGyy"/>\n')
+                    f.write(f'        <phase duration="42" state="rrrGGgGrr"/>\n')
+                    f.write(f'        <phase duration="3"  state="rrryyyGrr"/>\n')
+                    f.write(f'    </tlLogic>\n\n')
+                else:
+                    # Regular 4-phase template
+                    f.write(f'    <tlLogic id="{junction_id}" type="static" programID="0" offset="0">\n')
+                    f.write(f'        <phase duration="42" state="GGggrrrrGGggrrrr"/>\n')
+                    f.write(f'        <phase duration="3"  state="yyyyrrrryyyyrrrr"/>\n')
+                    f.write(f'        <phase duration="42" state="rrrrGGggrrrrGGgg"/>\n')
+                    f.write(f'        <phase duration="3"  state="rrrryyyyrrrryyyy"/>\n')
                     f.write(f'    </tlLogic>\n\n')
 
     f.write('</additional>\n')
