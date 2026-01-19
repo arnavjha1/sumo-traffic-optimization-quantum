@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <input>
-        <net-file value="test_grid_FORCED_TLS.net.xml"/>
+        <net-file value="test_grid_FORCED_TLS_FIXED.net.xml"/>
         <route-files value="grid.rou.xml"/>
     </input>
 </configuration>
