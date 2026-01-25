@@ -1,0 +1,15 @@
+<configuration>
+    <input>
+        <net-file value="net/grid2x2_tls.net.xml"/>
+        <route-files value="routes/routes.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="300"/>
+    </time>
+
+    <report>
+        <no-step-log value="true"/>
+    </report>
+</configuration>

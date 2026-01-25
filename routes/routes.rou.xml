@@ -1,0 +1,30 @@
+<routes>
+    <!-- Vehicle type -->
+    <vType id="car"
+           accel="2.6"
+           decel="4.5"
+           maxSpeed="13.9"
+           length="5"/>
+
+    <!-- ROUTES -->
+
+    <!-- Bottom to top -->
+    <route id="r0" edges="-E3 A0A1 E6"/>
+    <route id="r1" edges="-E2 B0B1 E0"/>
+
+    <!-- Left to right -->
+    <route id="r2" edges="-E5 A0B0 E4"/>
+    <route id="r3" edges="-E7 A1B1 E1"/>
+
+    <!-- Cross-grid -->
+    <route id="r4" edges="-E3 A0B0 B0B1 E0"/>
+    <route id="r5" edges="-E6 A1A0 A0B0 E4"/>
+
+    <!-- VEHICLES -->
+    <vehicle id="veh0" type="car" route="r0" depart="0"/>
+    <vehicle id="veh1" type="car" route="r1" depart="5"/>
+    <vehicle id="veh2" type="car" route="r2" depart="10"/>
+    <vehicle id="veh3" type="car" route="r3" depart="15"/>
+    <vehicle id="veh4" type="car" route="r4" depart="20"/>
+    <vehicle id="veh5" type="car" route="r5" depart="25"/>
+</routes>
