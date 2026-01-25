@@ -1,0 +1,21 @@
+
+<additional>
+    <!-- Probabilistic turns at intersections -->
+    <!-- Example probabilities: 60% straight, 25% right, 15% left -->
+
+    <!-- Intersection at A0 -->
+    <laneArea id="laneA0" lane="-E3_0">
+        <turnProb dest="A0A1" prob="0.6"/>  <!-- straight -->
+        <turnProb dest="A0B0" prob="0.15"/> <!-- left -->
+        <turnProb dest="A0A2" prob="0.25"/> <!-- right -->
+    </laneArea>
+
+    <!-- Intersection at B0 -->
+    <laneArea id="laneB0" lane="-E5_0">
+        <turnProb dest="B0B1" prob="0.6"/>
+        <turnProb dest="B0A0" prob="0.15"/>
+        <turnProb dest="B0B2" prob="0.25"/>
+    </laneArea>
+
+    <!-- Intersection at other lanes can be added similarly -->
+</additional>

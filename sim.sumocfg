@@ -2,11 +2,13 @@
     <input>
         <net-file value="grid2x2_tls.net.xml"/>
         <route-files value="routes.rou.xml"/>
+        <additional-files value="turns.add.xml"/>
     </input>
+
 
     <time>
         <begin value="0"/>
-        <end value="300"/>
+        <end value="3000000"/>
     </time>
 
     <report>
