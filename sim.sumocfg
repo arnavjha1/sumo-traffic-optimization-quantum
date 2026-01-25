@@ -4,11 +4,14 @@
         <route-files value="routes.rou.xml"/>
     </input>
 
-
     <time>
         <begin value="0"/>
-        <end value="3000000"/>
+        <end value="30000"/>
     </time>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+    </processing>
 
     <report>
         <no-step-log value="true"/>
