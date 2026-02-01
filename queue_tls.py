@@ -8,8 +8,8 @@ from collections import defaultdict
 # SIMULATION CONFIG
 # ----------------------------
 SUMO_BINARY = "sumo-gui"  # change to "sumo" for headless
-SUMO_CONFIG = "grid2x2_tls.sumocfg"  # your SUMO config file
-SIM_TIME = 3600            # seconds
+SUMO_CONFIG = "sim.sumocfg"  # your SUMO config file
+SIM_TIME = 600            # seconds
 
 # ----------------------------
 # FIXED OUTPUT ORDER
@@ -20,7 +20,7 @@ TLS_ORDER = ["A0", "A1", "B0", "B1"]
 # ----------------------------
 # QUEUE PARAMETERS
 # ----------------------------
-CHECK_INTERVAL = 15        # seconds between queue checks
+CHECK_INTERVAL = 5        # seconds between queue checks
 LEFT_THRESHOLD = 6
 STRAIGHT_THRESHOLD = 8
 
