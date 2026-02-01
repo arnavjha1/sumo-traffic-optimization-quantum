@@ -1,73 +1,25 @@
-import traci
-import dimod
-from collections import defaultdict
+# quantum_tls.py
+from dimod import BinaryQuadraticModel
+from dwave.samplers import SimulatedAnnealingSampler
 
-SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim.sumocfg"
-END_TIME = 600
-CONTROL_INTERVAL = 30  # seconds
+def solve_tls_phases(queue_lengths):
+    """
+    queue_lengths: dict like {"NS": 12, "EW": 5}
+    returns: phase string with highest priority
+    """
 
-# -----------------------
-# START SUMO
-# -----------------------
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+    bqm = BinaryQuadraticModel({}, {}, 0.0, "BINARY")
 
-tls_ids = traci.trafficlight.getIDList()
-phase_count = {
-    tls: len(traci.trafficlight.getAllProgramLogics(tls)[0].phases)
-    for tls in tls_ids
-}
+    # Higher queue → lower energy → more likely selected
+    for phase, q in queue_lengths.items():
+        bqm.add_variable(phase, -q)
 
-# -----------------------
-# SIMULATION LOOP
-# -----------------------
-while traci.simulation.getTime() < END_TIME:
-    traci.simulationStep()
-    t = traci.simulation.getTime()
+    sampler = SimulatedAnnealingSampler()
+    result = sampler.sample(bqm, num_reads=100)
 
-    if t % CONTROL_INTERVAL != 0:
-        continue
+    sample = result.first.sample
 
-    # -----------------------
-    # BUILD TRAFFIC STATE
-    # -----------------------
-    queues = {}
+    # pick active phase
+    active = [k for k, v in sample.items() if v == 1]
 
-    for tls in tls_ids:
-        q = 0
-        for lane in traci.trafficlight.getControlledLanes(tls):
-            for v in traci.lane.getLastStepVehicleIDs(lane):
-                if traci.vehicle.getSpeed(v) < 0.1:
-                    q += 1
-        queues[tls] = q
-
-    # -----------------------
-    # BUILD BQM
-    # -----------------------
-    bqm = dimod.BinaryQuadraticModel({}, {}, 0.0, dimod.BINARY)
-
-    for tls in tls_ids:
-        for p in range(phase_count[tls]):
-            var = f"{tls}_p{p}"
-            # Penalize queues → prefer phases that reduce congestion
-            bqm.add_variable(var, queues[tls])
-
-        # one-hot constraint: exactly one phase
-        vars_tls = [f"{tls}_p{p}" for p in range(phase_count[tls])]
-        dimod.generators.combinations(bqm, vars_tls, 1, strength=50)
-
-    # -----------------------
-    # SOLVE (CLASSICAL FIRST)
-    # -----------------------
-    sampler = dimod.SimulatedAnnealingSampler()
-    sample = sampler.sample(bqm, num_reads=50).first.sample
-
-    # -----------------------
-    # APPLY TO SUMO
-    # -----------------------
-    for tls in tls_ids:
-        for p in range(phase_count[tls]):
-            if sample.get(f"{tls}_p{p}", 0) == 1:
-                traci.trafficlight.setPhase(tls, p)
-
-traci.close()
+    return active[0] if active else max(queue_lengths, key=queue_lengths.get)
