@@ -1,164 +1,147 @@
-# adaptive_tls_queue_results.py
-# SUMO TraCI script for 2x2 grid with queue-based traffic lights and results tracking
-
 import traci
 from collections import defaultdict
 
-# ----------------------------
-# SIMULATION CONFIG
-# ----------------------------
-SUMO_BINARY = "sumo-gui"  # change to "sumo" for headless
-SUMO_CONFIG = "sim.sumocfg"  # your SUMO config file
-SIM_TIME = 600            # seconds
+# =======================
+# CONFIG
+# =======================
+SUMO_BINARY = "sumo-gui"
+SUMO_CONFIG = "sim.sumocfg"
+END_TIME = 600
 
-# ----------------------------
-# FIXED OUTPUT ORDER
-# ----------------------------
-ROUTE_ORDER = ["r0", "r1", "r2", "r3", "r4", "r5"]
-TLS_ORDER = ["A0", "A1", "B0", "B1"]
+LEFT_MAX_TIME = 15          # seconds
+EW_QUEUE_THRESHOLD = 12      # cars
+NS_QUEUE_THRESHOLD = 12
 
-# ----------------------------
-# QUEUE PARAMETERS
-# ----------------------------
-CHECK_INTERVAL = 5        # seconds between queue checks
-LEFT_THRESHOLD = 6
-STRAIGHT_THRESHOLD = 8
 
-STRAIGHT_PHASE = 0
-LEFT_PHASE = 1
+# =======================
+# START SUMO
+# =======================
+traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 
-# ----------------------------
-# DATA STRUCTURES
-# ----------------------------
+
+# =======================
+# TLS PHASE INDICES
+# (CHANGE THESE IF NEEDED)
+# =======================
+PHASE_NS_LEFT = 0
+PHASE_NS_STRAIGHT = 1
+PHASE_EW_LEFT = 2
+PHASE_EW_STRAIGHT = 3
+
+TLS_ID = traci.trafficlight.getIDList()[0]
+
+# =======================
+# METRICS
+# =======================
 depart_time = {}
 route_of = {}
 last_waiting_time = {}
 
 travel_times = defaultdict(list)
 waiting_times = defaultdict(list)
-queue_lengths = defaultdict(list)
 throughput = defaultdict(int)
 
-# ----------------------------
-# HELPER FUNCTIONS
-# ----------------------------
-def get_lane_queue(lane_ids):
-    """Return number of stopped vehicles in these lanes"""
-    q = 0
-    for lane in lane_ids:
-        for veh_id in traci.lane.getLastStepVehicleIDs(lane):
-            if traci.vehicle.getSpeed(veh_id) < 0.1:
-                q += 1
-    return q
+# =======================
+# HELPERS
+# =======================
+def stopped_cars_in_lanes(lanes):
+    count = 0
+    for lane in lanes:
+        for v in traci.lane.getLastStepVehicleIDs(lane):
+            if traci.vehicle.getSpeed(v) < 0.1:
+                count += 1
+    return count
 
-def get_controlled_lanes(tls_id):
-    """Return lane IDs controlled by the traffic light"""
-    return traci.trafficlight.getControlledLanes(tls_id)
+def get_lanes(direction, lane_type):
+    """
+    direction: 'NS' or 'EW'
+    lane_type: 'left' or 'right'
+    """
+    lanes = []
+    for lane in traci.trafficlight.getControlledLanes(TLS_ID):
+        if direction in lane and lane_type in lane:
+            lanes.append(lane)
+    return lanes
 
-def identify_left_straight_lanes(lanes):
-    """Separate left-turn and straight lanes (adjust for your net)"""
-    left_lanes = [l for l in lanes if "_16_" in l or "_17_" in l]
-    straight_lanes = [l for l in lanes if "_1_" in l or "_5_" in l]
-    return left_lanes, straight_lanes
+state = "NS_LEFT"
+state_start_time = 0
 
-# ----------------------------
-# MAIN LOOP
-# ----------------------------
-def run():
-    traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
-    tls_ids = traci.trafficlight.getIDList()
-    last_check = defaultdict(lambda: -CHECK_INTERVAL)
+# =======================
+# SIM LOOP
+# =======================
+while traci.simulation.getTime() < END_TIME:
+    traci.simulationStep()
+    t = traci.simulation.getTime()
 
-    for step in range(SIM_TIME):
-        traci.simulationStep()
-        t = traci.simulation.getTime()
+    # -------------------
+    # VEHICLE METRICS
+    # -------------------
+    for veh in traci.simulation.getDepartedIDList():
+        depart_time[veh] = t
+        route_of[veh] = traci.vehicle.getRouteID(veh)
+        last_waiting_time[veh] = 0.0
 
-        # --- Update traffic light phases ---
-        for tls in tls_ids:
-            if t - last_check[tls] < CHECK_INTERVAL:
-                continue
-            last_check[tls] = t
+    for veh in traci.vehicle.getIDList():
+        last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
 
-            lanes = get_controlled_lanes(tls)
-            left_lanes, straight_lanes = identify_left_straight_lanes(lanes)
+    for veh in traci.simulation.getArrivedIDList():
+        if veh in depart_time:
+            r = route_of[veh]
+            travel_times[r].append(t - depart_time[veh])
+            waiting_times[r].append(last_waiting_time.get(veh, 0))
+            throughput[r] += 1
 
-            left_q = get_lane_queue(left_lanes)
-            straight_q = get_lane_queue(straight_lanes)
+            depart_time.pop(veh, None)
+            route_of.pop(veh, None)
+            last_waiting_time.pop(veh, None)
 
-            current_phase = traci.trafficlight.getPhase(tls)
+    # -------------------
+    # QUEUES
+    # -------------------
+    ns_left = stopped_cars_in_lanes(get_lanes("NS", "left"))
+    ns_right = stopped_cars_in_lanes(get_lanes("NS", "right"))
+    ew_left = stopped_cars_in_lanes(get_lanes("EW", "left"))
+    ew_right = stopped_cars_in_lanes(get_lanes("EW", "right"))
 
-            if left_q > LEFT_THRESHOLD and current_phase != LEFT_PHASE:
-                traci.trafficlight.setPhase(tls, LEFT_PHASE)
-            elif straight_q > STRAIGHT_THRESHOLD and current_phase != STRAIGHT_PHASE:
-                traci.trafficlight.setPhase(tls, STRAIGHT_PHASE)
+    # -------------------
+    # STATE MACHINE
+    # -------------------
+    elapsed = t - state_start_time
 
-            # --- Record average queue lengths ---
-            queue_lengths[tls].append(left_q + straight_q)
+    if state == "NS_LEFT":
+        traci.trafficlight.setPhase(TLS_ID, PHASE_NS_LEFT)
 
-        # --- Track vehicles for travel time and waiting time ---
-        for veh_id in traci.vehicle.getIDList():
-            route_id = traci.vehicle.getRouteID(veh_id)
-            if veh_id not in depart_time:
-                depart_time[veh_id] = t
-                route_of[veh_id] = route_id
-                last_waiting_time[veh_id] = 0
+        if ns_left == 0 or elapsed >= LEFT_MAX_TIME:
+            state = "NS_STRAIGHT"
+            state_start_time = t
 
-            # Accumulate waiting time
-            speed = traci.vehicle.getSpeed(veh_id)
-            if speed < 0.1:
-                last_waiting_time[veh_id] += 1  # each step = 1s
+    elif state == "NS_STRAIGHT":
+        traci.trafficlight.setPhase(TLS_ID, PHASE_NS_STRAIGHT)
 
-        # --- Remove arrived vehicles and update travel/waiting times ---
-        arrived = traci.simulation.getArrivedIDList()
-        for veh_id in arrived:
-            route_id = route_of.get(veh_id, None)
-            if route_id:
-                travel_times[route_id].append(t - depart_time[veh_id])
-                waiting_times[route_id].append(last_waiting_time[veh_id])
-                throughput[route_id] += 1
+        if ew_left + ew_right >= EW_QUEUE_THRESHOLD:
+            state = "EW_LEFT"
+            state_start_time = t
 
-            # Clean up
-            depart_time.pop(veh_id, None)
-            route_of.pop(veh_id, None)
-            last_waiting_time.pop(veh_id, None)
+    elif state == "EW_LEFT":
+        traci.trafficlight.setPhase(TLS_ID, PHASE_EW_LEFT)
 
-    traci.close()
+        if ew_left == 0 or elapsed >= LEFT_MAX_TIME:
+            state = "EW_STRAIGHT"
+            state_start_time = t
 
-    # ----------------------------
-    # RESULTS (ORDERED)
-    # ----------------------------
-    print("\n===== PERFORMANCE METRICS =====")
+    elif state == "EW_STRAIGHT":
+        traci.trafficlight.setPhase(TLS_ID, PHASE_EW_STRAIGHT)
 
-    print("\nAverage Travel Time per Route:")
-    for route in ROUTE_ORDER:
-        if route in travel_times and travel_times[route]:
-            avg = sum(travel_times[route]) / len(travel_times[route])
-            print(f"  {route}: {avg:.2f} s (n={len(travel_times[route])})")
-        else:
-            print(f"  {route}: N/A")
+        if ns_left + ns_right >= NS_QUEUE_THRESHOLD:
+            state = "NS_LEFT"
+            state_start_time = t
 
-    print("\nAverage Waiting Time per Route:")
-    for route in ROUTE_ORDER:
-        if route in waiting_times and waiting_times[route]:
-            avg = sum(waiting_times[route]) / len(waiting_times[route])
-            print(f"  {route}: {avg:.2f} s")
-        else:
-            print(f"  {route}: N/A")
+traci.close()
 
-    print("\nAverage Queue Length per Intersection:")
-    for tls in TLS_ORDER:
-        if tls in queue_lengths and queue_lengths[tls]:
-            avg = sum(queue_lengths[tls]) / len(queue_lengths[tls])
-            print(f"  {tls}: {avg:.2f} vehicles")
-        else:
-            print(f"  {tls}: N/A")
+# =======================
+# RESULTS
+# =======================
+print("\n===== RESULTS =====")
 
-    print("\nThroughput:")
-    for route in ROUTE_ORDER:
-        print(f"  {route}: {throughput.get(route, 0)}")
-
-# ----------------------------
-# ENTRY POINT
-# ----------------------------
-if __name__ == "__main__":
-    run()
+for r, times in travel_times.items():
+    print(f"{r}: avg travel {sum(times)/len(times):.2f}s, throughput {throughput[r]}")

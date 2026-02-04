@@ -1,25 +1,17 @@
 import traci
 from collections import defaultdict
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim.sumocfg"
 END_TIME = 600
-
-traci.start([
-    SUMO_BINARY,
-    "-c", SUMO_CONFIG,
-    "--start",
-    "--quit-on-end",
-    "--no-step-log",
-    "--time-to-teleport", "-1"
-])
-
 
 # -----------------------
 # FIXED OUTPUT ORDER
 # -----------------------
 ROUTE_ORDER = ["r0", "r1", "r2", "r3", "r4", "r5"]
 TLS_ORDER = ["A0", "A1", "B0", "B1"]
+
+traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 
 # -----------------------
 # DATA STRUCTURES
