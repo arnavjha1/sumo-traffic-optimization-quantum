@@ -145,3 +145,4 @@ print("\n===== RESULTS =====")
 
 for r, times in travel_times.items():
     print(f"{r}: avg travel {sum(times)/len(times):.2f}s, throughput {throughput[r]}")
+

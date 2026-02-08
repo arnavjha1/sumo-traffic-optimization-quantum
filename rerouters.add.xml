@@ -1,0 +1,91 @@
+<additional>
+
+    <!-- ========================= -->
+    <!-- Intersection A0 -->
+    <!-- Incoming: -E3, A1A0 -->
+    <!-- ========================= -->
+    <rerouter id="rr_A0" edges="-E3 A1A0">
+        <interval begin="0" end="100000">
+
+            <!-- Straight -->
+            <routeProbability probability="0.6"
+                              edges="A0A1"/>
+
+            <!-- Right -->
+            <routeProbability probability="0.25"
+                              edges="A0B0"/>
+
+            <!-- Left (2-edge turn) -->
+            <routeProbability probability="0.15"
+                              edges="A0B0 A0A1"/>
+
+        </interval>
+    </rerouter>
+
+    <!-- ========================= -->
+    <!-- Intersection A1 -->
+    <!-- Incoming: A0A1, -E7 -->
+    <!-- ========================= -->
+    <rerouter id="rr_A1" edges="A0A1 -E7">
+        <interval begin="0" end="100000">
+
+            <!-- Straight -->
+            <routeProbability probability="0.6"
+                              edges="A1A0"/>
+
+            <!-- Right -->
+            <routeProbability probability="0.25"
+                              edges="A1B1"/>
+
+            <!-- Left -->
+            <routeProbability probability="0.15"
+                              edges="A1B1 A1A0"/>
+
+        </interval>
+    </rerouter>
+
+    <!-- ========================= -->
+    <!-- Intersection B0 -->
+    <!-- Incoming: -E5, B1B0 -->
+    <!-- ========================= -->
+    <rerouter id="rr_B0" edges="-E5 B1B0">
+        <interval begin="0" end="100000">
+
+            <!-- Straight -->
+            <routeProbability probability="0.6"
+                              edges="B0B1"/>
+
+            <!-- Right -->
+            <routeProbability probability="0.25"
+                              edges="B0A0"/>
+
+            <!-- Left -->
+            <routeProbability probability="0.15"
+                              edges="B0A0 B0B1"/>
+
+        </interval>
+    </rerouter>
+
+    <!-- ========================= -->
+    <!-- Intersection B1 -->
+    <!-- Incoming: B0B1, -E2 -->
+    <!-- ========================= -->
+    <rerouter id="rr_B1" edges="B0B1 -E2">
+        <interval begin="0" end="100000">
+
+            <!-- Straight -->
+            <routeProbability probability="0.6"
+                              edges="B1B0"/>
+
+            <!-- Right -->
+            <routeProbability probability="0.25"
+                              edges="B1A1"/>
+
+            <!-- Left -->
+            <routeProbability probability="0.15"
+                              edges="B1A1 B1B0"/>
+
+        </interval>
+    </rerouter>
+
+</additional>
