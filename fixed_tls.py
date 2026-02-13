@@ -4,11 +4,14 @@ from collections import defaultdict
 SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim.sumocfg"
 END_TIME = 600
+TRAFFIC_LOAD = 5000         # EDIT BASED ON LOW, MEDIUM, OR HIGH TRAFFIC
 
 # -----------------------
 # FIXED OUTPUT ORDER
 # -----------------------
-ROUTE_ORDER = ["r0", "r1", "r2", "r3", "r4", "r5"]
+TWO_TURNS = ["r0", "r4", "r6", "r7", "r11", "r13", "r14", "r18", "r20", "r21", "r25", "r27", "r28", "r32", "r34", "r35", "r39", "r41", "r42", "r46", "r48", "r49", "r53", "r55"]
+ONE_TURN = ["r1", "r3", "r5", "r8", "r10", "r12", "r15", "r17", "r19", "r22", "r24", "r26", "r29", "r31", "r33", "r36", "r38", "r40", "r43", "r45", "r47", "r50", "r52", "r54"]
+NO_TURNS = ["r2", "r9", "r16", "r23", "r30", "r37", "r44", "r51"]
 TLS_ORDER = ["A0", "A1", "B0", "B1"]
 
 traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
@@ -73,27 +76,58 @@ while traci.simulation.getTime() < END_TIME:
 traci.close()
 
 # -----------------------
-# RESULTS (ORDERED)
+# RESULTS (GROUPED)
 # -----------------------
 print("\n===== PERFORMANCE METRICS =====")
 
-print("\nAverage Travel Time per Route:")
-for route in ROUTE_ORDER:
-    if route in travel_times and len(travel_times[route]) > 0:
-        avg = sum(travel_times[route]) / len(travel_times[route])
-        print(f"  {route}: {avg:.2f} s (n={len(travel_times[route])})")
-    else:
-        print(f"  {route}: N/A")
+def compute_avg(route_list, data_dict):
+    values = []
+    for r in route_list:
+        values.extend(data_dict.get(r, []))
+    return sum(values) / len(values) if len(values) > 0 else None
 
-print("\nAverage Waiting Time per Route:")
-for route in ROUTE_ORDER:
-    if route in waiting_times and len(waiting_times[route]) > 0:
-        avg = sum(waiting_times[route]) / len(waiting_times[route])
-        print(f"  {route}: {avg:.2f} s")
-    else:
-        print(f"  {route}: N/A")
+def compute_throughput(route_list):
+    return sum(throughput.get(r, 0) for r in route_list)
 
+ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+
+# -----------------------
+# TRAVEL TIME
+# -----------------------
+print("\nAverage Travel Time:")
+
+avg_two = compute_avg(TWO_TURNS, travel_times)
+avg_one = compute_avg(ONE_TURN, travel_times)
+avg_none = compute_avg(NO_TURNS, travel_times)
+avg_all = compute_avg(ALL_ROUTES, travel_times)
+
+print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
+print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
+print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
+print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+
+
+# -----------------------
+# WAITING TIME
+# -----------------------
+print("\nAverage Waiting Time:")
+
+avg_two = compute_avg(TWO_TURNS, waiting_times)
+avg_one = compute_avg(ONE_TURN, waiting_times)
+avg_none = compute_avg(NO_TURNS, waiting_times)
+avg_all = compute_avg(ALL_ROUTES, waiting_times)
+
+print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
+print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
+print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
+print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+
+
+# -----------------------
+# QUEUE LENGTH (UNCHANGED LOGIC)
+# -----------------------
 print("\nAverage Queue Length per Intersection:")
+
 for tls in TLS_ORDER:
     if tls in queue_lengths and len(queue_lengths[tls]) > 0:
         avg = sum(queue_lengths[tls]) / len(queue_lengths[tls])
@@ -101,6 +135,18 @@ for tls in TLS_ORDER:
     else:
         print(f"  {tls}: N/A")
 
-print("\nThroughput:")
-for route in ROUTE_ORDER:
-    print(f"  {route}: {throughput.get(route, 0)}")
+
+# -----------------------
+# THROUGHPUT
+# -----------------------
+print("\nThroughput Percentage:")
+
+thr_two = compute_throughput(TWO_TURNS)
+thr_one = compute_throughput(ONE_TURN)
+thr_none = compute_throughput(NO_TURNS)
+thr_all = compute_throughput(ALL_ROUTES)
+
+print(f"  Two Turns: {thr_two / TRAFFIC_LOAD * 100:.2f}%")
+print(f"  One Turn:  {thr_one}")
+print(f"  No Turns:  {thr_none}")
+print(f"  Overall:   {thr_all}")

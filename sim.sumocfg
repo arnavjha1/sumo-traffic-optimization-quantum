@@ -1,6 +1,6 @@
 <configuration>
     <input>
-        <net-file value="grid2x2_tls.net.xml"/>
+        <net-file value="grid_2x2/grid2x2_tls.net.xml"/>
         <route-files value="routes.rou.xml"/>
     </input>
 
