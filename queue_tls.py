@@ -47,6 +47,12 @@ NUM_TLS = 4
 NUM_LANES = 3
 queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
 
+first_lefts = 27
+second_lefts = 87
+
+for tls in TLS_ORDER:
+    traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrrrrrrrrrr")
+
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
@@ -55,14 +61,31 @@ while traci.simulation.getTime() < END_TIME:
     t = traci.simulation.getTime()
 
     # ====================================================
-    # >>>>>> INSERT YOUR TRAFFIC LIGHT CONTROL HERE <<<<<<
-    # ====================================================
-    # Example placeholder (does nothing):
-    # for tls in TLS_ORDER:
-    #     current_state = traci.trafficlight.getRedYellowGreenState(tls)
-    #     traci.trafficlight.setRedYellowGreenState(tls, current_state)
-    #
-    # Replace this section with your optimization logic.
+    # QUEUE LENGTH ALGORITHM
+
+    for tls in TLS_ORDER:
+        current_state = traci.trafficlight.getRedYellowGreenState(tls)
+        if int(t) % 120 < 60:
+            if int(t) % 120 >= 57:
+                traci.trafficlight.setRedYellowGreenState(tls, "yryrr rrrrr yryrr rrrrr")
+            if int(t) % 120 == 0:
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrG Grrrr rrrrG Grrrr")
+            if int(t) % 120 == first_lefts + 3:
+                traci.trafficlight.setRedYellowGreenState(tls, "GGGGr rrrrr GGGGr rrrrr")
+            if int(t) % 120 == first_lefts or (queue_lengths[TLS_ORDER.index(tls)][0][2][-1] + queue_lengths[TLS_ORDER.index(tls)][1][0][-1] + queue_lengths[TLS_ORDER.index(tls)][2][2][-1] + queue_lengths[TLS_ORDER.index(tls)][3][0][-1] < 5):
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrry yrrrr rrrry yrrrr")
+                first_lefts = int(t) % 120
+        else:
+            if int(t) % 120 >= 57:
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrr yryrr rrrrr yryrr")
+            if int(t) % 120 == 0:
+                traci.trafficlight.setRedYellowGreenState(tls, "Grrrr rrrrG Grrrr rrrrG")
+            if int(t) % 120 == second_lefts + 3:
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrr GGGGr rrrrr GGGGr")
+            if int(t) % 120 == second_lefts or (queue_lengths[TLS_ORDER.index(tls)][0][0][-1] + queue_lengths[TLS_ORDER.index(tls)][1][2][-1] + queue_lengths[TLS_ORDER.index(tls)][2][0][-1] + queue_lengths[TLS_ORDER.index(tls)][3][2][-1] < 5):
+                traci.trafficlight.setRedYellowGreenState(tls, "yrrrr rrrry yrrrr rrrry")
+                second_lefts = int(t) % 120
+
     # ====================================================
 
     # Vehicles that just departed
