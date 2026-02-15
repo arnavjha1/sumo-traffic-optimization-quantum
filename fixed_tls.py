@@ -4,14 +4,20 @@ from collections import defaultdict
 SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim.sumocfg"
 END_TIME = 600
-TRAFFIC_LOAD = 5000         # EDIT BASED ON LOW, MEDIUM, OR HIGH TRAFFIC
 
 # -----------------------
 # FIXED OUTPUT ORDER
 # -----------------------
-TWO_TURNS = ["r0", "r4", "r6", "r7", "r11", "r13", "r14", "r18", "r20", "r21", "r25", "r27", "r28", "r32", "r34", "r35", "r39", "r41", "r42", "r46", "r48", "r49", "r53", "r55"]
-ONE_TURN = ["r1", "r3", "r5", "r8", "r10", "r12", "r15", "r17", "r19", "r22", "r24", "r26", "r29", "r31", "r33", "r36", "r38", "r40", "r43", "r45", "r47", "r50", "r52", "r54"]
+TWO_TURNS = ["r0", "r4", "r6", "r7", "r11", "r13", "r14", "r18", "r20", "r21",
+             "r25", "r27", "r28", "r32", "r34", "r35", "r39", "r41", "r42",
+             "r46", "r48", "r49", "r53", "r55"]
+
+ONE_TURN = ["r1", "r3", "r5", "r8", "r10", "r12", "r15", "r17", "r19", "r22",
+            "r24", "r26", "r29", "r31", "r33", "r36", "r38", "r40", "r43",
+            "r45", "r47", "r50", "r52", "r54"]
+
 NO_TURNS = ["r2", "r9", "r16", "r23", "r30", "r37", "r44", "r51"]
+
 TLS_ORDER = ["A0", "A1", "B0", "B1"]
 
 traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
@@ -25,11 +31,13 @@ last_waiting_time = {}
 
 travel_times = defaultdict(list)
 waiting_times = defaultdict(list)
-
-queue_lengths = defaultdict(list)
 throughput = defaultdict(int)
 
-tls_ids = traci.trafficlight.getIDList()
+# 3D queue storage:
+# queue_lengths[tls_index][lane_type][time]
+NUM_TLS = 4
+NUM_LANES = 3
+queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
 
 # -----------------------
 # SIMULATION LOOP
@@ -64,14 +72,30 @@ while traci.simulation.getTime() < END_TIME:
             route_of.pop(veh, None)
             last_waiting_time.pop(veh, None)
 
-    # Queue length per TLS
-    for tls in tls_ids:
-        queue = 0
-        for lane in traci.trafficlight.getControlledLanes(tls):
-            for veh in traci.lane.getLastStepVehicleIDs(lane):
-                if traci.vehicle.getSpeed(veh) < 0.1:
-                    queue += 1
-        queue_lengths[tls].append(queue)
+    # -----------------------
+    # QUEUE LENGTH PER TLS PER LANE
+    # -----------------------
+    for tls_index, tls in enumerate(TLS_ORDER):
+
+        lanes = traci.trafficlight.getControlledLanes(tls)
+        lanes = list(dict.fromkeys(lanes))  # remove duplicates
+
+        # Assumes 3 lanes per incoming direction:
+        # lane 0 = left
+        # lane 1 = straight
+        # lane 2 = right
+        for lane_type in range(3):
+            if lane_type < len(lanes):
+                lane_id = lanes[lane_type]
+
+                queue = 0
+                for veh in traci.lane.getLastStepVehicleIDs(lane_id):
+                    if traci.vehicle.getSpeed(veh) < 0.1:
+                        queue += 1
+
+                queue_lengths[tls_index][lane_type].append(queue)
+            else:
+                queue_lengths[tls_index][lane_type].append(0)
 
 traci.close()
 
@@ -106,7 +130,6 @@ print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
 
-
 # -----------------------
 # WAITING TIME
 # -----------------------
@@ -122,31 +145,34 @@ print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
 
-
 # -----------------------
-# QUEUE LENGTH (UNCHANGED LOGIC)
+# QUEUE LENGTH PER LANE
 # -----------------------
-print("\nAverage Queue Length per Intersection:")
+print("\nAverage Queue Length per Intersection (by lane type):")
 
-for tls in TLS_ORDER:
-    if tls in queue_lengths and len(queue_lengths[tls]) > 0:
-        avg = sum(queue_lengths[tls]) / len(queue_lengths[tls])
-        print(f"  {tls}: {avg:.2f} vehicles")
-    else:
-        print(f"  {tls}: N/A")
+LANE_LABELS = ["Left", "Straight", "Right"]
 
+for tls_index, tls in enumerate(TLS_ORDER):
+    print(f"\n  {tls}:")
+    for lane_type in range(3):
+        data = queue_lengths[tls_index][lane_type]
+        if len(data) > 0:
+            avg = sum(data) / len(data)
+            print(f"    {LANE_LABELS[lane_type]}: {avg:.2f} vehicles")
+        else:
+            print(f"    {LANE_LABELS[lane_type]}: N/A")
 
 # -----------------------
 # THROUGHPUT
 # -----------------------
-print("\nThroughput Percentage:")
+print("\nThroughput:")
 
 thr_two = compute_throughput(TWO_TURNS)
 thr_one = compute_throughput(ONE_TURN)
 thr_none = compute_throughput(NO_TURNS)
 thr_all = compute_throughput(ALL_ROUTES)
 
-print(f"  Two Turns: {thr_two / TRAFFIC_LOAD * 100:.2f}%")
+print(f"  Two Turns: {thr_two}")
 print(f"  One Turn:  {thr_one}")
 print(f"  No Turns:  {thr_none}")
 print(f"  Overall:   {thr_all}")
