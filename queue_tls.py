@@ -23,6 +23,16 @@ TLS_ORDER = ["A0", "A1", "B0", "B1"]
 traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 
 # -----------------------
+# FORCE MANUAL TLS CONTROL
+# -----------------------
+for tls in TLS_ORDER:
+    # Switch to program "0" (default program)
+    traci.trafficlight.setProgram(tls, "0")
+
+    # Freeze automatic cycling
+    traci.trafficlight.setPhaseDuration(tls, 999999)
+
+# -----------------------
 # DATA STRUCTURES
 # -----------------------
 depart_time = {}
@@ -33,8 +43,6 @@ travel_times = defaultdict(list)
 waiting_times = defaultdict(list)
 throughput = defaultdict(int)
 
-# 3D queue storage:
-# queue_lengths[tls_index][lane_type][time]
 NUM_TLS = 4
 NUM_LANES = 3
 queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
@@ -45,6 +53,17 @@ queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
 while traci.simulation.getTime() < END_TIME:
     traci.simulationStep()
     t = traci.simulation.getTime()
+
+    # ====================================================
+    # >>>>>> INSERT YOUR TRAFFIC LIGHT CONTROL HERE <<<<<<
+    # ====================================================
+    # Example placeholder (does nothing):
+    # for tls in TLS_ORDER:
+    #     current_state = traci.trafficlight.getRedYellowGreenState(tls)
+    #     traci.trafficlight.setRedYellowGreenState(tls, current_state)
+    #
+    # Replace this section with your optimization logic.
+    # ====================================================
 
     # Vehicles that just departed
     for veh in traci.simulation.getDepartedIDList():
@@ -67,7 +86,6 @@ while traci.simulation.getTime() < END_TIME:
             waiting_times[route].append(waiting_time)
             throughput[route] += 1
 
-            # cleanup
             depart_time.pop(veh, None)
             route_of.pop(veh, None)
             last_waiting_time.pop(veh, None)
@@ -78,12 +96,8 @@ while traci.simulation.getTime() < END_TIME:
     for tls_index, tls in enumerate(TLS_ORDER):
 
         lanes = traci.trafficlight.getControlledLanes(tls)
-        lanes = list(dict.fromkeys(lanes))  # remove duplicates
+        lanes = list(dict.fromkeys(lanes))
 
-        # Assumes 3 lanes per incoming direction:
-        # lane 0 = left
-        # lane 1 = straight
-        # lane 2 = right
         for lane_type in range(3):
             if lane_type < len(lanes):
                 lane_id = lanes[lane_type]
@@ -100,7 +114,7 @@ while traci.simulation.getTime() < END_TIME:
 traci.close()
 
 # -----------------------
-# RESULTS (GROUPED)
+# RESULTS
 # -----------------------
 print("\n===== PERFORMANCE METRICS =====")
 
@@ -115,11 +129,7 @@ def compute_throughput(route_list):
 
 ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
 
-# -----------------------
-# TRAVEL TIME
-# -----------------------
 print("\nAverage Travel Time:")
-
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
 avg_none = compute_avg(NO_TURNS, travel_times)
@@ -130,11 +140,7 @@ print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
 
-# -----------------------
-# WAITING TIME
-# -----------------------
 print("\nAverage Waiting Time:")
-
 avg_two = compute_avg(TWO_TURNS, waiting_times)
 avg_one = compute_avg(ONE_TURN, waiting_times)
 avg_none = compute_avg(NO_TURNS, waiting_times)
@@ -145,11 +151,7 @@ print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
 
-# -----------------------
-# QUEUE LENGTH PER LANE
-# -----------------------
 print("\nAverage Queue Length per Intersection (by lane type):")
-
 LANE_LABELS = ["Left", "Straight", "Right"]
 
 for tls_index, tls in enumerate(TLS_ORDER):
@@ -162,11 +164,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         else:
             print(f"    {LANE_LABELS[lane_type]}: N/A")
 
-# -----------------------
-# THROUGHPUT
-# -----------------------
 print("\nThroughput:")
-
 thr_two = compute_throughput(TWO_TURNS)
 thr_one = compute_throughput(ONE_TURN)
 thr_none = compute_throughput(NO_TURNS)
