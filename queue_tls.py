@@ -26,10 +26,7 @@ traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 # FORCE MANUAL TLS CONTROL
 # -----------------------
 for tls in TLS_ORDER:
-    # Switch to program "0" (default program)
     traci.trafficlight.setProgram(tls, "0")
-
-    # Freeze automatic cycling
     traci.trafficlight.setPhaseDuration(tls, 999999)
 
 # -----------------------
@@ -44,8 +41,11 @@ waiting_times = defaultdict(list)
 throughput = defaultdict(int)
 
 NUM_TLS = 4
-NUM_LANES = 3
-queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
+NUM_SIDES = 4       # Each TLS has 4 incoming sides
+NUM_LANES = 3       # Left=2, Straight=1, Right=0
+
+# Initialize 4D queue_lengths: TLS x Side x Lane x Time
+queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 
 first_lefts = 27
 second_lefts = 87
@@ -61,33 +61,6 @@ while traci.simulation.getTime() < END_TIME:
     t = traci.simulation.getTime()
 
     # ====================================================
-    # QUEUE LENGTH ALGORITHM
-
-    for tls in TLS_ORDER:
-        current_state = traci.trafficlight.getRedYellowGreenState(tls)
-        if int(t) % 120 < 60:
-            if int(t) % 120 >= 57:
-                traci.trafficlight.setRedYellowGreenState(tls, "yryrr rrrrr yryrr rrrrr")
-            if int(t) % 120 == 0:
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrG Grrrr rrrrG Grrrr")
-            if int(t) % 120 == first_lefts + 3:
-                traci.trafficlight.setRedYellowGreenState(tls, "GGGGr rrrrr GGGGr rrrrr")
-            if int(t) % 120 == first_lefts or (queue_lengths[TLS_ORDER.index(tls)][0][2][-1] + queue_lengths[TLS_ORDER.index(tls)][1][0][-1] + queue_lengths[TLS_ORDER.index(tls)][2][2][-1] + queue_lengths[TLS_ORDER.index(tls)][3][0][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrry yrrrr rrrry yrrrr")
-                first_lefts = int(t) % 120
-        else:
-            if int(t) % 120 >= 57:
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrr yryrr rrrrr yryrr")
-            if int(t) % 120 == 0:
-                traci.trafficlight.setRedYellowGreenState(tls, "Grrrr rrrrG Grrrr rrrrG")
-            if int(t) % 120 == second_lefts + 3:
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrr GGGGr rrrrr GGGGr")
-            if int(t) % 120 == second_lefts or (queue_lengths[TLS_ORDER.index(tls)][0][0][-1] + queue_lengths[TLS_ORDER.index(tls)][1][2][-1] + queue_lengths[TLS_ORDER.index(tls)][2][0][-1] + queue_lengths[TLS_ORDER.index(tls)][3][2][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "yrrrr rrrry yrrrr rrrry")
-                second_lefts = int(t) % 120
-
-    # ====================================================
-
     # Vehicles that just departed
     for veh in traci.simulation.getDepartedIDList():
         depart_time[veh] = t
@@ -113,26 +86,52 @@ while traci.simulation.getTime() < END_TIME:
             route_of.pop(veh, None)
             last_waiting_time.pop(veh, None)
 
-    # -----------------------
-    # QUEUE LENGTH PER TLS PER LANE
-    # -----------------------
+    # ====================================================
+    # QUEUE LENGTH CALCULATION (4D ARRAY)
     for tls_index, tls in enumerate(TLS_ORDER):
-
         lanes = traci.trafficlight.getControlledLanes(tls)
-        lanes = list(dict.fromkeys(lanes))
+        lanes = list(dict.fromkeys(lanes))  # remove duplicates
 
-        for lane_type in range(3):
-            if lane_type < len(lanes):
-                lane_id = lanes[lane_type]
+        # Each TLS has 4 sides; split lanes evenly per side
+        lanes_per_side = len(lanes) // NUM_SIDES
+        for side_index in range(NUM_SIDES):
+            for lane_index in range(NUM_LANES):
+                lane_pos = side_index * lanes_per_side + lane_index
+                if lane_pos < len(lanes):
+                    lane_id = lanes[lane_pos]
+                    queue = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
+                                if traci.vehicle.getSpeed(veh) < 0.1)
+                    queue_lengths[tls_index][side_index][lane_index].append(queue)
+                else:
+                    queue_lengths[tls_index][side_index][lane_index].append(0)
 
-                queue = 0
-                for veh in traci.lane.getLastStepVehicleIDs(lane_id):
-                    if traci.vehicle.getSpeed(veh) < 0.1:
-                        queue += 1
+    # ====================================================
+    # QUEUE LENGTH ALGORITHM
 
-                queue_lengths[tls_index][lane_type].append(queue)
-            else:
-                queue_lengths[tls_index][lane_type].append(0)
+    for tls in TLS_ORDER:
+        current_state = traci.trafficlight.getRedYellowGreenState(tls)
+        if int(t) % 120 < 60:
+            if int(t) % 120 >= 57:
+                traci.trafficlight.setRedYellowGreenState(tls, "yryrrrrrrryryrrrrrrr")
+            if int(t) % 120 >= 0 and int(t) % 120 < 10:
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrGGrrrrrrrrGGrrrr")
+            if int(t) % 120 >= first_lefts + 3:
+                traci.trafficlight.setRedYellowGreenState(tls, "GGGGrrrrrrGGGGrrrrrr")
+            if int(t) % 120 >= 10 and (int(t) % 120 == first_lefts and (queue_lengths[TLS_ORDER.index(tls)][0][2][-1] + queue_lengths[TLS_ORDER.index(tls)][1][0][-1] + queue_lengths[TLS_ORDER.index(tls)][2][2][-1] + queue_lengths[TLS_ORDER.index(tls)][3][0][-1] < 5)):
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrryyrrrrrrrryyrrrr")
+                first_lefts = int(t) % 120
+        else:
+            if int(t) % 120 >= 57:
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrryryrrrrrrryryrr")
+            if int(t) % 120 == 0 and int(t) % 120 < 10:
+                traci.trafficlight.setRedYellowGreenState(tls, "GrrrrrrrrGGrrrrrrrrG")
+            if int(t) % 120 >= second_lefts + 3:
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrGGGGrrrrrrGGGGr")
+            if int(t) % 120 >= 10 and (int(t) % 120 == second_lefts and (queue_lengths[TLS_ORDER.index(tls)][0][0][-1] + queue_lengths[TLS_ORDER.index(tls)][1][2][-1] + queue_lengths[TLS_ORDER.index(tls)][2][0][-1] + queue_lengths[TLS_ORDER.index(tls)][3][2][-1] < 5)):
+                traci.trafficlight.setRedYellowGreenState(tls, "yrrrrrrrryyrrrrrrrry")
+                second_lefts = int(t) % 120
+
+    # ====================================================
 
 traci.close()
 
@@ -152,6 +151,7 @@ def compute_throughput(route_list):
 
 ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
 
+# Travel time
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
@@ -163,6 +163,7 @@ print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
 
+# Waiting time
 print("\nAverage Waiting Time:")
 avg_two = compute_avg(TWO_TURNS, waiting_times)
 avg_one = compute_avg(ONE_TURN, waiting_times)
@@ -174,19 +175,21 @@ print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
 
-print("\nAverage Queue Length per Intersection (by lane type):")
-LANE_LABELS = ["Left", "Straight", "Right"]
+# Queue lengths
+print("\nAverage Queue Length per TLS per Side/Lane:")
+LANE_LABELS = ["Right", "Straight", "Left"]
 
 for tls_index, tls in enumerate(TLS_ORDER):
     print(f"\n  {tls}:")
-    for lane_type in range(3):
-        data = queue_lengths[tls_index][lane_type]
-        if len(data) > 0:
-            avg = sum(data) / len(data)
-            print(f"    {LANE_LABELS[lane_type]}: {avg:.2f} vehicles")
-        else:
-            print(f"    {LANE_LABELS[lane_type]}: N/A")
+    for side_index in range(NUM_SIDES):
+        print(f"    Side {side_index}: ", end="")
+        for lane_index in range(NUM_LANES):
+            data = queue_lengths[tls_index][side_index][lane_index]
+            avg = sum(data) / len(data) if data else 0
+            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
+        print()
 
+# Throughput
 print("\nThroughput:")
 thr_two = compute_throughput(TWO_TURNS)
 thr_one = compute_throughput(ONE_TURN)
