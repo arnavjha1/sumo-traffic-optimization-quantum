@@ -49,9 +49,11 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 
-for tls in TLS_ORDER:
-    traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrrrrrrrrrr")
+for tls in TLS_REG:
+    traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
     
+for tls in TLS_INVERT:
+    traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
 
 def simStep(num_times = 1):
     for _ in range(num_times):
@@ -107,13 +109,19 @@ def simStep(num_times = 1):
 # SIMULATION LOOP
 # -----------------------
 sim_module = 0
+delay_timer = 0
 
 while traci.simulation.getTime() < END_TIME:
+
     simStep()
+
+    if delay_timer > 0:
+        delay_timer -= 1
+        continue
 
     # ====================================================
     # QUEUE LENGTH ALGORITHM
-
+    
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
@@ -123,28 +131,19 @@ while traci.simulation.getTime() < END_TIME:
                 traci.trafficlight.setRedYellowGreenState(tls, "GGGrrrrrgrrr")
             elif (((int(t) % 120) >= 15) and sim_module == 0) or (queue_lengths[TLS_ORDER.index(tls)][0][2][-1] < 5):
                 traci.trafficlight.setRedYellowGreenState(tls, "GGyrrrrrgrrr")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "GGrrrrrrgrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+                delay_timer = 5
                 sim_module = 1
             elif (((int(t) % 120) <= 25)):
                 traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
             elif (((int(t) % 120) >= 35) and sim_module == 1) or (queue_lengths[TLS_ORDER.index(tls)][0][1][-1] < 5):
                 traci.trafficlight.setRedYellowGreenState(tls, "yygrrrGGgrrr")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGgrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGGrrr")
+                delay_timer = 5
                 sim_module = 2
             elif (((int(t) % 120) <= 45)):
                 traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGGrrr")
             elif (((int(t) % 120) >= 55) and sim_module == 2):
                 traci.trafficlight.setRedYellowGreenState(tls, "rryrrryyyrrr")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGGrrrrrg")
+                delay_timer = 5
                 sim_module = 3
 
         else:
