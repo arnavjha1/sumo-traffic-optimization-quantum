@@ -48,12 +48,15 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
+tIndex = []
 
 for tls in TLS_REG:
     traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+    tIndex.append(tls)
     
 for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
+    tIndex.append(tls)
 
 def simStep(num_times = 1):
     for _ in range(num_times):
@@ -108,16 +111,12 @@ def simStep(num_times = 1):
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
-sim_module = 0
-delay_timer = 0
+sim_module = [0] * len(tIndex)  # Track which module each TLS is in
 
 while traci.simulation.getTime() < END_TIME:
 
     simStep()
 
-    if delay_timer > 0:
-        delay_timer -= 1
-        continue
 
     # ====================================================
     # QUEUE LENGTH ALGORITHM
@@ -125,119 +124,74 @@ while traci.simulation.getTime() < END_TIME:
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-        if int(t) % 120 < 60:
-            if   (((int(t) % 120) <= 5)):
-                sim_module = 0
-                traci.trafficlight.setRedYellowGreenState(tls, "GGGrrrrrgrrr")
-            elif (((int(t) % 120) >= 15) and sim_module == 0) or (queue_lengths[TLS_ORDER.index(tls)][0][2][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "GGyrrrrrgrrr")
-                delay_timer = 5
-                sim_module = 1
-            elif (((int(t) % 120) <= 25)):
-                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            elif (((int(t) % 120) >= 35) and sim_module == 1) or (queue_lengths[TLS_ORDER.index(tls)][0][1][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "yygrrrGGgrrr")
-                delay_timer = 5
-                sim_module = 2
-            elif (((int(t) % 120) <= 45)):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGGrrr")
-            elif (((int(t) % 120) >= 55) and sim_module == 2):
-                traci.trafficlight.setRedYellowGreenState(tls, "rryrrryyyrrr")
-                delay_timer = 5
-                sim_module = 3
+        ns_queue = queue_lengths[tIndex.index(tls)][0][1][-1] + queue_lengths[tIndex.index(tls)][0][2][-1] + queue_lengths[tIndex.index(tls)][0][0][-1] + queue_lengths[tIndex.index(tls)][2][1][-1] + queue_lengths[tIndex.index(tls)][2][2][-1] + queue_lengths[tIndex.index(tls)][2][0][-1]
+        ew_queue = queue_lengths[tIndex.index(tls)][1][1][-1] + queue_lengths[tIndex.index(tls)][1][2][-1] + queue_lengths[tIndex.index(tls)][1][0][-1] + queue_lengths[tIndex.index(tls)][3][1][-1] + queue_lengths[tIndex.index(tls)][3][2][-1] + queue_lengths[tIndex.index(tls)][3][0][-1]
+        
+        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
+            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+            if(sim_module[tIndex.index(tls)] >= 23 and ns_queue < 10):
+                sim_module[tIndex.index(tls)] = 55
+            else:
+                sim_module[tIndex.index(tls)] += 1
 
-        else:
-            if   (((int(t) % 120) <= 65)):
-                sim_module = 0
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGGrrrrrg")
-            elif (((int(t) % 120) >= 75) and sim_module == 0) or (queue_lengths[TLS_ORDER.index(tls)][1][2][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGyrrrrrg")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGrrrrrrg")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-                sim_module = 1
-            elif (((int(t) % 120) <= 85)):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            elif (((int(t) % 120) >= 95) and sim_module == 1) or (queue_lengths[TLS_ORDER.index(tls)][1][1][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrryygrrrGGg")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGg")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGG")
-                sim_module = 2
-            elif (((int(t) % 120) <= 105)):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGG")
-            elif (((int(t) % 120) >= 115) and sim_module == 2):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrryrrryyy")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGG")
-                sim_module = 3
+        elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
+            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] == 59:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
+            if(sim_module[tIndex.index(tls)] >= 83 and ew_queue < 10):
+                sim_module[tIndex.index(tls)] = 115
+            else:
+                sim_module[tIndex.index(tls)] += 1
+                
+        elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] == 119:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] = 0
 
     for tls in TLS_INVERT:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-        if int(t) % 120 < 60:
-            if   (((int(t) % 120) <= 5)):
-                sim_module = 0
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGG")
-            elif (((int(t) % 120) >= 15) and sim_module == 0) or (queue_lengths[TLS_ORDER.index(tls)][1][2][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGy")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrgrrrGGr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-                sim_module = 1
-            elif (((int(t) % 120) <= 25)):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            elif (((int(t) % 120) >= 35) and sim_module == 1) or (queue_lengths[TLS_ORDER.index(tls)][1][1][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrryyg")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrrrg")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGGrrrrrg")
-                sim_module = 2
-            elif (((int(t) % 120) <= 45)):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrGGGrrrrrg")
-            elif (((int(t) % 120) >= 55) and sim_module == 2):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrrrry")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGGrrr")
-                sim_module = 3
+        ew_queue = queue_lengths[tIndex.index(tls)][0][1][-1] + queue_lengths[tIndex.index(tls)][0][2][-1] + queue_lengths[tIndex.index(tls)][0][0][-1] + queue_lengths[tIndex.index(tls)][2][1][-1] + queue_lengths[tIndex.index(tls)][2][2][-1] + queue_lengths[tIndex.index(tls)][2][0][-1]
+        ns_queue = queue_lengths[tIndex.index(tls)][1][1][-1] + queue_lengths[tIndex.index(tls)][1][2][-1] + queue_lengths[tIndex.index(tls)][1][0][-1] + queue_lengths[tIndex.index(tls)][3][1][-1] + queue_lengths[tIndex.index(tls)][3][2][-1] + queue_lengths[tIndex.index(tls)][3][0][-1]
         
-        else:
-            if   (((int(t) % 120) <= 65)):
-                sim_module = 0
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGGrrr")
-            elif (((int(t) % 120) >= 75) and sim_module == 0) or (queue_lengths[TLS_ORDER.index(tls)][0][2][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGyrrr")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGrrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-                sim_module = 1
-            elif (((int(t) % 120) <= 85)):
-                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            elif (((int(t) % 120) >= 95) and sim_module == 1) or (queue_lengths[TLS_ORDER.index(tls)][0][1][-1] < 5):
-                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrryygrrr")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrrrgrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "GGGrrrrrgrrr")
-                sim_module = 2
-            elif (((int(t) % 120) <= 105)):
-                traci.trafficlight.setRedYellowGreenState(tls, "GGGrrrrrgrrr")
-            elif (((int(t) % 120) >= 115) and sim_module == 2):
-                traci.trafficlight.setRedYellowGreenState(tls, "yyyrrrrryrrr")
-                simStep(4)
-                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-                simStep()
-                traci.trafficlight.setRedYellowGreenState(tls, "rrgrrrGGGrrr")
-                sim_module = 3
+        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
+            if(sim_module[tIndex.index(tls)] >= 23 and ns_queue < 10):
+                sim_module[tIndex.index(tls)] = 55
+            else:
+                sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] == 59:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
+            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+            if(sim_module[tIndex.index(tls)] >= 83 and ew_queue < 10):
+                sim_module[tIndex.index(tls)] = 115
+            else:
+                sim_module[tIndex.index(tls)] += 1
+                
+        elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
+            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] == 119:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] = 0
     # ====================================================
 
 traci.close()
