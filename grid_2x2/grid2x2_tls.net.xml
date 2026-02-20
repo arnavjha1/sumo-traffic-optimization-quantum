@@ -376,11 +376,11 @@
         <phase duration="1"  state="rrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="B1" type="static" programID="0" offset="0">
-        <phase duration="55" state="rrrGGgrrrGGg"/>
-        <phase duration="4"  state="rrryyyrrryyy"/>
-        <phase duration="1"  state="rrrrrrrrrrrr"/>
         <phase duration="55" state="GGgrrrGGgrrr"/>
         <phase duration="4"  state="yyyrrryyyrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrr"/>
+        <phase duration="55" state="rrrGGgrrrGGg"/>
+        <phase duration="4"  state="rrryyyrrryyy"/>
         <phase duration="1"  state="rrrrrrrrrrrr"/>
     </tlLogic>
 
