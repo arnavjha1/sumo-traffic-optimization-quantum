@@ -115,7 +115,7 @@ def simStep(num_times = 1):
 
 QUEUE_K = 2
 REG_K = 1
-LEFT_WEIGHT = 1.35
+LEFT_WEIGHT = 1.00
 RIGHT_WEIGHT = 0.45
 pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 
@@ -135,6 +135,8 @@ def compute_pressure():
 
 BIAS_THRESHOLD = 15
 x_i = [[] for _ in range(NUM_TLS)]
+delta_ns = [[] for _ in range(NUM_TLS)]
+delta_ew = [[] for _ in range(NUM_TLS)]
 
 def optimize_x_i(tls_index, delta_i):
     if len(x_i[tls_index]) == 0:
@@ -148,11 +150,37 @@ def optimize_x_i(tls_index, delta_i):
     else:
         x_i[tls_index].append(x_i[tls_index][-1])
 
+def optimize_ns_delta(tls_index, ns_imbalance):
+    if len(delta_ns[tls_index]) == 0:
+        delta_ns[tls_index].append(0)
+        return
+
+    if ns_imbalance > BIAS_THRESHOLD:
+        delta_ns[tls_index].append(1)
+    elif ns_imbalance < -BIAS_THRESHOLD:
+        delta_ns[tls_index].append(-1)
+    else:
+        delta_ns[tls_index].append(0)
+
+def optimize_ew_delta(tls_index, ew_imbalance):
+    if len(delta_ew[tls_index]) == 0:
+        delta_ew[tls_index].append(0)
+        return
+
+    if ew_imbalance > BIAS_THRESHOLD:
+        delta_ew[tls_index].append(1)
+    elif ew_imbalance < -BIAS_THRESHOLD:
+        delta_ew[tls_index].append(-1)
+    else:
+        delta_ew[tls_index].append(0)
+
 
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
+ns_tracker = [0] * len(tIndex)  
+ew_tracker = [0] * len(tIndex) 
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -166,18 +194,42 @@ while traci.simulation.getTime() < END_TIME:
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
+
         bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
         ns_imbalance = pressure[tIndex.index(tls)][0][-1] - pressure[tIndex.index(tls)][2][-1]
         ew_imbalance = pressure[tIndex.index(tls)][1][-1] - pressure[tIndex.index(tls)][3][-1]
-        optimize_x_i(tIndex.index(tls), bias_i)
 
-        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
+        optimize_x_i(tIndex.index(tls), bias_i)
+        optimize_ns_delta(tIndex.index(tls), ns_imbalance)
+        optimize_ew_delta(tIndex.index(tls), ew_imbalance)
+
+        if sim_module[tIndex.index(tls)] == 0 and sim_module[tIndex.index(tls)] <= 1:
+            if(delta_ns[tIndex.index(tls)][-1] == 1):
+                traci.trafficlight.setRedYellowGreenState(tls, "GGGrrrrrrrrr")
+                ns_tracker[tIndex.index(tls)] = 1
+            elif(delta_ns[tIndex.index(tls)][-1] == -1):
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrGGGrr")
+                ns_tracker[tIndex.index(tls)] = -1
+            else:
+                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+        elif sim_module[tIndex.index(tls)] > 1 and sim_module[tIndex.index(tls)] < 23:
+            if((delta_ns[tIndex.index(tls)][-1] == 0 and ns_tracker[tIndex.index(tls)] != 0) or sim_module[tIndex.index(tls)] >= 18):
+                if(ns_tracker[tIndex.index(tls)] == 1):
+                    traci.trafficlight.setRedYellowGreenState(tls, "GGyrrrrrrrrr")
+                    ns_tracker[tIndex.index(tls)] = 0
+                    sim_module[tIndex.index(tls)] = 19
+                elif(ns_tracker[tIndex.index(tls)] == -1):
+                    traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrGGyrrr")
+                    ns_tracker[tIndex.index(tls)] = 0
+                    sim_module[tIndex.index(tls)] = 19
+                else:
+                    sim_module[tIndex.index(tls)] += 1
+        elif sim_module[tIndex.index(tls)] >= 23 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
             if(sim_module[tIndex.index(tls)] >= 23 and x_i[tIndex.index(tls)][-1] == -1):
-                sim_module[tIndex.index(tls)] = 55
+                sim_module[tIndex.index(tls)] = 45
             else:
                 sim_module[tIndex.index(tls)] += 1
-
         elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
             traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
             sim_module[tIndex.index(tls)] += 1
@@ -186,7 +238,29 @@ while traci.simulation.getTime() < END_TIME:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] += 1
 
-        elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
+        if sim_module[tIndex.index(tls)] == 60 and sim_module[tIndex.index(tls)] <= 61:
+            if(delta_ns[tIndex.index(tls)][-1] == 1):
+                traci.trafficlight.setRedYellowGreenState(tls, "GGGrrrrrrrrr")
+                ns_tracker[tIndex.index(tls)] = 1
+            elif(delta_ns[tIndex.index(tls)][-1] == -1):
+                traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrGGGrr")
+                ns_tracker[tIndex.index(tls)] = -1
+            else:
+                traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+        elif sim_module[tIndex.index(tls)] > 61 and sim_module[tIndex.index(tls)] < 83:
+            if((delta_ns[tIndex.index(tls)][-1] == 0 and ns_tracker[tIndex.index(tls)] != 0) or sim_module[tIndex.index(tls)] >= 18):
+                if(ns_tracker[tIndex.index(tls)] == 1):
+                    traci.trafficlight.setRedYellowGreenState(tls, "GGyrrrrrrrrr")
+                    ns_tracker[tIndex.index(tls)] = 0
+                    sim_module[tIndex.index(tls)] = 19
+                elif(ns_tracker[tIndex.index(tls)] == -1):
+                    traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrGGyrrr")
+                    ns_tracker[tIndex.index(tls)] = 0
+                    sim_module[tIndex.index(tls)] = 19
+                else:
+                    sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] >= 83 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
             if(sim_module[tIndex.index(tls)] >= 83 and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 115
