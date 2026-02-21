@@ -115,7 +115,7 @@ def simStep(num_times = 1):
 
 QUEUE_K = 2
 REG_K = 1
-LEFT_WEIGHT = 1.00
+LEFT_WEIGHT = 1.35
 RIGHT_WEIGHT = 0.45
 pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 
@@ -167,6 +167,8 @@ while traci.simulation.getTime() < END_TIME:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
         bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
+        ns_imbalance = pressure[tIndex.index(tls)][0][-1] - pressure[tIndex.index(tls)][2][-1]
+        ew_imbalance = pressure[tIndex.index(tls)][1][-1] - pressure[tIndex.index(tls)][3][-1]
         optimize_x_i(tIndex.index(tls), bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
