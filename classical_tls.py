@@ -133,43 +133,37 @@ def compute_pressure():
             pressure_value = QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
             pressure[tls_index][side_index].append(pressure_value)
 
-BIAS_THRESHOLD = 15
+# ==========================================================
+# ENERGY-BASED PHASE OPTIMIZATION
+# ==========================================================
+
+LAMBDA_SWITCHING_PENALTY = 0   # tune between 15–30
+
 x_i = [[] for _ in range(NUM_TLS)]
 
-def compute_x_i(tls_index, delta_i):
+def optimize_x_i(tls_index, bias_i):
+
+    # First timestep initialization
     if len(x_i[tls_index]) == 0:
-        x_i[tls_index].append(1)
+        if bias_i >= 0:
+            x_i[tls_index].append(1)
+        else:
+            x_i[tls_index].append(-1)
         return
 
-    if delta_i > 0:
-        x_i[tls_index].append(1)
-    elif delta_i < 0:
-        x_i[tls_index].append(-1)
+    current_x = x_i[tls_index][-1]
+    delta = bias_i
+
+    # Energy if we keep current phase
+    energy_stay = -delta * current_x
+
+    # Energy if we switch phase
+    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
+
+    if energy_switch < energy_stay:
+        x_i[tls_index].append(-current_x)
     else:
-        x_i[tls_index].append(x_i[tls_index][-1])
-
-energy_i = [[] for _ in range(NUM_TLS)]
-projected_energy_i = [[] for _ in range(NUM_TLS)]
-LAMBDA_SWITCHING_PENALTY = 10
-
-def compute_energy(tls_index, bias_i):
-    if len(x_i[tls_index]) < 2:
-        energy_i[tls_index].append(0)
-        return
-
-    # Compute energy based on switching penalty
-    energy = 0
-    projected_energy = 0
-    for i in range(1, len(x_i[tls_index])):
-        if x_i[tls_index][i] != x_i[tls_index][i-1]:
-            energy += LAMBDA_SWITCHING_PENALTY
-        
-        projected_energy -= bias_i * x_i[tls_index][i]  # Projected reward alignment with bias
-        projected_energy += LAMBDA_SWITCHING_PENALTY
-        energy -= bias_i * x_i[tls_index][i]  # Actual reward alignment with bias
-
-    energy_i[tls_index].append(energy)
-    projected_energy_i[tls_index].append(projected_energy)
+        x_i[tls_index].append(current_x)
 
 # -----------------------
 # SIMULATION LOOP
@@ -191,12 +185,11 @@ while traci.simulation.getTime() < END_TIME:
         bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
         ns_imbalance = pressure[tIndex.index(tls)][0][-1] - pressure[tIndex.index(tls)][2][-1]
         ew_imbalance = pressure[tIndex.index(tls)][1][-1] - pressure[tIndex.index(tls)][3][-1]
-        compute_x_i(tIndex.index(tls), bias_i)
-        compute_energy(tIndex.index(tls), bias_i)
+        optimize_x_i(tIndex.index(tls), bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 23 and projected_energy_i[tIndex.index(tls)][-1] > 0):
+            if(sim_module[tIndex.index(tls)] >= 23 and x_i[tIndex.index(tls)][-1] > 0):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -211,7 +204,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 83 and projected_energy_i[tIndex.index(tls)][-1] > 0):
+            if(sim_module[tIndex.index(tls)] >= 83 and x_i[tIndex.index(tls)][-1] > 0):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -230,12 +223,11 @@ while traci.simulation.getTime() < END_TIME:
         bias_i = (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1]) - (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1])
         ew_imbalance = pressure[tIndex.index(tls)][0][-1] - pressure[tIndex.index(tls)][2][-1]
         ns_imbalance = pressure[tIndex.index(tls)][1][-1] - pressure[tIndex.index(tls)][3][-1]
-        compute_x_i(tIndex.index(tls), bias_i)
-        compute_energy(tIndex.index(tls), bias_i)
+        optimize_x_i(tIndex.index(tls), bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 23 and projected_energy_i[tIndex.index(tls)][-1] > 0):
+            if(sim_module[tIndex.index(tls)] >= 23 and x_i[tIndex.index(tls)][-1] > 0):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -250,7 +242,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 83 and projected_energy_i[tIndex.index(tls)][-1] > 0):
+            if(sim_module[tIndex.index(tls)] >= 83 and x_i[tIndex.index(tls)][-1] > 0):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
