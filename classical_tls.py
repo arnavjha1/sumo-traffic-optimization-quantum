@@ -133,12 +133,24 @@ def compute_pressure():
             pressure_value = QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
             pressure[tls_index][side_index].append(pressure_value)
 
+BIAS_THRESHOLD = 15
+x_i = [[] for _ in range(NUM_TLS)]
+
+def optimize_x_i(tls_index, bias_i):
+    if(len(x_i[tls_index]) == 0):
+        x_i[tls_index].append(1)
+    else:
+        if(bias_i > BIAS_THRESHOLD):
+            x_i[tls_index].append(1)
+        elif(bias_i < -BIAS_THRESHOLD):
+            x_i[tls_index].append(-1)
+        else:
+            x_i[tls_index].append(x_i[tls_index][-1])  # Keep previous value if within threshold
 
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-BIAS_THRESHOLD = 15
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -153,10 +165,11 @@ while traci.simulation.getTime() < END_TIME:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
         bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
+        optimize_x_i(tIndex.index(tls), bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 23 and bias_i < -BIAS_THRESHOLD):
+            if(sim_module[tIndex.index(tls)] >= 23 and x_i[tIndex.index(tls)][-1] == -1):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -171,7 +184,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 83 and bias_i > BIAS_THRESHOLD):
+            if(sim_module[tIndex.index(tls)] >= 83 and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
