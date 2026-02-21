@@ -115,8 +115,8 @@ def simStep(num_times = 1):
 
 QUEUE_K = 2
 REG_K = 1
-LEFT_WEIGHT = 0.7
-RIGHT_WEIGHT = 0.15
+LEFT_WEIGHT = 1.00
+RIGHT_WEIGHT = 0.45
 pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 
 def compute_pressure():
@@ -136,16 +136,18 @@ def compute_pressure():
 BIAS_THRESHOLD = 15
 x_i = [[] for _ in range(NUM_TLS)]
 
-def optimize_x_i(tls_index, bias_i):
-    if(len(x_i[tls_index]) == 0):
+def optimize_x_i(tls_index, delta_i):
+    if len(x_i[tls_index]) == 0:
         x_i[tls_index].append(1)
+        return
+
+    if delta_i > 0:
+        x_i[tls_index].append(1)
+    elif delta_i < 0:
+        x_i[tls_index].append(-1)
     else:
-        if(bias_i > BIAS_THRESHOLD):
-            x_i[tls_index].append(1)
-        elif(bias_i < -BIAS_THRESHOLD):
-            x_i[tls_index].append(-1)
-        else:
-            x_i[tls_index].append(x_i[tls_index][-1])  # Keep previous value if within threshold
+        x_i[tls_index].append(x_i[tls_index][-1])
+
 
 # -----------------------
 # SIMULATION LOOP
