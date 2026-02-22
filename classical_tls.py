@@ -22,6 +22,13 @@ TLS_ORDER = ["A0", "A1", "B0", "B1"]
 TLS_REG = ["A0", "A1", "B0"]
 TLS_INVERT = ["B1"]
 
+TLS_NEIGHBORS = [
+    ["A0", "B0", "A1"],  # A0 neighbors
+    ["A1", "B1", "A0"],  # A1 neighbors
+    ["B0", "A0", "B1"],  # B0 neighbors
+    ["B1", "A1", "B0"]   # B1 neighbors
+]
+
 traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 
 # -----------------------
@@ -154,6 +161,7 @@ def compute_discharging_pressure():
 # ==========================================================
 
 LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
+NON_COUPLING_PENALTY = 10             # tune between 5–15
 
 x_i = [[] for _ in range(NUM_TLS)]
 
@@ -211,7 +219,7 @@ while traci.simulation.getTime() < END_TIME:
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 15 and x_i[tIndex.index(tls)][-1] == -1):
+            if(sim_module[tIndex.index(tls)] >= 16 and x_i[tIndex.index(tls)][-1] == -1):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -226,7 +234,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 75 and x_i[tIndex.index(tls)][-1] == 1):
+            if(sim_module[tIndex.index(tls)] >= 76 and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -255,7 +263,7 @@ while traci.simulation.getTime() < END_TIME:
         
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 23 and x_i[tIndex.index(tls)][-1] == 1):
+            if(sim_module[tIndex.index(tls)] >= 16 and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -270,7 +278,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 83 and x_i[tIndex.index(tls)][-1] == -1):
+            if(sim_module[tIndex.index(tls)] >= 76 and x_i[tIndex.index(tls)][-1] == -1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
