@@ -239,7 +239,7 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
-            traci.trafficlight.setRedYellowGreenState(tls, "yyrrrryyrrrr")
+            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
             sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 59 and sim_module[tIndex.index(tls)] < 60:
@@ -254,7 +254,7 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
                 
         elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyrrrryyr")
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
             sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
@@ -283,7 +283,7 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
                 
         elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyrrrryyr")
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
             sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 59 and sim_module[tIndex.index(tls)] < 60:
@@ -298,7 +298,7 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
-            traci.trafficlight.setRedYellowGreenState(tls, "yyrrrryyrrrr")
+            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
             sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
