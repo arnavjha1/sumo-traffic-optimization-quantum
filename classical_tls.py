@@ -161,7 +161,7 @@ def compute_discharging_pressure():
 # ==========================================================
 
 LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-NON_COUPLING_PENALTY = 10             # tune between 5–15
+coupling_bias = 0             # tune between 5–15
 
 x_i = [[] for _ in range(NUM_TLS)]
 
@@ -181,8 +181,22 @@ def optimize_x_i(tls_index, bias_i):
     # Energy if we keep current phase
     energy_stay = -delta * current_x
 
+    # Energy if we keep current phase: Coupling with neighbors
+    if len(x_i[NUM_TLS - 1]) > 0:
+        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
+            neighbor_index = tIndex.index(neighbor_tls)
+            if len(x_i[neighbor_index]) > 0:
+                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
+
     # Energy if we switch phase
     energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
+
+    # Energy if we switch phase: Coupling with neighbors
+    if len(x_i[NUM_TLS - 1]) > 0:
+        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
+            neighbor_index = tIndex.index(neighbor_tls)
+            if len(x_i[neighbor_index]) > 0:
+                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
 
     if energy_switch < energy_stay:
         x_i[tls_index].append(-current_x)
