@@ -161,7 +161,7 @@ def compute_discharging_pressure():
 # ==========================================================
 
 LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 0             # tune between 5–15
+coupling_bias = 0             # tune between 0-10
 
 x_i = [[] for _ in range(NUM_TLS)]
 
@@ -239,10 +239,10 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
-            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
+            traci.trafficlight.setRedYellowGreenState(tls, "yyrrrryyrrrr")
             sim_module[tIndex.index(tls)] += 1
 
-        elif sim_module[tIndex.index(tls)] == 59:
+        elif sim_module[tIndex.index(tls)] >= 59 and sim_module[tIndex.index(tls)] < 60:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] += 1
 
@@ -254,10 +254,10 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
                 
         elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyrrrryyr")
             sim_module[tIndex.index(tls)] += 1
 
-        elif sim_module[tIndex.index(tls)] == 119:
+        elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] = 0
 
@@ -283,10 +283,10 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
                 
         elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyrrrryyr")
             sim_module[tIndex.index(tls)] += 1
 
-        elif sim_module[tIndex.index(tls)] == 59:
+        elif sim_module[tIndex.index(tls)] >= 59 and sim_module[tIndex.index(tls)] < 60:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] += 1
 
@@ -298,10 +298,10 @@ while traci.simulation.getTime() < END_TIME:
                 sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
-            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
+            traci.trafficlight.setRedYellowGreenState(tls, "yyrrrryyrrrr")
             sim_module[tIndex.index(tls)] += 1
 
-        elif sim_module[tIndex.index(tls)] == 119:
+        elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] = 0
     # ====================================================
@@ -323,6 +323,20 @@ def compute_throughput(route_list):
     return sum(throughput.get(r, 0) for r in route_list)
 
 ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+
+# Queue lengths
+print("\nAverage Queue Length per TLS per Side/Lane:")
+LANE_LABELS = ["Right", "Straight", "Left"]
+
+for tls_index, tls in enumerate(TLS_ORDER):
+    print(f"\n  {tls}:")
+    for side_index in range(NUM_SIDES):
+        print(f"    Side {side_index}: ", end="")
+        for lane_index in range(NUM_LANES):
+            data = queue_lengths[tls_index][side_index][lane_index]
+            avg = sum(data) / len(data) if data else 0
+            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
+        print()
 
 # Travel time
 print("\nAverage Travel Time:")
@@ -347,20 +361,6 @@ print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
 print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
-
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
-
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
 
 # Throughput
 print("\nThroughput:")

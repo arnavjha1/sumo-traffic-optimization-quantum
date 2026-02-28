@@ -212,6 +212,20 @@ def compute_throughput(route_list):
 
 ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
 
+# Queue lengths
+print("\nAverage Queue Length per TLS per Side/Lane:")
+LANE_LABELS = ["Right", "Straight", "Left"]
+
+for tls_index, tls in enumerate(TLS_ORDER):
+    print(f"\n  {tls}:")
+    for side_index in range(NUM_SIDES):
+        print(f"    Side {side_index}: ", end="")
+        for lane_index in range(NUM_LANES):
+            data = queue_lengths[tls_index][side_index][lane_index]
+            avg = sum(data) / len(data) if data else 0
+            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
+        print()
+
 # Travel time
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
@@ -235,20 +249,6 @@ print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
 print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
-
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
-
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
 
 # Throughput
 print("\nThroughput:")

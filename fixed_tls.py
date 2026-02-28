@@ -116,6 +116,23 @@ def compute_throughput(route_list):
 ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
 
 # -----------------------
+# QUEUE LENGTH PER LANE
+# -----------------------
+print("\nAverage Queue Length per Intersection (by lane type):")
+
+LANE_LABELS = ["Left", "Straight", "Right"]
+
+for tls_index, tls in enumerate(TLS_ORDER):
+    print(f"\n  {tls}:")
+    for lane_type in range(3):
+        data = queue_lengths[tls_index][lane_type]
+        if len(data) > 0:
+            avg = sum(data) / len(data)
+            print(f"    {LANE_LABELS[lane_type]}: {avg:.2f} vehicles")
+        else:
+            print(f"    {LANE_LABELS[lane_type]}: N/A")
+
+# -----------------------
 # TRAVEL TIME
 # -----------------------
 print("\nAverage Travel Time:")
@@ -144,23 +161,6 @@ print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
 print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
 print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
 print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
-
-# -----------------------
-# QUEUE LENGTH PER LANE
-# -----------------------
-print("\nAverage Queue Length per Intersection (by lane type):")
-
-LANE_LABELS = ["Left", "Straight", "Right"]
-
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for lane_type in range(3):
-        data = queue_lengths[tls_index][lane_type]
-        if len(data) > 0:
-            avg = sum(data) / len(data)
-            print(f"    {LANE_LABELS[lane_type]}: {avg:.2f} vehicles")
-        else:
-            print(f"    {LANE_LABELS[lane_type]}: N/A")
 
 # -----------------------
 # THROUGHPUT
