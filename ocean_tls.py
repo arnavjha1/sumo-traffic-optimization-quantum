@@ -134,6 +134,34 @@ RIGHT_WEIGHT = 0.47
 pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 discharging_pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 
+def compute_pressure():
+    for tls in TLS_ORDER:
+        tls_index = tIndex.index(tls)
+        for side_index in range(NUM_SIDES):
+            left_queue     = queue_lengths[tls_index][side_index][2][-1]
+            left_reg       =  regular_cars[tls_index][side_index][2][-1]
+            straight_queue = queue_lengths[tls_index][side_index][1][-1]
+            straight_reg   =  regular_cars[tls_index][side_index][1][-1]
+            right_queue    = queue_lengths[tls_index][side_index][0][-1]
+            right_reg      =  regular_cars[tls_index][side_index][0][-1]
+
+            pressure_value = QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
+            pressure[tls_index][side_index].append(pressure_value)
+
+def compute_discharging_pressure():
+    for tls in TLS_ORDER:
+        tls_index = tIndex.index(tls)
+        for side_index in range(NUM_SIDES):
+            left_queue     = queue_lengths[tls_index][side_index][2][-1]
+            left_reg       =  regular_cars[tls_index][side_index][2][-1]
+            straight_queue = queue_lengths[tls_index][side_index][1][-1]
+            straight_reg   =  regular_cars[tls_index][side_index][1][-1]
+            right_queue    = queue_lengths[tls_index][side_index][0][-1]
+            right_reg      =  regular_cars[tls_index][side_index][0][-1]
+
+            pressure_value = DISCHARGE_QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
+            discharging_pressure[tls_index][side_index].append(pressure_value)
+
 # ==========================================================
 # D-WAVE ENERGY-BASED PHASE OPTIMIZATION
 # ==========================================================

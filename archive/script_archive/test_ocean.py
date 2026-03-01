@@ -1,4 +1,4 @@
-from quantum_tls import solve_tls_phases
+from archive.script_archive.quantum_tls import solve_tls_phases
 
 queues = {
     "NS": 20,
