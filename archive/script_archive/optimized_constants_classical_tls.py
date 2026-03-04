@@ -52,6 +52,7 @@ throughput = defaultdict(int)
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
 NUM_LANES = 3       # Left=2, Straight=1, Right=0
+BASELINE_CARS_IN_GRID = 500
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
@@ -120,7 +121,35 @@ def simStep(num_times = 1):
                         regular_cars[tls_index][side_index][lane_index].append(0)
                         queue_lengths[tls_index][side_index][lane_index].append(0)
 
-QUEUE_K = 2
+def get_total_cars(queue_bias=1, regular_bias=1):
+    return queue_bias * get_total_queued() + regular_bias * get_total_regular()
+
+def get_total_queued():
+    total = 0
+    for tls in range(NUM_TLS):
+        for side in range(NUM_SIDES):
+            for lane in range(NUM_LANES):
+                if queue_lengths[tls][side][lane]:
+                    total += queue_lengths[tls][side][lane][-1]
+    return total
+
+def get_total_regular():
+    total = 0
+    for tls in range(NUM_TLS):
+        for side in range(NUM_SIDES):
+            for lane in range(NUM_LANES):
+                if regular_cars[tls][side][lane]:
+                    total += regular_cars[tls][side][lane][-1]
+    return total
+
+BASELINE_QUEUE_K = 2
+def get_QUEUE_K():
+    total_cars = get_total_cars()
+
+    load_ratio = total_cars / BASELINE_CARS_IN_GRID
+
+    return BASELINE_QUEUE_K * load_ratio
+
 DISCHARGE_QUEUE_K = 1
 REG_K = 1
 LEFT_WEIGHT = 1.00
@@ -139,7 +168,7 @@ def compute_pressure():
             right_queue    = queue_lengths[tls_index][side_index][0][-1]
             right_reg      =  regular_cars[tls_index][side_index][0][-1]
 
-            pressure_value = QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
+            pressure_value = get_QUEUE_K() * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
             pressure[tls_index][side_index].append(pressure_value)
 
 def compute_discharging_pressure():
