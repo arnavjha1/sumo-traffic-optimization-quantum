@@ -104,9 +104,9 @@
 
     <!-- ROUTES -->
     
-    <!--  T = 2000, low traffic
-          T = 3500, medium traffic
-          T = 5000, high traffic     -->
+    <!--  T = 2000, total = 16000, low traffic
+          T = 3500, total = 28000, medium traffic
+          T = 5000, total = 40000, high traffic     -->
     <!--<ENTITY VPH_LOW>                 = 3B                 -->
     <!--<ENTITY VPH_MED>                 =      3Br           -->
     <!--<ENTITY VPH_HIGH>                =            Br^2

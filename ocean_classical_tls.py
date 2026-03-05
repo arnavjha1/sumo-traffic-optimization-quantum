@@ -168,17 +168,17 @@ def compute_discharging_pressure():
 # ENERGY-BASED PHASE OPTIMIZATION (SQA)
 # ==========================================================
 LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 0               # tune between 0–10
+coupling_bias = 2               # tune between 0–10
 
 x_i = [[] for _ in range(NUM_TLS)]
 
 # Initialize local SQA sampler
 sqa_sampler = SimulatedAnnealingSampler()
-
 def optimize_x_i(tls_index, bias_i):
     """
     Optimize the phase (+1 / -1) for a TLS using a local SQA sampler.
     """
+
     # First timestep initialization
     if len(x_i[tls_index]) == 0:
         x_i[tls_index].append(1 if bias_i >= 0 else -1)
@@ -186,28 +186,35 @@ def optimize_x_i(tls_index, bias_i):
 
     current_x = x_i[tls_index][-1]
 
-    # Construct simple Ising BQM
-    h = {tls_index: -bias_i}  # local bias
-    J = {}
+    # -------------------------------------------------
+    # Incorporate neighbor coupling into effective bias
+    # -------------------------------------------------
+    effective_bias = bias_i
 
-    # Coupling with neighbors
     for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
         neighbor_index = tIndex.index(neighbor_tls)
         if len(x_i[neighbor_index]) > 0:
-            J[(tls_index, neighbor_index)] = -coupling_bias * x_i[neighbor_index][-1]
+            effective_bias += coupling_bias * x_i[neighbor_index][-1]
 
-    bqm = BinaryQuadraticModel('SPIN')
-    bqm.add_linear_from(h)
-    bqm.add_quadratic_from(J)
+    # -------------------------------------------------
+    # Build SINGLE VARIABLE Ising model
+    # -------------------------------------------------
+    var_label = "x"
 
-    # Solve with SQA
-    sampleset = sqa_sampler.sample(bqm, num_reads=10)
-    best_sample = sampleset.first.sample[tls_index]
+    bqm = BinaryQuadraticModel.empty(dimod.SPIN)
+    bqm.add_variable(var_label, -effective_bias)
 
-    # Include switching penalty
+    # Solve
+    sampleset = sqa_sampler.sample(bqm, num_reads=20)
+    best_sample = sampleset.first.sample[var_label]
+
+    # -------------------------------------------------
+    # Apply switching penalty manually
+    # -------------------------------------------------
     if best_sample != current_x:
-        energy_stay = bqm.energy({tls_index: current_x})
-        energy_flip = bqm.energy({tls_index: -current_x}) + LAMBDA_SWITCHING_PENALTY
+        energy_stay = -effective_bias * current_x
+        energy_flip = -effective_bias * (-current_x) + LAMBDA_SWITCHING_PENALTY
+
         x_i[tls_index].append(-current_x if energy_flip < energy_stay else current_x)
     else:
         x_i[tls_index].append(current_x)
