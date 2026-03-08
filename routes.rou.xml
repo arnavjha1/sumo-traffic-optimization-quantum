@@ -1,4 +1,5 @@
 <routes>
+
     <!-- Vehicle type -->
     <vType id="car"
            accel="2.6"
@@ -6,205 +7,432 @@
            maxSpeed="13.9"
            length="5"/>
 
-
     <!-- Route probabilities -->
     <parameters>
-        <prob id="ALPHA" value="0.6"/>  <!-- straight -->
-        <prob id="BETA"  value="0.25"/> <!-- right -->
-        <prob id="GAMMA" value="0.15"/> <!-- left -->
+        <prob id="ALPHA" value="0.6"/>
+        <prob id="BETA"  value="0.25"/>
+        <prob id="GAMMA" value="0.15"/>
     </parameters>
 
-    <!-- Top-left W-->
-    <route id="r0" edges="-E7 E6"/>
-    
-    <route id="r1" edges="-E7 A1B1 E0"/>
-    <route id="r2" edges="-E7 A1B1 E1"/>
-    <route id="r3" edges="-E7 A1B1 B1B0 E2"/>
-
-    <route id="r4" edges="-E7 A1A0 E5"/>
-    <route id="r5" edges="-E7 A1A0 E3"/>
-    <route id="r6" edges="-E7 A1A0 A0B0 E4"/>
-
-    <!-- Top-left N-->
-    <route id="r7" edges="-E6 E7"/>
-    
-    <route id="r8" edges="-E6 A1A0 E5"/>
-    <route id="r9" edges="-E6 A1A0 E3"/>
-    <route id="r10" edges="-E6 A1A0 A0B0 E4"/>
-
-    <route id="r11" edges="-E6 A1B1 E0"/>
-    <route id="r12" edges="-E6 A1B1 E1"/>
-    <route id="r13" edges="-E6 A1B1 B1B0 E2"/>
-
-    <!-- Top-right E -->
-    <route id="r14" edges="-E1 E0"/>
-
-    <route id="r15" edges="-E1 B1A1 E6"/>
-    <route id="r16" edges="-E1 B1A1 E7"/>
-    <route id="r17" edges="-E1 B1A1 A1A0 E3"/>
-
-    <route id="r18" edges="-E1 B1B0 E4"/>
-    <route id="r19" edges="-E1 B1B0 E2"/>
-    <route id="r20" edges="-E1 B1B0 B0A0 E5"/>
-
-    <!-- Top-right N -->
-    <route id="r21" edges="-E0 E1"/>
-
-    <route id="r22" edges="-E0 B1B0 E4"/>
-    <route id="r23" edges="-E0 B1B0 E2"/>
-    <route id="r24" edges="-E0 B1B0 B0A0 E5"/>
-
-    <route id="r25" edges="-E0 B1A1 E6"/>
-    <route id="r26" edges="-E0 B1A1 E7"/>
-    <route id="r27" edges="-E0 B1A1 A1A0 E3"/>
-
-    <!-- Bottom-left W -->
-    <route id="r28" edges="-E5 E3"/>
-
-    <route id="r29" edges="-E5 A0B0 E2"/>
-    <route id="r30" edges="-E5 A0B0 E4"/>
-    <route id="r31" edges="-E5 A0B0 B0B1 E0"/>
-
-    <route id="r32" edges="-E5 A0A1 E7"/>
-    <route id="r33" edges="-E5 A0A1 E6"/>
-    <route id="r34" edges="-E5 A0A1 A1B1 E1"/>
-
-    <!-- Bottom-left S -->
-    <route id="r35" edges="-E3 E5"/>
-
-    <route id="r36" edges="-E3 A0A1 E7"/>
-    <route id="r37" edges="-E3 A0A1 E6"/>
-    <route id="r38" edges="-E3 A0A1 A1B1 E1"/>
-
-    <route id="r39" edges="-E3 A0B0 E2"/>
-    <route id="r40" edges="-E3 A0B0 E4"/>
-    <route id="r41" edges="-E3 A0B0 B0B1 E0"/>
-
-    <!-- Bottom-right E -->
-    <route id="r42" edges="-E4 E2"/>
-
-    <route id="r43" edges="-E4 B0A0 E3"/>
-    <route id="r44" edges="-E4 B0A0 E5"/>
-    <route id="r45" edges="-E4 B0A0 A0A1 E6"/>
-
-    <route id="r46" edges="-E4 B0B1 E1"/>
-    <route id="r47" edges="-E4 B0B1 E0"/>
-    <route id="r48" edges="-E4 B0B1 B1A1 E7"/>
-
-    <!-- Bottom-right S -->
-    <route id="r49" edges="-E2 E4"/>
-
-    <route id="r50" edges="-E2 B0B1 E1"/>
-    <route id="r51" edges="-E2 B0B1 E0"/>
-    <route id="r52" edges="-E2 B0B1 B1A1 E7"/>
-
-    <route id="r53" edges="-E2 B0A0 E3"/>
-    <route id="r54" edges="-E2 B0A0 E5"/>
-    <route id="r55" edges="-E2 B0A0 A0A1 E6"/>
-
     <!-- ROUTES -->
-    
-    <!--  T = 2000, total = 16000, low traffic
-          T = 3500, total = 28000, medium traffic
-          T = 5000, total = 40000, high traffic     -->
-    <!--<ENTITY VPH_LOW>                 = 3B                 -->
-    <!--<ENTITY VPH_MED>                 =      3Br           -->
-    <!--<ENTITY VPH_HIGH>                =            Br^2
-    
-                              Formula: T = 3B + 3Br + Br^2    -->
 
-    <!--
-        Route probabilities:
-        - Straight:     (r / r + 1)
-        - Right:    (1 - r / r + 1) * 0.5
-        - Left:     (1 - r / r + 1) * 0.5
-    -->
+    <route id="r0" edges="-E6 A1B1 E1"/>
+    <route id="r1" edges="-E6 A1B1 E0"/>
+    <route id="r2" edges="-E6 A1B1 B1B0 E4"/>
+    <route id="r3" edges="-E6 A1B1 B1B0 B0A0 E5"/>
+    <route id="r4" edges="-E6 A1B1 B1B0 B0A0 A0A1 A1B1 E1"/>
+    <route id="r5" edges="-E6 A1B1 B1B0 B0A0 A0A1 A1B1 E0"/>
+    <route id="r6" edges="-E6 A1B1 B1B0 B0A0 A0A1 A1B1 B1B0 E4"/>
+    <route id="r7" edges="-E6 A1B1 B1B0 B0A0 A0A1 A1B1 B1B0 E2"/>
+    <route id="r8" edges="-E6 A1B1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r9" edges="-E6 A1B1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r10" edges="-E6 A1B1 B1B0 B0A0 E3"/>
+    <route id="r11" edges="-E6 A1B1 B1B0 E2"/>
+    <route id="r12" edges="-E6 E7"/>
+    <route id="r13" edges="-E6 E6"/>
+    <route id="r14" edges="-E6 A1A0 A0B0 E4"/>
+    <route id="r15" edges="-E6 A1A0 A0B0 B0B1 E1"/>
+    <route id="r16" edges="-E6 A1A0 A0B0 B0B1 B1A1 E7"/>
+    <route id="r17" edges="-E6 A1A0 A0B0 B0B1 B1A1 E6"/>
+    <route id="r18" edges="-E6 A1A0 A0B0 B0B1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r19" edges="-E6 A1A0 A0B0 B0B1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r20" edges="-E6 A1A0 A0B0 B0B1 B1A1 A1A0 E5"/>
+    <route id="r21" edges="-E6 A1A0 A0B0 B0B1 B1A1 A1A0 E3"/>
+    <route id="r22" edges="-E6 A1A0 A0B0 B0B1 E0"/>
+    <route id="r23" edges="-E6 A1A0 A0B0 E2"/>
+    <route id="r24" edges="-E6 A1A0 E5"/>
+    <route id="r25" edges="-E6 A1A0 E3"/>
+    <route id="r26" edges="-E0 E1"/>
+    <route id="r27" edges="-E0 B1A1 E7"/>
+    <route id="r28" edges="-E0 B1A1 E6"/>
+    <route id="r29" edges="-E0 B1A1 A1A0 A0B0 E4"/>
+    <route id="r30" edges="-E0 B1A1 A1A0 A0B0 B0B1 E1"/>
+    <route id="r31" edges="-E0 B1A1 A1A0 A0B0 B0B1 B1A1 E7"/>
+    <route id="r32" edges="-E0 B1A1 A1A0 A0B0 B0B1 B1A1 E6"/>
+    <route id="r33" edges="-E0 B1A1 A1A0 A0B0 B0B1 B1A1 A1A0 E5"/>
+    <route id="r34" edges="-E0 B1A1 A1A0 A0B0 B0B1 B1A1 A1A0 E3"/>
+    <route id="r35" edges="-E0 B1A1 A1A0 A0B0 B0B1 E0"/>
+    <route id="r36" edges="-E0 B1A1 A1A0 A0B0 E2"/>
+    <route id="r37" edges="-E0 B1A1 A1A0 E5"/>
+    <route id="r38" edges="-E0 B1A1 A1A0 E3"/>
+    <route id="r39" edges="-E0 E0"/>
+    <route id="r40" edges="-E0 B1B0 E4"/>
+    <route id="r41" edges="-E0 B1B0 B0A0 E5"/>
+    <route id="r42" edges="-E0 B1B0 B0A0 A0A1 A1B1 E1"/>
+    <route id="r43" edges="-E0 B1B0 B0A0 A0A1 A1B1 E0"/>
+    <route id="r44" edges="-E0 B1B0 B0A0 A0A1 A1B1 B1B0 E4"/>
+    <route id="r45" edges="-E0 B1B0 B0A0 A0A1 A1B1 B1B0 B0A0 E5"/>
+    <route id="r46" edges="-E0 B1B0 B0A0 A0A1 A1B1 B1B0 B0A0 E3"/>
+    <route id="r47" edges="-E0 B1B0 B0A0 A0A1 A1B1 B1B0 E2"/>
+    <route id="r48" edges="-E0 B1B0 B0A0 A0A1 E7"/>
+    <route id="r49" edges="-E0 B1B0 B0A0 A0A1 E6"/>
+    <route id="r50" edges="-E0 B1B0 B0A0 E3"/>
+    <route id="r51" edges="-E0 B1B0 E2"/>
+    <route id="r52" edges="-E3 A0B0 E4"/>
+    <route id="r53" edges="-E3 A0B0 B0B1 E1"/>
+    <route id="r54" edges="-E3 A0B0 B0B1 B1A1 E7"/>
+    <route id="r55" edges="-E3 A0B0 B0B1 B1A1 E6"/>
+    <route id="r56" edges="-E3 A0B0 B0B1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r57" edges="-E3 A0B0 B0B1 B1A1 A1A0 A0B0 B0B1 E1"/>
+    <route id="r58" edges="-E3 A0B0 B0B1 B1A1 A1A0 A0B0 B0B1 E0"/>
+    <route id="r59" edges="-E3 A0B0 B0B1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r60" edges="-E3 A0B0 B0B1 B1A1 A1A0 E5"/>
+    <route id="r61" edges="-E3 A0B0 B0B1 B1A1 A1A0 E3"/>
+    <route id="r62" edges="-E3 A0B0 B0B1 E0"/>
+    <route id="r63" edges="-E3 A0B0 E2"/>
+    <route id="r64" edges="-E3 E5"/>
+    <route id="r65" edges="-E3 A0A1 A1B1 E1"/>
+    <route id="r66" edges="-E3 A0A1 A1B1 E0"/>
+    <route id="r67" edges="-E3 A0A1 A1B1 B1B0 E4"/>
+    <route id="r68" edges="-E3 A0A1 A1B1 B1B0 B0A0 E5"/>
+    <route id="r69" edges="-E3 A0A1 A1B1 B1B0 B0A0 A0A1 A1B1 E1"/>
+    <route id="r70" edges="-E3 A0A1 A1B1 B1B0 B0A0 A0A1 A1B1 E0"/>
+    <route id="r71" edges="-E3 A0A1 A1B1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r72" edges="-E3 A0A1 A1B1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r73" edges="-E3 A0A1 A1B1 B1B0 B0A0 E3"/>
+    <route id="r74" edges="-E3 A0A1 A1B1 B1B0 E2"/>
+    <route id="r75" edges="-E3 A0A1 E7"/>
+    <route id="r76" edges="-E3 A0A1 E6"/>
+    <route id="r77" edges="-E3 E3"/>
+    <route id="r78" edges="-E2 E4"/>
+    <route id="r79" edges="-E2 B0A0 E5"/>
+    <route id="r80" edges="-E2 B0A0 A0A1 A1B1 E1"/>
+    <route id="r81" edges="-E2 B0A0 A0A1 A1B1 E0"/>
+    <route id="r82" edges="-E2 B0A0 A0A1 A1B1 B1B0 E4"/>
+    <route id="r83" edges="-E2 B0A0 A0A1 A1B1 B1B0 B0A0 E5"/>
+    <route id="r84" edges="-E2 B0A0 A0A1 A1B1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r85" edges="-E2 B0A0 A0A1 A1B1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r86" edges="-E2 B0A0 A0A1 A1B1 B1B0 B0A0 E3"/>
+    <route id="r87" edges="-E2 B0A0 A0A1 A1B1 B1B0 E2"/>
+    <route id="r88" edges="-E2 B0A0 A0A1 E7"/>
+    <route id="r89" edges="-E2 B0A0 A0A1 E6"/>
+    <route id="r90" edges="-E2 B0A0 E3"/>
+    <route id="r91" edges="-E2 B0B1 E1"/>
+    <route id="r92" edges="-E2 B0B1 B1A1 E7"/>
+    <route id="r93" edges="-E2 B0B1 B1A1 E6"/>
+    <route id="r94" edges="-E2 B0B1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r95" edges="-E2 B0B1 B1A1 A1A0 A0B0 B0B1 E1"/>
+    <route id="r96" edges="-E2 B0B1 B1A1 A1A0 A0B0 B0B1 B1A1 E7"/>
+    <route id="r97" edges="-E2 B0B1 B1A1 A1A0 A0B0 B0B1 B1A1 E6"/>
+    <route id="r98" edges="-E2 B0B1 B1A1 A1A0 A0B0 B0B1 E0"/>
+    <route id="r99" edges="-E2 B0B1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r100" edges="-E2 B0B1 B1A1 A1A0 E5"/>
+    <route id="r101" edges="-E2 B0B1 B1A1 A1A0 E3"/>
+    <route id="r102" edges="-E2 B0B1 E0"/>
+    <route id="r103" edges="-E2 E2"/>
+    <route id="r104" edges="-E5 A0B0 E4"/>
+    <route id="r105" edges="-E5 A0B0 B0B1 E1"/>
+    <route id="r106" edges="-E5 A0B0 B0B1 B1A1 E7"/>
+    <route id="r107" edges="-E5 A0B0 B0B1 B1A1 E6"/>
+    <route id="r108" edges="-E5 A0B0 B0B1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r109" edges="-E5 A0B0 B0B1 B1A1 A1A0 A0B0 B0B1 E1"/>
+    <route id="r110" edges="-E5 A0B0 B0B1 B1A1 A1A0 A0B0 B0B1 E0"/>
+    <route id="r111" edges="-E5 A0B0 B0B1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r112" edges="-E5 A0B0 B0B1 B1A1 A1A0 E5"/>
+    <route id="r113" edges="-E5 A0B0 B0B1 B1A1 A1A0 E3"/>
+    <route id="r114" edges="-E5 A0B0 B0B1 E0"/>
+    <route id="r115" edges="-E5 A0B0 E2"/>
+    <route id="r116" edges="-E5 E5"/>
+    <route id="r117" edges="-E5 A0A1 A1B1 E1"/>
+    <route id="r118" edges="-E5 A0A1 A1B1 E0"/>
+    <route id="r119" edges="-E5 A0A1 A1B1 B1B0 E4"/>
+    <route id="r120" edges="-E5 A0A1 A1B1 B1B0 B0A0 E5"/>
+    <route id="r121" edges="-E5 A0A1 A1B1 B1B0 B0A0 A0A1 A1B1 E1"/>
+    <route id="r122" edges="-E5 A0A1 A1B1 B1B0 B0A0 A0A1 A1B1 E0"/>
+    <route id="r123" edges="-E5 A0A1 A1B1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r124" edges="-E5 A0A1 A1B1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r125" edges="-E5 A0A1 A1B1 B1B0 B0A0 E3"/>
+    <route id="r126" edges="-E5 A0A1 A1B1 B1B0 E2"/>
+    <route id="r127" edges="-E5 A0A1 E7"/>
+    <route id="r128" edges="-E5 A0A1 E6"/>
+    <route id="r129" edges="-E5 E3"/>
+    <route id="r130" edges="-E7 A1B1 E1"/>
+    <route id="r131" edges="-E7 A1B1 E0"/>
+    <route id="r132" edges="-E7 A1B1 B1B0 E4"/>
+    <route id="r133" edges="-E7 A1B1 B1B0 B0A0 E5"/>
+    <route id="r134" edges="-E7 A1B1 B1B0 B0A0 A0A1 A1B1 E1"/>
+    <route id="r135" edges="-E7 A1B1 B1B0 B0A0 A0A1 A1B1 E0"/>
+    <route id="r136" edges="-E7 A1B1 B1B0 B0A0 A0A1 A1B1 B1B0 E4"/>
+    <route id="r137" edges="-E7 A1B1 B1B0 B0A0 A0A1 A1B1 B1B0 E2"/>
+    <route id="r138" edges="-E7 A1B1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r139" edges="-E7 A1B1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r140" edges="-E7 A1B1 B1B0 B0A0 E3"/>
+    <route id="r141" edges="-E7 A1B1 B1B0 E2"/>
+    <route id="r142" edges="-E7 E7"/>
+    <route id="r143" edges="-E7 E6"/>
+    <route id="r144" edges="-E7 A1A0 A0B0 E4"/>
+    <route id="r145" edges="-E7 A1A0 A0B0 B0B1 E1"/>
+    <route id="r146" edges="-E7 A1A0 A0B0 B0B1 B1A1 E7"/>
+    <route id="r147" edges="-E7 A1A0 A0B0 B0B1 B1A1 E6"/>
+    <route id="r148" edges="-E7 A1A0 A0B0 B0B1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r149" edges="-E7 A1A0 A0B0 B0B1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r150" edges="-E7 A1A0 A0B0 B0B1 B1A1 A1A0 E5"/>
+    <route id="r151" edges="-E7 A1A0 A0B0 B0B1 B1A1 A1A0 E3"/>
+    <route id="r152" edges="-E7 A1A0 A0B0 B0B1 E0"/>
+    <route id="r153" edges="-E7 A1A0 A0B0 E2"/>
+    <route id="r154" edges="-E7 A1A0 E5"/>
+    <route id="r155" edges="-E7 A1A0 E3"/>
+    <route id="r156" edges="-E4 E4"/>
+    <route id="r157" edges="-E4 B0A0 E5"/>
+    <route id="r158" edges="-E4 B0A0 A0A1 A1B1 E1"/>
+    <route id="r159" edges="-E4 B0A0 A0A1 A1B1 E0"/>
+    <route id="r160" edges="-E4 B0A0 A0A1 A1B1 B1B0 E4"/>
+    <route id="r161" edges="-E4 B0A0 A0A1 A1B1 B1B0 B0A0 E5"/>
+    <route id="r162" edges="-E4 B0A0 A0A1 A1B1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r163" edges="-E4 B0A0 A0A1 A1B1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r164" edges="-E4 B0A0 A0A1 A1B1 B1B0 B0A0 E3"/>
+    <route id="r165" edges="-E4 B0A0 A0A1 A1B1 B1B0 E2"/>
+    <route id="r166" edges="-E4 B0A0 A0A1 E7"/>
+    <route id="r167" edges="-E4 B0A0 A0A1 E6"/>
+    <route id="r168" edges="-E4 B0A0 E3"/>
+    <route id="r169" edges="-E4 B0B1 E1"/>
+    <route id="r170" edges="-E4 B0B1 B1A1 E7"/>
+    <route id="r171" edges="-E4 B0B1 B1A1 E6"/>
+    <route id="r172" edges="-E4 B0B1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r173" edges="-E4 B0B1 B1A1 A1A0 A0B0 B0B1 E1"/>
+    <route id="r174" edges="-E4 B0B1 B1A1 A1A0 A0B0 B0B1 B1A1 E7"/>
+    <route id="r175" edges="-E4 B0B1 B1A1 A1A0 A0B0 B0B1 B1A1 E6"/>
+    <route id="r176" edges="-E4 B0B1 B1A1 A1A0 A0B0 B0B1 E0"/>
+    <route id="r177" edges="-E4 B0B1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r178" edges="-E4 B0B1 B1A1 A1A0 E5"/>
+    <route id="r179" edges="-E4 B0B1 B1A1 A1A0 E3"/>
+    <route id="r180" edges="-E4 B0B1 E0"/>
+    <route id="r181" edges="-E4 E2"/>
+    <route id="r182" edges="-E1 E1"/>
+    <route id="r183" edges="-E1 B1A1 E7"/>
+    <route id="r184" edges="-E1 B1A1 E6"/>
+    <route id="r185" edges="-E1 B1A1 A1A0 A0B0 E4"/>
+    <route id="r186" edges="-E1 B1A1 A1A0 A0B0 B0B1 E1"/>
+    <route id="r187" edges="-E1 B1A1 A1A0 A0B0 B0B1 B1A1 E7"/>
+    <route id="r188" edges="-E1 B1A1 A1A0 A0B0 B0B1 B1A1 E6"/>
+    <route id="r189" edges="-E1 B1A1 A1A0 A0B0 B0B1 B1A1 A1A0 E5"/>
+    <route id="r190" edges="-E1 B1A1 A1A0 A0B0 B0B1 B1A1 A1A0 E3"/>
+    <route id="r191" edges="-E1 B1A1 A1A0 A0B0 B0B1 E0"/>
+    <route id="r192" edges="-E1 B1A1 A1A0 A0B0 E2"/>
+    <route id="r193" edges="-E1 B1A1 A1A0 E5"/>
+    <route id="r194" edges="-E1 B1A1 A1A0 E3"/>
+    <route id="r195" edges="-E1 E0"/>
+    <route id="r196" edges="-E1 B1B0 E4"/>
+    <route id="r197" edges="-E1 B1B0 B0A0 E5"/>
+    <route id="r198" edges="-E1 B1B0 B0A0 A0A1 A1B1 E1"/>
+    <route id="r199" edges="-E1 B1B0 B0A0 A0A1 A1B1 E0"/>
+    <route id="r200" edges="-E1 B1B0 B0A0 A0A1 A1B1 B1B0 E4"/>
+    <route id="r201" edges="-E1 B1B0 B0A0 A0A1 A1B1 B1B0 B0A0 E5"/>
+    <route id="r202" edges="-E1 B1B0 B0A0 A0A1 A1B1 B1B0 B0A0 E3"/>
+    <route id="r203" edges="-E1 B1B0 B0A0 A0A1 A1B1 B1B0 E2"/>
+    <route id="r204" edges="-E1 B1B0 B0A0 A0A1 E7"/>
+    <route id="r205" edges="-E1 B1B0 B0A0 A0A1 E6"/>
+    <route id="r206" edges="-E1 B1B0 B0A0 E3"/>
+    <route id="r207" edges="-E1 B1B0 E2"/>
 
-    <!-- FLOWS from dead ends -->
-    <flow id="flow0" type="car" route="r0" begin="0" end="300" vehsPerHour="324"/>
+    <!-- FLOWS -->
 
-    <flow id="flow1" type="car" route="r1" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow2" type="car" route="r2" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow3" type="car" route="r3" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow4" type="car" route="r4" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow5" type="car" route="r5" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow6" type="car" route="r6" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow7" type="car" route="r7" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow8" type="car" route="r8" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow9" type="car" route="r9" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow10" type="car" route="r10" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow11" type="car" route="r11" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow12" type="car" route="r12" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow13" type="car" route="r13" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow14" type="car" route="r14" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow15" type="car" route="r15" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow16" type="car" route="r16" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow17" type="car" route="r17" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow18" type="car" route="r18" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow19" type="car" route="r19" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow20" type="car" route="r20" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow21" type="car" route="r21" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow22" type="car" route="r22" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow23" type="car" route="r23" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow24" type="car" route="r24" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow25" type="car" route="r25" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow26" type="car" route="r26" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow27" type="car" route="r27" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow28" type="car" route="r28" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow29" type="car" route="r29" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow30" type="car" route="r30" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow31" type="car" route="r31" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow32" type="car" route="r32" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow33" type="car" route="r33" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow34" type="car" route="r34" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow35" type="car" route="r35" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow36" type="car" route="r36" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow37" type="car" route="r37" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow38" type="car" route="r38" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow39" type="car" route="r39" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow40" type="car" route="r40" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow41" type="car" route="r41" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow42" type="car" route="r42" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow43" type="car" route="r43" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow44" type="car" route="r44" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow45" type="car" route="r45" begin="0" end="300" vehsPerHour="755"/>
-
-    <flow id="flow46" type="car" route="r46" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow47" type="car" route="r47" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow48" type="car" route="r48" begin="0" end="300" vehsPerHour="324"/>
-
-
-    <flow id="flow49" type="car" route="r49" begin="0" end="300" vehsPerHour="324"/>
-
-    <flow id="flow50" type="car" route="r50" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow51" type="car" route="r51" begin="0" end="300" vehsPerHour="1763"/>
-    <flow id="flow52" type="car" route="r52" begin="0" end="300" vehsPerHour="755"/>
-    
-    <flow id="flow53" type="car" route="r53" begin="0" end="300" vehsPerHour="324"/>
-    <flow id="flow54" type="car" route="r54" begin="0" end="300" vehsPerHour="755"/>
-    <flow id="flow55" type="car" route="r55" begin="0" end="300" vehsPerHour="324"/>
+    <flow id="flow0" type="car" route="r0" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow1" type="car" route="r1" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow2" type="car" route="r2" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow3" type="car" route="r3" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow4" type="car" route="r4" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow5" type="car" route="r5" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow6" type="car" route="r6" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow7" type="car" route="r7" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow8" type="car" route="r8" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow9" type="car" route="r9" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow10" type="car" route="r10" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow11" type="car" route="r11" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow12" type="car" route="r12" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow13" type="car" route="r13" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow14" type="car" route="r14" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow15" type="car" route="r15" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow16" type="car" route="r16" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow17" type="car" route="r17" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow18" type="car" route="r18" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow19" type="car" route="r19" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow20" type="car" route="r20" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow21" type="car" route="r21" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow22" type="car" route="r22" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow23" type="car" route="r23" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow24" type="car" route="r24" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow25" type="car" route="r25" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow26" type="car" route="r26" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow27" type="car" route="r27" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow28" type="car" route="r28" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow29" type="car" route="r29" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow30" type="car" route="r30" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow31" type="car" route="r31" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow32" type="car" route="r32" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow33" type="car" route="r33" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow34" type="car" route="r34" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow35" type="car" route="r35" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow36" type="car" route="r36" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow37" type="car" route="r37" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow38" type="car" route="r38" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow39" type="car" route="r39" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow40" type="car" route="r40" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow41" type="car" route="r41" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow42" type="car" route="r42" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow43" type="car" route="r43" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow44" type="car" route="r44" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow45" type="car" route="r45" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow46" type="car" route="r46" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow47" type="car" route="r47" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow48" type="car" route="r48" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow49" type="car" route="r49" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow50" type="car" route="r50" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow51" type="car" route="r51" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow52" type="car" route="r52" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow53" type="car" route="r53" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow54" type="car" route="r54" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow55" type="car" route="r55" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow56" type="car" route="r56" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow57" type="car" route="r57" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow58" type="car" route="r58" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow59" type="car" route="r59" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow60" type="car" route="r60" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow61" type="car" route="r61" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow62" type="car" route="r62" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow63" type="car" route="r63" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow64" type="car" route="r64" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow65" type="car" route="r65" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow66" type="car" route="r66" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow67" type="car" route="r67" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow68" type="car" route="r68" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow69" type="car" route="r69" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow70" type="car" route="r70" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow71" type="car" route="r71" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow72" type="car" route="r72" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow73" type="car" route="r73" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow74" type="car" route="r74" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow75" type="car" route="r75" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow76" type="car" route="r76" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow77" type="car" route="r77" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow78" type="car" route="r78" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow79" type="car" route="r79" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow80" type="car" route="r80" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow81" type="car" route="r81" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow82" type="car" route="r82" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow83" type="car" route="r83" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow84" type="car" route="r84" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow85" type="car" route="r85" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow86" type="car" route="r86" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow87" type="car" route="r87" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow88" type="car" route="r88" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow89" type="car" route="r89" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow90" type="car" route="r90" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow91" type="car" route="r91" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow92" type="car" route="r92" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow93" type="car" route="r93" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow94" type="car" route="r94" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow95" type="car" route="r95" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow96" type="car" route="r96" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow97" type="car" route="r97" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow98" type="car" route="r98" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow99" type="car" route="r99" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow100" type="car" route="r100" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow101" type="car" route="r101" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow102" type="car" route="r102" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow103" type="car" route="r103" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow104" type="car" route="r104" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow105" type="car" route="r105" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow106" type="car" route="r106" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow107" type="car" route="r107" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow108" type="car" route="r108" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow109" type="car" route="r109" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow110" type="car" route="r110" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow111" type="car" route="r111" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow112" type="car" route="r112" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow113" type="car" route="r113" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow114" type="car" route="r114" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow115" type="car" route="r115" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow116" type="car" route="r116" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow117" type="car" route="r117" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow118" type="car" route="r118" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow119" type="car" route="r119" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow120" type="car" route="r120" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow121" type="car" route="r121" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow122" type="car" route="r122" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow123" type="car" route="r123" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow124" type="car" route="r124" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow125" type="car" route="r125" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow126" type="car" route="r126" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow127" type="car" route="r127" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow128" type="car" route="r128" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow129" type="car" route="r129" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow130" type="car" route="r130" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow131" type="car" route="r131" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow132" type="car" route="r132" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow133" type="car" route="r133" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow134" type="car" route="r134" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow135" type="car" route="r135" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow136" type="car" route="r136" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow137" type="car" route="r137" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow138" type="car" route="r138" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow139" type="car" route="r139" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow140" type="car" route="r140" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow141" type="car" route="r141" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow142" type="car" route="r142" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow143" type="car" route="r143" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow144" type="car" route="r144" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow145" type="car" route="r145" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow146" type="car" route="r146" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow147" type="car" route="r147" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow148" type="car" route="r148" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow149" type="car" route="r149" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow150" type="car" route="r150" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow151" type="car" route="r151" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow152" type="car" route="r152" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow153" type="car" route="r153" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow154" type="car" route="r154" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow155" type="car" route="r155" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow156" type="car" route="r156" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow157" type="car" route="r157" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow158" type="car" route="r158" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow159" type="car" route="r159" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow160" type="car" route="r160" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow161" type="car" route="r161" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow162" type="car" route="r162" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow163" type="car" route="r163" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow164" type="car" route="r164" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow165" type="car" route="r165" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow166" type="car" route="r166" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow167" type="car" route="r167" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow168" type="car" route="r168" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow169" type="car" route="r169" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow170" type="car" route="r170" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow171" type="car" route="r171" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow172" type="car" route="r172" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow173" type="car" route="r173" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow174" type="car" route="r174" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow175" type="car" route="r175" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow176" type="car" route="r176" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow177" type="car" route="r177" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow178" type="car" route="r178" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow179" type="car" route="r179" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow180" type="car" route="r180" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow181" type="car" route="r181" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow182" type="car" route="r182" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow183" type="car" route="r183" begin="0" end="300" vehsPerHour="2450"/>
+    <flow id="flow184" type="car" route="r184" begin="0" end="300" vehsPerHour="1050"/>
+    <flow id="flow185" type="car" route="r185" begin="0" end="300" vehsPerHour="221"/>
+    <flow id="flow186" type="car" route="r186" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow187" type="car" route="r187" begin="0" end="300" vehsPerHour="20"/>
+    <flow id="flow188" type="car" route="r188" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow189" type="car" route="r189" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow190" type="car" route="r190" begin="0" end="300" vehsPerHour="6"/>
+    <flow id="flow191" type="car" route="r191" begin="0" end="300" vehsPerHour="66"/>
+    <flow id="flow192" type="car" route="r192" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow193" type="car" route="r193" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow194" type="car" route="r194" begin="0" end="300" vehsPerHour="735"/>
+    <flow id="flow195" type="car" route="r195" begin="0" end="300" vehsPerHour="1500"/>
+    <flow id="flow196" type="car" route="r196" begin="0" end="300" vehsPerHour="450"/>
+    <flow id="flow197" type="car" route="r197" begin="0" end="300" vehsPerHour="315"/>
+    <flow id="flow198" type="car" route="r198" begin="0" end="300" vehsPerHour="28"/>
+    <flow id="flow199" type="car" route="r199" begin="0" end="300" vehsPerHour="12"/>
+    <flow id="flow200" type="car" route="r200" begin="0" end="300" vehsPerHour="4"/>
+    <flow id="flow201" type="car" route="r201" begin="0" end="300" vehsPerHour="3"/>
+    <flow id="flow202" type="car" route="r202" begin="0" end="300" vehsPerHour="1"/>
+    <flow id="flow203" type="car" route="r203" begin="0" end="300" vehsPerHour="9"/>
+    <flow id="flow204" type="car" route="r204" begin="0" end="300" vehsPerHour="41"/>
+    <flow id="flow205" type="car" route="r205" begin="0" end="300" vehsPerHour="95"/>
+    <flow id="flow206" type="car" route="r206" begin="0" end="300" vehsPerHour="135"/>
+    <flow id="flow207" type="car" route="r207" begin="0" end="300" vehsPerHour="1050"/>
 </routes>
