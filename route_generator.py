@@ -4,8 +4,8 @@ import string
 # CONFIG
 # --------------------------------------------------
 
-numcols = 2
-numrows = 2
+numcols = 5
+numrows = 5
 
 # top/bottom go left -> right
 top_edges = ["E6", "E0"]
@@ -58,7 +58,7 @@ def store_route(edges, turns, moves):
     edge_string = " ".join(edges)
     routes.append(f'    <route id="r{route_id}" edges="{edge_string}"/>')
     if expected_cars != 0:
-        flows.append(f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="300" vehsPerHour="{expected_cars}"/>')
+        flows.append(f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="600" vehsPerHour="{expected_cars}"/>')
         flow_id += 1
     route_id += 1
 
