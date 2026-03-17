@@ -16,10 +16,12 @@ left_edges = ["left4","left3","left2","left1","left0"]
 right_edges = ["right4","right3","right2","right1","right0"]
 
 TRAFFIC = 40000
-ALPHA = 0.8
+ALPHA = 0.33
+BETA = ((1-ALPHA)/2)
+GAMMA = ((1-ALPHA)/2)
 
 TOTAL_EDGES = (numrows + numcols) * 2
-MAX_MOVES = numcols + numrows + 2
+MAX_MOVES = 3*(numcols + numrows + 2)
 
 column_ids = list(string.ascii_uppercase)
 
