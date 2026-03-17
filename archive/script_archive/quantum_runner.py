@@ -1,5 +1,5 @@
 import traci
-from quantum_tls import solve_tls_phases
+from archive.script_archive.quantum_tls import solve_tls_phases
 from collections import defaultdict
 
 SUMO_BINARY = "sumo"
