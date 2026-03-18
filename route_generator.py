@@ -14,9 +14,7 @@ bottom_edges = ["bottom0","bottom1","bottom2","bottom3","bottom4"]
 left_edges = ["left4","left3","left2","left1","left0"]
 right_edges = ["right4","right3","right2","right1","right0"]
 
-# number of simulated routes (controls density)
 NUM_SAMPLES = 1000
-
 TRAFFIC = 400000 / NUM_SAMPLES
 
 ALPHA = 0.7
@@ -25,7 +23,6 @@ GAMMA = (1-ALPHA)/2
 
 TOTAL_EDGES = (numrows + numcols) * 2
 MAX_MOVES = 50
-
 
 column_ids = list(string.ascii_uppercase)
 
@@ -54,6 +51,51 @@ def direction(px,py,x,y):
     if y<py: return "D"
 
 # --------------------------------------------------
+# LANE SELECTION LOGIC (KEY PART)
+# --------------------------------------------------
+def get_lane_from_first_turn(edges):
+    first = edges[0]
+    second = edges[1]
+
+    # helper to extract node
+    def split_edge(e):
+        mid = len(e)//2
+        return e[:mid], e[mid:]
+
+    start, mid = split_edge(first)
+    mid2, nxt = split_edge(second)
+
+    def parse(n):
+        x = column_ids.index(n[0])
+        y = int(n[1:])
+        return x,y
+
+    sx, sy = parse(start)
+    mx, my = parse(mid)
+    nx, ny = parse(nxt)
+
+    entry_dir = direction(sx, sy, mx, my)
+    move_dir = direction(mx, my, nx, ny)
+
+    # STRAIGHT
+    if entry_dir == move_dir:
+        return "1"
+
+    # TURN MAPPING
+    turn_map = {
+        ("U","L"): "0",
+        ("U","R"): "2",
+        ("D","R"): "0",
+        ("D","L"): "2",
+        ("L","D"): "0",
+        ("L","U"): "2",
+        ("R","U"): "0",
+        ("R","D"): "2",
+    }
+
+    return turn_map.get((entry_dir, move_dir), "1")
+
+# --------------------------------------------------
 # STORE ROUTE
 # --------------------------------------------------
 
@@ -76,8 +118,10 @@ def store_route(edges,turns,moves):
         f'    <route id="r{route_id}" edges="{edge_string}"/>'
     )
 
+    lane = get_lane_from_first_turn(edges)
+
     flows.append(
-        f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="600" vehsPerHour="{cars}" departLane="1"/>'
+        f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="600" vehsPerHour="{cars}" departLane="{lane}" departSpeed="max" departPos="base"/>'
     )
 
     route_id += 1
@@ -110,13 +154,11 @@ def random_route(start_edge, start_x, start_y, initial_dir):
 
         for nx, ny in neighbors:
 
-            # prevent U-turn
             if nx == px and ny == py:
                 continue
 
             step_dir = direction(x,y,nx,ny)
 
-            # assign probabilities
             if prev_dir is None or step_dir == prev_dir:
                 prob = ALPHA
             elif step_dir in ["L","R"] and prev_dir in ["U","D"]:
@@ -131,7 +173,6 @@ def random_route(start_edge, start_x, start_y, initial_dir):
         if not valid:
             return
 
-        # normalize probabilities
         total = sum(v[3] for v in valid)
         r = random.random() * total
 
@@ -141,7 +182,7 @@ def random_route(start_edge, start_x, start_y, initial_dir):
             if r <= cum:
                 break
 
-        # check exit
+        # exit conditions
         if nx < 0:
             idx = numrows-1-ny
             exit_node = left_edges[idx]
@@ -164,7 +205,6 @@ def random_route(start_edge, start_x, start_y, initial_dir):
             path.append(edge(node(x,y), exit_node))
             break
 
-        # normal move
         path.append(edge(node(x,y), node(nx,ny)))
 
         if prev_dir is not None and step_dir != prev_dir:
@@ -189,33 +229,21 @@ def generate():
 
         if side == "top":
             x = random.randint(0, numcols-1)
-            random_route(
-                edge(top_edges[x], node(x, numrows-1)),
-                x, numrows-1, "D"
-            )
+            random_route(edge(top_edges[x], node(x, numrows-1)), x, numrows-1, "D")
 
         elif side == "bottom":
             x = random.randint(0, numcols-1)
-            random_route(
-                edge(bottom_edges[x], node(x, 0)),
-                x, 0, "U"
-            )
+            random_route(edge(bottom_edges[x], node(x, 0)), x, 0, "U")
 
         elif side == "left":
             y = random.randint(0, numrows-1)
             idx = numrows-1-y
-            random_route(
-                edge(left_edges[idx], node(0,y)),
-                0, y, "R"
-            )
+            random_route(edge(left_edges[idx], node(0,y)), 0, y, "R")
 
         else:
             y = random.randint(0, numrows-1)
             idx = numrows-1-y
-            random_route(
-                edge(right_edges[idx], node(numcols-1,y)),
-                numcols-1, y, "L"
-            )
+            random_route(edge(right_edges[idx], node(numcols-1,y)), numcols-1, y, "L")
 
 generate()
 
@@ -226,12 +254,16 @@ generate()
 with open("routes.rou.xml","w") as f:
 
     f.write("<routes>\n\n")
-
+    
     f.write("""    <vType id="car"
-           accel="2.6"
-           decel="4.5"
-           maxSpeed="13.9"
-           length="5"/>\n\n""")
+       accel="2.6"
+       decel="4.5"
+       maxSpeed="13.9"
+       length="5"
+       lcStrategic="10"
+       lcCooperative="1.0"
+       lcSpeedGain="1.0"
+       lcKeepRight="0.0"/>\n\n""")
 
     f.write("    <!-- ROUTES -->\n\n")
 
