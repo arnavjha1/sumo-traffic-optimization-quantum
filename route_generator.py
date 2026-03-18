@@ -1,4 +1,5 @@
 import string
+import random
 
 # --------------------------------------------------
 # CONFIG
@@ -7,21 +8,24 @@ import string
 numcols = 5
 numrows = 5
 
-# top/bottom go left -> right
 top_edges = ["top0","top1","top2","top3","top4"]
 bottom_edges = ["bottom0","bottom1","bottom2","bottom3","bottom4"]
 
-# left/right go top -> bottom
 left_edges = ["left4","left3","left2","left1","left0"]
 right_edges = ["right4","right3","right2","right1","right0"]
 
-TRAFFIC = 40000
+# number of simulated routes (controls density)
+NUM_SAMPLES = 1000
+
+TRAFFIC = 400000 / NUM_SAMPLES
+
 ALPHA = 0.7
-BETA = ((1-ALPHA)/2)
-GAMMA = ((1-ALPHA)/2)
+BETA = (1-ALPHA)/2
+GAMMA = (1-ALPHA)/2
 
 TOTAL_EDGES = (numrows + numcols) * 2
-MAX_MOVES = 2*(numcols + numrows)
+MAX_MOVES = 50
+
 
 column_ids = list(string.ascii_uppercase)
 
@@ -30,7 +34,6 @@ flow_id = 0
 
 routes = []
 flows = []
-possible_routes = []
 
 # --------------------------------------------------
 # HELPERS
@@ -43,15 +46,12 @@ def edge(a,b):
     return f"{a}{b}"
 
 def direction(px,py,x,y):
-
     if px is None:
         return None
-
     if x>px: return "R"
     if x<px: return "L"
     if y>py: return "U"
     if y<py: return "D"
-
 
 # --------------------------------------------------
 # STORE ROUTE
@@ -59,14 +59,16 @@ def direction(px,py,x,y):
 
 def store_route(edges,turns,moves):
 
-    global route_id
-    global flow_id
+    global route_id, flow_id
 
     cars = round(
         (TRAFFIC / TOTAL_EDGES)
         * (ALPHA ** (moves-turns))
-        * (((1-ALPHA)/2) ** turns)
+        * (BETA ** turns)
     )
+
+    if cars <= 0:
+        return
 
     edge_string = " ".join(edges)
 
@@ -74,206 +76,151 @@ def store_route(edges,turns,moves):
         f'    <route id="r{route_id}" edges="{edge_string}"/>'
     )
 
-    if cars>0:
+    flows.append(
+        f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="600" vehsPerHour="{cars}" departLane="1"/>'
+    )
 
-        flows.append(
-            f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="600" vehsPerHour="{cars}"/>'
-        )
-
-        flow_id+=1
-
-    route_id+=1
-
+    route_id += 1
+    flow_id += 1
 
 # --------------------------------------------------
-# RECURSIVE ROUTE SEARCH
+# RANDOM WALK GENERATOR
 # --------------------------------------------------
 
-def recursive_route(x,y,px,py,prev_dir,moves,turns,path,forbidden_exit):
+def random_route(start_edge, start_x, start_y, initial_dir):
 
-    if moves>MAX_MOVES:
-        return
+    x, y = start_x, start_y
+    px, py = None, None
+    prev_dir = initial_dir
 
-    # add internal edge
-    if px is not None:
+    path = [start_edge]
+    moves = 0
+    turns = 0
 
-        path = path + [ edge(node(px,py),node(x,y)) ]
+    while moves < MAX_MOVES:
 
-    neighbors = [
-        (x+1,y),
-        (x-1,y),
-        (x,y+1),
-        (x,y-1)
-    ]
+        neighbors = [
+            (x+1,y),
+            (x-1,y),
+            (x,y+1),
+            (x,y-1)
+        ]
 
-    for nx,ny in neighbors:
+        valid = []
 
-        # prevent U turn
-        if nx==px and ny==py:
-            continue
+        for nx, ny in neighbors:
 
-        step_dir = direction(x,y,nx,ny)
+            # prevent U-turn
+            if nx == px and ny == py:
+                continue
 
-        new_turns = turns
-        if prev_dir is not None and step_dir!=prev_dir:
-            new_turns+=1
+            step_dir = direction(x,y,nx,ny)
 
-        new_moves = moves+1
+            # assign probabilities
+            if prev_dir is None or step_dir == prev_dir:
+                prob = ALPHA
+            elif step_dir in ["L","R"] and prev_dir in ["U","D"]:
+                prob = BETA
+            elif step_dir in ["U","D"] and prev_dir in ["L","R"]:
+                prob = GAMMA
+            else:
+                prob = BETA
 
-        # --------------------------------
-        # EXIT GRID
-        # --------------------------------
+            valid.append((nx, ny, step_dir, prob))
 
-        if nx<0:
+        if not valid:
+            return
 
+        # normalize probabilities
+        total = sum(v[3] for v in valid)
+        r = random.random() * total
+
+        cum = 0
+        for nx, ny, step_dir, prob in valid:
+            cum += prob
+            if r <= cum:
+                break
+
+        # check exit
+        if nx < 0:
             idx = numrows-1-ny
             exit_node = left_edges[idx]
+            path.append(edge(node(x,y), exit_node))
+            break
 
-            if exit_node!=forbidden_exit:
-
-                possible_routes.append(
-                    (path+[ edge(node(x,y),exit_node) ],new_moves,new_turns)
-                )
-
-        elif nx>=numcols:
-
+        elif nx >= numcols:
             idx = numrows-1-ny
             exit_node = right_edges[idx]
+            path.append(edge(node(x,y), exit_node))
+            break
 
-            if exit_node!=forbidden_exit:
-
-                possible_routes.append(
-                    (path+[ edge(node(x,y),exit_node) ],new_moves,new_turns)
-                )
-
-        elif ny<0:
-
+        elif ny < 0:
             exit_node = bottom_edges[nx]
+            path.append(edge(node(x,y), exit_node))
+            break
 
-            if exit_node!=forbidden_exit:
-
-                possible_routes.append(
-                    (path+[ edge(node(x,y),exit_node) ],new_moves,new_turns)
-                )
-
-        elif ny>=numrows:
-
+        elif ny >= numrows:
             exit_node = top_edges[nx]
+            path.append(edge(node(x,y), exit_node))
+            break
 
-            if exit_node!=forbidden_exit:
+        # normal move
+        path.append(edge(node(x,y), node(nx,ny)))
 
-                possible_routes.append(
-                    (path+[ edge(node(x,y),exit_node) ],new_moves,new_turns)
-                )
+        if prev_dir is not None and step_dir != prev_dir:
+            turns += 1
 
-        else:
+        px, py = x, y
+        x, y = nx, ny
+        prev_dir = step_dir
+        moves += 1
 
-            recursive_route(
-                nx,ny,
-                x,y,
-                step_dir,
-                new_moves,
-                new_turns,
-                path,
-                forbidden_exit
+    store_route(path, turns, moves)
+
+# --------------------------------------------------
+# GENERATE TRAFFIC
+# --------------------------------------------------
+
+def generate():
+
+    for _ in range(NUM_SAMPLES):
+
+        side = random.choice(["top","bottom","left","right"])
+
+        if side == "top":
+            x = random.randint(0, numcols-1)
+            random_route(
+                edge(top_edges[x], node(x, numrows-1)),
+                x, numrows-1, "D"
             )
 
+        elif side == "bottom":
+            x = random.randint(0, numcols-1)
+            random_route(
+                edge(bottom_edges[x], node(x, 0)),
+                x, 0, "U"
+            )
+
+        elif side == "left":
+            y = random.randint(0, numrows-1)
+            idx = numrows-1-y
+            random_route(
+                edge(left_edges[idx], node(0,y)),
+                0, y, "R"
+            )
+
+        else:
+            y = random.randint(0, numrows-1)
+            idx = numrows-1-y
+            random_route(
+                edge(right_edges[idx], node(numcols-1,y)),
+                numcols-1, y, "L"
+            )
+
+generate()
 
 # --------------------------------------------------
-# GENERATE ENTRY ROUTES
-# --------------------------------------------------
-
-# TOP
-
-for x in range(numcols):
-
-    start = top_edges[x]
-    start_edge = edge(start,node(x,numrows-1))
-
-    recursive_route(
-        x,
-        numrows-1,
-        None,
-        None,
-        "D",
-        0,
-        0,
-        [start_edge],
-        start
-    )
-
-# BOTTOM
-
-for x in range(numcols):
-
-    start = bottom_edges[x]
-    start_edge = edge(start,node(x,0))
-
-    recursive_route(
-        x,
-        0,
-        None,
-        None,
-        "U",
-        0,
-        0,
-        [start_edge],
-        start
-    )
-
-# LEFT
-
-for y in range(numrows):
-
-    idx = numrows-1-y
-    start = left_edges[idx]
-
-    start_edge = edge(start,node(0,y))
-
-    recursive_route(
-        0,
-        y,
-        None,
-        None,
-        "R",
-        0,
-        0,
-        [start_edge],
-        start
-    )
-
-# RIGHT
-
-for y in range(numrows):
-
-    idx = numrows-1-y
-    start = right_edges[idx]
-
-    start_edge = edge(start,node(numcols-1,y))
-
-    recursive_route(
-        numcols-1,
-        y,
-        None,
-        None,
-        "L",
-        0,
-        0,
-        [start_edge],
-        start
-    )
-
-
-# --------------------------------------------------
-# STORE ROUTES
-# --------------------------------------------------
-
-for edges,moves,turns in possible_routes:
-    store_route(edges,turns,moves)
-
-
-# --------------------------------------------------
-# WRITE ROUTE FILE
+# WRITE FILE
 # --------------------------------------------------
 
 with open("routes.rou.xml","w") as f:

@@ -1997,42 +1997,44 @@
     </edge>
 
     <tlLogic id="A0" type="static" programID="0" offset="0">
-        <phase duration="33" state="GGGgrrrrGGGgrrrr"/>
-        <phase duration="3"  state="yyygrrrryyygrrrr"/>
-        <phase duration="6"  state="rrrGrrrrrrrGrrrr"/>
-        <phase duration="3"  state="rrryrrrrrrryrrrr"/>
-        <phase duration="33" state="rrrrGGGgrrrrGGGg"/>
-        <phase duration="3"  state="rrrryyygrrrryyyg"/>
-        <phase duration="6"  state="rrrrrrrGrrrrrrrG"/>
-        <phase duration="3"  state="rrrrrrryrrrrrrry"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="A1" type="static" programID="0" offset="0">
-        <phase duration="33" state="GGGgrrrrGGGgrrrr"/>
-        <phase duration="3"  state="yyygrrrryyygrrrr"/>
-        <phase duration="6"  state="rrrGrrrrrrrGrrrr"/>
-        <phase duration="3"  state="rrryrrrrrrryrrrr"/>
-        <phase duration="33" state="rrrrGGGgrrrrGGGg"/>
-        <phase duration="3"  state="rrrryyygrrrryyyg"/>
-        <phase duration="6"  state="rrrrrrrGrrrrrrrG"/>
-        <phase duration="3"  state="rrrrrrryrrrrrrry"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="A2" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="A3" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="A4" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="B0" type="static" programID="0" offset="0">
         <phase duration="33" state="GGGgrrrrGGGgrrrr"/>
@@ -2045,122 +2047,156 @@
         <phase duration="3"  state="rrrrrrryrrrrrrry"/>
     </tlLogic>
     <tlLogic id="B1" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="B2" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="B3" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="B4" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="C0" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="C1" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="C2" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="C3" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="C4" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="D0" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="D1" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="D2" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="D3" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="D4" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="E0" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="E1" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="E2" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="E3" type="static" programID="0" offset="0">
-        <phase duration="42" state="GGGGggrrrrrrGGGGggrrrrrr"/>
-        <phase duration="3"  state="yyyyyyrrrrrryyyyyyrrrrrr"/>
-        <phase duration="42" state="rrrrrrGGGGggrrrrrrGGGGgg"/>
-        <phase duration="3"  state="rrrrrryyyyyyrrrrrryyyyyy"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
     <tlLogic id="E4" type="static" programID="0" offset="0">
-        <phase duration="33" state="GGGgrrrrGGGgrrrr"/>
-        <phase duration="3"  state="yyygrrrryyygrrrr"/>
-        <phase duration="6"  state="rrrGrrrrrrrGrrrr"/>
-        <phase duration="3"  state="rrryrrrrrrryrrrr"/>
-        <phase duration="33" state="rrrrGGGgrrrrGGGg"/>
-        <phase duration="3"  state="rrrryyygrrrryyyg"/>
-        <phase duration="6"  state="rrrrrrrGrrrrrrrG"/>
-        <phase duration="3"  state="rrrrrrryrrrrrrry"/>
+        <phase duration="55" state="GGGggrrrGGGggrrr"/>
+        <phase duration="4"  state="yyyggrrryyyggrrr"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
+        <phase duration="55" state="grrrGGGggrrrGGGg"/>
+        <phase duration="4"  state="grrryyyggrrryyyg"/>
+        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
     </tlLogic>
 
     <junction id="A0" type="traffic_light" x="200.00" y="200.00" incLanes="A1A0_0 A1A0_1 A1A0_2 B0A0_0 B0A0_1 B0A0_2 bottom0A0_0 bottom0A0_1 bottom0A0_2 left0A0_0 left0A0_1 left0A0_2" intLanes=":A0_0_0 :A0_1_0 :A0_1_1 :A0_16_0 :A0_4_0 :A0_5_0 :A0_5_1 :A0_17_0 :A0_8_0 :A0_9_0 :A0_9_1 :A0_18_0 :A0_12_0 :A0_13_0 :A0_13_1 :A0_19_0" shape="190.40,213.60 209.60,213.60 210.04,211.38 210.60,210.60 211.38,210.04 212.38,209.71 213.60,209.60 213.60,190.40 211.38,189.96 210.60,189.40 210.04,188.62 209.71,187.62 209.60,186.40 190.40,186.40 189.96,188.62 189.40,189.40 188.62,189.96 187.62,190.29 186.40,190.40 186.40,209.60 188.62,210.04 189.40,210.60 189.96,211.38 190.29,212.38">
