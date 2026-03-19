@@ -54,34 +54,67 @@ def direction(px,py,x,y):
 # LANE SELECTION LOGIC (KEY PART)
 # --------------------------------------------------
 def get_lane_from_first_turn(edges):
+
+    if len(edges) < 2:
+        return None
+
     first = edges[0]
     second = edges[1]
 
-    # helper to extract node
-    def split_edge(e):
-        mid = len(e)//2
-        return e[:mid], e[mid:]
+    # -----------------------------
+    # ENTRY DIRECTION (from edge name)
+    # -----------------------------
+    if first.startswith("top"):
+        entry_dir = "D"
+    elif first.startswith("bottom"):
+        entry_dir = "U"
+    elif first.startswith("left"):
+        entry_dir = "R"
+    elif first.startswith("right"):
+        entry_dir = "L"
+    else:
+        return None
 
-    start, mid = split_edge(first)
-    mid2, nxt = split_edge(second)
+    # -----------------------------
+    # EXTRACT GRID NODES
+    # -----------------------------
+    # first edge: "... -> A0"
+    # find first capital letter = start of grid node
+    idx = next(i for i, c in enumerate(first) if c.isupper())
+    mid = first[idx:]   # e.g. "A0"
 
+    # second edge: "A0B0"
+    mid2 = second[:len(second)//2]
+    nxt  = second[len(second)//2:]
+
+    if mid != mid2:
+        return None
+
+    # -----------------------------
+    # PARSE GRID NODES ONLY
+    # -----------------------------
     def parse(n):
-        x = column_ids.index(n[0])
-        y = int(n[1:])
-        return x,y
+        if n[0] not in column_ids:
+            return None
+        return column_ids.index(n[0]), int(n[1:])
 
-    sx, sy = parse(start)
-    mx, my = parse(mid)
-    nx, ny = parse(nxt)
+    m = parse(mid)
+    n = parse(nxt)
 
-    entry_dir = direction(sx, sy, mx, my)
+    if m is None or n is None:
+        return None
+
+    mx, my = m
+    nx, ny = n
+
     move_dir = direction(mx, my, nx, ny)
 
-    # STRAIGHT
-    if entry_dir == move_dir:
-        return "1"
+    # -----------------------------
+    # LANE LOGIC
+    # -----------------------------
+    if move_dir == entry_dir:
+        return "1"  # straight
 
-    # TURN MAPPING
     turn_map = {
         ("U","L"): "0",
         ("U","R"): "2",
@@ -118,7 +151,12 @@ def store_route(edges,turns,moves):
         f'    <route id="r{route_id}" edges="{edge_string}"/>'
     )
 
-    lane = get_lane_from_first_turn(edges)
+   #lane = get_lane_from_first_turn(edges)
+
+   #if lane not in ["0", "1", "2"]:
+   #    lane = "best"
+    
+    lane = "1"
 
     flows.append(
         f'    <flow id="flow{flow_id}" type="car" route="r{route_id}" begin="0" end="600" vehsPerHour="{cars}" departLane="{lane}" departSpeed="max" departPos="base"/>'
@@ -259,11 +297,7 @@ with open("routes.rou.xml","w") as f:
        accel="2.6"
        decel="4.5"
        maxSpeed="13.9"
-       length="5"
-       lcStrategic="10"
-       lcCooperative="1.0"
-       lcSpeedGain="1.0"
-       lcKeepRight="0.0"/>\n\n""")
+       length="5"/>\n\n""")
 
     f.write("    <!-- ROUTES -->\n\n")
 
