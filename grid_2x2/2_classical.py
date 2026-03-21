@@ -1,7 +1,7 @@
 import traci
 from collections import defaultdict
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2.sumocfg"
 END_TIME = 600
 
@@ -207,6 +207,7 @@ def optimize_x_i(tls_index, bias_i):
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
+MIN_CHANGE_TIME = 12  # Minimum time to wait before allowing another change
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -233,7 +234,7 @@ while traci.simulation.getTime() < END_TIME:
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 16 and x_i[tIndex.index(tls)][-1] == -1):
+            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME and x_i[tIndex.index(tls)][-1] == -1):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -248,7 +249,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 76 and x_i[tIndex.index(tls)][-1] == 1):
+            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME+60 and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -277,7 +278,7 @@ while traci.simulation.getTime() < END_TIME:
         
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= 16 and x_i[tIndex.index(tls)][-1] == 1):
+            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 55
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -292,7 +293,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= 76 and x_i[tIndex.index(tls)][-1] == -1):
+            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME+60 and x_i[tIndex.index(tls)][-1] == -1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -339,6 +340,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
+print("\nCLASSICAL")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
