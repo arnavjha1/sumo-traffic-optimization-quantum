@@ -207,7 +207,7 @@ def optimize_x_i(tls_index, bias_i):
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-MIN_CHANGE_TIME = 12  # Minimum time to wait before allowing another change
+MIN_CHANGE_TIME = 16  # Minimum time to wait before allowing another change
 
 while traci.simulation.getTime() < END_TIME:
 
