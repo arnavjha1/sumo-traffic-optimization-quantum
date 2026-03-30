@@ -1,0 +1,499 @@
+commit cb79044c5390086b5f888836ba358653e8cdf62c
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Mon Mar 23 22:34:05 2026 -0700
+
+    add graphs in matplotlib
+
+commit bcfed502c25cc0c99f81058dfea6f4252c782cc7
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Mon Mar 23 18:59:42 2026 -0700
+
+    working throughput graph
+
+commit 9979da8b5adb7d7b05e7472dcd636542fd08dab3
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Mar 21 23:29:53 2026 -0700
+
+    revert back to abstract version of classical
+
+commit 41bf71f904555b9569546a79aff52ee0f267fab0
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Mar 21 22:32:08 2026 -0700
+
+    log book information
+
+commit 4821c4c9e992b184ea45569540123c662fb6616e
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Mar 21 11:08:07 2026 -0700
+
+    Final version of project
+
+commit 65c7a93ef94e4e8aad24dc69097d3b4aae052159
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Mar 18 18:23:42 2026 -0700
+
+    quantum annealer working, implementing with bias
+
+commit 8ed165bd612294e038d3bd10268a3e82e8f948fb
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Mar 18 17:36:31 2026 -0700
+
+    switching back to 2x2 grid for quantum, 5x5 grid is giving a lot of issues
+
+commit da5b5b25e96bf9f54736f2a6407d45e56aaf4248
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Mar 18 13:04:37 2026 -0700
+
+    update connections to be more clean + trying to fix ghost connection issues
+
+commit fa00da7cf5c2ac7d2b78b84303b56d588fc5a6bb
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Mar 18 12:05:58 2026 -0700
+
+    buggy fixes for two lane straight, going to make it back into one lane straight
+
+commit 7ecda619b0d8efa49188d50ff07eb231d88b4230
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Mon Mar 16 20:21:09 2026 -0700
+
+    update structure of the repository to allow back and forth between 2x2 and 5x5
+
+commit 925993215e86c1dc0896bc0d8115d3bc8e26b73d
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Mon Mar 16 17:00:06 2026 -0700
+
+    add more recursion to change probability bugs
+
+commit dc7be221e62e516271a3b77e9aa6212b97b6fa66
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Mar 11 16:07:24 2026 -0700
+
+    scaled things up to a 5x5 grid, working for fixed tls, but routing seems inaccurate
+
+commit fdd099eaca3a740f83ffb4a4edc91ac8dc95164e
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Mar 10 17:01:50 2026 -0700
+
+    route generator updates
+
+commit fb145ea110db560eab904457d619b0b98c0eec23
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Mar 10 16:55:38 2026 -0700
+
+    route generator
+
+commit cb883b0079b04f130fa6ffb0cfd0ae1df66a212e
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Mar 8 12:32:27 2026 -0700
+
+    automatic route generator -> overloading traffic signals so its not working
+
+commit 1d041ad1c2d0db79a9984990d61e49c5ecb2bee5
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Thu Mar 5 17:43:58 2026 -0800
+
+    add basic route generator -> need to work on this
+
+commit 3d42102e82cbf4a57e46618d8a1f42d459e9187f
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Mar 4 16:05:14 2026 -0800
+
+    OCEAN CLASSICAL MODEL WORKING - although very laggy
+
+commit 31d9f9e053664e8834ddacc56f8fe7163ee6dec4
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Mar 3 17:35:58 2026 -0800
+
+    tried out using optimizable constants, which didn't work, so reverted
+
+commit a61a7a760431c4627932acc79eedad65f3f85289
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Mar 1 11:52:35 2026 -0800
+
+    fix not including pressure in ocean scripts
+
+commit 0d76e6a63600c10c2cf936688c98129530d346c7
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Mar 1 11:45:03 2026 -0800
+
+    Use ocean classical solver since quantum computers require paid access
+
+commit 52c821cde6f2847631bfc3063c2d3e5752ed47d2
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Mar 1 10:53:44 2026 -0800
+
+    First prototype of the QUBO solver from Ocean -> still issues
+
+commit 6bb8bab37231180d496ca67669319ae9757f0e23
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Mar 1 10:51:06 2026 -0800
+
+    Restructure the file contents and add basic quantum scripts -> hopefully link ocean
+
+commit b4cf5715fd193ff99e2b0c125a1c1d832dcd6513
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Feb 28 14:14:16 2026 -0800
+
+    the left turn stopping reduced throughput by a lot, so reverting that
+
+commit e93aacc73b0585f7c01740e5536b9d46439e67f1
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 27 22:37:45 2026 -0800
+
+    update to order
+
+commit befeb4737d8be24ad1f80c1ad61999d61f1b167d
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 27 22:21:06 2026 -0800
+
+    add coupling logic to classical control
+
+commit b768fb215862944ee48a64f1b2c08bec97f1975d
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Feb 24 18:11:55 2026 -0800
+
+    update to routes
+
+commit a4a211857da4c047b431ef7d957aa3b5c951ec12
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Feb 24 17:36:58 2026 -0800
+
+    Start - 2/24
+
+commit f8715ddacb894b59162b77c44eb745e5eb6cdb7b
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 22 12:55:36 2026 -0800
+
+    fine tune min time
+
+commit f52dc11bd0296ec2f8947853a5d0d8fe345d074c
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 22 11:38:11 2026 -0800
+
+    minimum discharge time 23 -> 15, throughput 915 -> 930
+
+commit 81f2d9d9b82cdedca69bd897c53422c421cff472
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 22 11:31:55 2026 -0800
+
+    last change with energy method - likely will have to switch back to old model since throughput was better
+
+commit 65c962b41e61a27a83ea9d2baf0b7b137782685c
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Feb 21 13:02:35 2026 -0800
+
+    optimization based on energy - still low 801 throughput
+
+commit 5736e3a1d6e3d6b6df5f14211958cf1ee1ad1ee4
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Feb 21 12:53:36 2026 -0800
+
+    making energy function, so far failing, throughput 922 -> 809
+
+commit ff905335f142411d7a3553cb4a14996a95ed88ac
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Feb 21 12:16:23 2026 -0800
+
+    revert + trying left turn at beginning, fail: tp 922 -> 896
+
+commit 500f670d4dd67be17a79539eba10f420220a0349
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Feb 21 12:03:41 2026 -0800
+
+    buggy left turn algorithm
+
+commit 34e554ae95fd2f38193915ce07b9e9baa50a8514
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 20 22:54:01 2026 -0800
+
+    try to make higher left turn weightage
+
+commit d06ab43264a5a3b95d9384d1bda80d8b1a41c124
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 20 22:15:50 2026 -0800
+
+    updates to algorithm
+
+commit 0aba78200bc596da1e13cd247cb668a33a445324
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 20 18:03:10 2026 -0800
+
+    implementation of an optimization function for x_i, throughput 917 -> 922
+
+commit 041569553c6a86c39bd6ea47f594d7c282f2cd96
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Thu Feb 19 20:12:15 2026 -0800
+
+    basic classical algorithm implemented - more efficient than fixed and queue so far but still some things we could improve
+
+commit a434f5fe01b97d57b4e6f643060e9f66ee45e47e
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Thu Feb 19 18:43:40 2026 -0800
+
+    update fixed tls to use the updated queue tls metric tracking
+
+commit 390a2c132433fef71f7c27738ba5989516346c82
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Feb 18 16:25:10 2026 -0800
+
+    mostly working queue based algorithm (could use some improvements)
+
+commit 57eaf7a07ae7f4588aff89812b8164fd8a50f783
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Feb 18 14:43:06 2026 -0800
+
+    updated starting code - start 2/18
+
+commit 8cfcd76dcee5d088fc5bc6fdca5b0a4d48cf3068
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Feb 17 19:29:43 2026 -0800
+
+    queue code somewhat working but still a little buggy
+
+commit aaf7361376a516e0d8e0e9e6ea0e7e35dbb54aa4
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Tue Feb 17 16:49:35 2026 -0800
+
+    Queue algorithm updates
+
+commit 1de616db86d0ea549b5522af7c0bdb13fbf40f57
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 15 12:22:54 2026 -0800
+
+    Queue algorithm (bugged) - but with updated queue array
+
+commit 300fe9ecd86d910260fdaef66feec066a0852abb
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 15 10:18:10 2026 -0800
+
+    test phase changes for queue alg - protected left
+
+commit 1835bbf07a80184f9d0d8adf2846e9430ad67f5d
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 15 10:02:59 2026 -0800
+
+    update fixed and queue algorithms to report the queue length per length
+
+commit 4cab75b04b7812b64b6c211b240538c1961908a9
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 13 12:16:56 2026 -0800
+
+    UPDATE: probability and consistency
+
+commit 86958a5bfe898f67bd90346513aac0aaca5ce54f
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 13 10:16:01 2026 -0800
+
+    update 2x2 to a 3 lane system
+
+commit f1ebd3316486568a4504f0bd8d92dc051bf38356
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Feb 13 10:02:19 2026 -0800
+
+    updates to grid
+
+commit b40c19e6d3f22989a18b4e9a734052e92d17a864
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Thu Feb 12 18:21:37 2026 -0800
+
+    add more flow tags
+
+commit ae5f0eb7491f83d2859278a7dadf25e749d6fbe0
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 8 14:58:23 2026 -0800
+
+    puesdo probability implemented, now fairly even traffic
+
+commit e9c1fcd5aff13a61b600255b59e3a84c742006ac
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 8 12:49:57 2026 -0800
+
+    updates to revert back to 2/6
+
+commit 2c00f1c431fad3a70c85935deb0381c74bdfecc1
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 8 10:49:47 2026 -0800
+
+    updates to routes + added rerouter -> not working
+
+commit 90d9e041bf8284bbc58945ec04beec78eb21a2dd
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Feb 7 23:17:13 2026 -0800
+
+    add quantum runner
+
+commit 66803f30b8365d5fbda9cf8d0e2916bc425b40b3
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Wed Feb 4 14:19:18 2026 -0800
+
+    updates to the 2x2 grid gui
+
+commit ce7ce518dd932ac141bdee43f6a7fe0a9bf94744
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 1 13:01:39 2026 -0800
+
+    revert to regular 2-lane grid
+
+commit d8f709816efdb8d8bcae072600bca7ff5264a500
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 1 12:31:35 2026 -0800
+
+    basic ocean sdk implementation
+
+commit e377a3029db4276c20b9e4f43926cc7b8459c13a
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 1 11:55:14 2026 -0800
+
+    test dwave ocean linking
+
+commit c4437161d74412239eb778a81342576e9b9ef8b3
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 1 11:50:00 2026 -0800
+
+    tried to fix traci with new lane configurations, but its not working
+
+commit 830bfa186fff92a23b8a58617e1cd29b7d241a5f
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 1 10:37:36 2026 -0800
+
+    now left lane only turns left, but fixed tls is bugged
+
+commit c9e74b8ae2b9ec49f9a9641955644061c3149957
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Feb 1 10:27:52 2026 -0800
+
+    update to queue times
+
+commit 33add5eed92b234db35d75b0a3e6afa8ec26aab5
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 31 13:12:42 2026 -0800
+
+    code up basic queue based algorithm
+
+commit a49261400f3c210a1aa21f6a7b48f0727ff00f2b
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 31 11:16:01 2026 -0800
+
+    update to 2x2 grid
+
+commit 1bed05df3aac66c5fe5603adba8aa8387d52fbd8
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Jan 25 11:59:47 2026 -0800
+
+    test quantum python file
+
+commit 2bf93937ca0b5eda02ad568254591c1953ddc3c0
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Jan 25 00:43:43 2026 -0800
+
+    Made a feasible way to collect data for algorithms
+
+commit 38e418a96e03a49dceeed1a0616f275650ac86d4
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Jan 25 00:03:32 2026 -0800
+
+    timer based algorithm completely working with 2x2 grid
+
+commit 56b8fa99f8dd62dc5e0f5482bc59b4ece9c4e5db
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 23:57:20 2026 -0800
+
+    update sumo to not use the default time-based algorithm so we can implement our own using traci
+
+commit 46925bfadbdbcd2c560c532c1d53cb442f39af7c
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 23:09:12 2026 -0800
+
+    simulation working with a 2x2 grid - no probabilities currently
+
+commit bcac827b77c0156d67cb4bffc29cf25e58c59876
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 22:59:25 2026 -0800
+
+    update routes to not have one flow but be probability based, like we defined for variables
+
+commit 7b69ca1047d0e9395e5d5009e3341b1d7b80be4a
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 22:34:18 2026 -0800
+
+    editing route config
+
+commit aafafd454a551c602736f1be5ac39293c589fe2b
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 22:27:02 2026 -0800
+
+    updates to traci 2x2
+
+commit 8138ad1558a482f2c6dcc0e8df8596b284d82d83
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 21:42:33 2026 -0800
+
+    traffic signals on for a 2x2 grid
+
+commit 82cc09d955b69ea6c8057a94e51f91bd51493fc1
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 24 20:49:13 2026 -0800
+
+    update 1/24
+
+commit 6cc96eb86bba39852cc248e2a1b0ec92777c91f7
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Jan 18 16:58:59 2026 -0800
+
+    updates to try and fix traci with traffic lights
+
+commit 24202fef957ce44b5ad7fa59b34a22772c29ea8e
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sun Jan 18 10:20:47 2026 -0800
+
+    TRAFFIC SIGNALS FINALLY SHOWING
+
+commit 7edd18fba8d6f8a011c36478c4d64f31b39ca8a4
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 17 23:13:28 2026 -0800
+
+    buggy 2500 traffic junctions
+
+commit 252083bfe265695adc3f78b563f2227e02a90bd2
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 17 22:49:31 2026 -0800
+
+    two traffic signals template
+
+commit 8791cddc95ecc78d93e58d892afaac339f68856f
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 17 22:40:55 2026 -0800
+
+    revert changes to traffic light test configurations -> to 1/16
+
+commit 4a2c025d895732cba43a61dab3d2b3cd783924c0
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Sat Jan 17 22:33:51 2026 -0800
+
+    further work debugging TraCl python - unsuccessful
+
+commit 0c3889e7a4baa6b0ddd4702c78a6708597fe778e
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Jan 16 20:23:04 2026 -0800
+
+    Basic TraCl implemented + debugging needed
+
+commit 15975e267283b4bc281c9df7bf2c194c087e2319
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Fri Jan 16 19:32:01 2026 -0800
+
+    50 x 50 grid working with SUMO random alg
+
+commit 1b44c13284713ec6c18894ac44792e1c344b9d29
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Thu Jan 15 21:21:08 2026 -0800
+
+    Add current work from b4 1/15
+
+commit 6bd778dfc0f493f9c6ddea05259c2ae9e93968b7
+Author: Arnav Jha <overrideeducation@gmail.com>
+Date:   Thu Jan 15 21:18:10 2026 -0800
+
+    Initialize README with project title and description
+    
+    Added project title and brief description to README.
