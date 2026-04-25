@@ -15,8 +15,8 @@ SUMO_BINARY = "sumo"  # or "sumo"
 
 sumo_cmd = [
     SUMO_BINARY,
-    "-n", "grid5x5_tls.net.xml",
-    "-r", "routes.rou.xml"
+    "-n", "grid_5x5/grid5x5_tls.net.xml",
+    "-r", "grid_5x5/routes.rou.xml"
 ]
 
 traci.start(sumo_cmd)
@@ -32,45 +32,41 @@ def choose_direction():
     else:
         return "RIGHT"
 
+import random
 
-# ---- main loop ----
 while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
 
     for vid in traci.vehicle.getIDList():
 
-        edge = traci.vehicle.getRoadID(vid)
-
-        # only act at intersections (edges ending in nodes like A0, B1 etc)
-        possible_edges = traci.vehicle.getNextStops(vid)
-
-        # better: use junction logic
         current_edge = traci.vehicle.getRoadID(vid)
 
-        # if vehicle is at a junction decision point
-        if ":" in current_edge:  # SUMO junction edges often contain ':'
+        # skip if not on a normal edge
+        if ":" in current_edge:
             continue
 
-        # get outgoing edges from current lane
-        allowed = traci.vehicle.getAllowedLinks(vid)
-
-        # fallback: use network structure instead
+        # get outgoing edges from current edge
         next_edges = traci.edge.getOutgoing(current_edge)
 
         if not next_edges:
             continue
 
-        choice = choose_direction()
+        # enforce minimum structure assumption
+        if len(next_edges) < 3:
+            continue  # skip weird junctions for now
 
-        # pick edges
-        if choice == "STRAIGHT":
-            target = next_edges[0]
-        elif choice == "LEFT":
-            target = next_edges[min(1, len(next_edges)-1)]
+        # 60/20/20 decision
+        r = random.random()
+
+        if r < 0.6:
+            target = next_edges[0]      # straight (assumed)
+        elif r < 0.8:
+            target = next_edges[1]      # left (assumed)
         else:
-            target = next_edges[-1]
+            target = next_edges[2]      # right (assumed)
 
-        traci.vehicle.setRoute(vid, [current_edge, target])
+        # force movement
+        traci.vehicle.changeTarget(vid, target)
 
 
 traci.close()
