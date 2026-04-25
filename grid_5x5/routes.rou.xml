@@ -1,33 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!-- generated on 2026-04-23T22:14:20.943857-08:00 by Eclipse SUMO duarouter 1.25.0
-<duarouterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
-
-    <input>
-        <net-file value="grid_5x5/grid5x5_tls.net.xml"/>
-        <route-files value="grid_5x5/trips.trips.xml"/>
-    </input>
-
-    <output>
-        <output-file value="grid_5x5/routes.rou.xml"/>
-    </output>
-
-</duarouterConfiguration>
--->
-
 <routes>
     <!-- Vehicle type -->
     <vType id="car"
            accel="2.6"
            decel="4.5"
            maxSpeed="13.9"
-           length="5"/>
-           
-    <routeDistribution id="testProb" probabilities="0.6 0.2 0.2">
-        <route edges="bottom0A0 A0A1 A1A2 A2A3"/>
-        <route edges="bottom0A0 A0B0 B0B1 B1B2"/>
-        <route edges="bottom0A0 A0A1 A1B1 B1C1"/>
-    </routeDistribution>
+           length="5">
+        <!-- THIS enables random decisions -->
+        <param key="has.rerouting.device" value="true"/>
+    </vType>
 
-    <flow id="flow0" type="car" route="testProb" begin="0" end="600" vehsPerHour="1666"/>
+    <!-- Flow with NO destination -->
+    <flow id="flow0"
+          type="car"
+          begin="0"
+          end="600"
+          vehsPerHour="600"
+          from="bottom0A0"/>
 </routes>

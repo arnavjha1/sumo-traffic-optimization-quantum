@@ -1,0 +1,12 @@
+<configuration>
+    <input>
+        <net-file value="grid_5x5/grid5x5_tls.net.xml"/>
+        <route-files value="grid_5x5/routes.rou.xml"/>
+        <turn-ratios value="grid_5x5/turns.xml"/>
+    </input>
+
+    <routing>
+        <device.rerouting.probability value="1"/>
+        <device.rerouting.period value="1"/>
+    </routing>
+</configuration>
