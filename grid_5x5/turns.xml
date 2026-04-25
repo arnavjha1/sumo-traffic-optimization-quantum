@@ -1,8 +1,0 @@
-<turns>
-    <interval begin="0" end="3600">
-        <!-- From bottom0A0 intersection -->
-        <edgeRelation from="bottom0A0" to="A0A1" probability="0.6"/>
-        <edgeRelation from="bottom0A0" to="A0B0" probability="0.2"/>
-        <edgeRelation from="bottom0A0" to="A0C0" probability="0.2"/>
-    </interval>
-</turns>

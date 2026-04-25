@@ -1,19 +1,10 @@
 <routes>
-    <!-- Vehicle type -->
-    <vType id="car"
-           accel="2.6"
-           decel="4.5"
-           maxSpeed="13.9"
-           length="5">
-        <!-- THIS enables random decisions -->
-        <param key="has.rerouting.device" value="true"/>
-    </vType>
+    <vType id="car" maxSpeed="13.9" length="5"/>
 
-    <!-- Flow with NO destination -->
     <flow id="flow0"
           type="car"
           begin="0"
-          end="600"
+          end="3600"
           vehsPerHour="600"
           from="bottom0A0"/>
 </routes>
