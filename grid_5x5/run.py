@@ -69,6 +69,8 @@ def get_next_edges_with_dirs(vid):
     lane_id = traci.vehicle.getLaneID(vid)
     links = traci.lane.getLinks(lane_id)
 
+    print("RAW LINKS:", links)
+
     classified = {"straight": [], "left": [], "right": []}
 
     for link in links:
