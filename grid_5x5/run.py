@@ -43,30 +43,28 @@ while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
 
     for vid in traci.vehicle.getIDList():
+
         lane_id = traci.vehicle.getLaneID(vid)
 
-        # skip internal lanes (junctions)
         if lane_id.startswith(":"):
             continue
 
         edge = traci.vehicle.getRoadID(vid)
+        num_lanes = traci.edge.getLaneNumber(edge)
 
-        # only decide when entering a NEW edge
         if vid not in last_edge or last_edge[vid] != edge:
+
             direction = choose_direction()
             target_lane = LANE_MAP[direction]
 
-            best_lanes = traci.vehicle.getBestLanes(vid)
+            # clamp safely
+            target_lane = max(0, min(target_lane, num_lanes - 1))
 
-            allowed_lanes = [lane[0].split("_")[-1] for lane in best_lanes]
-            allowed_lanes = [int(l) for l in allowed_lanes if l.isdigit()]
-
-            print("Chosen:", target_lane)
-            print("Allowed:", allowed_lanes)
-
-            if target_lane in allowed_lanes:
+            try:
                 traci.vehicle.changeLane(vid, target_lane, 100)
-        
+            except:
+                pass
+
         last_edge[vid] = edge
 
 traci.close()
