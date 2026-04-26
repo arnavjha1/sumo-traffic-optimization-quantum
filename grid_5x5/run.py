@@ -12,7 +12,7 @@ else:
     sys.exit("SUMO_HOME not set")
 
 sumo_cmd = [
-    "sumo",
+    "sumo-gui",
     "-n", "grid_5x5/grid5x5_tls.net.xml",
     "-r", "grid_5x5/routes.rou.xml",
     "--step-length", "1"
@@ -64,9 +64,20 @@ PROBS = {
     "left": 0.2,
     "right": 0.2
 }
-def get_next_edges(edge_id):
-    links = traci.edge.getOutgoingLinks(edge_id)
-    return [l[0] for l in links if l[0] != ""]
+
+def get_next_edges(vid):
+    lane_id = traci.vehicle.getLaneID(vid)
+    
+    links = traci.lane.getLinks(lane_id)
+    
+    # each link = (lane, via, priority, open, foe, state, direction, length)
+    next_edges = []
+    for link in links:
+        next_lane = link[0]
+        next_edge = next_lane.split("_")[0]  # remove lane index
+        next_edges.append(next_edge)
+
+    return list(set(next_edges))  # remove duplicates
 
 while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
@@ -74,8 +85,8 @@ while traci.simulation.getMinExpectedNumber() > 0:
     for vid in traci.vehicle.getIDList():
         edge = traci.vehicle.getRoadID(vid)
 
-        next_edges = get_next_edges(edge)
-        next_edges = [e[0] for e in next_edges if e[0] != ""]
+        next_edges = get_next_edges(vid)
+        next_edges = [e for e in next_edges if e != ""]
 
         if not next_edges:
             continue
