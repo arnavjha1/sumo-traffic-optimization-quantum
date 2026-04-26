@@ -21,9 +21,6 @@ PROBS = {
 
 last_edge = {}
 
-DEBUG = True  # turn off if too noisy
-
-
 def pick_weighted(edges):
     if not edges:
         return None
@@ -50,15 +47,15 @@ while traci.simulation.getMinExpectedNumber() > 0:
 
         # only decide when entering new edge
         if vid not in last_edge or last_edge[vid] != edge:
+            
+            links = traci.edge.getLinks(edge)
+            outgoing = [link[0].split("_")[0] for link in links if link[0] != ""]
 
-            outgoing = traci.edge.getOutgoingIDList(edge)
-
-            if DEBUG:
-                print("\n==============================")
-                print(f"Vehicle: {vid}")
-                print(f"Current edge: {edge}")
-                print(f"Outgoing edges: {outgoing}")
-                print("==============================\n")
+            print("\n==============================")
+            print(f"Vehicle: {vid}")
+            print(f"Current edge: {edge}")
+            print(f"Outgoing edges: {outgoing}")
+            print("==============================\n")
 
             chosen = pick_weighted(outgoing)
 
