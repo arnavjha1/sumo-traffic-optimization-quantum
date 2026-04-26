@@ -45,19 +45,25 @@ while traci.simulation.getMinExpectedNumber() > 0:
         if edge.startswith(":"):
             continue
 
-        # only decide when entering new edge
         if vid not in last_edge or last_edge[vid] != edge:
-            
-            links = traci.edge.getLinks(edge)
-            outgoing = [link[0].split("_")[0] for link in links if link[0] != ""]
+
+            lane_id = traci.vehicle.getLaneID(vid)
+            links = traci.lane.getLinks(lane_id)
+
+            outgoing_edges = []
+            for link in links:
+                next_lane = link[0]
+                next_edge = next_lane.split("_")[0]
+                outgoing_edges.append(next_edge)
 
             print("\n==============================")
             print(f"Vehicle: {vid}")
             print(f"Current edge: {edge}")
-            print(f"Outgoing edges: {outgoing}")
+            print(f"Lane: {lane_id}")
+            print("Outgoing edges:", outgoing_edges)
             print("==============================\n")
 
-            chosen = pick_weighted(outgoing)
+            chosen = pick_weighted(outgoing_edges)
 
             if chosen:
                 try:
