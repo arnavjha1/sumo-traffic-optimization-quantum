@@ -1,7 +1,7 @@
 import traci
 from collections import defaultdict
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2.sumocfg"
 END_TIME = 600
 
@@ -147,10 +147,10 @@ avg_all = compute_avg(ALL_ROUTES, travel_times)
 
 # Waiting time
 #print("\nAverage Waiting Time:")
-avg_two = compute_avg(TWO_TURNS, waiting_times)
-avg_one = compute_avg(ONE_TURN, waiting_times)
-avg_none = compute_avg(NO_TURNS, waiting_times)
-avg_all = compute_avg(ALL_ROUTES, waiting_times)
+aavg_two = compute_avg(TWO_TURNS, waiting_times)
+aavg_one = compute_avg(ONE_TURN, waiting_times)
+aavg_none = compute_avg(NO_TURNS, waiting_times)
+aavg_all = compute_avg(ALL_ROUTES, waiting_times)
 
 #print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
 #print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
@@ -168,4 +168,4 @@ thr_all = compute_throughput(ALL_ROUTES)
 #print(f"  One Turn:  {thr_one}")
 #print(f"  No Turns:  {thr_none}")
 #print(f"  Overall:   {thr_all}")
-print(f"{avg_all:.2f},{avg_all:.2f},{thr_all}")
+print(f"{avg_all:.2f},{aavg_all:.2f},{thr_all}")
