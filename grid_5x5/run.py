@@ -10,13 +10,13 @@ else:
     sys.exit("SUMO_HOME not set")
 
 import traci
-
-SUMO_BINARY = "sumo"  # or "sumo"
+import random
 
 sumo_cmd = [
-    SUMO_BINARY,
+    "sumo",
     "-n", "grid_5x5/grid5x5_tls.net.xml",
-    "-r", "grid_5x5/routes.rou.xml"
+    "-r", "grid_5x5/routes.rou.xml",
+    "--step-length", "1"
 ]
 
 traci.start(sumo_cmd)
