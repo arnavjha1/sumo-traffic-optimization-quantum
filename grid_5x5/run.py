@@ -6,14 +6,12 @@ import random
 tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
 sys.path.append(tools)
 
-meta_data = [
+traci.start([
     "sumo-gui",
     "-n", "grid_5x5/grid5x5_tls.net.xml",
     "-r", "grid_5x5/routes.rou.xml",
     "--step-length", "1"
-]
-
-traci.start(meta_data)
+])
 
 PROBS = {
     "straight": 0.6,
@@ -21,74 +19,54 @@ PROBS = {
     "right": 0.2
 }
 
-def choose_direction():
-    r = random.random()
-    if r < PROBS["straight"]:
-        return "straight"
-    elif r < PROBS["straight"] + PROBS["left"]:
-        return "left"
-    else:
-        return "right"
-
-LANE_MAP = {
-    "right": 0,
-    "straight": 1,
-    "left": 2
-}
-
-# remember last edge per vehicle
 last_edge = {}
+
+DEBUG = True  # turn off if too noisy
+
+
+def pick_weighted(edges):
+    if not edges:
+        return None
+
+    r = random.random()
+
+    if r < PROBS["straight"]:
+        return edges[0]
+    elif r < PROBS["straight"] + PROBS["left"]:
+        return edges[min(1, len(edges) - 1)]
+    else:
+        return edges[-1]
+
 
 while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
 
     for vid in traci.vehicle.getIDList():
 
-        lane_id = traci.vehicle.getLaneID(vid)
-
-        if lane_id.startswith(":"):
-            continue
-
-        # only decide once per edge
         edge = traci.vehicle.getRoadID(vid)
 
+        if edge.startswith(":"):
+            continue
+
+        # only decide when entering new edge
         if vid not in last_edge or last_edge[vid] != edge:
 
-            links = traci.lane.getLinks(lane_id)
+            outgoing = traci.edge.getOutgoingIDList(edge)
 
-            straight = []
-            left = []
-            right = []
+            if DEBUG:
+                print("\n==============================")
+                print(f"Vehicle: {vid}")
+                print(f"Current edge: {edge}")
+                print(f"Outgoing edges: {outgoing}")
+                print("==============================\n")
 
-            for link in links:
-                direction = link[6]
-                next_lane = link[0]
+            chosen = pick_weighted(outgoing)
 
-                if direction == "s":
-                    straight.append(next_lane)
-                elif direction == "l":
-                    left.append(next_lane)
-                elif direction == "r":
-                    right.append(next_lane)
-
-            r = random.random()
-
-            if r < PROBS["straight"] and straight:
-                chosen_lane = random.choice(straight)
-            elif r < PROBS["straight"] + PROBS["left"] and left:
-                chosen_lane = random.choice(left)
-            elif right:
-                chosen_lane = random.choice(right)
-            else:
-                continue
-
-            # THIS is the key fix
-            traci.vehicle.setLaneChangeMode(vid, 0b001000000000)
-
-            try:
-                traci.vehicle.moveTo(vid, chosen_lane, 0)
-            except:
-                pass
+            if chosen:
+                try:
+                    traci.vehicle.changeTarget(vid, chosen)
+                except:
+                    pass
 
         last_edge[vid] = edge
 
