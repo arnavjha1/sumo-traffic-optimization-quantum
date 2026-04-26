@@ -3,23 +3,18 @@ import sys
 import traci
 import random
 
-# ---- SUMO setup ----
-if 'SUMO_HOME' in os.environ:
-    tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
-    sys.path.append(tools)
-else:
-    sys.exit("SUMO_HOME not set")
+tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
+sys.path.append(tools)
 
-sumo_cmd = [
+meta_data = [
     "sumo-gui",
     "-n", "grid_5x5/grid5x5_tls.net.xml",
     "-r", "grid_5x5/routes.rou.xml",
     "--step-length", "1"
 ]
 
-traci.start(sumo_cmd)
+traci.start(meta_data)
 
-# ---- probabilities ----
 PROBS = {
     "straight": 0.6,
     "left": 0.2,
@@ -35,7 +30,6 @@ def choose_direction():
     else:
         return "right"
 
-# lane mapping
 LANE_MAP = {
     "right": 0,
     "straight": 1,
