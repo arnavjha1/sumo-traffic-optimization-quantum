@@ -58,66 +58,48 @@ def classify(prev_edge, candidate_edge):
         return "left"
     else:
         return "right"
-
+    
 PROBS = {
     "straight": 0.6,
     "left": 0.2,
     "right": 0.2
 }
 
-def get_next_edges_with_dirs(vid):
-    lane_id = traci.vehicle.getLaneID(vid)
-    links = traci.lane.getLinks(lane_id)
+def choose_direction():
+    r = random.random()
+    if r < PROBS["straight"]:
+        return "straight"
+    elif r < PROBS["straight"] + PROBS["left"]:
+        return "left"
+    else:
+        return "right"
 
-    print("RAW LINKS:", links)
-
-    classified = {"straight": [], "left": [], "right": []}
-
-    for link in links:
-        next_lane = link[0]
-        direction = link[6]  # THIS is the key
-
-        next_edge = next_lane.split("_")[0]
-
-        if direction == "s":
-            classified["straight"].append(next_edge)
-        elif direction == "l":
-            classified["left"].append(next_edge)
-        elif direction == "r":
-            classified["right"].append(next_edge)
-
-    return classified
+LANE_MAP = {
+    "right": 0,
+    "straight": 1,
+    "left": 2
+}
 
 while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
 
     for vid in traci.vehicle.getIDList():
-        edge = traci.vehicle.getRoadID(vid)
+        lane_id = traci.vehicle.getLaneID(vid)
 
-        classified = get_next_edges_with_dirs(vid)
-
-        next_edges = (
-            classified["straight"] +
-            classified["left"] +
-            classified["right"]
-        )
-
-        if not next_edges:
+        # Skip junction/internal lanes
+        if lane_id.startswith(":"):
             continue
 
-        # pick based on probabilities
-        r = random.random()
+        edge_id = traci.vehicle.getRoadID(vid)
 
-        if r < PROBS["straight"] and classified["straight"]:
-            chosen = random.choice(classified["straight"])
-        elif r < PROBS["straight"] + PROBS["left"] and classified["left"]:
-            chosen = random.choice(classified["left"])
-        elif classified["right"]:
-            chosen = random.choice(classified["right"])
-        else:
-            chosen = random.choice(next_edges)
+        # Choose direction probabilistically
+        direction = choose_direction()
+        target_lane_index = LANE_MAP[direction]
 
-        # force route change
-        traci.vehicle.changeTarget(vid, chosen)
+        try:
+            # Change to desired lane BEFORE intersection
+            traci.vehicle.changeLane(vid, target_lane_index, 50)
+        except:
+            pass
 
 traci.close()
