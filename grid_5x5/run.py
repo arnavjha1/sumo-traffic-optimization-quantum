@@ -49,19 +49,44 @@ while traci.simulation.getMinExpectedNumber() > 0:
         if lane_id.startswith(":"):
             continue
 
+        # only decide once per edge
         edge = traci.vehicle.getRoadID(vid)
-        num_lanes = traci.edge.getLaneNumber(edge)
 
         if vid not in last_edge or last_edge[vid] != edge:
 
-            direction = choose_direction()
-            target_lane = LANE_MAP[direction]
+            links = traci.lane.getLinks(lane_id)
 
-            # clamp safely
-            target_lane = max(0, min(target_lane, num_lanes - 1))
+            straight = []
+            left = []
+            right = []
+
+            for link in links:
+                direction = link[6]
+                next_lane = link[0]
+
+                if direction == "s":
+                    straight.append(next_lane)
+                elif direction == "l":
+                    left.append(next_lane)
+                elif direction == "r":
+                    right.append(next_lane)
+
+            r = random.random()
+
+            if r < PROBS["straight"] and straight:
+                chosen_lane = random.choice(straight)
+            elif r < PROBS["straight"] + PROBS["left"] and left:
+                chosen_lane = random.choice(left)
+            elif right:
+                chosen_lane = random.choice(right)
+            else:
+                continue
+
+            # THIS is the key fix
+            traci.vehicle.setLaneChangeMode(vid, 0b001000000000)
 
             try:
-                traci.vehicle.changeLane(vid, target_lane, 100)
+                traci.vehicle.moveTo(vid, chosen_lane, 0)
             except:
                 pass
 
