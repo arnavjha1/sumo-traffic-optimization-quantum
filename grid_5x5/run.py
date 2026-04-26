@@ -64,16 +64,17 @@ PROBS = {
     "left": 0.2,
     "right": 0.2
 }
-
 def get_next_edges(edge_id):
-    return traci.edge.getAllowedNextEdges(edge_id)
+    links = traci.edge.getOutgoingLinks(edge_id)
+    return [l[0] for l in links if l[0] != ""]
+
 while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
 
     for vid in traci.vehicle.getIDList():
         edge = traci.vehicle.getRoadID(vid)
 
-        next_edges = traci.edge.getOutgoingLinks(edge)
+        next_edges = get_next_edges(edge)
         next_edges = [e[0] for e in next_edges if e[0] != ""]
 
         if not next_edges:
