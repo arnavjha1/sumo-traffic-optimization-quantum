@@ -56,11 +56,17 @@ while traci.simulation.getMinExpectedNumber() > 0:
             direction = choose_direction()
             target_lane = LANE_MAP[direction]
 
-            try:
-                traci.vehicle.changeLane(vid, target_lane, 50)
-            except:
-                pass
+            best_lanes = traci.vehicle.getBestLanes(vid)
 
+            allowed_lanes = [lane[0].split("_")[-1] for lane in best_lanes]
+            allowed_lanes = [int(l) for l in allowed_lanes if l.isdigit()]
+
+            print("Chosen:", target_lane)
+            print("Allowed:", allowed_lanes)
+
+            if target_lane in allowed_lanes:
+                traci.vehicle.changeLane(vid, target_lane, 100)
+        
         last_edge[vid] = edge
 
 traci.close()
