@@ -65,19 +65,26 @@ PROBS = {
     "right": 0.2
 }
 
-def get_next_edges(vid):
+def get_next_edges_with_dirs(vid):
     lane_id = traci.vehicle.getLaneID(vid)
-    
     links = traci.lane.getLinks(lane_id)
-    
-    # each link = (lane, via, priority, open, foe, state, direction, length)
-    next_edges = []
+
+    classified = {"straight": [], "left": [], "right": []}
+
     for link in links:
         next_lane = link[0]
-        next_edge = next_lane.split("_")[0]  # remove lane index
-        next_edges.append(next_edge)
+        direction = link[6]  # THIS is the key
 
-    return list(set(next_edges))  # remove duplicates
+        next_edge = next_lane.split("_")[0]
+
+        if direction == "s":
+            classified["straight"].append(next_edge)
+        elif direction == "l":
+            classified["left"].append(next_edge)
+        elif direction == "r":
+            classified["right"].append(next_edge)
+
+    return classified
 
 while traci.simulation.getMinExpectedNumber() > 0:
     traci.simulationStep()
@@ -85,21 +92,16 @@ while traci.simulation.getMinExpectedNumber() > 0:
     for vid in traci.vehicle.getIDList():
         edge = traci.vehicle.getRoadID(vid)
 
-        next_edges = get_next_edges(vid)
-        next_edges = [e for e in next_edges if e != ""]
+        classified = get_next_edges_with_dirs(vid)
+
+        next_edges = (
+            classified["straight"] +
+            classified["left"] +
+            classified["right"]
+        )
 
         if not next_edges:
             continue
-
-        # classify options
-        classified = {"straight": [], "left": [], "right": []}
-
-        for e in next_edges:
-            try:
-                c = classify(edge, e)
-                classified[c].append(e)
-            except:
-                continue
 
         # pick based on probabilities
         r = random.random()
