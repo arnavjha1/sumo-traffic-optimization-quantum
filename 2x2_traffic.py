@@ -1,3 +1,4 @@
+from unittest import result
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
@@ -93,12 +94,36 @@ def generate_routes_xml(file_path, v_low, v_mid, v_high):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(xml_str)
 
-
-# --- USAGE ---
 file_path = "routes_2x2/routes2x2.rou.xml"
 
-V_LOW = 324
-V_MID = 755
-V_HIGH = 1763
+#=========================
+# RUNNING SIMULATIONS
+#=========================
 
-generate_routes_xml(file_path, V_LOW, V_MID, V_HIGH)
+import subprocess
+
+NUM_TRAFFIC = 5
+traffic_counts = [1000, 2000, 3000, 4000, 5000]
+travel_times = []
+waiting_times = []
+throughputs = []
+
+for i in range(5):
+    V_LOW = 324 * traffic_counts[i] / 5000
+    V_MID = 755 * traffic_counts[i] / 5000
+    V_HIGH = 1763 * traffic_counts[i] / 5000
+
+    generate_routes_xml(file_path, V_LOW, V_MID, V_HIGH)
+
+    # Run and wait for it to finish
+    result = subprocess.run(["python", "grid_2x2/2_classical.py"], capture_output=True, text=True)
+    
+    line = result.stdout.strip()
+    data = [float(x) for x in line.split(',')]
+    travel_times.append(data[0])
+    waiting_times.append(data[1])
+    throughputs.append(data[2])
+
+print("Travel times:", travel_times)
+print("Waiting times:", waiting_times)
+print("Throughputs:", throughputs)
