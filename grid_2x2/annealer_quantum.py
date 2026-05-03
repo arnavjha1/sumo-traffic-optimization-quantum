@@ -1,62 +1,49 @@
 from qiskit import QuantumCircuit
 from qiskit.primitives import StatevectorSampler
 import numpy as np
-import matplotlib.pyplot as plt  # Added for graphing
 
-def quantum_decision(biases):
-    NUM_TLS = len(biases)
-    qc = QuantumCircuit(NUM_TLS)
+def quantum_decision(biases, p=1):
 
-    # STEP 1: Encode biases
-    for i in range(NUM_TLS):
-        theta = (np.tanh(biases[i]) + 1) * (np.pi / 2)
-        qc.ry(theta, i)
+    n = len(biases)
 
-    # STEP 2: Couple with neighboring traffic lights
-    for i in range(NUM_TLS - 1):
-        qc.cx(i, i + 1)
+    # Parameters (we'll just grid search for now)
+    gammas = np.linspace(0, np.pi, 10)
+    betas = np.linspace(0, np.pi/2, 10)
 
-    # STEP 3: Measure
-    qc.measure_all()
+    best_energy = float("inf")
+    best_bitstring = None
 
-    # Run circuit
-    sampler = StatevectorSampler()
-    result = sampler.run([qc], shots=1024).result()
-    counts = result[0].data.meas.get_counts()
+    for gamma in gammas:
+        for beta in betas:
 
-    # STEP 4: Pick best configuration
-    best_bitstring = max(counts, key=counts.get)
-    best_bitstring = best_bitstring[::-1]
+            qc = QuantumCircuit(n)
 
-    # Modification: Return counts dictionary so we can graph it
-    return best_bitstring, counts
+            # Initialize superposition
+            qc.h(range(n))
 
-if __name__ == "__main__":
-    # Test with varying biases to see a more interesting graph
-    test_biases = [-1.0, -1.0, 1.0, -1.0]
+            # ----- COST UNITARY -----
+            for i in range(n):
+                qc.rz(2 * gamma * biases[i], i)
 
-    # Get the best string and the full distribution
-    best_str, all_counts = quantum_decision(test_biases)
+            # ----- MIXER -----
+            for i in range(n):
+                qc.rx(2 * beta, i)
 
-    print("Test biases:", test_biases)
-    print("Quantum decision (Best String):", best_str)
+            qc.measure_all()
 
-    # --- GRAPHING SECTION ---
-    
-    # 1. Reverse the keys to match your logic (first qubit on the left)
-    formatted_counts = {k[::-1]: v for k, v in all_counts.items()}
-    
-    # 2. Sort the bitstrings alphabetically for a clean x-axis
-    sorted_bits = sorted(formatted_counts.keys())
-    sorted_freqs = [formatted_counts[b] for b in sorted_bits]
+            sampler = StatevectorSampler()
+            result = sampler.run([qc], shots=512).result()
+            counts = result[0].data.meas.get_counts()
 
-    # 3. Create the Bar Chart
-    plt.figure(figsize=(10, 6))
-    plt.bar(sorted_bits, sorted_freqs, color='skyblue', edgecolor='darkblue')
-    plt.xlabel('Traffic Light Configurations', fontsize=12)
-    plt.ylabel('Frequency', fontsize=12)
-    plt.title('Quantum Decision', fontsize=14)
-    plt.xticks(rotation=45) # Rotate labels for readability
-    plt.grid(axis='y', linestyle='--', alpha=0.6)
-    plt.tight_layout()
-    plt.show()
+            # Evaluate classical energy
+            for bitstring, freq in counts.items():
+                bitstring = bitstring[::-1]
+                x = np.array([1 if b == '1' else 0 for b in bitstring])
+
+                energy = -np.dot(biases, x)
+
+                if energy < best_energy:
+                    best_energy = energy
+                    best_bitstring = bitstring
+
+    return best_bitstring
