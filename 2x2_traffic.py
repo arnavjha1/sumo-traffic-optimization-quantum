@@ -104,11 +104,44 @@ import subprocess
 
 NUM_TRAFFIC = 5
 traffic_counts = [1000, 2000, 3000, 4000, 5000]
-travel_times = []
-waiting_times = []
-throughputs = []
+travel_times = [[],[],[],[]]
+waiting_times = [[],[],[],[]]
+throughputs = [[],[],[],[]]
 
-for i in range(5):
+for i in range(len(traffic_counts)):
+    V_LOW = 324 * traffic_counts[i] / 5000
+    V_MID = 755 * traffic_counts[i] / 5000
+    V_HIGH = 1763 * traffic_counts[i] / 5000
+
+    generate_routes_xml(file_path, V_LOW, V_MID, V_HIGH)
+
+    # Run and wait for it to finish
+    result = subprocess.run(["python", "grid_2x2/0_fixed.py"], capture_output=True, text=True)
+    
+    line = result.stdout.strip()
+    data = [float(x) for x in line.split(',')]
+    travel_times[0].append(data[0])
+    waiting_times[0].append(data[1])
+    throughputs[0].append(data[2])
+    print("0-fixed: ", i)
+
+for i in range(len(traffic_counts)):
+    V_LOW = 324 * traffic_counts[i] / 5000
+    V_MID = 755 * traffic_counts[i] / 5000
+    V_HIGH = 1763 * traffic_counts[i] / 5000
+
+    generate_routes_xml(file_path, V_LOW, V_MID, V_HIGH)
+
+    # Run and wait for it to finish
+    result = subprocess.run(["python", "grid_2x2/1_queue.py"], capture_output=True, text=True)
+    line = result.stdout.strip()
+    data = [float(x) for x in line.split(',') if x.strip() != '']
+    travel_times[1].append(data[0])
+    waiting_times[1].append(data[1])
+    throughputs[1].append(data[2])
+    print("1-queue: ", i)
+
+for i in range(len(traffic_counts)):
     V_LOW = 324 * traffic_counts[i] / 5000
     V_MID = 755 * traffic_counts[i] / 5000
     V_HIGH = 1763 * traffic_counts[i] / 5000
@@ -120,10 +153,131 @@ for i in range(5):
     
     line = result.stdout.strip()
     data = [float(x) for x in line.split(',')]
-    travel_times.append(data[0])
-    waiting_times.append(data[1])
-    throughputs.append(data[2])
+    travel_times[2].append(data[0])
+    waiting_times[2].append(data[1])
+    throughputs[2].append(data[2])
+    print("2-classical: ", i)
+
+for i in range(len(traffic_counts)):
+    V_LOW = 324 * traffic_counts[i] / 5000
+    V_MID = 755 * traffic_counts[i] / 5000
+    V_HIGH = 1763 * traffic_counts[i] / 5000
+
+    generate_routes_xml(file_path, V_LOW, V_MID, V_HIGH)
+
+    # Run and wait for it to finish
+    result = subprocess.run(["python", "grid_2x2/3_quantum.py"], capture_output=True, text=True)
+    
+    line = result.stdout.strip()
+    data = [float(x) for x in line.split(',')]
+    travel_times[3].append(data[0])
+    waiting_times[3].append(data[1])
+    throughputs[3].append(data[2])
+    print("3-quantum: ", i)
 
 print("Travel times:", travel_times)
 print("Waiting times:", waiting_times)
 print("Throughputs:", throughputs)
+
+#=========================
+# MAKE GRAPHS
+#=========================
+
+# Travel Time
+import matplotlib.pyplot as plt
+from scipy.interpolate import make_interp_spline
+import numpy as np
+
+alpha_smooth = np.linspace(min(traffic_counts), max(traffic_counts), 1000)
+
+fixed_smooth = make_interp_spline(traffic_counts, travel_times[0])(alpha_smooth)
+queue_smooth = make_interp_spline(traffic_counts, travel_times[1])(alpha_smooth)
+classical_smooth = make_interp_spline(traffic_counts, travel_times[2])(alpha_smooth)
+quantum_smooth = make_interp_spline(traffic_counts, travel_times[3])(alpha_smooth)
+
+plt.figure()
+
+plt.plot(alpha_smooth, fixed_smooth, linewidth=2.5, label='Fixed')
+plt.plot(alpha_smooth, queue_smooth, linewidth=2.5, label='Queue')
+plt.plot(alpha_smooth, classical_smooth, linewidth=2.5, label='Classical')
+plt.plot(alpha_smooth, quantum_smooth, linewidth=2.5, label='Quantum')
+
+plt.scatter(traffic_counts, travel_times[0], s=50)
+plt.scatter(traffic_counts, travel_times[1], s=50)
+plt.scatter(traffic_counts, travel_times[2], s=50)
+plt.scatter(traffic_counts, travel_times[3], s=50)
+
+plt.xlabel('Vehicle Count')
+plt.ylabel('Average Travel Time (s)')
+plt.title('Travel Time vs Vehicle Count')
+
+plt.ylim(50, 150)
+
+plt.gca().invert_yaxis()
+
+plt.legend()
+plt.grid()
+
+plt.show()
+
+# Waiting Time
+
+fixed_smooth = make_interp_spline(traffic_counts, waiting_times[0])(alpha_smooth)
+queue_smooth = make_interp_spline(traffic_counts, waiting_times[1])(alpha_smooth)
+classical_smooth = make_interp_spline(traffic_counts, waiting_times[2])(alpha_smooth)
+quantum_smooth = make_interp_spline(traffic_counts, waiting_times[3])(alpha_smooth)
+
+plt.figure()
+
+plt.plot(alpha_smooth, fixed_smooth, linewidth=2.5, label='Fixed')
+plt.plot(alpha_smooth, queue_smooth, linewidth=2.5, label='Queue')
+plt.plot(alpha_smooth, classical_smooth, linewidth=2.5, label='Classical')
+plt.plot(alpha_smooth, quantum_smooth, linewidth=2.5, label='Quantum')
+
+plt.scatter(traffic_counts, waiting_times[0], s=50)
+plt.scatter(traffic_counts, waiting_times[1], s=50)
+plt.scatter(traffic_counts, waiting_times[2], s=50)
+plt.scatter(traffic_counts, waiting_times[3], s=50)
+
+plt.xlabel('Vehicle Count')
+plt.ylabel('Average Waiting Time (s)')
+plt.title('Waiting Time vs Vehicle Count')
+
+plt.ylim(15, 70)
+
+plt.gca().invert_yaxis()
+
+plt.legend()
+plt.grid()
+
+plt.show()
+
+# Throughput
+
+fixed_smooth = make_interp_spline(traffic_counts, throughputs[0])(alpha_smooth)
+queue_smooth = make_interp_spline(traffic_counts, throughputs[1])(alpha_smooth)
+classical_smooth = make_interp_spline(traffic_counts, throughputs[2])(alpha_smooth)
+quantum_smooth = make_interp_spline(traffic_counts, throughputs[3])(alpha_smooth)
+
+plt.figure()
+
+plt.plot(alpha_smooth, fixed_smooth, linewidth=2.5, label='Fixed')
+plt.plot(alpha_smooth, queue_smooth, linewidth=2.5, label='Queue')
+plt.plot(alpha_smooth, classical_smooth, linewidth=2.5, label='Classical')
+plt.plot(alpha_smooth, quantum_smooth, linewidth=2.5, label='Quantum')
+
+plt.scatter(traffic_counts, throughputs[0], s=50)
+plt.scatter(traffic_counts, throughputs[1], s=50)
+plt.scatter(traffic_counts, throughputs[2], s=50)
+plt.scatter(traffic_counts, throughputs[3], s=50)
+
+plt.xlabel('Vehicle Count')
+plt.ylabel('Average Throughput (vehicles/s)')
+plt.title('Throughput vs Vehicle Count')
+
+plt.ylim(15, 70)
+
+plt.gca().invert_yaxis()
+
+plt.legend()
+plt.grid()

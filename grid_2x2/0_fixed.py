@@ -33,11 +33,10 @@ travel_times = defaultdict(list)
 waiting_times = defaultdict(list)
 throughput = defaultdict(int)
 
-# 3D queue storage:
-# queue_lengths[tls_index][lane_type][time]
 NUM_TLS = 4
-NUM_SIDES = 4
 NUM_LANES = 3
+
+# queue_lengths[tls][lane][time]
 queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
 
 # -----------------------
@@ -74,25 +73,20 @@ while traci.simulation.getTime() < END_TIME:
             last_waiting_time.pop(veh, None)
 
     # -----------------------
-    # QUEUE LENGTH PER TLS PER LANE
+    # QUEUE LENGTH PER TLS PER LANE (kept but simplified)
     # -----------------------
     for tls_index, tls in enumerate(TLS_ORDER):
-
         lanes = traci.trafficlight.getControlledLanes(tls)
-        lanes = list(dict.fromkeys(lanes))  # remove duplicates
+        lanes = list(dict.fromkeys(lanes))
 
-        # Assumes 3 lanes per incoming direction:
-        # lane 0 = left
-        # lane 1 = straight
-        # lane 2 = right
-        for lane_type in range(3):
+        for lane_type in range(NUM_LANES):
             if lane_type < len(lanes):
                 lane_id = lanes[lane_type]
 
-                queue = 0
-                for veh in traci.lane.getLastStepVehicleIDs(lane_id):
-                    if traci.vehicle.getSpeed(veh) < 0.1:
-                        queue += 1
+                queue = sum(
+                    1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
+                    if traci.vehicle.getSpeed(veh) < 0.1
+                )
 
                 queue_lengths[tls_index][lane_type].append(queue)
             else:
@@ -103,8 +97,6 @@ traci.close()
 # -----------------------
 # RESULTS
 # -----------------------
-
-#print("\n===== PERFORMANCE METRICS =====")
 
 def compute_avg(route_list, data_dict):
     values = []
@@ -117,55 +109,19 @@ def compute_throughput(route_list):
 
 ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
 
-# Queue lengths
-
-#print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
-
-for tls_index, tls in enumerate(TLS_ORDER):
-    #print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        #print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            #print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        #print()
-
 # Travel time
-#print("\nCLASSICAL")
-#print("\nAverage Travel Time:")
-avg_two = compute_avg(TWO_TURNS, travel_times)
-avg_one = compute_avg(ONE_TURN, travel_times)
-avg_none = compute_avg(NO_TURNS, travel_times)
 avg_all = compute_avg(ALL_ROUTES, travel_times)
 
-#print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-#print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-#print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-#print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
-
 # Waiting time
-#print("\nAverage Waiting Time:")
-aavg_two = compute_avg(TWO_TURNS, waiting_times)
-aavg_one = compute_avg(ONE_TURN, waiting_times)
-aavg_none = compute_avg(NO_TURNS, waiting_times)
 aavg_all = compute_avg(ALL_ROUTES, waiting_times)
 
-#print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-#print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-#print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-#print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
-
 # Throughput
-#print("\nThroughput:")
-thr_two = compute_throughput(TWO_TURNS)
-thr_one = compute_throughput(ONE_TURN)
-thr_none = compute_throughput(NO_TURNS)
 thr_all = compute_throughput(ALL_ROUTES)
 
-#print(f"  Two Turns: {thr_two}")
-#print(f"  One Turn:  {thr_one}")
-#print(f"  No Turns:  {thr_none}")
-#print(f"  Overall:   {thr_all}")
-print(f"{avg_all:.2f},{aavg_all:.2f},{thr_all}")
+# -----------------------
+# SAFE OUTPUT
+# -----------------------
+def safe(x):
+    return x if x is not None else 0.0
+
+print(f"{safe(avg_all):.2f},{safe(aavg_all):.2f},{thr_all:.2f}")
