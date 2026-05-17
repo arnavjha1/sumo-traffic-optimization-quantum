@@ -24,12 +24,13 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
     gammas = np.linspace(0, np.pi, 10)
     betas = np.linspace(0, np.pi/2, 10)
 
-    best_energy = float("inf")
+    # best_energy = float("inf")
     best_bitstring = None
 
     best_gamma = None
     best_beta = None
 
+    best_expected_energy = float("inf")
 
     for gamma in gammas:
         for beta in betas:
@@ -72,8 +73,11 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
             result = sampler.run([qc], shots=512).result()
             counts = result[0].data.meas.get_counts()
 
+            expected_energy = 0
+
             for bitstring, freq in counts.items():
 
+                probability = freq / 512
                 bitstring = bitstring[::-1]
 
                 x = np.array([
@@ -103,12 +107,12 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
 
                                 energy -= coupling_strength
 
-                # Keep best configuration found
-                if energy < best_energy:
-
-                    best_energy = energy
-                    best_bitstring = bitstring
-                    best_gamma = gamma
-                    best_beta = beta
+                expected_energy += probability * energy
+            
+            if expected_energy < best_expected_energy:
+                best_expected_energy = expected_energy
+                best_bitstring = max(counts, key=counts.get)[::-1]
+                best_gamma = gamma
+                best_beta = beta
 
     return best_bitstring, best_gamma, best_beta
