@@ -2,7 +2,7 @@ import traci
 from collections import defaultdict
 from annealer_quantum import quantum_decision
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2.sumocfg"
 END_TIME = 600
 
