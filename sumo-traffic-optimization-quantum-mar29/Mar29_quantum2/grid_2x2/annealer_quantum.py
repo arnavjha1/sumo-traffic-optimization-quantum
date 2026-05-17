@@ -5,7 +5,7 @@ import numpy as np
 LAMBDA = 10
 sampler = StatevectorSampler()
 
-def quantum_decision(biases, prev_state, p=1):
+def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
 
     n = len(biases)
 
@@ -27,6 +27,10 @@ def quantum_decision(biases, prev_state, p=1):
     best_energy = float("inf")
     best_bitstring = None
 
+    best_gamma = None
+    best_beta = None
+
+
     for gamma in gammas:
         for beta in betas:
 
@@ -41,6 +45,23 @@ def quantum_decision(biases, prev_state, p=1):
                     2 * gamma * effective_biases[i],
                     i
                 )
+
+            # Neighbor coupling
+            for i in range(n):
+
+                for j in neighbors[i]:
+
+                    # avoid duplicates
+                    if i < j:
+
+                        qc.cx(i, j)
+
+                        qc.rz(
+                            2 * gamma * coupling_strength,
+                            j
+                        )
+
+                        qc.cx(i, j)
 
             # MIXER
             for i in range(n):
@@ -60,19 +81,34 @@ def quantum_decision(biases, prev_state, p=1):
                     for b in bitstring
                 ])
 
-                # TRUE ENERGY
+                # TRUE ENERGY OF ENTIRE SYSTEM
                 energy = 0
 
                 for i in range(n):
 
+                    # Bias term
                     energy += -biases[i] * x[i]
 
+                    # Switching penalty
                     energy += LAMBDA * (
                         x[i] - prev_state[i]
                     )**2
 
+                    # Neighbor coupling
+                    for j in neighbors[i]:
+
+                        if i < j:
+
+                            if x[i] == x[j]:
+
+                                energy -= coupling_strength
+
+                # Keep best configuration found
                 if energy < best_energy:
+
                     best_energy = energy
                     best_bitstring = bitstring
+                    best_gamma = gamma
+                    best_beta = beta
 
-    return best_bitstring
+    return best_bitstring, best_gamma, best_beta

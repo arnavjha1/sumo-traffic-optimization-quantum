@@ -158,57 +158,8 @@ def compute_discharging_pressure():
             pressure_value = DISCHARGE_QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
             discharging_pressure[tls_index][side_index].append(pressure_value)
 
-# ==========================================================
-# COLLECT ALL BIAS VALUES
-# ==========================================================
-
-LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 2             # tune between 0-10
 
 x_i = [[] for _ in range(NUM_TLS)]
-
-# ==========================================================
-# OLD CODE FOR CLASSICAL ANNEALER
-# ==========================================================
-
-def optimize_x_i(tls_index, bias_i):
-
-    # First timestep initialization
-    if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
-            x_i[tls_index].append(-1)
-        return
-
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
-
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
-
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
-
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
-
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
-
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
-    else:
-        x_i[tls_index].append(current_x)
-
 
 # -----------------------
 # SIMULATION LOOP
@@ -342,9 +293,29 @@ while traci.simulation.getTime() < END_TIME:
             prev_state.append(
                 1 if x_i[i][-1] == 1 else 0
             )
+    
+    neighbor_indices = []
 
-    # Call the quantum annealer
-    bitstring = quantum_decision(bias_list, prev_state)
+    for i in range(NUM_TLS):
+
+        curr_neighbors = []
+
+        for neighbor_tls in TLS_NEIGHBORS[i][1:]:
+
+            curr_neighbors.append(
+                tIndex.index(neighbor_tls)
+            )
+
+        neighbor_indices.append(curr_neighbors)
+
+    bitstring, gamma, beta = quantum_decision(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    print(gamma, beta)
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
