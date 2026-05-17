@@ -308,14 +308,14 @@ while traci.simulation.getTime() < END_TIME:
 
         neighbor_indices.append(curr_neighbors)
 
-    bitstring, gamma, beta = quantum_decision(
+    bitstring = quantum_decision(
         bias_list,
         prev_state,
         neighbor_indices,
         coupling_strength=2
     )
 
-    print(gamma, beta)
+    print(traci.simulation.getTime())
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):

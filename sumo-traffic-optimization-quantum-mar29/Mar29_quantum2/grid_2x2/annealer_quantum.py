@@ -21,8 +21,8 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
             biases[i] - penalty
         )
     
-    gammas = np.linspace(0.5, np.pi, 3)
-    betas = np.linspace(0.4, 1.2, 3)
+    gamma = 0.5
+    beta = 0.4
 
     best_energy = float("inf")
     best_bitstring = None
@@ -30,84 +30,80 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
     best_gamma = None
     best_beta = None
 
-    for gamma in gammas:
-        for beta in betas:
 
-            qc = QuantumCircuit(n)
+    qc = QuantumCircuit(n)
 
-            # Superposition
-            qc.h(range(n))
+    # Superposition
+    qc.h(range(n))
 
-            # COST UNITARY
-            for i in range(n):
+    # COST UNITARY
+    for i in range(n):
+        qc.rz(
+            2 * gamma * effective_biases[i],
+            i
+        )
+
+    # Neighbor coupling
+    for i in range(n):
+
+        for j in neighbors[i]:
+
+            # avoid duplicates
+            if i < j:
+
+                qc.cx(i, j)
+
                 qc.rz(
-                    2 * gamma * effective_biases[i],
-                    i
+                    2 * gamma * coupling_strength,
+                    j
                 )
 
+                qc.cx(i, j)
+
+    # MIXER
+    for i in range(n):
+        qc.rx(2 * beta, i)
+
+    qc.measure_all()
+
+    result = sampler.run([qc], shots=512).result()
+    counts = result[0].data.meas.get_counts()
+
+    for bitstring, freq in counts.items():
+
+        bitstring = bitstring[::-1]
+
+        x = np.array([
+            1 if b == '1' else 0
+            for b in bitstring
+        ])
+
+        # TRUE ENERGY OF ENTIRE SYSTEM
+        energy = 0
+
+        for i in range(n):
+
+            # Bias term
+            energy += -biases[i] * x[i]
+
+            # Switching penalty
+            energy += LAMBDA * (
+                x[i] - prev_state[i]
+            )**2
+
             # Neighbor coupling
-            for i in range(n):
+            for j in neighbors[i]:
 
-                for j in neighbors[i]:
+                if i < j:
 
-                    # avoid duplicates
-                    if i < j:
+                    if x[i] == x[j]:
 
-                        qc.cx(i, j)
+                        energy -= coupling_strength
 
-                        qc.rz(
-                            2 * gamma * coupling_strength,
-                            j
-                        )
+        # Keep best sampled state overall
+        if energy < best_energy:
 
-                        qc.cx(i, j)
+            best_energy = energy
+            best_bitstring = bitstring
 
-            # MIXER
-            for i in range(n):
-                qc.rx(2 * beta, i)
-
-            qc.measure_all()
-
-            result = sampler.run([qc], shots=512).result()
-            counts = result[0].data.meas.get_counts()
-
-            for bitstring, freq in counts.items():
-
-                bitstring = bitstring[::-1]
-
-                x = np.array([
-                    1 if b == '1' else 0
-                    for b in bitstring
-                ])
-
-                # TRUE ENERGY OF ENTIRE SYSTEM
-                energy = 0
-
-                for i in range(n):
-
-                    # Bias term
-                    energy += -biases[i] * x[i]
-
-                    # Switching penalty
-                    energy += LAMBDA * (
-                        x[i] - prev_state[i]
-                    )**2
-
-                    # Neighbor coupling
-                    for j in neighbors[i]:
-
-                        if i < j:
-
-                            if x[i] == x[j]:
-
-                                energy -= coupling_strength
-
-                # Keep best sampled state overall
-                if energy < best_energy:
-
-                    best_energy = energy
-                    best_bitstring = bitstring
-                    best_gamma = gamma
-                    best_beta = beta
-
-    return best_bitstring, best_gamma, best_beta
+    return best_bitstring
