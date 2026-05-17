@@ -3,6 +3,7 @@ from qiskit.primitives import StatevectorSampler
 import numpy as np
 
 LAMBDA = 20
+sampler = StatevectorSampler()
 
 def quantum_decision(biases, prev_state, p=1):
 
@@ -25,8 +26,6 @@ def quantum_decision(biases, prev_state, p=1):
 
     best_energy = float("inf")
     best_bitstring = None
-
-    sampler = StatevectorSampler()
 
     for gamma in gammas:
         for beta in betas:

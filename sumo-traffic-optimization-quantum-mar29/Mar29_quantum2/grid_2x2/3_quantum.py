@@ -319,8 +319,32 @@ while traci.simulation.getTime() < END_TIME:
     # Convert biases to a flat list (length 4)
     bias_list = [bias_i_tls[tIndex.index(tls)][-1] for tls in TLS_ORDER]
 
+    # Previous traffic light states
+    # 0 = NS green
+    # 1 = EW green
+
+    prev_state = []
+
+    for i in range(NUM_TLS):
+
+        # First timestep fallback
+        if len(x_i[i]) == 0:
+
+            # Use initial configuration
+            if TLS_ORDER[i] in TLS_REG:
+                prev_state.append(0)
+            else:
+                prev_state.append(1)
+
+        else:
+
+            # Convert {-1,1} -> {0,1}
+            prev_state.append(
+                1 if x_i[i][-1] == 1 else 0
+            )
+
     # Call the quantum annealer
-    bitstring = quantum_decision(bias_list)
+    bitstring = quantum_decision(bias_list, prev_state)
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
