@@ -9,16 +9,20 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
 
     n = len(biases)
 
+    # Convert previous binary state into Ising spin state
+    prev_spin = np.array([
+        2 * prev_state[i] - 1
+        for i in range(n)
+    ])
+
     # Effective biases including switching penalty
     effective_biases = []
 
     for i in range(n):
 
-        # prev_state should be 0 or 1
-        penalty = LAMBDA * (1 - 2 * prev_state[i])
-
+        # In Ising form, switching penalty acts like a field
         effective_biases.append(
-            biases[i] - penalty
+            biases[i] + LAMBDA * prev_spin[i]
         )
     
     gamma = 0.5
@@ -27,28 +31,23 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
     best_energy = float("inf")
     best_bitstring = None
 
-    best_gamma = None
-    best_beta = None
-
-
     qc = QuantumCircuit(n)
 
     # Superposition
     qc.h(range(n))
 
-    # COST UNITARY
+    # COST UNITARY: Ising bias term
     for i in range(n):
         qc.rz(
             2 * gamma * effective_biases[i],
             i
         )
 
-    # Neighbor coupling
+    # COST UNITARY: Ising neighbor coupling
     for i in range(n):
 
         for j in neighbors[i]:
 
-            # avoid duplicates
             if i < j:
 
                 qc.cx(i, j)
@@ -78,29 +77,29 @@ def quantum_decision(biases, prev_state, neighbors, coupling_strength=2, p=1):
             for b in bitstring
         ])
 
-        # TRUE ENERGY OF ENTIRE SYSTEM
+        # Convert binary x into Ising spin s
+        s = 2*x - 1
+
         energy = 0
 
         for i in range(n):
 
-            # Bias term
-            energy += -biases[i] * x[i]
+            # Ising bias term:
+            # same sign between bias and spin reduces energy
+            energy += -biases[i] * s[i]
 
-            # Switching penalty
-            energy += LAMBDA * (
-                x[i] - prev_state[i]
-            )**2
+            # Ising switching penalty:
+            # rewards staying aligned with previous spin
+            energy += -LAMBDA * prev_spin[i] * s[i]
 
-            # Neighbor coupling
+            # Ising neighbor coupling:
+            # rewards neighboring spins being the same
             for j in neighbors[i]:
 
                 if i < j:
 
-                    if x[i] == x[j]:
+                    energy += -coupling_strength * s[i] * s[j]
 
-                        energy -= coupling_strength
-
-        # Keep best sampled state overall
         if energy < best_energy:
 
             best_energy = energy
