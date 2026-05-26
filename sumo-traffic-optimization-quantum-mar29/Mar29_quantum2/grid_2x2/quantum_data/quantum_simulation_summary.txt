@@ -1,0 +1,24 @@
+===== QUANTUM SIMULATION SUMMARY =====
+
+Throughput averages by file:
+[]
+
+Waiting time averages by file:
+[]
+
+Travel time averages by file:
+[]
+
+===== OVERALL AVERAGES =====
+
+Overall Throughput Average: 0.00
+Overall Waiting Time Average: 0.00 s
+Overall Travel Time Average: 0.00 s
+
+===== FULL OVERALL STATS =====
+
+{
+    "throughput": {},
+    "average_waiting_time": {},
+    "average_travel_time": {}
+}

@@ -3,7 +3,7 @@ from collections import defaultdict
 from annealer_quantum import quantum_decision
 
 SUMO_BINARY = "sumo"
-SUMO_CONFIG = "sim2x2.sumocfg"
+SUMO_CONFIG = "sim2x2_a10.sumocfg"
 END_TIME = 600
 
 # -----------------------

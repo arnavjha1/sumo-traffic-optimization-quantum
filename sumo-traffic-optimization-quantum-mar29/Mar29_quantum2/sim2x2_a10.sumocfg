@@ -1,0 +1,19 @@
+<configuration>
+    <input>
+        <net-file value="grid_2x2/grid2x2_tls.net.xml"/>
+        <route-files value="routes_2x2/routes2x2_a10.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="30000"/>
+    </time>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+    </processing>
+
+    <report>
+        <no-step-log value="true"/>
+    </report>
+</configuration>
