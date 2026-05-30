@@ -1,7 +1,0 @@
-
-        <phase duration="55" state="GGGggrrrGGGggrrr"/>
-        <phase duration="4"  state="yyyggrrryyyggrrr"/>
-        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
-        <phase duration="55" state="grrrGGGggrrrGGGg"/>
-        <phase duration="4"  state="grrryyyggrrryyyg"/>
-        <phase duration="1"  state="rrrrrrrrrrrrrrrr"/>
