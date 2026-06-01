@@ -1,9 +1,10 @@
 """
-Nearest-signal alpha exploration pipeline for Seattle SUMO traffic data.
+Repeatable alpha-estimation pipeline for Seattle SUMO traffic data.
 
-This script does not calculate final alpha values yet. It assigns each usable
-traffic count station to its nearest signalized intersection, keeps the station
-only when that signal is close enough, and summarizes directional inflows.
+The source datasets do not contain true turn-level trajectories. This script
+therefore estimates corridor continuation from directional count-station flows:
+alpha_straight is the share of flow on the dominant opposing corridor, while
+alpha_left and alpha_right split the remaining cross-flow evenly.
 
 Run from the repository root:
 
@@ -17,6 +18,7 @@ or use the root-level wrapper:
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 from typing import Iterable
 
@@ -29,18 +31,41 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 DEFAULT_COUNTS_CSV = REPO_ROOT / "data" / "Traffic_Study_Flow_Counts_Seattle.csv"
 DEFAULT_SIGNALS_CSV = REPO_ROOT / "data" / "Traffic_Intersections_Seattle.csv"
-DEFAULT_OUTPUT_CSV = (
-    REPO_ROOT / "data_analysis" / "generated_data" / "alpha_nearest_signal_output.csv"
-)
+DEFAULT_GENERATED_DIR = REPO_ROOT / "data_analysis" / "generated_data"
+
+DEFAULT_NEAREST_OUTPUT_CSV = DEFAULT_GENERATED_DIR / "alpha_nearest_signal_output.csv"
+DEFAULT_CANDIDATE_OUTPUT_CSV = DEFAULT_GENERATED_DIR / "alpha_candidate_signals.csv"
+DEFAULT_ALPHA_OUTPUT_CSV = DEFAULT_GENERATED_DIR / "alpha_estimates_by_signal.csv"
+DEFAULT_CITYWIDE_SUMMARY_CSV = DEFAULT_GENERATED_DIR / "alpha_citywide_summary.csv"
 
 DIRECTION_COLUMNS = ["N", "S", "E", "W", "NE", "NW", "SE", "SW"]
-DESCRIPTION_EXCLUDE_TERMS = ["DEAD END", "TRL", "RP", "ON RP", "OFF RP", "I5"]
+DIRECTION_FLOW_COLUMNS = [f"total_{direction}_flow" for direction in DIRECTION_COLUMNS]
+
+CORRIDOR_PAIRS = {
+    "NS": ("N", "S"),
+    "EW": ("E", "W"),
+    "NESW": ("NE", "SW"),
+    "NWSE": ("NW", "SE"),
+}
+
+CANDIDATE_DESCRIPTION_EXCLUDE_TERMS = [
+    "DEAD END",
+    "TRL",
+    "RP",
+    "ON RP",
+    "OFF RP",
+    "I5",
+    "BR",
+    "SR",
+    "POINT",
+    "RAMP",
+]
 
 
 def parse_args() -> argparse.Namespace:
     """Read command-line options while keeping repo-local defaults."""
     parser = argparse.ArgumentParser(
-        description="Assign Seattle traffic count stations to their nearest signals."
+        description="Estimate signal-level alpha values from Seattle traffic count flows."
     )
     parser.add_argument(
         "--counts-csv",
@@ -55,33 +80,34 @@ def parse_args() -> argparse.Namespace:
         help="Path to the Seattle signal/intersection inventory CSV.",
     )
     parser.add_argument(
-        "--output-csv",
+        "--nearest-output-csv",
         type=Path,
-        default=DEFAULT_OUTPUT_CSV,
-        help="Path where the nearest-signal output CSV will be saved.",
+        default=DEFAULT_NEAREST_OUTPUT_CSV,
+        help="Path where the full nearest-signal flow table will be saved.",
+    )
+    parser.add_argument(
+        "--candidate-output-csv",
+        type=Path,
+        default=DEFAULT_CANDIDATE_OUTPUT_CSV,
+        help="Path where candidate signals will be saved.",
+    )
+    parser.add_argument(
+        "--alpha-output-csv",
+        type=Path,
+        default=DEFAULT_ALPHA_OUTPUT_CSV,
+        help="Path where final per-signal alpha estimates will be saved.",
+    )
+    parser.add_argument(
+        "--citywide-summary-csv",
+        type=Path,
+        default=DEFAULT_CITYWIDE_SUMMARY_CSV,
+        help="Path where citywide alpha summary statistics will be saved.",
     )
     parser.add_argument(
         "--max-distance-feet",
         type=float,
         default=150.0,
-        help="Keep a station only if its nearest signal is within this distance.",
-    )
-    parser.add_argument(
-        "--min-stations",
-        type=int,
-        default=2,
-        help="Discard signals with fewer assigned stations than this.",
-    )
-    parser.add_argument(
-        "--max-stations",
-        type=int,
-        default=12,
-        help="Discard signals with more assigned stations than this.",
-    )
-    parser.add_argument(
-        "--keep-nonstandard-signals",
-        action="store_true",
-        help="Do not discard descriptions containing DEAD END, TRL, RP, ON RP, OFF RP, or I5.",
+        help="Assign a count station only if its nearest signal is within this distance.",
     )
     return parser.parse_args()
 
@@ -92,26 +118,28 @@ def keep_available_columns(df: pd.DataFrame, desired_columns: Iterable[str]) -> 
     return df.loc[:, available_columns].copy()
 
 
-def clean_number(series: pd.Series) -> pd.Series:
+def clean_number(values: pd.Series) -> pd.Series:
     """Convert values like '1,234' and blanks into numeric values."""
     return pd.to_numeric(
-        series.astype("string").str.replace(",", "", regex=False).str.strip(),
+        values.astype("string").str.replace(",", "", regex=False).str.strip(),
         errors="coerce",
     )
 
 
-def choose_volume_column(counts: pd.DataFrame) -> str:
-    """Use STUDY_AWDT when present, otherwise fall back to STUDY_ADT."""
-    if "STUDY_AWDT" in counts.columns:
-        return "STUDY_AWDT"
-    if "STUDY_ADT" in counts.columns:
-        return "STUDY_ADT"
-    raise ValueError("Traffic count data must include STUDY_AWDT or STUDY_ADT.")
+def choose_volume(counts: pd.DataFrame) -> pd.Series:
+    """Prefer STUDY_AWDT as volume, falling back row-by-row to STUDY_ADT."""
+    if "STUDY_AWDT" not in counts.columns and "STUDY_ADT" not in counts.columns:
+        raise ValueError("Traffic count data must include STUDY_AWDT or STUDY_ADT.")
+
+    awdt = clean_number(counts["STUDY_AWDT"]) if "STUDY_AWDT" in counts.columns else pd.Series(np.nan, index=counts.index)
+    adt = clean_number(counts["STUDY_ADT"]) if "STUDY_ADT" in counts.columns else pd.Series(np.nan, index=counts.index)
+    return awdt.fillna(adt)
 
 
-def load_and_clean_counts(counts_csv: Path) -> pd.DataFrame:
-    """Load traffic counts and keep stations with coordinates and positive volume."""
+def load_data(counts_csv: Path, signals_csv: Path) -> tuple[pd.DataFrame, pd.DataFrame, int]:
+    """Load and clean traffic count stations and signalized intersections."""
     desired_count_columns = [
+        "OBJECTID",
         "STUDY_ID",
         "STUDY_AWDT",
         "STUDY_ADT",
@@ -121,21 +149,16 @@ def load_and_clean_counts(counts_csv: Path) -> pd.DataFrame:
         "x",
         "y",
     ]
-
     raw_counts = pd.read_csv(counts_csv, low_memory=False)
+    total_count_stations_loaded = len(raw_counts)
     counts = keep_available_columns(raw_counts, desired_count_columns)
-
-    volume_column = choose_volume_column(counts)
-    counts["volume"] = clean_number(counts[volume_column])
 
     for coordinate_column in ["x", "y"]:
         if coordinate_column not in counts.columns:
             raise ValueError(f"Traffic count data is missing required coordinate {coordinate_column!r}.")
         counts[coordinate_column] = clean_number(counts[coordinate_column])
 
-    if "STUDY_ID" not in counts.columns:
-        counts["STUDY_ID"] = pd.NA
-
+    counts["volume"] = choose_volume(counts)
     if "STUDY_DIRFLOW" in counts.columns:
         counts["STUDY_DIRFLOW"] = counts["STUDY_DIRFLOW"].astype("string").str.upper().str.strip()
     else:
@@ -143,11 +166,8 @@ def load_and_clean_counts(counts_csv: Path) -> pd.DataFrame:
 
     counts = counts.dropna(subset=["x", "y", "volume"])
     counts = counts[counts["volume"] > 0].copy()
-    return counts.reset_index(drop=True)
+    counts = counts[counts["STUDY_DIRFLOW"].isin(DIRECTION_COLUMNS)].copy()
 
-
-def load_and_clean_signals(signals_csv: Path) -> pd.DataFrame:
-    """Load signals and keep rows with projected coordinates."""
     desired_signal_columns = [
         "UNITID",
         "UNITDESC",
@@ -156,7 +176,6 @@ def load_and_clean_signals(signals_csv: Path) -> pd.DataFrame:
         "GIS_XCOORD",
         "GIS_YCOORD",
     ]
-
     raw_signals = pd.read_csv(signals_csv, low_memory=False)
     signals = keep_available_columns(raw_signals, desired_signal_columns)
 
@@ -167,37 +186,20 @@ def load_and_clean_signals(signals_csv: Path) -> pd.DataFrame:
     if "GIS_XCOORD" not in signals.columns or "GIS_YCOORD" not in signals.columns:
         raise ValueError("Signal data must include GIS_XCOORD and GIS_YCOORD.")
 
-    if "UNITID" not in signals.columns:
-        signals["UNITID"] = pd.NA
-    if "UNITDESC" not in signals.columns:
-        signals["UNITDESC"] = pd.NA
-    if "SHAPE_LAT" not in signals.columns:
-        signals["SHAPE_LAT"] = pd.NA
-    if "SHAPE_LNG" not in signals.columns:
-        signals["SHAPE_LNG"] = pd.NA
+    for optional_column in ["UNITID", "UNITDESC", "SHAPE_LAT", "SHAPE_LNG"]:
+        if optional_column not in signals.columns:
+            signals[optional_column] = pd.NA
 
-    signals = signals.dropna(subset=["GIS_XCOORD", "GIS_YCOORD"]).copy()
-    return signals.reset_index(drop=True)
+    signals = signals.dropna(subset=["GIS_XCOORD", "GIS_YCOORD", "SHAPE_LAT", "SHAPE_LNG"]).copy()
+    return counts.reset_index(drop=True), signals.reset_index(drop=True), total_count_stations_loaded
 
 
-def estimate_alpha_from_directional_flows(row):
-    """Placeholder for future left/straight/right movement classification."""
-    return None, None, None
-
-
-def assign_counts_to_nearest_signals(
+def assign_count_stations_to_nearest_signal(
     counts: pd.DataFrame,
     signals: pd.DataFrame,
-    max_distance_feet: float,
+    max_distance_feet: float = 150.0,
 ) -> tuple[pd.DataFrame, int]:
-    """
-    Assign each count station to at most one signal.
-
-    The KD-tree is built from signal coordinates in projected feet. Each station
-    queries the tree for its single nearest signal. If that nearest signal is
-    farther than max_distance_feet, the station is discarded instead of being
-    attached to a distant or ambiguous intersection.
-    """
+    """Assign each count station row to its nearest signal when within max distance."""
     signal_points = signals[["GIS_XCOORD", "GIS_YCOORD"]].to_numpy(dtype=float)
     count_points = counts[["x", "y"]].to_numpy(dtype=float)
 
@@ -209,7 +211,7 @@ def assign_counts_to_nearest_signals(
     assigned["station_distance_feet"] = distances
 
     within_distance = assigned["station_distance_feet"] <= max_distance_feet
-    discarded_too_far = int((~within_distance).sum())
+    discarded_count = int((~within_distance).sum())
     assigned = assigned.loc[within_distance].copy()
 
     signal_lookup = signals.reset_index().rename(columns={"index": "nearest_signal_index"})
@@ -219,31 +221,17 @@ def assign_counts_to_nearest_signals(
         how="left",
         suffixes=("_count", "_signal"),
     )
-
-    # The same STUDY_ID can appear more than once near the same signal. Keep the
-    # closest copy so one study does not inflate an intersection's inflow.
-    dedupe_columns = ["UNITID", "STUDY_ID"]
-    assigned = assigned.sort_values("station_distance_feet")
-    assigned = assigned.drop_duplicates(subset=dedupe_columns, keep="first")
-    return assigned, discarded_too_far
+    return assigned.reset_index(drop=True), discarded_count
 
 
-def signal_description_is_allowed(description: object) -> bool:
-    """Return False for optional nonstandard/ramp/trail/dead-end descriptions."""
-    text = str(description).upper()
-    return not any(term in text for term in DESCRIPTION_EXCLUDE_TERMS)
+def direction_flow_column(direction: str) -> str:
+    """Return the output column name for a direction's total flow."""
+    return f"total_{direction}_flow"
 
 
-def summarize_assigned_signals(
-    assigned: pd.DataFrame,
-    max_distance_feet: float,
-    min_stations: int,
-    max_stations: int,
-    discard_nonstandard_signals: bool,
-) -> pd.DataFrame:
-    """Group assigned stations by signal and apply quality filters."""
+def build_signal_flow_table(assigned: pd.DataFrame) -> pd.DataFrame:
+    """Group assigned count stations by signal and summarize directional flows."""
     rows = []
-
     for _, group in assigned.groupby("UNITID", dropna=False):
         first = group.iloc[0]
         row = {
@@ -259,26 +247,27 @@ def summarize_assigned_signals(
 
         for direction in DIRECTION_COLUMNS:
             direction_mask = group["STUDY_DIRFLOW"] == direction
-            row[f"total_{direction}_flow"] = float(group.loc[direction_mask, "volume"].sum())
+            row[direction_flow_column(direction)] = float(group.loc[direction_mask, "volume"].sum())
 
-        estimate_alpha_from_directional_flows(pd.Series(row))
         rows.append(row)
 
     output = pd.DataFrame(rows)
     if output.empty:
-        return output
+        columns = [
+            "signal_id",
+            "signal_description",
+            "latitude",
+            "longitude",
+            "assigned_count_stations",
+            "u",
+            *DIRECTION_FLOW_COLUMNS,
+            "max_station_distance",
+            "average_station_distance",
+            "nonzero_direction_buckets",
+        ]
+        return pd.DataFrame(columns=columns)
 
-    quality_mask = (
-        (output["assigned_count_stations"] >= min_stations)
-        & (output["assigned_count_stations"] <= max_stations)
-        & (output["max_station_distance"] <= max_distance_feet)
-    )
-
-    if discard_nonstandard_signals:
-        quality_mask &= output["signal_description"].apply(signal_description_is_allowed)
-
-    output = output.loc[quality_mask].copy()
-
+    output["nonzero_direction_buckets"] = output[DIRECTION_FLOW_COLUMNS].gt(0).sum(axis=1)
     ordered_columns = [
         "signal_id",
         "signal_description",
@@ -286,85 +275,284 @@ def summarize_assigned_signals(
         "longitude",
         "assigned_count_stations",
         "u",
-        "total_N_flow",
-        "total_S_flow",
-        "total_E_flow",
-        "total_W_flow",
-        "total_NE_flow",
-        "total_NW_flow",
-        "total_SE_flow",
-        "total_SW_flow",
+        *DIRECTION_FLOW_COLUMNS,
         "max_station_distance",
         "average_station_distance",
+        "nonzero_direction_buckets",
     ]
-    return output.loc[:, ordered_columns].sort_values("u", ascending=False)
+    return output.loc[:, ordered_columns].sort_values("u", ascending=False).reset_index(drop=True)
 
 
-def print_summary(
-    total_count_stations: int,
-    assigned_count_stations: int,
-    discarded_too_far: int,
-    output: pd.DataFrame,
+def signal_description_is_candidate(description: object) -> bool:
+    """Return False for descriptions that look like ramps, bridges, trails, or links."""
+    text = str(description).upper()
+    return not any(term in text for term in CANDIDATE_DESCRIPTION_EXCLUDE_TERMS)
+
+
+def filter_candidate_signals(signal_flows: pd.DataFrame, max_distance_feet: float = 150.0) -> pd.DataFrame:
+    """Apply the candidate filters needed before estimating corridor alpha."""
+    if signal_flows.empty:
+        return signal_flows.copy()
+
+    lower_u = signal_flows["u"].quantile(0.10)
+    upper_u = signal_flows["u"].quantile(0.90)
+
+    candidate_mask = (
+        signal_flows["assigned_count_stations"].between(4, 8, inclusive="both")
+        & (signal_flows["max_station_distance"] <= max_distance_feet)
+        & (signal_flows["nonzero_direction_buckets"] >= 3)
+        & signal_flows["u"].between(lower_u, upper_u, inclusive="both")
+        & signal_flows["signal_description"].apply(signal_description_is_candidate)
+    )
+    return signal_flows.loc[candidate_mask].sort_values("u", ascending=False).reset_index(drop=True)
+
+
+def analyze_direction_patterns(candidates: pd.DataFrame) -> pd.DataFrame:
+    """Add opposing-pair flags and pair volumes for each candidate signal."""
+    analyzed = candidates.copy()
+    if analyzed.empty:
+        for column in [
+            "has_NS_pair",
+            "has_EW_pair",
+            "has_NESW_pair",
+            "has_NWSE_pair",
+            "NS_pair_volume",
+            "EW_pair_volume",
+            "NESW_pair_volume",
+            "NWSE_pair_volume",
+        ]:
+            analyzed[column] = pd.Series(dtype=bool if column.startswith("has_") else float)
+        return analyzed
+
+    analyzed["has_NS_pair"] = (analyzed["total_N_flow"] > 0) & (analyzed["total_S_flow"] > 0)
+    analyzed["has_EW_pair"] = (analyzed["total_E_flow"] > 0) & (analyzed["total_W_flow"] > 0)
+    analyzed["has_NESW_pair"] = (analyzed["total_NE_flow"] > 0) & (analyzed["total_SW_flow"] > 0)
+    analyzed["has_NWSE_pair"] = (analyzed["total_NW_flow"] > 0) & (analyzed["total_SE_flow"] > 0)
+
+    for corridor, (first_direction, second_direction) in CORRIDOR_PAIRS.items():
+        analyzed[f"{corridor}_pair_volume"] = (
+            analyzed[direction_flow_column(first_direction)]
+            + analyzed[direction_flow_column(second_direction)]
+        )
+
+    return analyzed
+
+
+def estimate_corridor_alpha(analyzed_candidates: pd.DataFrame) -> pd.DataFrame:
+    """Convert dominant-corridor continuation into estimated alpha values."""
+    estimates = analyzed_candidates.copy()
+    if estimates.empty:
+        for column in [
+            "dominant_corridor",
+            "dominant_corridor_volume",
+            "cross_flow_volume",
+            "continuation_ratio",
+            "departure_ratio",
+            "alpha_left",
+            "alpha_straight",
+            "alpha_right",
+        ]:
+            estimates[column] = pd.Series(dtype=float)
+        return estimates
+
+    pair_volume_columns = [f"{corridor}_pair_volume" for corridor in CORRIDOR_PAIRS]
+    dominant_pair_column = estimates[pair_volume_columns].idxmax(axis=1)
+    estimates["dominant_corridor"] = dominant_pair_column.str.replace("_pair_volume", "", regex=False)
+    estimates["dominant_corridor_volume"] = estimates[pair_volume_columns].max(axis=1)
+    estimates["cross_flow_volume"] = (estimates["u"] - estimates["dominant_corridor_volume"]).clip(lower=0)
+    estimates["continuation_ratio"] = estimates["dominant_corridor_volume"] / estimates["u"]
+    estimates["departure_ratio"] = estimates["cross_flow_volume"] / estimates["u"]
+    estimates["alpha_straight"] = estimates["continuation_ratio"]
+
+    # The Seattle count data does not contain turn-level trajectories, so the
+    # non-corridor departure share is split evenly into left and right estimates.
+    estimates["alpha_left"] = estimates["departure_ratio"] / 2.0
+    estimates["alpha_right"] = estimates["departure_ratio"] / 2.0
+    return estimates
+
+
+def build_citywide_summary(alpha_estimates: pd.DataFrame) -> pd.DataFrame:
+    """Create one-row citywide alpha summary statistics."""
+    summary = {
+        "candidate_signal_count": int(len(alpha_estimates)),
+        "mean_alpha_left": alpha_estimates["alpha_left"].mean(),
+        "mean_alpha_straight": alpha_estimates["alpha_straight"].mean(),
+        "mean_alpha_right": alpha_estimates["alpha_right"].mean(),
+        "median_alpha_left": alpha_estimates["alpha_left"].median(),
+        "median_alpha_straight": alpha_estimates["alpha_straight"].median(),
+        "median_alpha_right": alpha_estimates["alpha_right"].median(),
+        "mean_continuation_ratio": alpha_estimates["continuation_ratio"].mean(),
+        "median_continuation_ratio": alpha_estimates["continuation_ratio"].median(),
+        "mean_departure_ratio": alpha_estimates["departure_ratio"].mean(),
+        "median_departure_ratio": alpha_estimates["departure_ratio"].median(),
+    }
+    return pd.DataFrame([summary])
+
+
+def final_alpha_columns(alpha_estimates: pd.DataFrame) -> pd.DataFrame:
+    """Return final alpha columns in the requested reusable order."""
+    columns = [
+        "signal_id",
+        "signal_description",
+        "u",
+        "assigned_count_stations",
+        "dominant_corridor",
+        "dominant_corridor_volume",
+        "cross_flow_volume",
+        "continuation_ratio",
+        "departure_ratio",
+        "alpha_left",
+        "alpha_straight",
+        "alpha_right",
+        "max_station_distance",
+        "average_station_distance",
+        *DIRECTION_FLOW_COLUMNS,
+    ]
+    return alpha_estimates.loc[:, columns].sort_values("u", ascending=False).reset_index(drop=True)
+
+
+def write_outputs(
+    signal_flows: pd.DataFrame,
+    analyzed_candidates: pd.DataFrame,
+    alpha_estimates: pd.DataFrame,
+    citywide_summary: pd.DataFrame,
+    nearest_output_csv: Path,
+    candidate_output_csv: Path,
+    alpha_output_csv: Path,
+    citywide_summary_csv: Path,
 ) -> None:
-    """Print high-level diagnostics for nearest-signal assignment."""
-    print("\nNearest-signal alpha exploration summary")
-    print("========================================")
-    print(f"Total count stations loaded: {total_count_stations:,}")
-    print(f"Count stations assigned to a signal: {assigned_count_stations:,}")
-    print(f"Count stations discarded for being farther than 150 ft: {discarded_too_far:,}")
-    print(f"Number of valid signals after filtering: {len(output):,}")
-    print(f"Mean estimated inflow u: {output['u'].mean():,.2f}")
-    print(f"Median estimated inflow u: {output['u'].median():,.2f}")
+    """Save all reusable CSV outputs, creating generated folders as needed."""
+    os.makedirs(DEFAULT_GENERATED_DIR, exist_ok=True)
+    for output_path in [
+        nearest_output_csv,
+        candidate_output_csv,
+        alpha_output_csv,
+        citywide_summary_csv,
+    ]:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    print("\nTop 10 valid intersections by estimated inflow")
-    print("----------------------------------------------")
+    signal_flows.to_csv(nearest_output_csv, index=False)
+    analyzed_candidates.to_csv(candidate_output_csv, index=False)
+    final_alpha_columns(alpha_estimates).to_csv(alpha_output_csv, index=False)
+    citywide_summary.to_csv(citywide_summary_csv, index=False)
+
+
+def print_summaries(
+    total_count_stations_loaded: int,
+    count_stations_assigned: int,
+    count_stations_discarded: int,
+    signal_flows: pd.DataFrame,
+    analyzed_candidates: pd.DataFrame,
+    alpha_estimates: pd.DataFrame,
+    citywide_summary: pd.DataFrame,
+) -> None:
+    """Print useful diagnostics and alpha summaries to console."""
+    print("\nAlpha-estimation pipeline summary")
+    print("=================================")
+    print(f"Total count stations loaded: {total_count_stations_loaded:,}")
+    print(f"Count stations assigned: {count_stations_assigned:,}")
+    print(f"Count stations discarded: {count_stations_discarded:,}")
+    print(f"Valid signals before candidate filtering: {len(signal_flows):,}")
+    print(f"Candidate signal count: {len(analyzed_candidates):,}")
+
+    ns_ew_count = int((analyzed_candidates["has_NS_pair"] & analyzed_candidates["has_EW_pair"]).sum()) if not analyzed_candidates.empty else 0
+    pattern_counts = {
+        "N + S": int(analyzed_candidates["has_NS_pair"].sum()) if not analyzed_candidates.empty else 0,
+        "E + W": int(analyzed_candidates["has_EW_pair"].sum()) if not analyzed_candidates.empty else 0,
+        "N + S + E + W": ns_ew_count,
+        "NE + SW": int(analyzed_candidates["has_NESW_pair"].sum()) if not analyzed_candidates.empty else 0,
+        "NW + SE": int(analyzed_candidates["has_NWSE_pair"].sum()) if not analyzed_candidates.empty else 0,
+    }
+
+    print("\nPattern counts")
+    print("--------------")
+    for pattern, count in pattern_counts.items():
+        print(f"{pattern}: {count:,}")
+
+    summary_row = citywide_summary.iloc[0]
+    print("\nCitywide mean alpha")
+    print("-------------------")
+    print(
+        "left={:.4f}, straight={:.4f}, right={:.4f}".format(
+            summary_row["mean_alpha_left"],
+            summary_row["mean_alpha_straight"],
+            summary_row["mean_alpha_right"],
+        )
+    )
+    print("\nCitywide median alpha")
+    print("---------------------")
+    print(
+        "left={:.4f}, straight={:.4f}, right={:.4f}".format(
+            summary_row["median_alpha_left"],
+            summary_row["median_alpha_straight"],
+            summary_row["median_alpha_right"],
+        )
+    )
+
+    print("\nTop 10 candidate signals by u")
+    print("-----------------------------")
     display_columns = [
         "signal_id",
         "signal_description",
-        "assigned_count_stations",
         "u",
-        "max_station_distance",
+        "assigned_count_stations",
+        "dominant_corridor",
+        "continuation_ratio",
+        "alpha_left",
+        "alpha_straight",
+        "alpha_right",
     ]
-    print(output.head(10)[display_columns].to_string(index=False))
+    if alpha_estimates.empty:
+        print("(no candidate signals)")
+    else:
+        print(alpha_estimates.sort_values("u", ascending=False).head(10)[display_columns].to_string(index=False))
 
 
 def main() -> None:
-    """Run the complete load, clean, assign, filter, print, and save pipeline."""
+    """Run the full load, assign, summarize, filter, alpha, save, and print pipeline."""
     args = parse_args()
 
-    print(f"Loading traffic counts from: {args.counts_csv}")
-    counts = load_and_clean_counts(args.counts_csv)
-    print(f"Usable traffic count rows: {len(counts):,}")
-
-    print(f"Loading signal inventory from: {args.signals_csv}")
-    signals = load_and_clean_signals(args.signals_csv)
-    print(f"Usable signal rows: {len(signals):,}")
-
-    print(f"Assigning each count station to its nearest signal within {args.max_distance_feet:g} feet...")
-    assigned, discarded_too_far = assign_counts_to_nearest_signals(
+    counts, signals, total_count_stations_loaded = load_data(args.counts_csv, args.signals_csv)
+    assigned, _count_stations_discarded_too_far = assign_count_stations_to_nearest_signal(
         counts=counts,
         signals=signals,
         max_distance_feet=args.max_distance_feet,
     )
+    count_stations_discarded = total_count_stations_loaded - len(assigned)
 
-    output = summarize_assigned_signals(
-        assigned=assigned,
-        max_distance_feet=args.max_distance_feet,
-        min_stations=args.min_stations,
-        max_stations=args.max_stations,
-        discard_nonstandard_signals=not args.keep_nonstandard_signals,
+    signal_flows = build_signal_flow_table(assigned)
+    candidates = filter_candidate_signals(signal_flows, max_distance_feet=args.max_distance_feet)
+    analyzed_candidates = analyze_direction_patterns(candidates)
+    alpha_estimates = estimate_corridor_alpha(analyzed_candidates)
+    citywide_summary = build_citywide_summary(alpha_estimates)
+
+    write_outputs(
+        signal_flows=signal_flows,
+        analyzed_candidates=analyzed_candidates,
+        alpha_estimates=alpha_estimates,
+        citywide_summary=citywide_summary,
+        nearest_output_csv=args.nearest_output_csv,
+        candidate_output_csv=args.candidate_output_csv,
+        alpha_output_csv=args.alpha_output_csv,
+        citywide_summary_csv=args.citywide_summary_csv,
     )
 
-    args.output_csv.parent.mkdir(parents=True, exist_ok=True)
-    output.to_csv(args.output_csv, index=False)
-
-    print_summary(
-        total_count_stations=len(counts),
-        assigned_count_stations=len(assigned),
-        discarded_too_far=discarded_too_far,
-        output=output,
+    print_summaries(
+        total_count_stations_loaded=total_count_stations_loaded,
+        count_stations_assigned=len(assigned),
+        count_stations_discarded=count_stations_discarded,
+        signal_flows=signal_flows,
+        analyzed_candidates=analyzed_candidates,
+        alpha_estimates=alpha_estimates,
+        citywide_summary=citywide_summary,
     )
-    print(f"\nSaved nearest-signal output to: {args.output_csv}")
+
+    print("\nSaved outputs")
+    print("-------------")
+    print(args.nearest_output_csv)
+    print(args.candidate_output_csv)
+    print(args.alpha_output_csv)
+    print(args.citywide_summary_csv)
 
 
 if __name__ == "__main__":
