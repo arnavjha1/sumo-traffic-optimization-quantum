@@ -49,3 +49,5 @@ if __name__ == "__main__":
     print("Number of valid rows:", len(filtered_rows))
     print("24 hourly constants:")
     print(constants)
+    print("Valid rows:")
+    print(len(filtered_rows))
