@@ -1,53 +1,44 @@
+import subprocess
 import pandas as pd
+import numpy as np
+from pathlib import Path
 
-INPUT_FILE = "data/Traffic_Hourly_Count_Seattle.csv"
+# Paths
+BASE_DIR = Path("data_analysis")
+ALPHA_SCRIPT = BASE_DIR / "calc_alpha.py"
+TRAFFIC_SCRIPT = BASE_DIR / "calc_traffic_over_time.py"
+ALPHA_SUMMARY_CSV = BASE_DIR / "generated_data" / "alpha_citywide_summary.csv"
+HOURLY_CONSTANTS_CSV = BASE_DIR / "generated_data" / "calculated_hourly_constants.csv"
 
-def clean_number(value):
-    """
-    Converts values like '47,646' into 47646.
-    Also handles blanks or invalid values safely.
-    """
-    if pd.isna(value):
-        return None
-    return int(str(value).replace(",", "").strip())
+# 1. Run both scripts and wait for completion
+subprocess.run(["python", str(ALPHA_SCRIPT)], check=True)
+subprocess.run(["python", str(TRAFFIC_SCRIPT)], check=True)
 
-def calculate_hour_constants(csv_path):
-    df = pd.read_csv(csv_path)
+# 2. Load outputs
+alpha_summary = pd.read_csv(ALPHA_SUMMARY_CSV)
+hourly_constants = pd.read_csv(HOURLY_CONSTANTS_CSV)
 
-    # Clean numeric columns
-    hour_cols = [f"HR{hour:02d}_TOTAL" for hour in range(1, 25)]
-    numeric_cols = ["TOTAL"] + hour_cols
+# 3. Extract needed values
+alpha_straight = alpha_summary["mean_alpha_straight"].iloc[0]
+alpha_left = alpha_summary["mean_alpha_left"].iloc[0]
+alpha_right = alpha_summary["mean_alpha_right"].iloc[0]
+departure_constant = alpha_left + alpha_right
 
-    for col in numeric_cols:
-        df[col] = df[col].apply(clean_number)
+hour_constant_list = hourly_constants["hour_constant"].tolist()
+average_hour_traffic_list = hourly_constants["average_hourly_traffic"].tolist()
 
-    # Clean weekday and holiday columns
-    df["WEEKDAY"] = df["WEEKDAY"].astype(int)
-    df["HOLIDAY_YN"] = df["HOLIDAY_YN"].astype(str).str.strip()
+# 4. Build 24x4 array: [average_hour_traffic, hour_constant, alpha_straight, departure_constant]
+data_array = np.zeros((24, 3))
 
-    # Filter rows
-    filtered = df[
-        (df["TOTAL"] >= 10000) &
-        (~df["WEEKDAY"].isin([6, 7])) &
-        (df["HOLIDAY_YN"] == "N")
-    ].copy()
+for i in range(24):
+    data_array[i, 0] = average_hour_traffic_list[i] * hour_constant_list[i] * 24
+    data_array[i, 1] = alpha_straight
+    data_array[i, 2] = departure_constant
 
-    # Calculate hourly constants for each valid row
-    for col in hour_cols:
-        filtered[col + "_CONST"] = filtered[col] / filtered["TOTAL"]
+# Optional: convert to pandas DataFrame for easier inspection
+df_24x3 = pd.DataFrame(
+    data_array,
+    columns=["hourly_rate", "alpha_straight", "departure_constant"]
+)
 
-    const_cols = [col + "_CONST" for col in hour_cols]
-
-    # Average constants across all valid rows
-    hour_constants = filtered[const_cols].mean().tolist()
-
-    return hour_constants, filtered
-
-if __name__ == "__main__":
-    constants, filtered_rows = calculate_hour_constants(INPUT_FILE)
-
-    print("Number of valid rows:", len(filtered_rows))
-    print("24 hourly constants:")
-    print(constants)
-    print("Valid rows:")
-    print(len(filtered_rows))
+print(df_24x3)
