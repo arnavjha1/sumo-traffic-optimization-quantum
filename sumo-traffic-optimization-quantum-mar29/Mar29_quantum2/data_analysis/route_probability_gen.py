@@ -10,28 +10,28 @@ MAX_DECISIONS = 3
 # Each option: outgoing_edge, next_node, movement_direction
 GRAPH = {
     "A1": [
-        ("E6", None, "W"),        # exit west
+        ("E7", None, "W"),        # exit west
         ("A1B1", "B1", "E"),      # go east
         ("A1A0", "A0", "S"),      # go south
-        ("E7", None, "N"),        # exit north
+        ("E6", None, "N"),        # exit north
     ],
     "B1": [
-        ("B1A1", "A1", "W"),
-        ("E1", None, "E"),
-        ("B1B0", "B0", "S"),
-        ("E0", None, "N"),
+        ("B1A1", "A1", "W"),      # go west
+        ("E1", None, "E"),        # exit east
+        ("B1B0", "B0", "S"),      # go south
+        ("E0", None, "N"),        # exit north
     ],
     "A0": [
-        ("E5", None, "W"),
-        ("A0B0", "B0", "E"),
-        ("E3", None, "S"),
-        ("A0A1", "A1", "N"),
+        ("E5", None, "W"),        # exit west
+        ("A0B0", "B0", "E"),      # go east
+        ("E3", None, "S"),        # exit south
+        ("A0A1", "A1", "N"),      # go north
     ],
     "B0": [
-        ("B0A0", "A0", "W"),
-        ("E4", None, "E"),
-        ("E2", None, "S"),
-        ("B0B1", "B1", "N"),
+        ("B0A0", "A0", "W"),      # go west
+        ("E4", None, "E"),        # exit east
+        ("E2", None, "S"),        # exit south
+        ("B0B1", "B1", "N"),      # go north
     ],
 }
 
