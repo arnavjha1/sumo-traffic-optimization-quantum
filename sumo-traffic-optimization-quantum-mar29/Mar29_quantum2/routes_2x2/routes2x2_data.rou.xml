@@ -1,23 +1,23 @@
 <routes>
     <vType id="car" accel="2.6" decel="4.5" maxSpeed="13.9" length="5" />
-    <route id="r0" edges="-E7 E7" />
-    <route id="r1" edges="-E7 A1B1 E1" />
-    <route id="r2" edges="-E7 A1B1 B1B0 E4" />
-    <route id="r3" edges="-E7 A1B1 B1B0 E2" />
-    <route id="r4" edges="-E7 A1B1 E0" />
-    <route id="r5" edges="-E7 A1A0 E5" />
-    <route id="r6" edges="-E7 A1A0 A0B0 E4" />
-    <route id="r7" edges="-E7 A1A0 A0B0 E2" />
-    <route id="r8" edges="-E7 A1A0 E3" />
-    <route id="r9" edges="-E6 A1B1 E1" />
-    <route id="r10" edges="-E6 A1B1 B1B0 E4" />
-    <route id="r11" edges="-E6 A1B1 B1B0 E2" />
-    <route id="r12" edges="-E6 A1B1 E0" />
-    <route id="r13" edges="-E6 A1A0 E5" />
-    <route id="r14" edges="-E6 A1A0 A0B0 E4" />
-    <route id="r15" edges="-E6 A1A0 A0B0 E2" />
-    <route id="r16" edges="-E6 A1A0 E3" />
-    <route id="r17" edges="-E6 E6" />
+    <route id="r0" edges="-E6 E7" />
+    <route id="r1" edges="-E6 A1B1 E1" />
+    <route id="r2" edges="-E6 A1B1 B1B0 E4" />
+    <route id="r3" edges="-E6 A1B1 B1B0 E2" />
+    <route id="r4" edges="-E6 A1B1 E0" />
+    <route id="r5" edges="-E6 A1A0 E5" />
+    <route id="r6" edges="-E6 A1A0 A0B0 E4" />
+    <route id="r7" edges="-E6 A1A0 A0B0 E2" />
+    <route id="r8" edges="-E6 A1A0 E3" />
+    <route id="r9" edges="-E7 A1B1 E1" />
+    <route id="r10" edges="-E7 A1B1 B1B0 E4" />
+    <route id="r11" edges="-E7 A1B1 B1B0 E2" />
+    <route id="r12" edges="-E7 A1B1 E0" />
+    <route id="r13" edges="-E7 A1A0 E5" />
+    <route id="r14" edges="-E7 A1A0 A0B0 E4" />
+    <route id="r15" edges="-E7 A1A0 A0B0 E2" />
+    <route id="r16" edges="-E7 A1A0 E3" />
+    <route id="r17" edges="-E7 E6" />
     <route id="r18" edges="-E0 B1A1 E7" />
     <route id="r19" edges="-E0 B1A1 A1A0 E5" />
     <route id="r20" edges="-E0 B1A1 A1A0 E3" />

@@ -37,8 +37,8 @@ GRAPH = {
 
 # Starting edges: edge enters node while moving in direction
 STARTS = {
-    "-E7": ("A1", "S"),
-    "-E6": ("A1", "E"),
+    "-E6": ("A1", "S"),
+    "-E7": ("A1", "E"),
     "-E0": ("B1", "S"),
     "-E1": ("B1", "W"),
     "-E5": ("A0", "E"),
