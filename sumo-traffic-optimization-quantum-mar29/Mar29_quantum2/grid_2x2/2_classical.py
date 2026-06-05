@@ -2,8 +2,10 @@ import traci
 from collections import defaultdict
 
 SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim2x2.sumocfg"
-END_TIME = 600
+SUMO_CONFIG = "sim2x2_data.sumocfg"
+END_TIME = 86400
+HOUR_SECONDS = 3600
+NUM_HOURS = 24
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -48,6 +50,9 @@ last_waiting_time = {}
 travel_times = defaultdict(list)
 waiting_times = defaultdict(list)
 throughput = defaultdict(int)
+hourly_travel_times = [[] for _ in range(NUM_HOURS)]
+hourly_waiting_times = [[] for _ in range(NUM_HOURS)]
+hourly_throughput = [0 for _ in range(NUM_HOURS)]
 
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -88,10 +93,14 @@ def simStep(num_times = 1):
                 route = route_of[veh]
                 travel_time = t - depart_time[veh]
                 waiting_time = last_waiting_time.get(veh, 0.0)
+                hour_index = min(int(t // HOUR_SECONDS), NUM_HOURS - 1)
 
                 travel_times[route].append(travel_time)
                 waiting_times[route].append(waiting_time)
                 throughput[route] += 1
+                hourly_travel_times[hour_index].append(travel_time)
+                hourly_waiting_times[hour_index].append(waiting_time)
+                hourly_throughput[hour_index] += 1
 
                 depart_time.pop(veh, None)
                 route_of.pop(veh, None)
@@ -314,64 +323,33 @@ traci.close()
 # -----------------------
 print("\n===== PERFORMANCE METRICS =====")
 
-def compute_avg(route_list, data_dict):
-    values = []
-    for r in route_list:
-        values.extend(data_dict.get(r, []))
-    return sum(values) / len(values) if len(values) > 0 else None
-
-def compute_throughput(route_list):
-    return sum(throughput.get(r, 0) for r in route_list)
-
-ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
-
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
-
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
-
-# Travel time
 print("\nCLASSICAL")
-print("\nAverage Travel Time:")
-avg_two = compute_avg(TWO_TURNS, travel_times)
-avg_one = compute_avg(ONE_TURN, travel_times)
-avg_none = compute_avg(NO_TURNS, travel_times)
-avg_all = compute_avg(ALL_ROUTES, travel_times)
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+def compute_avg(values):
+    return sum(values) / len(values) if values else None
 
-# Waiting time
-print("\nAverage Waiting Time:")
-avg_two = compute_avg(TWO_TURNS, waiting_times)
-avg_one = compute_avg(ONE_TURN, waiting_times)
-avg_none = compute_avg(NO_TURNS, waiting_times)
-avg_all = compute_avg(ALL_ROUTES, waiting_times)
+def format_hour(hour):
+    hour_12 = hour % 12
+    if hour_12 == 0:
+        hour_12 = 12
+    suffix = "AM" if hour < 12 else "PM"
+    return f"{hour_12}{suffix}"
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+for hour in range(NUM_HOURS):
+    start_label = format_hour(hour)
+    end_label = format_hour((hour + 1) % NUM_HOURS)
+    avg_travel_time = compute_avg(hourly_travel_times[hour])
+    avg_waiting_time = compute_avg(hourly_waiting_times[hour])
 
-# Throughput
-print("\nThroughput:")
-thr_two = compute_throughput(TWO_TURNS)
-thr_one = compute_throughput(ONE_TURN)
-thr_none = compute_throughput(NO_TURNS)
-thr_all = compute_throughput(ALL_ROUTES)
-
-print(f"  Two Turns: {thr_two}")
-print(f"  One Turn:  {thr_one}")
-print(f"  No Turns:  {thr_none}")
-print(f"  Overall:   {thr_all}")
+    print(f"\nResults for {start_label} - {end_label}:")
+    print(f"  Throughput: {hourly_throughput[hour]}")
+    print(
+        f"  Average Travel Time: {avg_travel_time:.2f} s"
+        if avg_travel_time is not None
+        else "  Average Travel Time: N/A"
+    )
+    print(
+        f"  Average Waiting Time: {avg_waiting_time:.2f} s"
+        if avg_waiting_time is not None
+        else "  Average Waiting Time: N/A"
+    )

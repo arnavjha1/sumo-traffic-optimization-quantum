@@ -103,11 +103,10 @@ for _, route in route_probabilities.iterrows():
         },
     )
 
-for _, route in route_probabilities.iterrows():
-    route_id = str(route["route_id"])
-    route_probability = float(route["normalized_probability"])
-
-    for hour in range(24):
+for hour in range(24):
+    for _, route in route_probabilities.iterrows():
+        route_id = str(route["route_id"])
+        route_probability = float(route["normalized_probability"])
         begin = hour * 3600
         end = (hour + 1) * 3600
         vehs_per_hour = data_array[hour, 0] * route_probability
