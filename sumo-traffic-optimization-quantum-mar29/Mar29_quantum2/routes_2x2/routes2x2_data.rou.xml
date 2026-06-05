@@ -1,6 +1,6 @@
 <routes>
     <vType id="car" accel="2.6" decel="4.5" maxSpeed="13.9" length="5" />
-    <route id="r0" edges="-E7 E6" />
+    <route id="r0" edges="-E7 E7" />
     <route id="r1" edges="-E7 A1B1 E1" />
     <route id="r2" edges="-E7 A1B1 B1B0 E4" />
     <route id="r3" edges="-E7 A1B1 B1B0 E2" />
@@ -17,20 +17,20 @@
     <route id="r14" edges="-E6 A1A0 A0B0 E4" />
     <route id="r15" edges="-E6 A1A0 A0B0 E2" />
     <route id="r16" edges="-E6 A1A0 E3" />
-    <route id="r17" edges="-E6 E7" />
-    <route id="r18" edges="-E0 B1A1 E6" />
+    <route id="r17" edges="-E6 E6" />
+    <route id="r18" edges="-E0 B1A1 E7" />
     <route id="r19" edges="-E0 B1A1 A1A0 E5" />
     <route id="r20" edges="-E0 B1A1 A1A0 E3" />
-    <route id="r21" edges="-E0 B1A1 E7" />
+    <route id="r21" edges="-E0 B1A1 E6" />
     <route id="r22" edges="-E0 E1" />
     <route id="r23" edges="-E0 B1B0 B0A0 E5" />
     <route id="r24" edges="-E0 B1B0 B0A0 E3" />
     <route id="r25" edges="-E0 B1B0 E4" />
     <route id="r26" edges="-E0 B1B0 E2" />
-    <route id="r27" edges="-E1 B1A1 E6" />
+    <route id="r27" edges="-E1 B1A1 E7" />
     <route id="r28" edges="-E1 B1A1 A1A0 E5" />
     <route id="r29" edges="-E1 B1A1 A1A0 E3" />
-    <route id="r30" edges="-E1 B1A1 E7" />
+    <route id="r30" edges="-E1 B1A1 E6" />
     <route id="r31" edges="-E1 B1B0 B0A0 E5" />
     <route id="r32" edges="-E1 B1B0 B0A0 E3" />
     <route id="r33" edges="-E1 B1B0 E4" />
@@ -41,35 +41,35 @@
     <route id="r38" edges="-E5 A0B0 B0B1 E1" />
     <route id="r39" edges="-E5 A0B0 B0B1 E0" />
     <route id="r40" edges="-E5 E3" />
-    <route id="r41" edges="-E5 A0A1 E6" />
+    <route id="r41" edges="-E5 A0A1 E7" />
     <route id="r42" edges="-E5 A0A1 A1B1 E1" />
     <route id="r43" edges="-E5 A0A1 A1B1 E0" />
-    <route id="r44" edges="-E5 A0A1 E7" />
+    <route id="r44" edges="-E5 A0A1 E6" />
     <route id="r45" edges="-E3 E5" />
     <route id="r46" edges="-E3 A0B0 E4" />
     <route id="r47" edges="-E3 A0B0 E2" />
     <route id="r48" edges="-E3 A0B0 B0B1 E1" />
     <route id="r49" edges="-E3 A0B0 B0B1 E0" />
-    <route id="r50" edges="-E3 A0A1 E6" />
+    <route id="r50" edges="-E3 A0A1 E7" />
     <route id="r51" edges="-E3 A0A1 A1B1 E1" />
     <route id="r52" edges="-E3 A0A1 A1B1 E0" />
-    <route id="r53" edges="-E3 A0A1 E7" />
+    <route id="r53" edges="-E3 A0A1 E6" />
     <route id="r54" edges="-E4 B0A0 E5" />
     <route id="r55" edges="-E4 B0A0 E3" />
-    <route id="r56" edges="-E4 B0A0 A0A1 E6" />
-    <route id="r57" edges="-E4 B0A0 A0A1 E7" />
+    <route id="r56" edges="-E4 B0A0 A0A1 E7" />
+    <route id="r57" edges="-E4 B0A0 A0A1 E6" />
     <route id="r58" edges="-E4 E2" />
-    <route id="r59" edges="-E4 B0B1 B1A1 E6" />
-    <route id="r60" edges="-E4 B0B1 B1A1 E7" />
+    <route id="r59" edges="-E4 B0B1 B1A1 E7" />
+    <route id="r60" edges="-E4 B0B1 B1A1 E6" />
     <route id="r61" edges="-E4 B0B1 E1" />
     <route id="r62" edges="-E4 B0B1 E0" />
     <route id="r63" edges="-E2 B0A0 E5" />
     <route id="r64" edges="-E2 B0A0 E3" />
-    <route id="r65" edges="-E2 B0A0 A0A1 E6" />
-    <route id="r66" edges="-E2 B0A0 A0A1 E7" />
+    <route id="r65" edges="-E2 B0A0 A0A1 E7" />
+    <route id="r66" edges="-E2 B0A0 A0A1 E6" />
     <route id="r67" edges="-E2 E4" />
-    <route id="r68" edges="-E2 B0B1 B1A1 E6" />
-    <route id="r69" edges="-E2 B0B1 B1A1 E7" />
+    <route id="r68" edges="-E2 B0B1 B1A1 E7" />
+    <route id="r69" edges="-E2 B0B1 B1A1 E6" />
     <route id="r70" edges="-E2 B0B1 E1" />
     <route id="r71" edges="-E2 B0B1 E0" />
     <flow id="r0_h0" type="car" route="r0" begin="0" end="3600" vehsPerHour="36.324143" />
