@@ -3,7 +3,8 @@ from collections import defaultdict
 
 SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
-END_TIME = 86400
+ROUTE_GENERATION_END = 86400
+MAX_SIM_TIME = 100000
 HOUR_SECONDS = 3600
 NUM_HOURS = 24
 
@@ -47,36 +48,41 @@ queue_lengths = [[[] for _ in range(NUM_LANES)] for _ in range(NUM_TLS)]
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
-while traci.simulation.getTime() < END_TIME:
+while (
+    traci.simulation.getTime() < MAX_SIM_TIME
+    and (traci.simulation.getMinExpectedNumber() > 0 or traci.simulation.getTime() < ROUTE_GENERATION_END)
+):
     traci.simulationStep()
     t = traci.simulation.getTime()
 
-    # Vehicles that just departed
     for veh in traci.simulation.getDepartedIDList():
         depart_time[veh] = t
         route_of[veh] = traci.vehicle.getRouteID(veh)
         last_waiting_time[veh] = 0.0
 
-    # Update waiting times
     for veh in traci.vehicle.getIDList():
         last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
 
-    # Vehicles that just arrived
     for veh in traci.simulation.getArrivedIDList():
         if veh in depart_time:
             route = route_of[veh]
-            travel_time = t - depart_time[veh]
+            dep_t = depart_time[veh]
+
+            travel_time = t - dep_t
             waiting_time = last_waiting_time.get(veh, 0.0)
-            hour_index = min(int(t // HOUR_SECONDS), NUM_HOURS - 1)
 
-            travel_times[route].append(travel_time)
-            waiting_times[route].append(waiting_time)
-            throughput[route] += 1
-            hourly_travel_times[hour_index].append(travel_time)
-            hourly_waiting_times[hour_index].append(waiting_time)
-            hourly_throughput[hour_index] += 1
+            # Bucket by departure hour, not arrival hour
+            hour_index = int(dep_t // HOUR_SECONDS)
 
-            # cleanup
+            if 0 <= hour_index < NUM_HOURS:
+                travel_times[route].append(travel_time)
+                waiting_times[route].append(waiting_time)
+                throughput[route] += 1
+
+                hourly_travel_times[hour_index].append(travel_time)
+                hourly_waiting_times[hour_index].append(waiting_time)
+                hourly_throughput[hour_index] += 1
+
             depart_time.pop(veh, None)
             route_of.pop(veh, None)
             last_waiting_time.pop(veh, None)
