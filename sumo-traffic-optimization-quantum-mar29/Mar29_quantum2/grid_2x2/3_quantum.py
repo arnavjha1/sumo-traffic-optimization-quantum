@@ -1,12 +1,19 @@
 import traci
 from collections import defaultdict
 from annealer_quantum import quantum_decision
+from simulation_metrics import (
+    PerformanceTracker,
+    collect_queue_lengths_4d,
+    should_continue_simulation,
+    start_sumo,
+    ROUTE_GENERATION_END,
+    MAX_SIM_TIME,
+    HOUR_SECONDS,
+    NUM_HOURS,
+)
 
 SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
-END_TIME = 86400
-HOUR_SECONDS = 3600
-NUM_HOURS = 24
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -32,7 +39,7 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+start_sumo(SUMO_BINARY, SUMO_CONFIG, max_depart_delay=300)
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -73,63 +80,20 @@ for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
     tIndex.append(tls)
 
-def simStep(num_times = 1):
+metrics = PerformanceTracker("quantum")
+
+def simStep(num_times=1):
     for _ in range(num_times):
         traci.simulationStep()
-        t = traci.simulation.getTime()
-
-        # ====================================================
-        # Vehicles that just departed
-        for veh in traci.simulation.getDepartedIDList():
-            depart_time[veh] = t
-            route_of[veh] = traci.vehicle.getRouteID(veh)
-            last_waiting_time[veh] = 0.0
-
-        # Update waiting times
-        for veh in traci.vehicle.getIDList():
-            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
-
-        # Vehicles that just arrived
-        for veh in traci.simulation.getArrivedIDList():
-            if veh in depart_time:
-                route = route_of[veh]
-                travel_time = t - depart_time[veh]
-                waiting_time = last_waiting_time.get(veh, 0.0)
-                hour_index = min(int(t // HOUR_SECONDS), NUM_HOURS - 1)
-
-                travel_times[route].append(travel_time)
-                waiting_times[route].append(waiting_time)
-                throughput[route] += 1
-                hourly_travel_times[hour_index].append(travel_time)
-                hourly_waiting_times[hour_index].append(waiting_time)
-                hourly_throughput[hour_index] += 1
-
-                depart_time.pop(veh, None)
-                route_of.pop(veh, None)
-                last_waiting_time.pop(veh, None)
-
-        # ====================================================
-        # QUEUE LENGTH CALCULATION (4D ARRAY)
-        for tls_index, tls in enumerate(TLS_ORDER):
-            lanes = traci.trafficlight.getControlledLanes(tls)
-            lanes = list(dict.fromkeys(lanes))  # remove duplicates
-
-            # Each TLS has 4 sides; split lanes evenly per side
-            lanes_per_side = len(lanes) // NUM_SIDES
-            for side_index in range(NUM_SIDES):
-                for lane_index in range(NUM_LANES):
-                    lane_pos = side_index * lanes_per_side + lane_index
-                    if lane_pos < len(lanes):
-                        lane_id = lanes[lane_pos]
-                        queue = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
-                                    if traci.vehicle.getSpeed(veh) < 0.1)
-                        reg   = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
-                                    if traci.vehicle.getSpeed(veh) >= 0.1)
-                        regular_cars[tls_index][side_index][lane_index].append(reg)
-                        queue_lengths[tls_index][side_index][lane_index].append(queue)
-                    else:
-                        regular_cars[tls_index][side_index][lane_index].append(0)
-                        queue_lengths[tls_index][side_index][lane_index].append(0)
+        departed_count, arrived_count = metrics.process_vehicle_events()
+        total_queue_now = collect_queue_lengths_4d(
+            TLS_ORDER,
+            NUM_SIDES,
+            NUM_LANES,
+            queue_lengths,
+            regular_cars=regular_cars,
+        )
+        metrics.sample_debug(total_queue_now, departed_count, arrived_count)
 
 QUEUE_K = 2
 DISCHARGE_QUEUE_K = 1
@@ -168,7 +132,9 @@ def compute_discharging_pressure():
             discharging_pressure[tls_index][side_index].append(pressure_value)
 
 
-x_i = [[] for _ in range(NUM_TLS)]
+# x_i uses the same convention as the classical controller:
+#   +1 = NS green, -1 = EW green
+x_i = [[1] if TLS_ORDER[i] in TLS_REG else [-1] for i in range(NUM_TLS)]
 
 # -----------------------
 # SIMULATION LOOP
@@ -176,7 +142,7 @@ x_i = [[] for _ in range(NUM_TLS)]
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
 MIN_CHANGE_TIME = 12  # Minimum time to wait before allowing another change
 
-while traci.simulation.getTime() < END_TIME:
+while should_continue_simulation():
 
     simStep()
     compute_pressure()
@@ -300,7 +266,7 @@ while traci.simulation.getTime() < END_TIME:
 
             # Convert {-1,1} -> {0,1}
             prev_state.append(
-                1 if x_i[i][-1] == 1 else 0
+                0 if x_i[i][-1] == 1 else 1
             )
     
     neighbor_indices = []
@@ -324,47 +290,14 @@ while traci.simulation.getTime() < END_TIME:
         coupling_strength=2
     )
 
-    print(traci.simulation.getTime())
+    if int(traci.simulation.getTime()) % 3600 == 0:
+        print(f"Quantum simulation time: {traci.simulation.getTime()}")
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
-        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
+        x_i[idx].append(-1 if bitstring[idx] == '1' else 1)
     # ====================================================
 
 traci.close()
 
-# -----------------------
-# RESULTS
-# -----------------------
-print("\n===== PERFORMANCE METRICS =====")
-
-print("\nQUANTUM")
-
-def compute_avg(values):
-    return sum(values) / len(values) if values else None
-
-def format_hour(hour):
-    hour_12 = hour % 12
-    if hour_12 == 0:
-        hour_12 = 12
-    suffix = "AM" if hour < 12 else "PM"
-    return f"{hour_12}{suffix}"
-
-for hour in range(NUM_HOURS):
-    start_label = format_hour(hour)
-    end_label = format_hour((hour + 1) % NUM_HOURS)
-    avg_travel_time = compute_avg(hourly_travel_times[hour])
-    avg_waiting_time = compute_avg(hourly_waiting_times[hour])
-
-    print(f"\nResults for {start_label} - {end_label}:")
-    print(f"  Throughput: {hourly_throughput[hour]}")
-    print(
-        f"  Average Travel Time: {avg_travel_time:.2f} s"
-        if avg_travel_time is not None
-        else "  Average Travel Time: N/A"
-    )
-    print(
-        f"  Average Waiting Time: {avg_waiting_time:.2f} s"
-        if avg_waiting_time is not None
-        else "  Average Waiting Time: N/A"
-    )
+metrics.save_and_print()
