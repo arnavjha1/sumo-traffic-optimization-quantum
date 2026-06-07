@@ -1,0 +1,176 @@
+
+===== PERFORMANCE METRICS =====
+
+FIXED
+
+Results for 12AM - 1AM:
+  Departures: 912
+  Throughput: 912
+  Unfinished from this departure hour: 0
+  Average Travel Time: 57.33 s
+  Average Waiting Time: 26.24 s
+
+Results for 1AM - 2AM:
+  Departures: 616
+  Throughput: 616
+  Unfinished from this departure hour: 0
+  Average Travel Time: 59.84 s
+  Average Waiting Time: 27.64 s
+
+Results for 2AM - 3AM:
+  Departures: 480
+  Throughput: 480
+  Unfinished from this departure hour: 0
+  Average Travel Time: 59.27 s
+  Average Waiting Time: 27.75 s
+
+Results for 3AM - 4AM:
+  Departures: 376
+  Throughput: 376
+  Unfinished from this departure hour: 0
+  Average Travel Time: 59.92 s
+  Average Waiting Time: 27.56 s
+
+Results for 4AM - 5AM:
+  Departures: 552
+  Throughput: 552
+  Unfinished from this departure hour: 0
+  Average Travel Time: 59.80 s
+  Average Waiting Time: 27.72 s
+
+Results for 5AM - 6AM:
+  Departures: 1312
+  Throughput: 1312
+  Unfinished from this departure hour: 0
+  Average Travel Time: 58.60 s
+  Average Waiting Time: 27.23 s
+
+Results for 6AM - 7AM:
+  Departures: 2888
+  Throughput: 2888
+  Unfinished from this departure hour: 0
+  Average Travel Time: 59.09 s
+  Average Waiting Time: 27.42 s
+
+Results for 7AM - 8AM:
+  Departures: 4736
+  Throughput: 4736
+  Unfinished from this departure hour: 0
+  Average Travel Time: 63.00 s
+  Average Waiting Time: 29.64 s
+
+Results for 8AM - 9AM:
+  Departures: 5256
+  Throughput: 5256
+  Unfinished from this departure hour: 0
+  Average Travel Time: 65.54 s
+  Average Waiting Time: 30.67 s
+
+Results for 9AM - 10AM:
+  Departures: 4768
+  Throughput: 4768
+  Unfinished from this departure hour: 0
+  Average Travel Time: 63.02 s
+  Average Waiting Time: 29.42 s
+
+Results for 10AM - 11AM:
+  Departures: 4488
+  Throughput: 4488
+  Unfinished from this departure hour: 0
+  Average Travel Time: 62.51 s
+  Average Waiting Time: 29.18 s
+
+Results for 11AM - 12PM:
+  Departures: 4784
+  Throughput: 4784
+  Unfinished from this departure hour: 0
+  Average Travel Time: 62.84 s
+  Average Waiting Time: 29.47 s
+
+Results for 12PM - 1PM:
+  Departures: 5080
+  Throughput: 5080
+  Unfinished from this departure hour: 0
+  Average Travel Time: 64.70 s
+  Average Waiting Time: 30.25 s
+
+Results for 1PM - 2PM:
+  Departures: 5160
+  Throughput: 5160
+  Unfinished from this departure hour: 0
+  Average Travel Time: 64.65 s
+  Average Waiting Time: 30.11 s
+
+Results for 2PM - 3PM:
+  Departures: 5464
+  Throughput: 5464
+  Unfinished from this departure hour: 0
+  Average Travel Time: 67.26 s
+  Average Waiting Time: 31.68 s
+
+Results for 3PM - 4PM:
+  Departures: 5765
+  Throughput: 5765
+  Unfinished from this departure hour: 0
+  Average Travel Time: 99.61 s
+  Average Waiting Time: 41.18 s
+
+Results for 4PM - 5PM:
+  Departures: 5527
+  Throughput: 5527
+  Unfinished from this departure hour: 0
+  Average Travel Time: 117.41 s
+  Average Waiting Time: 47.05 s
+
+Results for 5PM - 6PM:
+  Departures: 5673
+  Throughput: 5673
+  Unfinished from this departure hour: 0
+  Average Travel Time: 111.12 s
+  Average Waiting Time: 45.36 s
+
+Results for 6PM - 7PM:
+  Departures: 5615
+  Throughput: 5615
+  Unfinished from this departure hour: 0
+  Average Travel Time: 92.55 s
+  Average Waiting Time: 40.18 s
+
+Results for 7PM - 8PM:
+  Departures: 4109
+  Throughput: 4109
+  Unfinished from this departure hour: 0
+  Average Travel Time: 61.66 s
+  Average Waiting Time: 28.97 s
+
+Results for 8PM - 9PM:
+  Departures: 3336
+  Throughput: 3336
+  Unfinished from this departure hour: 0
+  Average Travel Time: 60.15 s
+  Average Waiting Time: 27.88 s
+
+Results for 9PM - 10PM:
+  Departures: 2888
+  Throughput: 2888
+  Unfinished from this departure hour: 0
+  Average Travel Time: 59.35 s
+  Average Waiting Time: 27.52 s
+
+Results for 10PM - 11PM:
+  Departures: 2112
+  Throughput: 2112
+  Unfinished from this departure hour: 0
+  Average Travel Time: 58.38 s
+  Average Waiting Time: 26.87 s
+
+Results for 11PM - 12AM:
+  Departures: 1344
+  Throughput: 1344
+  Unfinished from this departure hour: 0
+  Average Travel Time: 57.54 s
+  Average Waiting Time: 26.50 s
+
+Saved hourly metrics CSV to: data_analysis\simulation_process_data\fixed_hourly_metrics.csv
+Saved hourly debug CSV to: data_analysis\simulation_process_data\fixed_hourly_debug.csv
+Saved step debug CSV to: data_analysis\simulation_process_data\fixed_step_debug.csv
