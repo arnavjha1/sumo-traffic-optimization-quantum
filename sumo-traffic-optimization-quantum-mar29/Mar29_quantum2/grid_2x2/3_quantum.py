@@ -12,7 +12,7 @@ from simulation_metrics import (
     NUM_HOURS,
 )
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
 
 # -----------------------
@@ -132,9 +132,7 @@ def compute_discharging_pressure():
             discharging_pressure[tls_index][side_index].append(pressure_value)
 
 
-# x_i uses the same convention as the classical controller:
-#   +1 = NS green, -1 = EW green
-x_i = [[1] if TLS_ORDER[i] in TLS_REG else [-1] for i in range(NUM_TLS)]
+x_i = [[] for _ in range(NUM_TLS)]
 
 # -----------------------
 # SIMULATION LOOP
@@ -266,7 +264,7 @@ while should_continue_simulation():
 
             # Convert {-1,1} -> {0,1}
             prev_state.append(
-                0 if x_i[i][-1] == 1 else 1
+                1 if x_i[i][-1] == 1 else 0
             )
     
     neighbor_indices = []
@@ -295,7 +293,7 @@ while should_continue_simulation():
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
-        x_i[idx].append(-1 if bitstring[idx] == '1' else 1)
+        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
     # ====================================================
 
 traci.close()
