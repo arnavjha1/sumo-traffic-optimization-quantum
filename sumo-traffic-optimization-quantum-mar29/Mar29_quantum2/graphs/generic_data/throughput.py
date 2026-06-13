@@ -1,3 +1,4 @@
+# GENERIC DATA - THROUGHPUT DATA
 import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
 import numpy as np
