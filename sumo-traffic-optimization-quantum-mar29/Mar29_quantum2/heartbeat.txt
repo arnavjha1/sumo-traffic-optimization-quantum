@@ -1,1 +1,1 @@
-3_quantum_a10 run 10/10
+3_quantum_a1 run 7/10

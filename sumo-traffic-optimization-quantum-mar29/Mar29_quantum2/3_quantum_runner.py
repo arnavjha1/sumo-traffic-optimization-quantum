@@ -9,10 +9,10 @@ from pathlib import Path
 # CONFIG
 # =============================
 
-NUM_RUNS = 100
+NUM_RUNS = 10
 
 BASE_DIR = Path(__file__).parent
-QUANTUM_DIR = BASE_DIR / "3_quantum"
+QUANTUM_DIR = BASE_DIR / "grid_2x2/3_quantum"
 OUTPUT_DIR = BASE_DIR / "quantum_data"
 
 OUTPUT_DIR.mkdir(exist_ok=True)
