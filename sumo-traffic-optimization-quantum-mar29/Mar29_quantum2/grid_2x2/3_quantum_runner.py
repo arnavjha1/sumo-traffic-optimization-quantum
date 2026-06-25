@@ -9,7 +9,7 @@ from pathlib import Path
 # CONFIG
 # =============================
 
-NUM_RUNS = 10
+NUM_RUNS = 100
 
 BASE_DIR = Path(__file__).parent
 QUANTUM_DIR = BASE_DIR / "3_quantum"
