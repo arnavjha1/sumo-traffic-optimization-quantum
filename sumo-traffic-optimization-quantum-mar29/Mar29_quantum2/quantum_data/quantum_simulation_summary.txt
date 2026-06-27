@@ -1,48 +1,48 @@
 ===== QUANTUM SIMULATION SUMMARY =====
 
 Throughput averages by file:
-[864, 887.5, 893.5, 925, 992, 1030, 943.5, 925, 844.5, 776, 710]
+[861.72, 877.38, 903.96, 929.18, 987.24, 1023, 941.84, 926.9, 849.12, 776.5, 712.66]
 
 Waiting time averages by file:
-[30.795, 30.455, 30.485, 30.535, 29.44, 30.57, 37.435, 39.17, 38.905, 38.0, 38.935]
+[30.832, 30.994, 30.3216, 30.2732, 29.896, 29.7272, 37.6816, 39.0346, 38.3774, 37.5216, 38.479800000000004]
 
 Travel time averages by file:
-[79.695, 79.605, 80.795, 82.845, 83.825, 88.195, 94.805, 97.09, 93.565, 89.58500000000001, 92.425]
+[79.8312, 80.3992, 80.279, 82.0882, 85.3122, 87.4426, 95.4872, 97.0684, 92.726, 88.8958, 91.729]
 
 ===== OVERALL AVERAGES =====
 
-Overall Throughput Average: 890.09
-Overall Waiting Time Average: 34.07 s
-Overall Travel Time Average: 87.49 s
+Overall Throughput Average: 889.95
+Overall Waiting Time Average: 33.92 s
+Overall Travel Time Average: 87.39 s
 
 ===== FULL OVERALL STATS =====
 
 {
     "throughput": {
-        "mean": 890.0909090909091,
-        "median": 893.5,
-        "min": 710,
-        "max": 1030,
-        "standard_deviation": 91.36569875555546,
-        "variance": 8347.690909090908,
-        "standard_error": 27.547794680074432
+        "mean": 889.9545454545455,
+        "median": 903.96,
+        "min": 712.66,
+        "max": 1023,
+        "standard_deviation": 89.37867042685704,
+        "variance": 7988.546727272728,
+        "standard_error": 26.948683096974467
     },
     "average_waiting_time": {
-        "mean": 34.065909090909095,
-        "median": 30.795,
-        "min": 29.44,
-        "max": 39.17,
-        "standard_deviation": 4.273787441006992,
-        "variance": 18.265259090909097,
-        "standard_error": 1.288595397777578
+        "mean": 33.921727272727274,
+        "median": 30.994,
+        "min": 29.7272,
+        "max": 39.0346,
+        "standard_deviation": 4.147980820855109,
+        "variance": 17.205744890181823,
+        "standard_error": 1.2506632745787996
     },
     "average_travel_time": {
-        "mean": 87.49363636363637,
-        "median": 88.195,
-        "min": 79.605,
-        "max": 97.09,
-        "standard_deviation": 6.438800389400612,
-        "variance": 41.45815045454547,
-        "standard_error": 1.9413713628760065
+        "mean": 87.38716363636364,
+        "median": 87.4426,
+        "min": 79.8312,
+        "max": 97.0684,
+        "standard_deviation": 6.307181640522609,
+        "variance": 39.78054024654546,
+        "standard_error": 1.9016868169301568
     }
 }

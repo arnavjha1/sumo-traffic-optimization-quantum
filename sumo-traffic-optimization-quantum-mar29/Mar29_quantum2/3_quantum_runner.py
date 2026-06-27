@@ -9,7 +9,7 @@ from pathlib import Path
 # CONFIG
 # =============================
 
-NUM_RUNS = 10
+NUM_RUNS = 50
 
 BASE_DIR = Path(__file__).parent
 QUANTUM_DIR = BASE_DIR / "grid_2x2/3_quantum"
