@@ -1,0 +1,1643 @@
+{
+    "source_file": "C:\\Arnav\\Repositories\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\3_quantum.py",
+    "num_runs_planned": 2,
+    "num_runs_attempted": 2,
+    "num_runs_successful": 1,
+    "num_runs_failed": 1,
+    "runs": [
+        {
+            "run": 1,
+            "error": "Timeout after 3600 seconds",
+            "raw_output": "",
+            "stderr": "Warning: Vehicle 'r68_h13.10' performs emergency braking on lane ':B1_5_0' with decel=9.00, wished=4.50, severity=1.00, time=47575.00.\nWarning: Vehicle 'r12_h13.62' performs emergency braking on lane ':B1_8_0' with decel=9.00, wished=4.50, severity=1.00, time=50109.00.\nWarning: Vehicle 'r25_h16.75' performs emergency braking on lane ':B0_2_0' with decel=9.00, wished=4.50, severity=1.00, time=60835.00.\nWarning: Vehicle 'r12_h17.3' performs emergency braking on lane ':B1_8_0' with decel=9.00, wished=4.50, severity=1.00, time=61354.00.\nWarning: Vehicle 'r44_h17.8' performs emergency braking on lane ':A0_11_0' with decel=9.00, wished=4.50, severity=1.00, time=61547.00.\nError: tcpip::Socket::recvAndCheck @ recv: Socket reset by peer\nQuitting (on error).\n"
+        },
+        {
+            "run": 2,
+            "hourly_metrics": [
+                {
+                    "hour": 0,
+                    "hour_label": "12AM - 1AM",
+                    "departures": 912,
+                    "throughput": 912,
+                    "unfinished": 0,
+                    "average_travel_time": 52.78,
+                    "average_waiting_time": 22.67
+                },
+                {
+                    "hour": 1,
+                    "hour_label": "1AM - 2AM",
+                    "departures": 616,
+                    "throughput": 616,
+                    "unfinished": 0,
+                    "average_travel_time": 56.62,
+                    "average_waiting_time": 24.8
+                },
+                {
+                    "hour": 2,
+                    "hour_label": "2AM - 3AM",
+                    "departures": 480,
+                    "throughput": 480,
+                    "unfinished": 0,
+                    "average_travel_time": 55.23,
+                    "average_waiting_time": 24.17
+                },
+                {
+                    "hour": 3,
+                    "hour_label": "3AM - 4AM",
+                    "departures": 376,
+                    "throughput": 376,
+                    "unfinished": 0,
+                    "average_travel_time": 52.23,
+                    "average_waiting_time": 22.03
+                },
+                {
+                    "hour": 4,
+                    "hour_label": "4AM - 5AM",
+                    "departures": 552,
+                    "throughput": 552,
+                    "unfinished": 0,
+                    "average_travel_time": 55.92,
+                    "average_waiting_time": 24.54
+                },
+                {
+                    "hour": 5,
+                    "hour_label": "5AM - 6AM",
+                    "departures": 1312,
+                    "throughput": 1312,
+                    "unfinished": 0,
+                    "average_travel_time": 55.56,
+                    "average_waiting_time": 24.5
+                },
+                {
+                    "hour": 6,
+                    "hour_label": "6AM - 7AM",
+                    "departures": 2888,
+                    "throughput": 2888,
+                    "unfinished": 0,
+                    "average_travel_time": 48.84,
+                    "average_waiting_time": 17.76
+                },
+                {
+                    "hour": 7,
+                    "hour_label": "7AM - 8AM",
+                    "departures": 4736,
+                    "throughput": 4736,
+                    "unfinished": 0,
+                    "average_travel_time": 47.43,
+                    "average_waiting_time": 14.91
+                },
+                {
+                    "hour": 8,
+                    "hour_label": "8AM - 9AM",
+                    "departures": 5256,
+                    "throughput": 5256,
+                    "unfinished": 0,
+                    "average_travel_time": 48.29,
+                    "average_waiting_time": 15.19
+                },
+                {
+                    "hour": 9,
+                    "hour_label": "9AM - 10AM",
+                    "departures": 4768,
+                    "throughput": 4768,
+                    "unfinished": 0,
+                    "average_travel_time": 48.15,
+                    "average_waiting_time": 15.5
+                },
+                {
+                    "hour": 10,
+                    "hour_label": "10AM - 11AM",
+                    "departures": 4488,
+                    "throughput": 4488,
+                    "unfinished": 0,
+                    "average_travel_time": 47.78,
+                    "average_waiting_time": 15.41
+                },
+                {
+                    "hour": 11,
+                    "hour_label": "11AM - 12PM",
+                    "departures": 4784,
+                    "throughput": 4784,
+                    "unfinished": 0,
+                    "average_travel_time": 47.7,
+                    "average_waiting_time": 15.18
+                },
+                {
+                    "hour": 12,
+                    "hour_label": "12PM - 1PM",
+                    "departures": 5080,
+                    "throughput": 5080,
+                    "unfinished": 0,
+                    "average_travel_time": 47.96,
+                    "average_waiting_time": 15.01
+                },
+                {
+                    "hour": 13,
+                    "hour_label": "1PM - 2PM",
+                    "departures": 5160,
+                    "throughput": 5160,
+                    "unfinished": 0,
+                    "average_travel_time": 48.18,
+                    "average_waiting_time": 15.19
+                },
+                {
+                    "hour": 14,
+                    "hour_label": "2PM - 3PM",
+                    "departures": 5464,
+                    "throughput": 5464,
+                    "unfinished": 0,
+                    "average_travel_time": 48.65,
+                    "average_waiting_time": 15.3
+                },
+                {
+                    "hour": 15,
+                    "hour_label": "3PM - 4PM",
+                    "departures": 5984,
+                    "throughput": 5984,
+                    "unfinished": 0,
+                    "average_travel_time": 50.14,
+                    "average_waiting_time": 16.12
+                },
+                {
+                    "hour": 16,
+                    "hour_label": "4PM - 5PM",
+                    "departures": 6369,
+                    "throughput": 6369,
+                    "unfinished": 0,
+                    "average_travel_time": 63.28,
+                    "average_waiting_time": 23.74
+                },
+                {
+                    "hour": 17,
+                    "hour_label": "5PM - 6PM",
+                    "departures": 6252,
+                    "throughput": 6252,
+                    "unfinished": 0,
+                    "average_travel_time": 77.82,
+                    "average_waiting_time": 32.49
+                },
+                {
+                    "hour": 18,
+                    "hour_label": "6PM - 7PM",
+                    "departures": 5799,
+                    "throughput": 5799,
+                    "unfinished": 0,
+                    "average_travel_time": 63.14,
+                    "average_waiting_time": 23.88
+                },
+                {
+                    "hour": 19,
+                    "hour_label": "7PM - 8PM",
+                    "departures": 4104,
+                    "throughput": 4104,
+                    "unfinished": 0,
+                    "average_travel_time": 47.65,
+                    "average_waiting_time": 15.53
+                },
+                {
+                    "hour": 20,
+                    "hour_label": "8PM - 9PM",
+                    "departures": 3336,
+                    "throughput": 3336,
+                    "unfinished": 0,
+                    "average_travel_time": 48.61,
+                    "average_waiting_time": 17.08
+                },
+                {
+                    "hour": 21,
+                    "hour_label": "9PM - 10PM",
+                    "departures": 2888,
+                    "throughput": 2888,
+                    "unfinished": 0,
+                    "average_travel_time": 49.54,
+                    "average_waiting_time": 18.24
+                },
+                {
+                    "hour": 22,
+                    "hour_label": "10PM - 11PM",
+                    "departures": 2112,
+                    "throughput": 2112,
+                    "unfinished": 0,
+                    "average_travel_time": 52.78,
+                    "average_waiting_time": 21.61
+                },
+                {
+                    "hour": 23,
+                    "hour_label": "11PM - 12AM",
+                    "departures": 1344,
+                    "throughput": 1344,
+                    "unfinished": 0,
+                    "average_travel_time": 55.04,
+                    "average_waiting_time": 23.8
+                }
+            ],
+            "totals": {
+                "departures": 85060,
+                "throughput": 85060,
+                "unfinished": 0,
+                "average_travel_time": 53.19398048436397,
+                "average_waiting_time": 18.780555607806257
+            },
+            "raw_output": " Retrying in 1 seconds\nQuantum simulation time: 3600.0\nQuantum simulation time: 7200.0\nQuantum simulation time: 10800.0\nQuantum simulation time: 14400.0\nQuantum simulation time: 18000.0\nQuantum simulation time: 21600.0\nQuantum simulation time: 25200.0\nQuantum simulation time: 28800.0\nQuantum simulation time: 32400.0\nQuantum simulation time: 36000.0\nQuantum simulation time: 39600.0\nQuantum simulation time: 43200.0\nQuantum simulation time: 46800.0\nQuantum simulation time: 50400.0\nQuantum simulation time: 54000.0\nQuantum simulation time: 57600.0\nQuantum simulation time: 61200.0\nQuantum simulation time: 64800.0\nQuantum simulation time: 68400.0\nQuantum simulation time: 72000.0\nQuantum simulation time: 75600.0\nQuantum simulation time: 79200.0\nQuantum simulation time: 82800.0\nQuantum simulation time: 86400.0\n\n===== PERFORMANCE METRICS =====\n\nQUANTUM\n\nResults for 12AM - 1AM:\n  Departures: 912\n  Throughput: 912\n  Unfinished from this departure hour: 0\n  Average Travel Time: 52.78 s\n  Average Waiting Time: 22.67 s\n\nResults for 1AM - 2AM:\n  Departures: 616\n  Throughput: 616\n  Unfinished from this departure hour: 0\n  Average Travel Time: 56.62 s\n  Average Waiting Time: 24.80 s\n\nResults for 2AM - 3AM:\n  Departures: 480\n  Throughput: 480\n  Unfinished from this departure hour: 0\n  Average Travel Time: 55.23 s\n  Average Waiting Time: 24.17 s\n\nResults for 3AM - 4AM:\n  Departures: 376\n  Throughput: 376\n  Unfinished from this departure hour: 0\n  Average Travel Time: 52.23 s\n  Average Waiting Time: 22.03 s\n\nResults for 4AM - 5AM:\n  Departures: 552\n  Throughput: 552\n  Unfinished from this departure hour: 0\n  Average Travel Time: 55.92 s\n  Average Waiting Time: 24.54 s\n\nResults for 5AM - 6AM:\n  Departures: 1312\n  Throughput: 1312\n  Unfinished from this departure hour: 0\n  Average Travel Time: 55.56 s\n  Average Waiting Time: 24.50 s\n\nResults for 6AM - 7AM:\n  Departures: 2888\n  Throughput: 2888\n  Unfinished from this departure hour: 0\n  Average Travel Time: 48.84 s\n  Average Waiting Time: 17.76 s\n\nResults for 7AM - 8AM:\n  Departures: 4736\n  Throughput: 4736\n  Unfinished from this departure hour: 0\n  Average Travel Time: 47.43 s\n  Average Waiting Time: 14.91 s\n\nResults for 8AM - 9AM:\n  Departures: 5256\n  Throughput: 5256\n  Unfinished from this departure hour: 0\n  Average Travel Time: 48.29 s\n  Average Waiting Time: 15.19 s\n\nResults for 9AM - 10AM:\n  Departures: 4768\n  Throughput: 4768\n  Unfinished from this departure hour: 0\n  Average Travel Time: 48.15 s\n  Average Waiting Time: 15.50 s\n\nResults for 10AM - 11AM:\n  Departures: 4488\n  Throughput: 4488\n  Unfinished from this departure hour: 0\n  Average Travel Time: 47.78 s\n  Average Waiting Time: 15.41 s\n\nResults for 11AM - 12PM:\n  Departures: 4784\n  Throughput: 4784\n  Unfinished from this departure hour: 0\n  Average Travel Time: 47.70 s\n  Average Waiting Time: 15.18 s\n\nResults for 12PM - 1PM:\n  Departures: 5080\n  Throughput: 5080\n  Unfinished from this departure hour: 0\n  Average Travel Time: 47.96 s\n  Average Waiting Time: 15.01 s\n\nResults for 1PM - 2PM:\n  Departures: 5160\n  Throughput: 5160\n  Unfinished from this departure hour: 0\n  Average Travel Time: 48.18 s\n  Average Waiting Time: 15.19 s\n\nResults for 2PM - 3PM:\n  Departures: 5464\n  Throughput: 5464\n  Unfinished from this departure hour: 0\n  Average Travel Time: 48.65 s\n  Average Waiting Time: 15.30 s\n\nResults for 3PM - 4PM:\n  Departures: 5984\n  Throughput: 5984\n  Unfinished from this departure hour: 0\n  Average Travel Time: 50.14 s\n  Average Waiting Time: 16.12 s\n\nResults for 4PM - 5PM:\n  Departures: 6369\n  Throughput: 6369\n  Unfinished from this departure hour: 0\n  Average Travel Time: 63.28 s\n  Average Waiting Time: 23.74 s\n\nResults for 5PM - 6PM:\n  Departures: 6252\n  Throughput: 6252\n  Unfinished from this departure hour: 0\n  Average Travel Time: 77.82 s\n  Average Waiting Time: 32.49 s\n\nResults for 6PM - 7PM:\n  Departures: 5799\n  Throughput: 5799\n  Unfinished from this departure hour: 0\n  Average Travel Time: 63.14 s\n  Average Waiting Time: 23.88 s\n\nResults for 7PM - 8PM:\n  Departures: 4104\n  Throughput: 4104\n  Unfinished from this departure hour: 0\n  Average Travel Time: 47.65 s\n  Average Waiting Time: 15.53 s\n\nResults for 8PM - 9PM:\n  Departures: 3336\n  Throughput: 3336\n  Unfinished from this departure hour: 0\n  Average Travel Time: 48.61 s\n  Average Waiting Time: 17.08 s\n\nResults for 9PM - 10PM:\n  Departures: 2888\n  Throughput: 2888\n  Unfinished from this departure hour: 0\n  Average Travel Time: 49.54 s\n  Average Waiting Time: 18.24 s\n\nResults for 10PM - 11PM:\n  Departures: 2112\n  Throughput: 2112\n  Unfinished from this departure hour: 0\n  Average Travel Time: 52.78 s\n  Average Waiting Time: 21.61 s\n\nResults for 11PM - 12AM:\n  Departures: 1344\n  Throughput: 1344\n  Unfinished from this departure hour: 0\n  Average Travel Time: 55.04 s\n  Average Waiting Time: 23.80 s\n\nSaved hourly metrics CSV to: data_analysis\\simulation_process_data\\quantum_hourly_metrics.csv\nSaved hourly debug CSV to: data_analysis\\simulation_process_data\\quantum_hourly_debug.csv\nSaved step debug CSV to: data_analysis\\simulation_process_data\\quantum_step_debug.csv\n",
+            "stderr": "Warning: Vehicle 'r45_h13.49' performs emergency braking on lane ':A0_8_0' with decel=9.00, wished=4.50, severity=1.00, time=48647.00.\nWarning: Vehicle 'r69_h15.11' performs emergency braking on lane ':B1_5_0' with decel=9.00, wished=4.50, severity=1.00, time=57458.00.\nWarning: Vehicle 'r12_h16.1' performs emergency braking on lane ':B1_8_0' with decel=9.00, wished=4.50, severity=1.00, time=57666.00.\nWarning: Vehicle 'r68_h16.10' performs emergency braking on lane ':B1_5_0' with decel=9.00, wished=4.50, severity=1.00, time=58236.00.\nWarning: Vehicle 'r28_h16.7' performs emergency braking on lane ':A1_5_0' with decel=9.00, wished=4.50, severity=1.00, time=59674.00.\nWarning: Vehicle 'r55_h16.66' performs emergency braking on lane ':A0_5_0' with decel=9.00, wished=4.50, severity=1.00, time=60441.00.\nWarning: Vehicle 'r14_h17.2' performs emergency braking on lane ':A0_2_0' with decel=9.00, wished=4.50, severity=1.00, time=61829.00.\nWarning: Vehicle 'r50_h18.22' performs emergency braking on lane ':A1_8_0' with decel=9.00, wished=4.50, severity=1.00, time=66092.00.\nWarning: Vehicle 'r63_h18.68' performs emergency braking on lane ':B0_8_0' with decel=9.00, wished=4.50, severity=1.00, time=68204.00.\n"
+        }
+    ],
+    "hourly_summary": [
+        {
+            "hour": 0,
+            "hour_label": "12AM - 1AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 912,
+                    "median": 912,
+                    "min": 912,
+                    "max": 912,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 912,
+                    "median": 912,
+                    "min": 912,
+                    "max": 912,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 52.78,
+                    "median": 52.78,
+                    "min": 52.78,
+                    "max": 52.78,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 22.67,
+                    "median": 22.67,
+                    "min": 22.67,
+                    "max": 22.67,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 1,
+            "hour_label": "1AM - 2AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 616,
+                    "median": 616,
+                    "min": 616,
+                    "max": 616,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 616,
+                    "median": 616,
+                    "min": 616,
+                    "max": 616,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 56.62,
+                    "median": 56.62,
+                    "min": 56.62,
+                    "max": 56.62,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 24.8,
+                    "median": 24.8,
+                    "min": 24.8,
+                    "max": 24.8,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 2,
+            "hour_label": "2AM - 3AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 480,
+                    "median": 480,
+                    "min": 480,
+                    "max": 480,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 480,
+                    "median": 480,
+                    "min": 480,
+                    "max": 480,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 55.23,
+                    "median": 55.23,
+                    "min": 55.23,
+                    "max": 55.23,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 24.17,
+                    "median": 24.17,
+                    "min": 24.17,
+                    "max": 24.17,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 3,
+            "hour_label": "3AM - 4AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 376,
+                    "median": 376,
+                    "min": 376,
+                    "max": 376,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 376,
+                    "median": 376,
+                    "min": 376,
+                    "max": 376,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 52.23,
+                    "median": 52.23,
+                    "min": 52.23,
+                    "max": 52.23,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 22.03,
+                    "median": 22.03,
+                    "min": 22.03,
+                    "max": 22.03,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 4,
+            "hour_label": "4AM - 5AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 552,
+                    "median": 552,
+                    "min": 552,
+                    "max": 552,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 552,
+                    "median": 552,
+                    "min": 552,
+                    "max": 552,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 55.92,
+                    "median": 55.92,
+                    "min": 55.92,
+                    "max": 55.92,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 24.54,
+                    "median": 24.54,
+                    "min": 24.54,
+                    "max": 24.54,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 5,
+            "hour_label": "5AM - 6AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 1312,
+                    "median": 1312,
+                    "min": 1312,
+                    "max": 1312,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 1312,
+                    "median": 1312,
+                    "min": 1312,
+                    "max": 1312,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 55.56,
+                    "median": 55.56,
+                    "min": 55.56,
+                    "max": 55.56,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 24.5,
+                    "median": 24.5,
+                    "min": 24.5,
+                    "max": 24.5,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 6,
+            "hour_label": "6AM - 7AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 2888,
+                    "median": 2888,
+                    "min": 2888,
+                    "max": 2888,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 2888,
+                    "median": 2888,
+                    "min": 2888,
+                    "max": 2888,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 48.84,
+                    "median": 48.84,
+                    "min": 48.84,
+                    "max": 48.84,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 17.76,
+                    "median": 17.76,
+                    "min": 17.76,
+                    "max": 17.76,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 7,
+            "hour_label": "7AM - 8AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 4736,
+                    "median": 4736,
+                    "min": 4736,
+                    "max": 4736,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 4736,
+                    "median": 4736,
+                    "min": 4736,
+                    "max": 4736,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 47.43,
+                    "median": 47.43,
+                    "min": 47.43,
+                    "max": 47.43,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 14.91,
+                    "median": 14.91,
+                    "min": 14.91,
+                    "max": 14.91,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 8,
+            "hour_label": "8AM - 9AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 5256,
+                    "median": 5256,
+                    "min": 5256,
+                    "max": 5256,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 5256,
+                    "median": 5256,
+                    "min": 5256,
+                    "max": 5256,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 48.29,
+                    "median": 48.29,
+                    "min": 48.29,
+                    "max": 48.29,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.19,
+                    "median": 15.19,
+                    "min": 15.19,
+                    "max": 15.19,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 9,
+            "hour_label": "9AM - 10AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 4768,
+                    "median": 4768,
+                    "min": 4768,
+                    "max": 4768,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 4768,
+                    "median": 4768,
+                    "min": 4768,
+                    "max": 4768,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 48.15,
+                    "median": 48.15,
+                    "min": 48.15,
+                    "max": 48.15,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.5,
+                    "median": 15.5,
+                    "min": 15.5,
+                    "max": 15.5,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 10,
+            "hour_label": "10AM - 11AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 4488,
+                    "median": 4488,
+                    "min": 4488,
+                    "max": 4488,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 4488,
+                    "median": 4488,
+                    "min": 4488,
+                    "max": 4488,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 47.78,
+                    "median": 47.78,
+                    "min": 47.78,
+                    "max": 47.78,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.41,
+                    "median": 15.41,
+                    "min": 15.41,
+                    "max": 15.41,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 11,
+            "hour_label": "11AM - 12PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 4784,
+                    "median": 4784,
+                    "min": 4784,
+                    "max": 4784,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 4784,
+                    "median": 4784,
+                    "min": 4784,
+                    "max": 4784,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 47.7,
+                    "median": 47.7,
+                    "min": 47.7,
+                    "max": 47.7,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.18,
+                    "median": 15.18,
+                    "min": 15.18,
+                    "max": 15.18,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 12,
+            "hour_label": "12PM - 1PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 5080,
+                    "median": 5080,
+                    "min": 5080,
+                    "max": 5080,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 5080,
+                    "median": 5080,
+                    "min": 5080,
+                    "max": 5080,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 47.96,
+                    "median": 47.96,
+                    "min": 47.96,
+                    "max": 47.96,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.01,
+                    "median": 15.01,
+                    "min": 15.01,
+                    "max": 15.01,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 13,
+            "hour_label": "1PM - 2PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 5160,
+                    "median": 5160,
+                    "min": 5160,
+                    "max": 5160,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 5160,
+                    "median": 5160,
+                    "min": 5160,
+                    "max": 5160,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 48.18,
+                    "median": 48.18,
+                    "min": 48.18,
+                    "max": 48.18,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.19,
+                    "median": 15.19,
+                    "min": 15.19,
+                    "max": 15.19,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 14,
+            "hour_label": "2PM - 3PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 5464,
+                    "median": 5464,
+                    "min": 5464,
+                    "max": 5464,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 5464,
+                    "median": 5464,
+                    "min": 5464,
+                    "max": 5464,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 48.65,
+                    "median": 48.65,
+                    "min": 48.65,
+                    "max": 48.65,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.3,
+                    "median": 15.3,
+                    "min": 15.3,
+                    "max": 15.3,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 15,
+            "hour_label": "3PM - 4PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 5984,
+                    "median": 5984,
+                    "min": 5984,
+                    "max": 5984,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 5984,
+                    "median": 5984,
+                    "min": 5984,
+                    "max": 5984,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 50.14,
+                    "median": 50.14,
+                    "min": 50.14,
+                    "max": 50.14,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 16.12,
+                    "median": 16.12,
+                    "min": 16.12,
+                    "max": 16.12,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 16,
+            "hour_label": "4PM - 5PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 6369,
+                    "median": 6369,
+                    "min": 6369,
+                    "max": 6369,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 6369,
+                    "median": 6369,
+                    "min": 6369,
+                    "max": 6369,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 63.28,
+                    "median": 63.28,
+                    "min": 63.28,
+                    "max": 63.28,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 23.74,
+                    "median": 23.74,
+                    "min": 23.74,
+                    "max": 23.74,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 17,
+            "hour_label": "5PM - 6PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 6252,
+                    "median": 6252,
+                    "min": 6252,
+                    "max": 6252,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 6252,
+                    "median": 6252,
+                    "min": 6252,
+                    "max": 6252,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 77.82,
+                    "median": 77.82,
+                    "min": 77.82,
+                    "max": 77.82,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 32.49,
+                    "median": 32.49,
+                    "min": 32.49,
+                    "max": 32.49,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 18,
+            "hour_label": "6PM - 7PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 5799,
+                    "median": 5799,
+                    "min": 5799,
+                    "max": 5799,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 5799,
+                    "median": 5799,
+                    "min": 5799,
+                    "max": 5799,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 63.14,
+                    "median": 63.14,
+                    "min": 63.14,
+                    "max": 63.14,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 23.88,
+                    "median": 23.88,
+                    "min": 23.88,
+                    "max": 23.88,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 19,
+            "hour_label": "7PM - 8PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 4104,
+                    "median": 4104,
+                    "min": 4104,
+                    "max": 4104,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 4104,
+                    "median": 4104,
+                    "min": 4104,
+                    "max": 4104,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 47.65,
+                    "median": 47.65,
+                    "min": 47.65,
+                    "max": 47.65,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 15.53,
+                    "median": 15.53,
+                    "min": 15.53,
+                    "max": 15.53,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 20,
+            "hour_label": "8PM - 9PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 3336,
+                    "median": 3336,
+                    "min": 3336,
+                    "max": 3336,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 3336,
+                    "median": 3336,
+                    "min": 3336,
+                    "max": 3336,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 48.61,
+                    "median": 48.61,
+                    "min": 48.61,
+                    "max": 48.61,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 17.08,
+                    "median": 17.08,
+                    "min": 17.08,
+                    "max": 17.08,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 21,
+            "hour_label": "9PM - 10PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 2888,
+                    "median": 2888,
+                    "min": 2888,
+                    "max": 2888,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 2888,
+                    "median": 2888,
+                    "min": 2888,
+                    "max": 2888,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 49.54,
+                    "median": 49.54,
+                    "min": 49.54,
+                    "max": 49.54,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 18.24,
+                    "median": 18.24,
+                    "min": 18.24,
+                    "max": 18.24,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 22,
+            "hour_label": "10PM - 11PM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 2112,
+                    "median": 2112,
+                    "min": 2112,
+                    "max": 2112,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 2112,
+                    "median": 2112,
+                    "min": 2112,
+                    "max": 2112,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 52.78,
+                    "median": 52.78,
+                    "min": 52.78,
+                    "max": 52.78,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 21.61,
+                    "median": 21.61,
+                    "min": 21.61,
+                    "max": 21.61,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        },
+        {
+            "hour": 23,
+            "hour_label": "11PM - 12AM",
+            "statistics": {
+                "departures": {
+                    "count": 1,
+                    "mean": 1344,
+                    "median": 1344,
+                    "min": 1344,
+                    "max": 1344,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "throughput": {
+                    "count": 1,
+                    "mean": 1344,
+                    "median": 1344,
+                    "min": 1344,
+                    "max": 1344,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "unfinished": {
+                    "count": 1,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_travel_time": {
+                    "count": 1,
+                    "mean": 55.04,
+                    "median": 55.04,
+                    "min": 55.04,
+                    "max": 55.04,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                },
+                "average_waiting_time": {
+                    "count": 1,
+                    "mean": 23.8,
+                    "median": 23.8,
+                    "min": 23.8,
+                    "max": 23.8,
+                    "standard_deviation": 0.0,
+                    "variance": 0.0,
+                    "standard_error": 0.0
+                }
+            }
+        }
+    ],
+    "overall_statistics": {
+        "departures": {
+            "count": 1,
+            "mean": 85060,
+            "median": 85060,
+            "min": 85060,
+            "max": 85060,
+            "standard_deviation": 0.0,
+            "variance": 0.0,
+            "standard_error": 0.0
+        },
+        "throughput": {
+            "count": 1,
+            "mean": 85060,
+            "median": 85060,
+            "min": 85060,
+            "max": 85060,
+            "standard_deviation": 0.0,
+            "variance": 0.0,
+            "standard_error": 0.0
+        },
+        "unfinished": {
+            "count": 1,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "standard_deviation": 0.0,
+            "variance": 0.0,
+            "standard_error": 0.0
+        },
+        "average_travel_time": {
+            "count": 1,
+            "mean": 53.19398048436397,
+            "median": 53.19398048436397,
+            "min": 53.19398048436397,
+            "max": 53.19398048436397,
+            "standard_deviation": 0.0,
+            "variance": 0.0,
+            "standard_error": 0.0
+        },
+        "average_waiting_time": {
+            "count": 1,
+            "mean": 18.780555607806257,
+            "median": 18.780555607806257,
+            "min": 18.780555607806257,
+            "max": 18.780555607806257,
+            "standard_deviation": 0.0,
+            "variance": 0.0,
+            "standard_error": 0.0
+        }
+    }
+}
