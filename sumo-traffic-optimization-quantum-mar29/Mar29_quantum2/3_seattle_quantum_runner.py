@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 # Run grid_2x2/3_quantum.py 50 times and aggregate its 24 hourly result blocks.
-NUM_RUNS = 2
+NUM_RUNS = 20
 RUN_TIMEOUT_SECONDS = 3600
 
 BASE_DIR = Path(__file__).resolve().parent
