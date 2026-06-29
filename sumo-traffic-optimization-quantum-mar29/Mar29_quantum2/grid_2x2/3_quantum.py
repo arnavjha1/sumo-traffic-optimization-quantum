@@ -12,7 +12,7 @@ from simulation_metrics import (
     NUM_HOURS,
 )
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
 
 # -----------------------

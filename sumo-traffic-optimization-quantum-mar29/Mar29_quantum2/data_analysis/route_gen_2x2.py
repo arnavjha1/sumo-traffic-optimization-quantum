@@ -22,7 +22,7 @@ PROCESS_OUTPUT_DIR = BASE_DIR / "simulation_process_data"
 PROCESS_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Scale demand down to avoid oversaturating the 2x2 network.
-DEMAND_SCALE = 0.35
+DEMAND_SCALE = 0.45
 
 # 1. Run scripts and wait for completion
 subprocess.run([sys.executable, str(ALPHA_SCRIPT)], check=True)
