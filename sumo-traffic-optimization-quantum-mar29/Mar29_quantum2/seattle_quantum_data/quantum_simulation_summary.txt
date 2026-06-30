@@ -1,177 +1,177 @@
 ===== SEATTLE QUANTUM SIMULATION SUMMARY =====
 
-Source: C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\3_quantum.py
-Runs attempted: 20
-Runs successful: 20
+Source: C:\Arnav\Repositories\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\3_quantum.py
+Runs attempted: 50
+Runs successful: 50
 Runs failed: 0
 
 ===== HOURLY MEAN +/- SAMPLE STANDARD DEVIATION =====
 
 00 (12AM - 1AM):
   Throughput: 912.00 +/- 0.00
-  Average travel time: 51.41 +/- 1.08 s
-  Average waiting time: 23.33 +/- 0.81 s
+  Average travel time: 54.70 +/- 1.13 s
+  Average waiting time: 23.73 +/- 0.84 s
   Departures: 912.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 01 (1AM - 2AM):
   Throughput: 616.00 +/- 0.00
-  Average travel time: 53.28 +/- 1.21 s
-  Average waiting time: 24.47 +/- 1.06 s
+  Average travel time: 55.92 +/- 1.21 s
+  Average waiting time: 24.44 +/- 0.90 s
   Departures: 616.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 02 (2AM - 3AM):
   Throughput: 480.00 +/- 0.00
-  Average travel time: 52.38 +/- 1.60 s
-  Average waiting time: 24.12 +/- 1.26 s
+  Average travel time: 55.20 +/- 1.76 s
+  Average waiting time: 24.12 +/- 1.31 s
   Departures: 480.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 03 (3AM - 4AM):
   Throughput: 376.00 +/- 0.00
-  Average travel time: 52.17 +/- 1.75 s
-  Average waiting time: 23.54 +/- 1.49 s
+  Average travel time: 55.13 +/- 1.66 s
+  Average waiting time: 23.68 +/- 1.24 s
   Departures: 376.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 04 (4AM - 5AM):
   Throughput: 552.00 +/- 0.00
-  Average travel time: 52.91 +/- 1.25 s
-  Average waiting time: 24.45 +/- 0.91 s
+  Average travel time: 55.64 +/- 1.18 s
+  Average waiting time: 24.33 +/- 0.90 s
   Departures: 552.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 05 (5AM - 6AM):
   Throughput: 1312.00 +/- 0.00
-  Average travel time: 52.36 +/- 0.57 s
-  Average waiting time: 23.72 +/- 0.43 s
+  Average travel time: 55.24 +/- 0.71 s
+  Average waiting time: 24.07 +/- 0.54 s
   Departures: 1312.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 06 (6AM - 7AM):
   Throughput: 2888.00 +/- 0.00
-  Average travel time: 46.94 +/- 0.24 s
-  Average waiting time: 17.97 +/- 0.19 s
+  Average travel time: 49.36 +/- 0.18 s
+  Average waiting time: 18.15 +/- 0.15 s
   Departures: 2888.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 07 (7AM - 8AM):
   Throughput: 4736.00 +/- 0.00
-  Average travel time: 45.19 +/- 0.53 s
-  Average waiting time: 14.86 +/- 0.20 s
+  Average travel time: 47.68 +/- 0.19 s
+  Average waiting time: 15.20 +/- 0.14 s
   Departures: 4736.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 08 (8AM - 9AM):
-  Throughput: 5202.05 +/- 108.95
-  Average travel time: 51.44 +/- 8.61 s
-  Average waiting time: 16.72 +/- 2.28 s
-  Departures: 5202.05 +/- 108.95
+  Throughput: 5256.00 +/- 0.00
+  Average travel time: 48.49 +/- 0.21 s
+  Average waiting time: 15.35 +/- 0.16 s
+  Departures: 5256.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 09 (9AM - 10AM):
-  Throughput: 4755.20 +/- 75.20
-  Average travel time: 49.39 +/- 7.73 s
-  Average waiting time: 16.30 +/- 1.74 s
-  Departures: 4755.20 +/- 75.20
+  Throughput: 4768.00 +/- 0.00
+  Average travel time: 47.81 +/- 0.19 s
+  Average waiting time: 15.22 +/- 0.15 s
+  Departures: 4768.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 10 (10AM - 11AM):
-  Throughput: 4474.00 +/- 62.61
-  Average travel time: 46.90 +/- 6.77 s
-  Average waiting time: 15.43 +/- 1.07 s
-  Departures: 4474.00 +/- 62.61
+  Throughput: 4488.00 +/- 0.00
+  Average travel time: 47.75 +/- 0.16 s
+  Average waiting time: 15.36 +/- 0.14 s
+  Departures: 4488.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 11 (11AM - 12PM):
-  Throughput: 4767.05 +/- 71.87
-  Average travel time: 47.73 +/- 7.11 s
-  Average waiting time: 15.51 +/- 1.51 s
-  Departures: 4767.05 +/- 71.87
+  Throughput: 4784.00 +/- 0.00
+  Average travel time: 47.78 +/- 0.20 s
+  Average waiting time: 15.21 +/- 0.15 s
+  Departures: 4784.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 12 (12PM - 1PM):
-  Throughput: 5067.00 +/- 40.16
-  Average travel time: 48.75 +/- 5.70 s
-  Average waiting time: 16.08 +/- 1.82 s
-  Departures: 5067.00 +/- 40.16
+  Throughput: 5080.00 +/- 0.00
+  Average travel time: 48.09 +/- 0.23 s
+  Average waiting time: 15.22 +/- 0.17 s
+  Departures: 5080.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 13 (1PM - 2PM):
-  Throughput: 5061.90 +/- 180.23
-  Average travel time: 56.54 +/- 15.33 s
-  Average waiting time: 17.98 +/- 3.37 s
-  Departures: 5061.90 +/- 180.23
+  Throughput: 5160.00 +/- 0.00
+  Average travel time: 48.27 +/- 0.32 s
+  Average waiting time: 15.30 +/- 0.22 s
+  Departures: 5160.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 14 (2PM - 3PM):
-  Throughput: 5406.55 +/- 132.21
-  Average travel time: 53.31 +/- 10.13 s
-  Average waiting time: 17.48 +/- 2.82 s
-  Departures: 5406.55 +/- 132.21
+  Throughput: 5464.00 +/- 0.00
+  Average travel time: 48.70 +/- 0.30 s
+  Average waiting time: 15.42 +/- 0.22 s
+  Departures: 5464.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 15 (3PM - 4PM):
-  Throughput: 5802.85 +/- 245.30
-  Average travel time: 62.39 +/- 14.91 s
-  Average waiting time: 21.33 +/- 4.38 s
-  Departures: 5802.85 +/- 245.30
+  Throughput: 5983.86 +/- 0.99
+  Average travel time: 50.60 +/- 0.58 s
+  Average waiting time: 16.38 +/- 0.39 s
+  Departures: 5983.86 +/- 0.99
   Unfinished: 0.00 +/- 0.00
 
 16 (4PM - 5PM):
-  Throughput: 5914.95 +/- 371.29
-  Average travel time: 81.14 +/- 14.71 s
-  Average waiting time: 29.20 +/- 3.36 s
-  Departures: 5914.95 +/- 371.29
+  Throughput: 6391.76 +/- 35.98
+  Average travel time: 59.25 +/- 3.90 s
+  Average waiting time: 21.41 +/- 2.32 s
+  Departures: 6391.76 +/- 35.98
   Unfinished: 0.00 +/- 0.00
 
 17 (5PM - 6PM):
-  Throughput: 6030.60 +/- 534.38
-  Average travel time: 83.50 +/- 16.49 s
-  Average waiting time: 31.47 +/- 1.79 s
-  Departures: 6030.60 +/- 534.38
+  Throughput: 6338.60 +/- 86.78
+  Average travel time: 72.14 +/- 5.09 s
+  Average waiting time: 28.89 +/- 2.96 s
+  Departures: 6338.60 +/- 86.78
   Unfinished: 0.00 +/- 0.00
 
 18 (6PM - 7PM):
-  Throughput: 5646.95 +/- 126.41
-  Average travel time: 59.28 +/- 6.37 s
-  Average waiting time: 22.01 +/- 2.18 s
-  Departures: 5646.95 +/- 126.41
+  Throughput: 5723.92 +/- 84.29
+  Average travel time: 59.10 +/- 4.24 s
+  Average waiting time: 21.39 +/- 2.46 s
+  Departures: 5723.92 +/- 84.29
   Unfinished: 0.00 +/- 0.00
 
 19 (7PM - 8PM):
-  Throughput: 4088.45 +/- 72.93
-  Average travel time: 47.88 +/- 9.23 s
-  Average waiting time: 15.97 +/- 1.64 s
-  Departures: 4088.45 +/- 72.93
+  Throughput: 4104.12 +/- 0.33
+  Average travel time: 47.74 +/- 0.16 s
+  Average waiting time: 15.64 +/- 0.13 s
+  Departures: 4104.12 +/- 0.33
   Unfinished: 0.00 +/- 0.00
 
 20 (8PM - 9PM):
   Throughput: 3336.00 +/- 0.00
-  Average travel time: 45.91 +/- 0.22 s
-  Average waiting time: 16.63 +/- 0.17 s
+  Average travel time: 48.41 +/- 0.18 s
+  Average waiting time: 16.85 +/- 0.15 s
   Departures: 3336.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 21 (9PM - 10PM):
   Throughput: 2888.00 +/- 0.00
-  Average travel time: 46.86 +/- 0.15 s
-  Average waiting time: 17.91 +/- 0.13 s
+  Average travel time: 49.32 +/- 0.21 s
+  Average waiting time: 18.13 +/- 0.18 s
   Departures: 2888.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 22 (10PM - 11PM):
   Throughput: 2112.00 +/- 0.00
-  Average travel time: 49.83 +/- 0.41 s
-  Average waiting time: 21.21 +/- 0.34 s
+  Average travel time: 52.42 +/- 0.39 s
+  Average waiting time: 21.46 +/- 0.35 s
   Departures: 2112.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
 23 (11PM - 12AM):
   Throughput: 1344.00 +/- 0.00
-  Average travel time: 52.57 +/- 0.50 s
-  Average waiting time: 23.91 +/- 0.42 s
+  Average travel time: 55.59 +/- 0.71 s
+  Average waiting time: 24.34 +/- 0.53 s
   Departures: 1344.00 +/- 0.00
   Unfinished: 0.00 +/- 0.00
 
@@ -179,27 +179,27 @@ Runs failed: 0
 
 {
     "departures": {
-        "count": 20,
-        "mean": 83769.55,
-        "median": 83827.5,
-        "min": 81971,
-        "max": 84899,
-        "standard_deviation": 802.3351101300307,
-        "variance": 643741.6289473685,
-        "standard_error": 179.40758469855285
+        "count": 50,
+        "mean": 85094.26,
+        "median": 85100.0,
+        "min": 85011,
+        "max": 85120,
+        "standard_deviation": 27.240283794859586,
+        "variance": 742.0330612244898,
+        "standard_error": 3.8523578785582466
     },
     "throughput": {
-        "count": 20,
-        "mean": 83769.55,
-        "median": 83827.5,
-        "min": 81971,
-        "max": 84899,
-        "standard_deviation": 802.3351101300307,
-        "variance": 643741.6289473685,
-        "standard_error": 179.40758469855285
+        "count": 50,
+        "mean": 85094.26,
+        "median": 85100.0,
+        "min": 85011,
+        "max": 85120,
+        "standard_deviation": 27.240283794859586,
+        "variance": 742.0330612244898,
+        "standard_error": 3.8523578785582466
     },
     "unfinished": {
-        "count": 20,
+        "count": 50,
         "mean": 0,
         "median": 0.0,
         "min": 0,
@@ -209,23 +209,23 @@ Runs failed: 0
         "standard_error": 0.0
     },
     "average_travel_time": {
-        "count": 20,
-        "mean": 55.52707282283122,
-        "median": 55.329357487048675,
-        "min": 50.66477358935092,
-        "max": 59.786858648300026,
-        "standard_deviation": 2.403358383930322,
-        "variance": 5.77613152160817,
-        "standard_error": 0.5374072720762239
+        "count": 50,
+        "mean": 52.29962534070945,
+        "median": 52.18824420815072,
+        "min": 50.113555216165416,
+        "max": 54.23920422063026,
+        "standard_deviation": 0.8054437692489369,
+        "variance": 0.6487396654219346,
+        "standard_error": 0.11390695022007521
     },
     "average_waiting_time": {
-        "count": 20,
-        "mean": 19.75320853654017,
-        "median": 19.761947070513482,
-        "min": 18.158985385280975,
-        "max": 20.803402221741326,
-        "standard_deviation": 0.6706904010354202,
-        "variance": 0.44982561404105276,
-        "standard_error": 0.1499709328571795
+        "count": 50,
+        "mean": 18.252376119783357,
+        "median": 18.192253539994756,
+        "min": 16.970849859022557,
+        "max": 19.430262318994014,
+        "standard_deviation": 0.47140707589391617,
+        "variance": 0.22222463120285244,
+        "standard_error": 0.06666702801278192
     }
 }
