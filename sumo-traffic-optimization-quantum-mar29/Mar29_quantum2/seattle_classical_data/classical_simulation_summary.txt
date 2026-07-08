@@ -1,0 +1,231 @@
+===== SEATTLE CLASSICAL SIMULATION SUMMARY =====
+
+Source: C:\Arnav\Repositories\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\2_classical.py
+Runs attempted: 3
+Runs successful: 3
+Runs failed: 0
+
+===== HOURLY MEAN +/- SAMPLE STANDARD DEVIATION =====
+
+00 (12AM - 1AM):
+  Throughput: 912.00 +/- 0.00
+  Average travel time: 52.36 +/- 0.00 s
+  Average waiting time: 22.34 +/- 0.00 s
+  Departures: 912.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+01 (1AM - 2AM):
+  Throughput: 616.00 +/- 0.00
+  Average travel time: 55.50 +/- 0.00 s
+  Average waiting time: 24.21 +/- 0.00 s
+  Departures: 616.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+02 (2AM - 3AM):
+  Throughput: 480.00 +/- 0.00
+  Average travel time: 55.28 +/- 0.00 s
+  Average waiting time: 24.55 +/- 0.00 s
+  Departures: 480.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+03 (3AM - 4AM):
+  Throughput: 376.00 +/- 0.00
+  Average travel time: 56.90 +/- 0.00 s
+  Average waiting time: 25.61 +/- 0.00 s
+  Departures: 376.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+04 (4AM - 5AM):
+  Throughput: 552.00 +/- 0.00
+  Average travel time: 54.18 +/- 0.00 s
+  Average waiting time: 23.58 +/- 0.00 s
+  Departures: 552.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+05 (5AM - 6AM):
+  Throughput: 1312.00 +/- 0.00
+  Average travel time: 56.35 +/- 0.00 s
+  Average waiting time: 25.16 +/- 0.00 s
+  Departures: 1312.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+06 (6AM - 7AM):
+  Throughput: 2888.00 +/- 0.00
+  Average travel time: 51.31 +/- 0.00 s
+  Average waiting time: 20.15 +/- 0.00 s
+  Departures: 2888.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+07 (7AM - 8AM):
+  Throughput: 4736.00 +/- 0.00
+  Average travel time: 48.90 +/- 0.00 s
+  Average waiting time: 16.46 +/- 0.00 s
+  Departures: 4736.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+08 (8AM - 9AM):
+  Throughput: 5256.00 +/- 0.00
+  Average travel time: 50.21 +/- 0.00 s
+  Average waiting time: 17.10 +/- 0.00 s
+  Departures: 5256.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+09 (9AM - 10AM):
+  Throughput: 4768.00 +/- 0.00
+  Average travel time: 49.45 +/- 0.00 s
+  Average waiting time: 16.81 +/- 0.00 s
+  Departures: 4768.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+10 (10AM - 11AM):
+  Throughput: 4488.00 +/- 0.00
+  Average travel time: 48.84 +/- 0.00 s
+  Average waiting time: 16.61 +/- 0.00 s
+  Departures: 4488.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+11 (11AM - 12PM):
+  Throughput: 4784.00 +/- 0.00
+  Average travel time: 48.94 +/- 0.00 s
+  Average waiting time: 16.44 +/- 0.00 s
+  Departures: 4784.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+12 (12PM - 1PM):
+  Throughput: 5080.00 +/- 0.00
+  Average travel time: 50.06 +/- 0.00 s
+  Average waiting time: 16.92 +/- 0.00 s
+  Departures: 5080.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+13 (1PM - 2PM):
+  Throughput: 5160.00 +/- 0.00
+  Average travel time: 49.16 +/- 0.00 s
+  Average waiting time: 16.49 +/- 0.00 s
+  Departures: 5160.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+14 (2PM - 3PM):
+  Throughput: 5464.00 +/- 0.00
+  Average travel time: 50.68 +/- 0.00 s
+  Average waiting time: 17.41 +/- 0.00 s
+  Departures: 5464.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+15 (3PM - 4PM):
+  Throughput: 5984.00 +/- 0.00
+  Average travel time: 52.35 +/- 0.00 s
+  Average waiting time: 18.28 +/- 0.00 s
+  Departures: 5984.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+16 (4PM - 5PM):
+  Throughput: 6421.00 +/- 0.00
+  Average travel time: 56.97 +/- 0.00 s
+  Average waiting time: 21.04 +/- 0.00 s
+  Departures: 6421.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+17 (5PM - 6PM):
+  Throughput: 6509.00 +/- 0.00
+  Average travel time: 68.70 +/- 0.00 s
+  Average waiting time: 28.53 +/- 0.00 s
+  Departures: 6509.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+18 (6PM - 7PM):
+  Throughput: 5550.00 +/- 0.00
+  Average travel time: 52.27 +/- 0.00 s
+  Average waiting time: 18.29 +/- 0.00 s
+  Departures: 5550.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+19 (7PM - 8PM):
+  Throughput: 4104.00 +/- 0.00
+  Average travel time: 48.42 +/- 0.00 s
+  Average waiting time: 16.61 +/- 0.00 s
+  Departures: 4104.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+20 (8PM - 9PM):
+  Throughput: 3336.00 +/- 0.00
+  Average travel time: 50.23 +/- 0.00 s
+  Average waiting time: 18.74 +/- 0.00 s
+  Departures: 3336.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+21 (9PM - 10PM):
+  Throughput: 2888.00 +/- 0.00
+  Average travel time: 52.33 +/- 0.00 s
+  Average waiting time: 21.03 +/- 0.00 s
+  Departures: 2888.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+22 (10PM - 11PM):
+  Throughput: 2112.00 +/- 0.00
+  Average travel time: 55.19 +/- 0.00 s
+  Average waiting time: 24.04 +/- 0.00 s
+  Departures: 2112.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+23 (11PM - 12AM):
+  Throughput: 1344.00 +/- 0.00
+  Average travel time: 54.94 +/- 0.00 s
+  Average waiting time: 24.03 +/- 0.00 s
+  Departures: 1344.00 +/- 0.00
+  Unfinished: 0.00 +/- 0.00
+
+===== PER-RUN TOTAL STATISTICS =====
+
+{
+    "departures": {
+        "count": 3,
+        "mean": 85120,
+        "median": 85120,
+        "min": 85120,
+        "max": 85120,
+        "standard_deviation": 0.0,
+        "variance": 0,
+        "standard_error": 0.0
+    },
+    "throughput": {
+        "count": 3,
+        "mean": 85120,
+        "median": 85120,
+        "min": 85120,
+        "max": 85120,
+        "standard_deviation": 0.0,
+        "variance": 0,
+        "standard_error": 0.0
+    },
+    "unfinished": {
+        "count": 3,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "standard_deviation": 0.0,
+        "variance": 0,
+        "standard_error": 0.0
+    },
+    "average_travel_time": {
+        "count": 3,
+        "mean": 52.57892070018797,
+        "median": 52.57892070018797,
+        "min": 52.57892070018797,
+        "max": 52.57892070018797,
+        "standard_deviation": 0.0,
+        "variance": 0.0,
+        "standard_error": 0.0
+    },
+    "average_waiting_time": {
+        "count": 3,
+        "mean": 19.201731085526315,
+        "median": 19.201731085526315,
+        "min": 19.201731085526315,
+        "max": 19.201731085526315,
+        "standard_deviation": 0.0,
+        "variance": 0.0,
+        "standard_error": 0.0
+    }
+}

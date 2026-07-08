@@ -35,50 +35,85 @@ quantum_std = np.array([stats["standard_deviation"] for stats in quantum_stats])
 quantum_min = np.array([stats["min"] for stats in quantum_stats])
 quantum_max = np.array([stats["max"] for stats in quantum_stats])
 
+smooth_hours = np.linspace(min(hours), max(hours), 300)
+
+
+def smooth(values):
+    x = np.array(hours, dtype=float)
+    y = np.array(values, dtype=float)
+    smoothed = []
+
+    for x_new in smooth_hours:
+        i = np.searchsorted(x, x_new) - 1
+        i = max(0, min(i, len(x) - 2))
+
+        p0 = y[max(i - 1, 0)]
+        p1 = y[i]
+        p2 = y[i + 1]
+        p3 = y[min(i + 2, len(y) - 1)]
+        t = (x_new - x[i]) / (x[i + 1] - x[i])
+
+        smoothed.append(
+            0.5
+            * (
+                (2 * p1)
+                + (-p0 + p2) * t
+                + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t**2
+                + (-p0 + 3 * p1 - 3 * p2 + p3) * t**3
+            )
+        )
+
+    return np.array(smoothed)
+
+
 quantum_color = "tab:red"
 
 plt.figure()
 
-plt.fill_between(
-    hours,
-    quantum_min,
-    quantum_max,
-    color=quantum_color,
-    alpha=0.08,
-    label="QAOA Optimization min-max",
-)
-plt.fill_between(
-    hours,
-    quantum - 2 * quantum_std,
-    quantum + 2 * quantum_std,
-    color=quantum_color,
-    alpha=0.12,
-    label="QAOA Optimization +/- 2 SD",
-)
-plt.fill_between(
-    hours,
-    quantum - quantum_std,
-    quantum + quantum_std,
-    color=quantum_color,
-    alpha=0.22,
-    label="QAOA Optimization +/- 1 SD",
-)
-
-plt.plot(hours, fixed, color="tab:blue", linewidth=1.6, label="Fixed-Time")
-plt.plot(hours, queue, color="tab:orange", linewidth=1.6, label="Queue-Based")
 plt.plot(
-    hours,
-    classical,
+    smooth_hours,
+    smooth(fixed),
+    color="tab:blue",
+    linewidth=1.6,
+    label="Fixed-Time",
+)
+plt.plot(
+    smooth_hours,
+    smooth(queue),
+    color="tab:orange",
+    linewidth=1.6,
+    label="Queue-Based",
+)
+plt.plot(
+    smooth_hours,
+    smooth(classical),
     color="tab:green",
     linewidth=1.6,
     label="Classical Optimization",
 )
 plt.plot(
-    hours,
-    quantum,
+    smooth_hours,
+    smooth(quantum),
     color=quantum_color,
     linewidth=1.6,
     label="QAOA Optimization",
+)
+
+plt.fill_between(
+    smooth_hours,
+    smooth(quantum - 0.5 * quantum_std),
+    smooth(quantum + 0.5 * quantum_std),
+    color=quantum_color,
+    alpha=0.22,
+    label="QAOA Optimization +/- 0.5 SD",
+)
+plt.fill_between(
+    smooth_hours,
+    smooth(quantum - 1 * quantum_std),
+    smooth(quantum + 1 * quantum_std),
+    color=quantum_color,
+    alpha=0.12,
+    label="QAOA Optimization +/- 1 SD",
 )
 
 plt.scatter(hours, fixed, color="tab:blue", s=20)
