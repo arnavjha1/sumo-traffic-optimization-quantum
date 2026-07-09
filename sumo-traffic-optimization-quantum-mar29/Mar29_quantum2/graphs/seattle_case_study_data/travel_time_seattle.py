@@ -96,24 +96,25 @@ plt.plot(
     smooth(quantum),
     color=quantum_color,
     linewidth=1.6,
-    label="QAOA Optimization",
+    label="QAOA Optimization Mean",
 )
 
-plt.fill_between(
-    smooth_hours,
-    smooth(quantum - 0.5 * quantum_std),
-    smooth(quantum + 0.5 * quantum_std),
-    color=quantum_color,
-    alpha=0.22,
-    label="QAOA Optimization +/- 0.5 SD",
-)
 plt.fill_between(
     smooth_hours,
     smooth(quantum - 1 * quantum_std),
     smooth(quantum + 1 * quantum_std),
     color=quantum_color,
-    alpha=0.12,
+    alpha=0.34,
     label="QAOA Optimization +/- 1 SD",
+)
+
+plt.fill_between(
+    smooth_hours,
+    smooth(quantum - 2 * quantum_std),
+    smooth(quantum + 2 * quantum_std),
+    color=quantum_color,
+    alpha=0.14,
+    label="QAOA Optimization +/- 2 SD",
 )
 
 plt.scatter(hours, fixed, color="tab:blue", s=20)
