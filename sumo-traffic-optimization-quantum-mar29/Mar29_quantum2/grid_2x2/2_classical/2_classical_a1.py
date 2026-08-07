@@ -1,18 +1,10 @@
 import traci
 from collections import defaultdict
-from simulation_metrics import (
-    PerformanceTracker,
-    collect_queue_lengths_4d,
-    should_continue_simulation,
-    start_sumo,
-    ROUTE_GENERATION_END,
-    MAX_SIM_TIME,
-    HOUR_SECONDS,
-    NUM_HOURS,
-)
+from annealer_classical import quantum_decision
 
 SUMO_BINARY = "sumo"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
+SUMO_CONFIG = "sim2x2_a1.sumocfg"
+END_TIME = 600
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -38,7 +30,7 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-start_sumo(SUMO_BINARY, SUMO_CONFIG, max_depart_delay=300)
+traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -57,9 +49,6 @@ last_waiting_time = {}
 travel_times = defaultdict(list)
 waiting_times = defaultdict(list)
 throughput = defaultdict(int)
-hourly_travel_times = [[] for _ in range(NUM_HOURS)]
-hourly_waiting_times = [[] for _ in range(NUM_HOURS)]
-hourly_throughput = [0 for _ in range(NUM_HOURS)]
 
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -69,6 +58,7 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 regular_cars = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 tIndex = []
+bias_i_tls = [[] for _ in range(NUM_TLS)]  # Store bias_i values for each TLS over time
 
 for tls in TLS_REG:
     traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -78,20 +68,59 @@ for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
     tIndex.append(tls)
 
-metrics = PerformanceTracker("classical")
-
-def simStep(num_times=1):
+def simStep(num_times = 1):
     for _ in range(num_times):
         traci.simulationStep()
-        departed_count, arrived_count = metrics.process_vehicle_events()
-        total_queue_now = collect_queue_lengths_4d(
-            TLS_ORDER,
-            NUM_SIDES,
-            NUM_LANES,
-            queue_lengths,
-            regular_cars=regular_cars,
-        )
-        metrics.sample_debug(total_queue_now, departed_count, arrived_count)
+        t = traci.simulation.getTime()
+
+        # ====================================================
+        # Vehicles that just departed
+        for veh in traci.simulation.getDepartedIDList():
+            depart_time[veh] = t
+            route_of[veh] = traci.vehicle.getRouteID(veh)
+            last_waiting_time[veh] = 0.0
+
+        # Update waiting times
+        for veh in traci.vehicle.getIDList():
+            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+
+        # Vehicles that just arrived
+        for veh in traci.simulation.getArrivedIDList():
+            if veh in depart_time:
+                route = route_of[veh]
+                travel_time = t - depart_time[veh]
+                waiting_time = last_waiting_time.get(veh, 0.0)
+
+                travel_times[route].append(travel_time)
+                waiting_times[route].append(waiting_time)
+                throughput[route] += 1
+
+                depart_time.pop(veh, None)
+                route_of.pop(veh, None)
+                last_waiting_time.pop(veh, None)
+
+        # ====================================================
+        # QUEUE LENGTH CALCULATION (4D ARRAY)
+        for tls_index, tls in enumerate(TLS_ORDER):
+            lanes = traci.trafficlight.getControlledLanes(tls)
+            lanes = list(dict.fromkeys(lanes))  # remove duplicates
+
+            # Each TLS has 4 sides; split lanes evenly per side
+            lanes_per_side = len(lanes) // NUM_SIDES
+            for side_index in range(NUM_SIDES):
+                for lane_index in range(NUM_LANES):
+                    lane_pos = side_index * lanes_per_side + lane_index
+                    if lane_pos < len(lanes):
+                        lane_id = lanes[lane_pos]
+                        queue = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
+                                    if traci.vehicle.getSpeed(veh) < 0.1)
+                        reg   = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
+                                    if traci.vehicle.getSpeed(veh) >= 0.1)
+                        regular_cars[tls_index][side_index][lane_index].append(reg)
+                        queue_lengths[tls_index][side_index][lane_index].append(queue)
+                    else:
+                        regular_cars[tls_index][side_index][lane_index].append(0)
+                        queue_lengths[tls_index][side_index][lane_index].append(0)
 
 QUEUE_K = 2
 DISCHARGE_QUEUE_K = 1
@@ -129,60 +158,16 @@ def compute_discharging_pressure():
             pressure_value = DISCHARGE_QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
             discharging_pressure[tls_index][side_index].append(pressure_value)
 
-# ==========================================================
-# ENERGY-BASED PHASE OPTIMIZATION
-# ==========================================================
-
-LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 2             # tune between 0-10
 
 x_i = [[] for _ in range(NUM_TLS)]
-
-def optimize_x_i(tls_index, bias_i):
-
-    # First timestep initialization
-    if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
-            x_i[tls_index].append(-1)
-        return
-
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
-
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
-
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
-
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
-
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
-
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
-    else:
-        x_i[tls_index].append(current_x)
 
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-MIN_CHANGE_TIME = 16  # Minimum time to wait before allowing another change
+MIN_CHANGE_TIME = 12  # Minimum time to wait before allowing another change
 
-while should_continue_simulation():
+while traci.simulation.getTime() < END_TIME:
 
     simStep()
     compute_pressure()
@@ -191,7 +176,6 @@ while should_continue_simulation():
 
     # ====================================================
     # QUEUE LENGTH ALGORITHM
-    
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
@@ -203,7 +187,7 @@ while should_continue_simulation():
         else:
             bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
         
-        optimize_x_i(tIndex.index(tls), bias_i)
+        bias_i_tls[tIndex.index(tls)].append(bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -222,7 +206,7 @@ while should_continue_simulation():
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME+60 and x_i[tIndex.index(tls)][-1] == 1):
+            if(sim_module[tIndex.index(tls)] >= (MIN_CHANGE_TIME + 60) and x_i[tIndex.index(tls)][-1] == 1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -246,7 +230,7 @@ while should_continue_simulation():
         else:
             bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
         
-        optimize_x_i(tIndex.index(tls), bias_i)
+        bias_i_tls[tIndex.index(tls)].append(bias_i)
 
         
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
@@ -266,7 +250,7 @@ while should_continue_simulation():
 
         elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME+60 and x_i[tIndex.index(tls)][-1] == -1):
+            if(sim_module[tIndex.index(tls)] >= (MIN_CHANGE_TIME + 60) and x_i[tIndex.index(tls)][-1] == -1):
                 sim_module[tIndex.index(tls)] = 115
             else:
                 sim_module[tIndex.index(tls)] += 1
@@ -278,8 +262,131 @@ while should_continue_simulation():
         elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] = 0
+    
+    # ====================================================
+    # QUANTUM ANNEALING OPTIMIZATION
+    # ====================================================
+
+    # Convert biases to a flat list (length 4)
+    bias_list = [bias_i_tls[tIndex.index(tls)][-1] for tls in TLS_ORDER]
+
+    # Previous traffic light states
+    # 0 = NS green
+    # 1 = EW green
+
+    prev_state = []
+
+    for i in range(NUM_TLS):
+
+        # First timestep fallback
+        if len(x_i[i]) == 0:
+
+            # Use initial configuration
+            if TLS_ORDER[i] in TLS_REG:
+                prev_state.append(0)
+            else:
+                prev_state.append(1)
+
+        else:
+
+            # Convert {-1,1} -> {0,1}
+            prev_state.append(
+                1 if x_i[i][-1] == 1 else 0
+            )
+    
+    neighbor_indices = []
+
+    for i in range(NUM_TLS):
+
+        curr_neighbors = []
+
+        for neighbor_tls in TLS_NEIGHBORS[i][1:]:
+
+            curr_neighbors.append(
+                tIndex.index(neighbor_tls)
+            )
+
+        neighbor_indices.append(curr_neighbors)
+
+    bitstring = quantum_decision(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    print(traci.simulation.getTime())
+
+    # Update x_i with quantum decisions
+    for idx, tls in enumerate(TLS_ORDER):
+        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
     # ====================================================
 
 traci.close()
 
-metrics.save_and_print()
+# -----------------------
+# RESULTS
+# -----------------------
+print("\n===== PERFORMANCE METRICS =====")
+
+def compute_avg(route_list, data_dict):
+    values = []
+    for r in route_list:
+        values.extend(data_dict.get(r, []))
+    return sum(values) / len(values) if len(values) > 0 else None
+
+def compute_throughput(route_list):
+    return sum(throughput.get(r, 0) for r in route_list)
+
+ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+
+# Queue lengths
+print("\nAverage Queue Length per TLS per Side/Lane:")
+LANE_LABELS = ["Right", "Straight", "Left"]
+
+for tls_index, tls in enumerate(TLS_ORDER):
+    print(f"\n  {tls}:")
+    for side_index in range(NUM_SIDES):
+        print(f"    Side {side_index}: ", end="")
+        for lane_index in range(NUM_LANES):
+            data = queue_lengths[tls_index][side_index][lane_index]
+            avg = sum(data) / len(data) if data else 0
+            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
+        print()
+
+# Travel time
+print("\nQUANTUM")
+print("\nAverage Travel Time:")
+avg_two = compute_avg(TWO_TURNS, travel_times)
+avg_one = compute_avg(ONE_TURN, travel_times)
+avg_none = compute_avg(NO_TURNS, travel_times)
+avg_all = compute_avg(ALL_ROUTES, travel_times)
+
+print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
+print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
+print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
+print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+
+# Waiting time
+print("\nAverage Waiting Time:")
+avg_two = compute_avg(TWO_TURNS, waiting_times)
+avg_one = compute_avg(ONE_TURN, waiting_times)
+avg_none = compute_avg(NO_TURNS, waiting_times)
+avg_all = compute_avg(ALL_ROUTES, waiting_times)
+
+print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
+print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
+print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
+print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+
+# Throughput
+print("\nThroughput:")
+thr_two = compute_throughput(TWO_TURNS)
+thr_one = compute_throughput(ONE_TURN)
+thr_none = compute_throughput(NO_TURNS)
+thr_all = compute_throughput(ALL_ROUTES)
+
+print(f"  Two Turns: {thr_two}")
+print(f"  One Turn:  {thr_one}")
+print(f"  No Turns:  {thr_none}")
+print(f"  Overall:   {thr_all}")
