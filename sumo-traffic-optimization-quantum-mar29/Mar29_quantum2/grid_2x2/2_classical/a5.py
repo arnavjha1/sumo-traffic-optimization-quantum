@@ -2,7 +2,7 @@ import traci
 from collections import defaultdict
 
 SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
+SUMO_CONFIG = "sim2x2_a5.sumocfg"
 END_TIME = 600
 
 # -----------------------
