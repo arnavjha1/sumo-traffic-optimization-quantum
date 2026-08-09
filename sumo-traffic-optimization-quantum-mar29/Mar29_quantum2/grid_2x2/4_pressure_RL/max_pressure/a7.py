@@ -1,7 +1,7 @@
 import traci
 from collections import defaultdict
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
@@ -57,7 +57,9 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 regular_cars = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 tIndex = []
-bias_i_tls = [[] for _ in range(NUM_TLS)]  # Store bias_i values for each TLS over time
+
+PHASE_NS = "GGgrrrGGgrrr"
+PHASE_EW = "rrrGGgrrrGGg"
 
 for tls in TLS_REG:
     traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -134,44 +136,92 @@ def get_lane_queue(lane_id):
         if traci.vehicle.getSpeed(veh) < 0.1
     )
 
-QUEUE_K = 2
-DISCHARGE_QUEUE_K = 1
-REG_K = 1
-LEFT_WEIGHT = 1.00
-RIGHT_WEIGHT = 0.47
-pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
-discharging_pressure = [[ [] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
-
-def compute_pressure():
-    for tls in TLS_ORDER:
-        tls_index = tIndex.index(tls)
-        for side_index in range(NUM_SIDES):
-            left_queue     = queue_lengths[tls_index][side_index][2][-1]
-            left_reg       =  regular_cars[tls_index][side_index][2][-1]
-            straight_queue = queue_lengths[tls_index][side_index][1][-1]
-            straight_reg   =  regular_cars[tls_index][side_index][1][-1]
-            right_queue    = queue_lengths[tls_index][side_index][0][-1]
-            right_reg      =  regular_cars[tls_index][side_index][0][-1]
-
-            pressure_value = QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
-            pressure[tls_index][side_index].append(pressure_value)
-
-def compute_discharging_pressure():
-    for tls in TLS_ORDER:
-        tls_index = tIndex.index(tls)
-        for side_index in range(NUM_SIDES):
-            left_queue     = queue_lengths[tls_index][side_index][2][-1]
-            left_reg       =  regular_cars[tls_index][side_index][2][-1]
-            straight_queue = queue_lengths[tls_index][side_index][1][-1]
-            straight_reg   =  regular_cars[tls_index][side_index][1][-1]
-            right_queue    = queue_lengths[tls_index][side_index][0][-1]
-            right_reg      =  regular_cars[tls_index][side_index][0][-1]
-
-            pressure_value = DISCHARGE_QUEUE_K * (LEFT_WEIGHT * left_queue + straight_queue + RIGHT_WEIGHT * right_queue) + REG_K * (LEFT_WEIGHT * left_reg + straight_reg + RIGHT_WEIGHT * right_reg)
-            discharging_pressure[tls_index][side_index].append(pressure_value)
-
+# ========================================
+# MAX PRESSURE DECISION ALGORITHM
+# ========================================
 
 x_i = [[] for _ in range(NUM_TLS)]
+
+def max_pressure_decision(tls):
+
+    # Each entry corresponds to one signal-controlled movement
+    controlled_links = traci.trafficlight.getControlledLinks(tls)
+
+    phase_pressures = []
+
+    for candidate_state in [PHASE_NS, PHASE_EW]:
+
+        total_pressure = 0.0
+
+        for signal_index, link_group in enumerate(controlled_links):
+
+            # This traffic-light signal is not green
+            # under the candidate phase, so this movement
+            # receives no pressure contribution.
+            if signal_index >= len(candidate_state):
+                continue
+
+            signal_char = candidate_state[signal_index]
+
+            if signal_char not in ("G", "g"):
+                continue
+
+            # A signal index can sometimes control more
+            # than one lane-to-lane connection.
+            for link in link_group:
+
+                incoming_lane = link[0]
+                outgoing_lane = link[1]
+
+                upstream_queue = get_lane_queue(
+                    incoming_lane
+                )
+
+                downstream_queue = get_lane_queue(
+                    outgoing_lane
+                )
+
+                movement_pressure = (
+                    upstream_queue
+                    - downstream_queue
+                )
+
+                total_pressure += movement_pressure
+
+        phase_pressures.append(total_pressure)
+
+    ns_pressure = phase_pressures[0]
+    ew_pressure = phase_pressures[1]
+
+    # +1 = PHASE_NS
+    # -1 = PHASE_EW
+    if ns_pressure > ew_pressure:
+        return 1
+
+    elif ew_pressure > ns_pressure:
+        return -1
+
+    else:
+        # Tie: retain current phase
+        current_state = (
+            traci.trafficlight
+            .getRedYellowGreenState(tls)
+        )
+
+        if current_state == PHASE_NS:
+            return 1
+
+        elif current_state == PHASE_EW:
+            return -1
+
+        # During yellow/all-red, fall back to
+        # most recent recommendation if available
+        tls_index = tIndex.index(tls)
+
+        if len(x_i[tls_index]) > 0:
+            return x_i[tls_index][-1]
+
+        return 1
 
 # -----------------------
 # SIMULATION LOOP
@@ -182,24 +232,18 @@ MIN_CHANGE_TIME = 12  # Minimum time to wait before allowing another change
 while traci.simulation.getTime() < END_TIME:
 
     simStep()
-    compute_pressure()
-    compute_discharging_pressure()
 
+    # ========================================
+    # MAX-PRESSURE DECISIONS
+    # ========================================
 
-    # ====================================================
-    # QUEUE LENGTH ALGORITHM
+    for idx, tls in enumerate(TLS_ORDER):
+        decision = max_pressure_decision(tls)
+        x_i[idx].append(decision)
+
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-
-        if(current_state == "GGgrrrGGgrrr"):
-            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        elif(current_state == "rrrGGgrrrGGg"):
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
-        else:
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        
-        bias_i_tls[tIndex.index(tls)].append(bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -234,16 +278,6 @@ while traci.simulation.getTime() < END_TIME:
     for tls in TLS_INVERT:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-
-        if(current_state == "GGgrrrGGgrrr"):
-            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        elif(current_state == "rrrGGgrrrGGg"):
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
-        else:
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        
-        bias_i_tls[tIndex.index(tls)].append(bias_i)
-
         
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
@@ -275,64 +309,6 @@ while traci.simulation.getTime() < END_TIME:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] = 0
     
-    # ====================================================
-    # QUANTUM ANNEALING OPTIMIZATION
-    # ====================================================
-
-    # Convert biases to a flat list (length 4)
-    bias_list = [bias_i_tls[tIndex.index(tls)][-1] for tls in TLS_ORDER]
-
-    # Previous traffic light states
-    # 0 = NS green
-    # 1 = EW green
-
-    prev_state = []
-
-    for i in range(NUM_TLS):
-
-        # First timestep fallback
-        if len(x_i[i]) == 0:
-
-            # Use initial configuration
-            if TLS_ORDER[i] in TLS_REG:
-                prev_state.append(0)
-            else:
-                prev_state.append(1)
-
-        else:
-
-            # Convert {-1,1} -> {0,1}
-            prev_state.append(
-                1 if x_i[i][-1] == 1 else 0
-            )
-    
-    neighbor_indices = []
-
-    for i in range(NUM_TLS):
-
-        curr_neighbors = []
-
-        for neighbor_tls in TLS_NEIGHBORS[i][1:]:
-
-            curr_neighbors.append(
-                tIndex.index(neighbor_tls)
-            )
-
-        neighbor_indices.append(curr_neighbors)
-
-    bitstring = quantum_decision(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-
-    print(traci.simulation.getTime())
-
-    # Update x_i with quantum decisions
-    for idx, tls in enumerate(TLS_ORDER):
-        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
-    # ====================================================
 
 traci.close()
 
