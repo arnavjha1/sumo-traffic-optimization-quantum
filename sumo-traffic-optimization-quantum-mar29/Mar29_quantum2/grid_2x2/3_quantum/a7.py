@@ -1,8 +1,9 @@
 import traci
 from collections import defaultdict
+from annealer_quantum import quantum_decision
 
-SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim2x2_a5.sumocfg"
+SUMO_BINARY = "sumo"
+SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
 # -----------------------
@@ -57,6 +58,7 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 regular_cars = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 tIndex = []
+bias_i_tls = [[] for _ in range(NUM_TLS)]  # Store bias_i values for each TLS over time
 
 for tls in TLS_REG:
     traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -126,7 +128,7 @@ REG_K = 1
 
 LEFT_WEIGHT = 1.00
 RIGHT_WEIGHT = 0.47
-DOWNSTREAM_K = 0.5
+DOWNSTREAM_K = 0.5 #0.69 next
 
 pressure = [
     [[] for _ in range(NUM_SIDES)]
@@ -351,58 +353,13 @@ def compute_discharging_pressure():
                 pressure_value
             )
 
-# ==========================================================
-# ENERGY-BASED PHASE OPTIMIZATION
-# ==========================================================
-
-LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 2             # tune between 0-10
-
 x_i = [[] for _ in range(NUM_TLS)]
-
-def optimize_x_i(tls_index, bias_i):
-
-    # First timestep initialization
-    if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
-            x_i[tls_index].append(-1)
-        return
-
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
-
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
-
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
-
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
-
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
-
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
-    else:
-        x_i[tls_index].append(current_x)
 
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-MIN_CHANGE_TIME = 16  # Minimum time to wait before allowing another change
+MIN_CHANGE_TIME = 12  # Minimum time to wait before allowing another change
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -424,7 +381,7 @@ while traci.simulation.getTime() < END_TIME:
         else:
             bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
         
-        optimize_x_i(tIndex.index(tls), bias_i)
+        bias_i_tls[tIndex.index(tls)].append(bias_i)
 
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -467,7 +424,7 @@ while traci.simulation.getTime() < END_TIME:
         else:
             bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
         
-        optimize_x_i(tIndex.index(tls), bias_i)
+        bias_i_tls[tIndex.index(tls)].append(bias_i)
 
         
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
@@ -500,6 +457,66 @@ while traci.simulation.getTime() < END_TIME:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] = 0
     
+    # ====================================================
+
+
+    # ====================================================
+    # QUANTUM ANNEALING OPTIMIZATION
+    # ====================================================
+
+    # Convert downstream-aware biases to a flat list (length 4)
+    bias_list = [bias_i_tls[tIndex.index(tls)][-1] for tls in TLS_ORDER]
+
+    # Previous traffic light states
+    # 0 = NS green
+    # 1 = EW green
+    prev_state = []
+
+    for i in range(NUM_TLS):
+
+        # First timestep fallback
+        if len(x_i[i]) == 0:
+
+            # Use initial configuration
+            if TLS_ORDER[i] in TLS_REG:
+                prev_state.append(0)
+            else:
+                prev_state.append(1)
+
+        else:
+
+            # Convert {-1,1} -> {0,1}
+            prev_state.append(
+                1 if x_i[i][-1] == 1 else 0
+            )
+
+    neighbor_indices = []
+
+    for i in range(NUM_TLS):
+
+        curr_neighbors = []
+
+        for neighbor_tls in TLS_NEIGHBORS[i][1:]:
+
+            curr_neighbors.append(
+                tIndex.index(neighbor_tls)
+            )
+
+        neighbor_indices.append(curr_neighbors)
+
+    bitstring = quantum_decision(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    print(traci.simulation.getTime())
+
+    # Update x_i with quantum decisions
+    for idx, tls in enumerate(TLS_ORDER):
+        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
+
     # ====================================================
 
 traci.close()
@@ -535,7 +552,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nCLASSICAL")
+print("\nQUANTUM")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
