@@ -176,12 +176,14 @@ def get_presslight_state(tls):
 
     if current_state == PHASE_NS:
         current_phase = 0
+        last_green_phase[tls] = 0
 
     elif current_state == PHASE_EW:
         current_phase = 1
+        last_green_phase[tls] = 1
 
     else:
-        current_phase = -1
+        current_phase = last_green_phase[tls]
 
     return [
         ns_upstream,
@@ -230,11 +232,55 @@ while traci.simulation.getTime() < END_TIME:
     simStep()
 
     # ========================================
-    # MAX-PRESSURE DECISIONS
+    # PRESSLIGHT STATE / REWARD TEST
     # ========================================
+    last_green_phase = {}
+
+    for tls in TLS_REG:
+        last_green_phase[tls] = 0
+
+    for tls in TLS_INVERT:
+        last_green_phase[tls] = 1
+
 
     for idx, tls in enumerate(TLS_ORDER):
-        decision = max_pressure_decision(tls)
+
+        state = get_presslight_state(tls)
+        reward = get_presslight_reward(tls)
+
+        print(
+            f"t={traci.simulation.getTime():.0f}",
+            f"TLS={tls}",
+            f"state={state}",
+            f"reward={reward}"
+        )
+
+        # TEMPORARY:
+        # Keep the current signal recommendation
+        # so we can test state/reward collection
+        # before adding the RL agent.
+
+        current_state = (
+            traci.trafficlight
+            .getRedYellowGreenState(tls)
+        )
+
+        if current_state == PHASE_NS:
+            decision = 1
+
+        elif current_state == PHASE_EW:
+            decision = -1
+
+        else:
+            # During yellow/all-red, retain
+            # the previous recommendation.
+            if len(x_i[idx]) > 0:
+                decision = x_i[idx][-1]
+            else:
+                decision = (
+                    1 if tls in TLS_REG else -1
+                )
+
         x_i[idx].append(decision)
 
     for tls in TLS_REG:
@@ -339,7 +385,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nQUANTUM")
+print("\nPRESSLIGHT")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
