@@ -1,12 +1,12 @@
 import traci
 from collections import defaultdict
-from agent import PressLightAgent
+from agent import MPLightAgent
 
 SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
-NUM_RUNS = 100
+NUM_RUNS = 1
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -51,7 +51,7 @@ ALL_RED_TIME = 1
 
 
 # ============================================================
-# PRESSLIGHT STATE / REWARD
+# MPLight STATE / REWARD
 # ============================================================
 
 def get_lane_queue(lane_id):
@@ -65,7 +65,7 @@ def get_lane_queue(lane_id):
     )
 
 
-def get_presslight_state(tls, last_green_phase):
+def get_MPLight_state(tls, last_green_phase):
     controlled_links = traci.trafficlight.getControlledLinks(tls)
 
     ns_upstream = 0
@@ -114,8 +114,8 @@ def get_presslight_state(tls, last_green_phase):
     ]
 
 
-def get_presslight_reward(tls, last_green_phase):
-    state = get_presslight_state(
+def get_MPLight_reward(tls, last_green_phase):
+    state = get_MPLight_state(
         tls,
         last_green_phase
     )
@@ -311,7 +311,7 @@ def print_episode_metrics(
 
             print()
 
-    print("\nPRESSLIGHT")
+    print("\nMPLight")
 
     print("\nAverage Travel Time:")
 
@@ -419,6 +419,18 @@ def run_episode(agent, episode):
                 tls,
                 999999
             )
+
+        print("\n===== DEBUG: CONTROLLED LINKS FOR A0 =====")
+
+        controlled_links = traci.trafficlight.getControlledLinks("A0")
+
+        for signal_index, link_group in enumerate(controlled_links):
+            print(f"\nSignal index {signal_index}:")
+
+            for link in link_group:
+                print(link)
+
+        print("\n===== END DEBUG =====\n")
 
         # Initial signal arrangement matches your previous setup.
         initial_phases = [0, 0, 0, 1]
@@ -569,12 +581,12 @@ def run_episode(agent, episode):
                 if previous_states[idx] is None:
                     continue
 
-                next_state = get_presslight_state(
+                next_state = get_MPLight_state(
                     tls,
                     last_green_phase
                 )
 
-                reward = get_presslight_reward(
+                reward = get_MPLight_reward(
                     tls,
                     last_green_phase
                 )
@@ -605,7 +617,7 @@ def run_episode(agent, episode):
             # 3. Observe current state and choose the next action
             # ----------------------------------------------------
             for idx, tls in enumerate(TLS_ORDER):
-                state = get_presslight_state(
+                state = get_MPLight_state(
                     tls,
                     last_green_phase
                 )
@@ -686,7 +698,7 @@ def run_episode(agent, episode):
 # TRAIN
 # ============================================================
 
-agent = PressLightAgent()
+agent = MPLightAgent()
 
 for episode in range(NUM_RUNS):
     run_episode(
@@ -695,9 +707,9 @@ for episode in range(NUM_RUNS):
     )
 
 agent.save(
-    "presslight_model.pt"
+    "MPLight_model.pt"
 )
 
 print(
-    "\nTraining complete. Model saved to presslight_model.pt"
+    "\nTraining complete. Model saved to MPLight_model.pt"
 )

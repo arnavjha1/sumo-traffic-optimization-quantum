@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 
-class PressLightNetwork(nn.Module):
+class MPLightNetwork(nn.Module):
     def __init__(self, state_size=5, action_size=2):
         super().__init__()
 
@@ -23,7 +23,7 @@ class PressLightNetwork(nn.Module):
         return self.model(x)
 
 
-class PressLightAgent:
+class MPLightAgent:
     def __init__(
         self,
         state_size=5,
@@ -40,8 +40,8 @@ class PressLightAgent:
         self.state_size = state_size
         self.action_size = action_size
 
-        self.model = PressLightNetwork(state_size, action_size)
-        self.target_model = PressLightNetwork(state_size, action_size)
+        self.model = MPLightNetwork(state_size, action_size)
+        self.target_model = MPLightNetwork(state_size, action_size)
         self.target_model.load_state_dict(self.model.state_dict())
         self.target_model.eval()
 
