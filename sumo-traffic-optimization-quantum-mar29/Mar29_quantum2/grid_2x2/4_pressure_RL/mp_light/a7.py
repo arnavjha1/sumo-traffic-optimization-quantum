@@ -64,71 +64,90 @@ def get_lane_queue(lane_id):
         if traci.vehicle.getSpeed(veh) < 0.1
     )
 
+def get_movement_pressures(tls):
 
-def get_MPLight_state(tls, last_green_phase):
     controlled_links = traci.trafficlight.getControlledLinks(tls)
 
-    ns_upstream = 0
-    ns_downstream = 0
-    ew_upstream = 0
-    ew_downstream = 0
+    movement_pressures = []
 
     for signal_index, link_group in enumerate(controlled_links):
+
+        # Normally there is one controlled link per signal index
+        # in your network.
+        link = link_group[0]
+
+        incoming_lane = link[0]
+        outgoing_lane = link[1]
+
+        incoming_queue = get_lane_queue(incoming_lane)
+        outgoing_queue = get_lane_queue(outgoing_lane)
+
+        pressure = incoming_queue - outgoing_queue
+
+        movement_pressures.append(pressure)
+
+    return movement_pressures
+
+def get_intersection_pressure(tls):
+
+    controlled_links = traci.trafficlight.getControlledLinks(tls)
+
+    incoming_lanes = set()
+    outgoing_lanes = set()
+
+    for link_group in controlled_links:
         for link in link_group:
+
             incoming_lane = link[0]
             outgoing_lane = link[1]
 
-            upstream_queue = get_lane_queue(incoming_lane)
-            downstream_queue = get_lane_queue(outgoing_lane)
+            incoming_lanes.add(incoming_lane)
+            outgoing_lanes.add(outgoing_lane)
 
-            if (
-                signal_index < len(PHASE_NS)
-                and PHASE_NS[signal_index] in ("G", "g")
-            ):
-                ns_upstream += upstream_queue
-                ns_downstream += downstream_queue
+    total_incoming_queue = sum(
+        get_lane_queue(lane)
+        for lane in incoming_lanes
+    )
 
-            if (
-                signal_index < len(PHASE_EW)
-                and PHASE_EW[signal_index] in ("G", "g")
-            ):
-                ew_upstream += upstream_queue
-                ew_downstream += downstream_queue
+    total_outgoing_queue = sum(
+        get_lane_queue(lane)
+        for lane in outgoing_lanes
+    )
 
+    pressure = abs(
+        total_incoming_queue
+        - total_outgoing_queue
+    )
+
+    return pressure
+
+def get_MPLight_state(tls, last_green_phase):
+
+    # Get the 12 movement-level pressures
+    movement_pressures = get_movement_pressures(tls)
+
+    # Determine which green phase is currently active
     current_state = traci.trafficlight.getRedYellowGreenState(tls)
 
     if current_state == PHASE_NS:
         current_phase = 0
+
     elif current_state == PHASE_EW:
         current_phase = 1
+
     else:
-        # Yellow/all-red are transition states, not separate RL actions.
+        # During yellow/all-red, remember the previous green phase
         current_phase = last_green_phase[tls]
 
-    return [
-        ns_upstream,
-        ns_downstream,
-        ew_upstream,
-        ew_downstream,
-        current_phase,
-    ]
-
+    # MPLight state:
+    # 12 movement pressures + current phase
+    return movement_pressures + [current_phase]
 
 def get_MPLight_reward(tls, last_green_phase):
-    state = get_MPLight_state(
-        tls,
-        last_green_phase
-    )
 
-    ns_pressure = state[0] - state[1]
-    ew_pressure = state[2] - state[3]
+    pressure = get_intersection_pressure(tls)
 
-    total_pressure = (
-        abs(ns_pressure)
-        + abs(ew_pressure)
-    )
-
-    return -total_pressure
+    return -pressure
 
 
 # ============================================================
@@ -420,17 +439,14 @@ def run_episode(agent, episode):
                 999999
             )
 
-        print("\n===== DEBUG: CONTROLLED LINKS FOR A0 =====")
+        print("\n===== DEBUG: MOVEMENT PRESSURES FOR A0 =====")
 
-        controlled_links = traci.trafficlight.getControlledLinks("A0")
+        pressures = get_movement_pressures("A0")
 
-        for signal_index, link_group in enumerate(controlled_links):
-            print(f"\nSignal index {signal_index}:")
+        for i, pressure in enumerate(pressures):
+            print(f"Movement {i}: pressure = {pressure}")
 
-            for link in link_group:
-                print(link)
-
-        print("\n===== END DEBUG =====\n")
+        print("===== END DEBUG =====\n")
 
         # Initial signal arrangement matches your previous setup.
         initial_phases = [0, 0, 0, 1]
@@ -566,6 +582,74 @@ def run_episode(agent, episode):
             # 1. Advance SUMO under the actions selected last step
             # ----------------------------------------------------
             sim_step()
+
+            if traci.simulation.getTime() == 100:
+
+                print("\n===== MPLIGHT STATE CHECK AT t=100 =====")
+
+                for tls in TLS_ORDER:
+
+                    state = get_MPLight_state(
+                        tls,
+                        last_green_phase
+                    )
+
+                    pressure = get_intersection_pressure(tls)
+
+                    reward = get_MPLight_reward(
+                        tls,
+                        last_green_phase
+                    )
+
+                    print(f"\nTLS: {tls}")
+                    print(f"State: {state}")
+                    print(f"State length: {len(state)}")
+                    print(f"Intersection pressure: {pressure}")
+                    print(f"Reward: {reward}")
+
+                state = get_MPLight_state(
+                    "A0",
+                    last_green_phase
+                )
+
+                movement_pressures = state[:12]
+
+                ns_pressures = [
+                    movement_pressures[i]
+                    for i in [0, 1, 2, 6, 7, 8]
+                ]
+
+                ew_pressures = [
+                    movement_pressures[i]
+                    for i in [3, 4, 5, 9, 10, 11]
+                ]
+
+                print("\nA0 NS movement pressures:")
+                print(ns_pressures)
+
+                print("A0 EW movement pressures:")
+                print(ew_pressures)
+
+                print("NS movement count:", len(ns_pressures))
+                print("EW movement count:", len(ew_pressures))
+
+                import torch
+
+                test_state = torch.tensor(
+                    state,
+                    dtype=torch.float32
+                ).unsqueeze(0)
+
+                with torch.no_grad():
+                    test_q_values = agent.model(test_state)
+
+                print("\nA0 Q-values:")
+                print(test_q_values)
+
+                print("Q-value shape:")
+                print(test_q_values.shape)
+
+                print("\n===== END STATE CHECK =====\n")
 
             done = (
                 traci.simulation.getTime()
