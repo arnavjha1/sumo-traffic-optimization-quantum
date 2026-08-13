@@ -44,11 +44,11 @@ YELLOW_NS_TO_EW = "yyyrrryyyrrr"
 YELLOW_EW_TO_NS = "rrryyyrrryyy"
 ALL_RED = "rrrrrrrrrrrr"
 
-MIN_CHANGE_TIME = 12
-MAX_GREEN_TIME = 55
-YELLOW_TIME = 4
-ALL_RED_TIME = 1
-
+# update constants to more closely reflect MP Light paper
+MIN_CHANGE_TIME = 0
+MAX_GREEN_TIME = 999999
+YELLOW_TIME = 3
+ALL_RED_TIME = 2
 DECISION_INTERVAL = 10
 
 # ============================================================
@@ -696,9 +696,30 @@ def run_episode(agent, episode):
                         done,
                     )
 
+                    if current_time == 20 and tls == "A0":
+
+                        print("\n===== MPLIGHT TRANSITION CHECK =====")
+
+                        print("Previous state:")
+                        print(previous_states[idx])
+
+                        print("Previous action:")
+                        print(previous_actions[idx])
+
+                        print("Reward:")
+                        print(reward)
+
+                        print("Next state:")
+                        print(next_state)
+
+                        print("Done:")
+                        print(done)
+
+                        print("===== END TRANSITION CHECK =====\n")
+
                     stored_experience = True
 
-                # One shared-network update per SUMO step.
+                # One shared-network update per MPLight decision epoch
                 if stored_experience:
                     loss = agent.train_step()
 
