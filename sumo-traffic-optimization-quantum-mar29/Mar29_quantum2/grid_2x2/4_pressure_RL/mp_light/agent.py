@@ -23,20 +23,12 @@ class MPLightNetwork(nn.Module):
             nn.ReLU()
         )
 
-        # Current phase:
-        # 0 = NS
-        # 1 = EW
-        self.phase_state_encoder = nn.Sequential(
-            nn.Linear(1, 8),
-            nn.ReLU()
-        )
-
         # Competition network compares:
         # NS representation
         # EW representation
         # current active phase
         self.competition_scorer = nn.Sequential(
-            nn.Linear(32 + 32 + 8, 64),
+            nn.Linear(32 + 32 + 1, 64),
             nn.ReLU(),
             nn.Linear(64, 32),
             nn.ReLU(),
@@ -60,8 +52,9 @@ class MPLightNetwork(nn.Module):
         ns_features = self.phase_encoder(ns_pressures)
         ew_features = self.phase_encoder(ew_pressures)
 
-        # Encode current phase separately
-        phase_features = self.phase_state_encoder(current_phase)
+        # Is the candidate phase currently active?
+        ns_is_current = (current_phase == 0).float()
+        ew_is_current = (current_phase == 1).float()
 
         # -------------------------------------------------
         # Explicit phase competition
@@ -72,7 +65,7 @@ class MPLightNetwork(nn.Module):
             [
                 ns_features,
                 ew_features,
-                phase_features
+                ns_is_current
             ],
             dim=1
         )
@@ -86,7 +79,7 @@ class MPLightNetwork(nn.Module):
             [
                 ew_features,
                 ns_features,
-                phase_features
+                ew_is_current
             ],
             dim=1
         )

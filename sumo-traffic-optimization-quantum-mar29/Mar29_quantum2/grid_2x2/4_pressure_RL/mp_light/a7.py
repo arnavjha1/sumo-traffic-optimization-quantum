@@ -49,6 +49,7 @@ MAX_GREEN_TIME = 55
 YELLOW_TIME = 4
 ALL_RED_TIME = 1
 
+DECISION_INTERVAL = 10
 
 # ============================================================
 # MPLight STATE / REWARD
@@ -501,6 +502,8 @@ def run_episode(agent, episode):
         previous_states = [None] * NUM_TLS
         previous_actions = [None] * NUM_TLS
 
+        desired_actions = initial_phases.copy()
+
         episode_losses = []
         episode_rewards = []
 
@@ -583,6 +586,12 @@ def run_episode(agent, episode):
             # ----------------------------------------------------
             sim_step()
 
+            current_time = int(traci.simulation.getTime())
+
+            decision_time = (
+                current_time % DECISION_INTERVAL == 0
+            )
+
             if traci.simulation.getTime() == 100:
 
                 print("\n===== MPLIGHT STATE CHECK AT t=100 =====")
@@ -659,40 +668,42 @@ def run_episode(agent, episode):
             # ----------------------------------------------------
             # 2. Observe s_(t+1), reward, and store old experience
             # ----------------------------------------------------
-            stored_experience = False
+            if decision_time:
 
-            for idx, tls in enumerate(TLS_ORDER):
-                if previous_states[idx] is None:
-                    continue
+                stored_experience = False
 
-                next_state = get_MPLight_state(
-                    tls,
-                    last_green_phase
-                )
+                for idx, tls in enumerate(TLS_ORDER):
+                    if previous_states[idx] is None:
+                        continue
 
-                reward = get_MPLight_reward(
-                    tls,
-                    last_green_phase
-                )
+                    next_state = get_MPLight_state(
+                        tls,
+                        last_green_phase
+                    )
 
-                episode_rewards.append(reward)
+                    reward = get_MPLight_reward(
+                        tls,
+                        last_green_phase
+                    )
 
-                agent.remember(
-                    previous_states[idx],
-                    previous_actions[idx],
-                    reward,
-                    next_state,
-                    done,
-                )
+                    episode_rewards.append(reward)
 
-                stored_experience = True
+                    agent.remember(
+                        previous_states[idx],
+                        previous_actions[idx],
+                        reward,
+                        next_state,
+                        done,
+                    )
 
-            # One shared-network update per SUMO step.
-            if stored_experience:
-                loss = agent.train_step()
+                    stored_experience = True
 
-                if loss is not None:
-                    episode_losses.append(loss)
+                # One shared-network update per SUMO step.
+                if stored_experience:
+                    loss = agent.train_step()
+
+                    if loss is not None:
+                        episode_losses.append(loss)
 
             if done:
                 break
@@ -700,31 +711,45 @@ def run_episode(agent, episode):
             # ----------------------------------------------------
             # 3. Observe current state and choose the next action
             # ----------------------------------------------------
+
+            if decision_time:
+
+                if current_time <= 50:
+                    print(
+                        f"MPLight decision epoch at t={current_time}"
+                    )
+
+                for idx, tls in enumerate(TLS_ORDER):
+
+                    state = get_MPLight_state(
+                        tls,
+                        last_green_phase
+                    )
+
+                    action = choose_effective_action(
+                        agent=agent,
+                        state=state,
+                        current_phase=current_green_phase[idx],
+                        signal_mode=signal_mode[idx],
+                        green_elapsed=green_elapsed[idx],
+                        pending_phase=pending_phase[idx],
+                    )
+
+                    desired_actions[idx] = action
+
+                    previous_states[idx] = state
+                    previous_actions[idx] = action
+                
+            # ----------------------------------------------------
+            # Apply the most recently selected desired action
+            # every SUMO second.
+            # ----------------------------------------------------
             for idx, tls in enumerate(TLS_ORDER):
-                state = get_MPLight_state(
-                    tls,
-                    last_green_phase
-                )
 
-                action = choose_effective_action(
-                    agent=agent,
-                    state=state,
-                    current_phase=current_green_phase[idx],
-                    signal_mode=signal_mode[idx],
-                    green_elapsed=green_elapsed[idx],
-                    pending_phase=pending_phase[idx],
-                )
-
-                previous_states[idx] = state
-                previous_actions[idx] = action
-
-                # ------------------------------------------------
-                # 4. Apply the chosen desired phase to the signal
-                # ------------------------------------------------
                 apply_signal_action(
                     tls=tls,
                     idx=idx,
-                    desired_action=action,
+                    desired_action=desired_actions[idx],
                     current_green_phase=current_green_phase,
                     last_green_phase=last_green_phase,
                     signal_mode=signal_mode,
