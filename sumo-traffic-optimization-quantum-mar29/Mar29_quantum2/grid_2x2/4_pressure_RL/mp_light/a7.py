@@ -6,7 +6,7 @@ SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
-NUM_RUNS = 1
+NUM_RUNS = 100
 
 # -----------------------
 # FIXED OUTPUT ORDER
