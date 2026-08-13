@@ -2,59 +2,170 @@ import traci
 from collections import defaultdict
 from agent import PressLightAgent
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
-NUM_RUNS = 100
+MODEL_PATH = "presslight_model.pt"
+
+PHASE_NS = "GGgrrrGGgrrr"
+PHASE_EW = "rrrGGgrrrGGg"
 
 # -----------------------
 # FIXED OUTPUT ORDER
 # -----------------------
-TWO_TURNS = [
-    "r0", "r4", "r6", "r7", "r11", "r13", "r14", "r18", "r20", "r21",
-    "r25", "r27", "r28", "r32", "r34", "r35", "r39", "r41", "r42",
-    "r46", "r48", "r49", "r53", "r55"
-]
+TWO_TURNS = ["r0", "r4", "r6", "r7", "r11", "r13", "r14", "r18", "r20", "r21",
+             "r25", "r27", "r28", "r32", "r34", "r35", "r39", "r41", "r42",
+             "r46", "r48", "r49", "r53", "r55"]
 
-ONE_TURN = [
-    "r1", "r3", "r5", "r8", "r10", "r12", "r15", "r17", "r19", "r22",
-    "r24", "r26", "r29", "r31", "r33", "r36", "r38", "r40", "r43",
-    "r45", "r47", "r50", "r52", "r54"
-]
+ONE_TURN = ["r1", "r3", "r5", "r8", "r10", "r12", "r15", "r17", "r19", "r22",
+            "r24", "r26", "r29", "r31", "r33", "r36", "r38", "r40", "r43",
+            "r45", "r47", "r50", "r52", "r54"]
 
-NO_TURNS = [
-    "r2", "r9", "r16", "r23", "r30", "r37", "r44", "r51"
-]
-
-ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+NO_TURNS = ["r2", "r9", "r16", "r23", "r30", "r37", "r44", "r51"]
 
 TLS_ORDER = ["A0", "A1", "B0", "B1"]
 TLS_REG = ["A0", "A1", "B0"]
 TLS_INVERT = ["B1"]
 
+TLS_NEIGHBORS = [
+    ["A0", "B0", "A1"],  # A0 neighbors
+    ["A1", "B1", "A0"],  # A1 neighbors
+    ["B0", "A0", "B1"],  # B0 neighbors
+    ["B1", "A1", "B0"]   # B1 neighbors
+]
+
+traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+
+# -----------------------
+# FORCE MANUAL TLS CONTROL
+# -----------------------
+for tls in TLS_ORDER:
+    traci.trafficlight.setProgram(tls, "0")
+    traci.trafficlight.setPhaseDuration(tls, 999999)
+
+# -----------------------
+# LOAD FROZEN PRESSLIGHT MODEL
+# -----------------------
+agent = PressLightAgent()
+agent.load(MODEL_PATH)
+agent.set_evaluation_mode()
+
+# -----------------------
+# DATA STRUCTURES
+# -----------------------
+depart_time = {}
+route_of = {}
+last_waiting_time = {}
+
+travel_times = defaultdict(list)
+waiting_times = defaultdict(list)
+throughput = defaultdict(int)
+
 NUM_TLS = 4
-NUM_SIDES = 4
-NUM_LANES = 3
+NUM_SIDES = 4       # Each TLS has 4 incoming sides
+NUM_LANES = 3       # Left=2, Straight=1, Right=0
 
-PHASE_NS = "GGgrrrGGgrrr"
-PHASE_EW = "rrrGGgrrrGGg"
+# Initialize 4D queue_lengths: TLS x Side x Lane x Time
+queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
+regular_cars = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
+tIndex = []
 
-YELLOW_NS_TO_EW = "yyyrrryyyrrr"
-YELLOW_EW_TO_NS = "rrryyyrrryyy"
-ALL_RED = "rrrrrrrrrrrr"
+for tls in TLS_REG:
+    traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+    tIndex.append(tls)
+    
+for tls in TLS_INVERT:
+    traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
+    tIndex.append(tls)
 
-MIN_CHANGE_TIME = 12
-MAX_GREEN_TIME = 55
-YELLOW_TIME = 4
-ALL_RED_TIME = 1
+# 0 = NS, 1 = EW. This mirrors the phase encoding used when PressLight
+# was trained and is used during yellow/all-red transition states.
+last_green_phase = {
+    tls: (0 if tls in TLS_REG else 1)
+    for tls in TLS_ORDER
+}
 
+def simStep(num_times = 1):
+    for _ in range(num_times):
+        traci.simulationStep()
+        t = traci.simulation.getTime()
 
-# ============================================================
-# PRESSLIGHT STATE / REWARD
-# ============================================================
+        # ====================================================
+        # Vehicles that just departed
+        for veh in traci.simulation.getDepartedIDList():
+            depart_time[veh] = t
+            route_of[veh] = traci.vehicle.getRouteID(veh)
+            last_waiting_time[veh] = 0.0
+
+        # Update waiting times
+        for veh in traci.vehicle.getIDList():
+            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+
+        # Vehicles that just arrived
+        for veh in traci.simulation.getArrivedIDList():
+            if veh in depart_time:
+                route = route_of[veh]
+                travel_time = t - depart_time[veh]
+                waiting_time = last_waiting_time.get(veh, 0.0)
+
+                travel_times[route].append(travel_time)
+                waiting_times[route].append(waiting_time)
+                throughput[route] += 1
+
+                depart_time.pop(veh, None)
+                route_of.pop(veh, None)
+                last_waiting_time.pop(veh, None)
+
+        # ====================================================
+        # QUEUE LENGTH CALCULATION (4D ARRAY)
+        for tls_index, tls in enumerate(TLS_ORDER):
+            lanes = traci.trafficlight.getControlledLanes(tls)
+            lanes = list(dict.fromkeys(lanes))  # remove duplicates
+
+            # Each TLS has 4 sides; split lanes evenly per side
+            lanes_per_side = len(lanes) // NUM_SIDES
+            for side_index in range(NUM_SIDES):
+                for lane_index in range(NUM_LANES):
+                    lane_pos = side_index * lanes_per_side + lane_index
+                    if lane_pos < len(lanes):
+                        lane_id = lanes[lane_pos]
+                        queue = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
+                                    if traci.vehicle.getSpeed(veh) < 0.1)
+                        reg   = sum(1 for veh in traci.lane.getLastStepVehicleIDs(lane_id)
+                                    if traci.vehicle.getSpeed(veh) >= 0.1)
+                        regular_cars[tls_index][side_index][lane_index].append(reg)
+                        queue_lengths[tls_index][side_index][lane_index].append(queue)
+                    else:
+                        regular_cars[tls_index][side_index][lane_index].append(0)
+                        queue_lengths[tls_index][side_index][lane_index].append(0)
+
+QUEUE_K = 2
+DISCHARGE_QUEUE_K = 1
+REG_K = 1
+
+LEFT_WEIGHT = 1.00
+RIGHT_WEIGHT = 0.47
+DOWNSTREAM_K = 0.5
+
+pressure = [
+    [[] for _ in range(NUM_SIDES)]
+    for _ in range(NUM_TLS)
+]
+
+discharging_pressure = [
+    [[] for _ in range(NUM_SIDES)]
+    for _ in range(NUM_TLS)
+]
+
 
 def get_lane_queue(lane_id):
+    """
+    Number of stopped/queued vehicles on a lane.
+    Uses the same < 0.1 m/s threshold as the rest
+    of the simulation.
+    """
+
     if lane_id is None or lane_id == "":
         return 0
 
@@ -65,7 +176,21 @@ def get_lane_queue(lane_id):
     )
 
 
-def get_presslight_state(tls, last_green_phase):
+def get_presslight_state(tls):
+    """
+    Recreates the 5-value PressLight observation used during training:
+
+        [NS upstream queue,
+         NS downstream queue,
+         EW upstream queue,
+         EW downstream queue,
+         current phase]
+
+    Phase encoding:
+        0 = NS
+        1 = EW
+    """
+
     controlled_links = traci.trafficlight.getControlledLinks(tls)
 
     ns_upstream = 0
@@ -99,8 +224,12 @@ def get_presslight_state(tls, last_green_phase):
 
     if current_state == PHASE_NS:
         current_phase = 0
+        last_green_phase[tls] = 0
+
     elif current_state == PHASE_EW:
         current_phase = 1
+        last_green_phase[tls] = 1
+
     else:
         # Yellow/all-red are transition states, not separate RL actions.
         current_phase = last_green_phase[tls]
@@ -114,590 +243,408 @@ def get_presslight_state(tls, last_green_phase):
     ]
 
 
-def get_presslight_reward(tls, last_green_phase):
-    state = get_presslight_state(
-        tls,
-        last_green_phase
-    )
-
-    ns_pressure = state[0] - state[1]
-    ew_pressure = state[2] - state[3]
-
-    total_pressure = (
-        abs(ns_pressure)
-        + abs(ew_pressure)
-    )
-
-    return -total_pressure
-
-
-# ============================================================
-# SIGNAL TRANSITION LOGIC
-# ============================================================
-
-def choose_effective_action(
-    agent,
-    state,
-    current_phase,
-    signal_mode,
-    green_elapsed,
-    pending_phase,
-):
+def get_downstream_queue_for_side(tls, side_index):
     """
-    The agent only makes a new decision when the signal is in a green
-    state and the minimum green time has elapsed.
+    Returns downstream congestion associated with
+    the incoming lanes belonging to one side of an
+    intersection.
 
-    During minimum-green or transition periods, the environment holds
-    the required action. MAX_GREEN_TIME prevents indefinite starvation.
+    Duplicate outgoing lanes are counted only once.
     """
 
-    if signal_mode != "green":
-        if pending_phase is not None:
-            return pending_phase
-        return current_phase
+    lanes = traci.trafficlight.getControlledLanes(tls)
+    lanes = list(dict.fromkeys(lanes))
 
-    if green_elapsed < MIN_CHANGE_TIME:
-        return current_phase
+    lanes_per_side = len(lanes) // NUM_SIDES
 
-    if green_elapsed >= MAX_GREEN_TIME:
-        return 1 - current_phase
+    start = side_index * lanes_per_side
+    end = start + lanes_per_side
 
-    return agent.select_action(state)
+    incoming_lanes = lanes[start:end]
+
+    downstream_lanes = set()
+
+    for incoming_lane in incoming_lanes:
+
+        # SUMO returns all lane-to-lane connections
+        # leaving this incoming lane.
+        for link in traci.lane.getLinks(incoming_lane):
+
+            outgoing_lane = link[0]
+
+            if outgoing_lane:
+                downstream_lanes.add(outgoing_lane)
+
+    downstream_queue = sum(
+        get_lane_queue(lane_id)
+        for lane_id in downstream_lanes
+    )
+
+    return downstream_queue
 
 
-def apply_signal_action(
-    tls,
-    idx,
-    desired_action,
-    current_green_phase,
-    last_green_phase,
-    signal_mode,
-    green_elapsed,
-    transition_timer,
-    pending_phase,
-):
-    mode = signal_mode[idx]
-    current_phase = current_green_phase[idx]
+def compute_pressure():
 
-    if mode == "green":
-        green_state = (
-            PHASE_NS
-            if current_phase == 0
-            else PHASE_EW
-        )
+    for tls in TLS_ORDER:
 
-        traci.trafficlight.setRedYellowGreenState(
-            tls,
-            green_state
-        )
+        tls_index = tIndex.index(tls)
 
-        if (
-            desired_action != current_phase
-            and green_elapsed[idx] >= MIN_CHANGE_TIME
-        ):
-            pending_phase[idx] = desired_action
-            signal_mode[idx] = "yellow"
-            transition_timer[idx] = 1
+        for side_index in range(NUM_SIDES):
 
-            yellow_state = (
-                YELLOW_NS_TO_EW
-                if current_phase == 0
-                else YELLOW_EW_TO_NS
+            left_queue = (
+                queue_lengths[tls_index][side_index][2][-1]
             )
 
-            traci.trafficlight.setRedYellowGreenState(
-                tls,
-                yellow_state
+            left_reg = (
+                regular_cars[tls_index][side_index][2][-1]
             )
+
+            straight_queue = (
+                queue_lengths[tls_index][side_index][1][-1]
+            )
+
+            straight_reg = (
+                regular_cars[tls_index][side_index][1][-1]
+            )
+
+            right_queue = (
+                queue_lengths[tls_index][side_index][0][-1]
+            )
+
+            right_reg = (
+                regular_cars[tls_index][side_index][0][-1]
+            )
+
+            # -----------------------------------------
+            # Original upstream pressure
+            # -----------------------------------------
+
+            upstream_pressure = (
+                QUEUE_K
+                * (
+                    LEFT_WEIGHT * left_queue
+                    + straight_queue
+                    + RIGHT_WEIGHT * right_queue
+                )
+                +
+                REG_K
+                * (
+                    LEFT_WEIGHT * left_reg
+                    + straight_reg
+                    + RIGHT_WEIGHT * right_reg
+                )
+            )
+
+            # -----------------------------------------
+            # NEW: downstream congestion
+            # -----------------------------------------
+
+            downstream_queue = (
+                get_downstream_queue_for_side(
+                    tls,
+                    side_index
+                )
+            )
+
+            # -----------------------------------------
+            # Net pressure
+            # -----------------------------------------
+
+            pressure_value = (
+                upstream_pressure
+                - DOWNSTREAM_K * downstream_queue
+            )
+
+            pressure[tls_index][side_index].append(
+                pressure_value
+            )
+
+
+def compute_discharging_pressure():
+
+    for tls in TLS_ORDER:
+
+        tls_index = tIndex.index(tls)
+
+        for side_index in range(NUM_SIDES):
+
+            left_queue = (
+                queue_lengths[tls_index][side_index][2][-1]
+            )
+
+            left_reg = (
+                regular_cars[tls_index][side_index][2][-1]
+            )
+
+            straight_queue = (
+                queue_lengths[tls_index][side_index][1][-1]
+            )
+
+            straight_reg = (
+                regular_cars[tls_index][side_index][1][-1]
+            )
+
+            right_queue = (
+                queue_lengths[tls_index][side_index][0][-1]
+            )
+
+            right_reg = (
+                regular_cars[tls_index][side_index][0][-1]
+            )
+
+            # -----------------------------------------
+            # Original discharging pressure
+            # -----------------------------------------
+
+            upstream_pressure = (
+                DISCHARGE_QUEUE_K
+                * (
+                    LEFT_WEIGHT * left_queue
+                    + straight_queue
+                    + RIGHT_WEIGHT * right_queue
+                )
+                +
+                REG_K
+                * (
+                    LEFT_WEIGHT * left_reg
+                    + straight_reg
+                    + RIGHT_WEIGHT * right_reg
+                )
+            )
+
+            # -----------------------------------------
+            # NEW: downstream congestion
+            # -----------------------------------------
+
+            downstream_queue = (
+                get_downstream_queue_for_side(
+                    tls,
+                    side_index
+                )
+            )
+
+            # -----------------------------------------
+            # Net discharging pressure
+            # -----------------------------------------
+
+            pressure_value = (
+                upstream_pressure
+                - DOWNSTREAM_K * downstream_queue
+            )
+
+            discharging_pressure[
+                tls_index
+            ][side_index].append(
+                pressure_value
+            )
+
+# ==========================================================
+# ENERGY-BASED PHASE OPTIMIZATION
+# ==========================================================
+
+LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
+coupling_bias = 2             # tune between 0-10
+
+x_i = [[] for _ in range(NUM_TLS)]
+
+def optimize_x_i(tls_index, bias_i):
+    """
+    Retains the original classical wrapper's optimize_x_i() call shape,
+    but replaces the energy-based decision with the frozen PressLight model.
+
+    PressLight action mapping:
+        action 0 -> NS -> x_i = +1
+        action 1 -> EW -> x_i = -1
+
+    The original sim_module logic below remains responsible for minimum
+    green time, phase transitions, yellow/all-red, and forced cycling.
+    """
+
+    # Retained only so the surrounding classical loop does not need to change.
+    _ = bias_i
+
+    tls = tIndex[tls_index]
+
+    state = get_presslight_state(tls)
+    action = agent.select_action(state)
+
+    desired_x = 1 if action == 0 else -1
+
+    if len(x_i[tls_index]) == 0:
+        x_i[tls_index].append(desired_x)
+    else:
+        x_i[tls_index].append(desired_x)
+
+
+# -----------------------
+# SIMULATION LOOP
+# -----------------------
+sim_module = [0] * len(tIndex)  # Track which module each TLS is in
+MIN_CHANGE_TIME = 16  # Minimum time to wait before allowing another change
+
+while traci.simulation.getTime() < END_TIME:
+
+    simStep()
+    compute_pressure()
+    compute_discharging_pressure()
+
+
+    # ====================================================
+    # QUEUE LENGTH ALGORITHM
+    for tls in TLS_REG:
+        current_state = traci.trafficlight.getRedYellowGreenState(tls)
+        t = traci.simulation.getTime()
+
+        if(current_state == "GGgrrrGGgrrr"):
+            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
+        elif(current_state == "rrrGGgrrrGGg"):
+            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
         else:
-            green_elapsed[idx] += 1
+            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
+        
+        optimize_x_i(tIndex.index(tls), bias_i)
 
-    elif mode == "yellow":
-        yellow_state = (
-            YELLOW_NS_TO_EW
-            if current_phase == 0
-            else YELLOW_EW_TO_NS
-        )
+        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
+            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME and x_i[tIndex.index(tls)][-1] == -1):
+                sim_module[tIndex.index(tls)] = 55
+            else:
+                sim_module[tIndex.index(tls)] += 1
 
-        traci.trafficlight.setRedYellowGreenState(
-            tls,
-            yellow_state
-        )
+        elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
+            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
+            sim_module[tIndex.index(tls)] += 1
 
-        transition_timer[idx] += 1
+        elif sim_module[tIndex.index(tls)] >= 59 and sim_module[tIndex.index(tls)] < 60:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] += 1
 
-        if transition_timer[idx] >= YELLOW_TIME:
-            signal_mode[idx] = "all_red"
-            transition_timer[idx] = 0
+        elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
+            if(sim_module[tIndex.index(tls)] >= (MIN_CHANGE_TIME + 60) and x_i[tIndex.index(tls)][-1] == 1):
+                sim_module[tIndex.index(tls)] = 115
+            else:
+                sim_module[tIndex.index(tls)] += 1
+                
+        elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
+            sim_module[tIndex.index(tls)] += 1
 
-    elif mode == "all_red":
-        traci.trafficlight.setRedYellowGreenState(
-            tls,
-            ALL_RED
-        )
+        elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] = 0
 
-        transition_timer[idx] += 1
+    for tls in TLS_INVERT:
+        current_state = traci.trafficlight.getRedYellowGreenState(tls)
+        t = traci.simulation.getTime()
 
-        if transition_timer[idx] >= ALL_RED_TIME:
-            current_green_phase[idx] = pending_phase[idx]
-            last_green_phase[tls] = pending_phase[idx]
+        if(current_state == "GGgrrrGGgrrr"):
+            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
+        elif(current_state == "rrrGGgrrrGGg"):
+            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
+        else:
+            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
+        
+        optimize_x_i(tIndex.index(tls), bias_i)
 
-            pending_phase[idx] = None
-            signal_mode[idx] = "green"
-            transition_timer[idx] = 0
-            green_elapsed[idx] = 0
+        
+        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < 55:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
+            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME and x_i[tIndex.index(tls)][-1] == 1):
+                sim_module[tIndex.index(tls)] = 55
+            else:
+                sim_module[tIndex.index(tls)] += 1
+                
+        elif sim_module[tIndex.index(tls)] >= 55 and sim_module[tIndex.index(tls)] < 59:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
+            sim_module[tIndex.index(tls)] += 1
 
+        elif sim_module[tIndex.index(tls)] >= 59 and sim_module[tIndex.index(tls)] < 60:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] += 1
 
-# ============================================================
-# METRICS
-# ============================================================
+        elif sim_module[tIndex.index(tls)] >= 60 and sim_module[tIndex.index(tls)] < 115:
+            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
+            if(sim_module[tIndex.index(tls)] >= (MIN_CHANGE_TIME + 60) and x_i[tIndex.index(tls)][-1] == -1):
+                sim_module[tIndex.index(tls)] = 115
+            else:
+                sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] >= 115 and sim_module[tIndex.index(tls)] < 119:
+            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
+            sim_module[tIndex.index(tls)] += 1
+
+        elif sim_module[tIndex.index(tls)] >= 119 and sim_module[tIndex.index(tls)] < 120:
+            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
+            sim_module[tIndex.index(tls)] = 0
+    
+    # ====================================================
+
+traci.close()
+
+# -----------------------
+# RESULTS
+# -----------------------
+print("\n===== PERFORMANCE METRICS =====")
 
 def compute_avg(route_list, data_dict):
     values = []
-
-    for route in route_list:
-        values.extend(
-            data_dict.get(route, [])
-        )
-
-    if not values:
-        return None
-
-    return sum(values) / len(values)
-
-
-def compute_throughput(route_list, throughput):
-    return sum(
-        throughput.get(route, 0)
-        for route in route_list
-    )
-
-
-def print_episode_metrics(
-    queue_lengths,
-    travel_times,
-    waiting_times,
-    throughput,
-):
-    print("\n===== PERFORMANCE METRICS =====")
-
-    print("\nAverage Queue Length per TLS per Side/Lane:")
-    lane_labels = ["Right", "Straight", "Left"]
-
-    for tls_index, tls in enumerate(TLS_ORDER):
-        print(f"\n  {tls}:")
-
-        for side_index in range(NUM_SIDES):
-            print(
-                f"    Side {side_index}: ",
-                end=""
-            )
-
-            for lane_index in range(NUM_LANES):
-                data = queue_lengths[
-                    tls_index
-                ][side_index][lane_index]
-
-                avg = (
-                    sum(data) / len(data)
-                    if data
-                    else 0
-                )
-
-                print(
-                    f"{lane_labels[lane_index]}={avg:.1f} ",
-                    end=""
-                )
-
-            print()
-
-    print("\nPRESSLIGHT")
-
-    print("\nAverage Travel Time:")
-
-    avg_two = compute_avg(TWO_TURNS, travel_times)
-    avg_one = compute_avg(ONE_TURN, travel_times)
-    avg_none = compute_avg(NO_TURNS, travel_times)
-    avg_all = compute_avg(ALL_ROUTES, travel_times)
-
-    print(
-        f"  Two Turns: {avg_two:.2f} s"
-        if avg_two is not None
-        else "  Two Turns: N/A"
-    )
-    print(
-        f"  One Turn:  {avg_one:.2f} s"
-        if avg_one is not None
-        else "  One Turn: N/A"
-    )
-    print(
-        f"  No Turns:  {avg_none:.2f} s"
-        if avg_none is not None
-        else "  No Turns: N/A"
-    )
-    print(
-        f"  Overall:   {avg_all:.2f} s"
-        if avg_all is not None
-        else "  Overall: N/A"
-    )
-
-    print("\nAverage Waiting Time:")
-
-    avg_two = compute_avg(TWO_TURNS, waiting_times)
-    avg_one = compute_avg(ONE_TURN, waiting_times)
-    avg_none = compute_avg(NO_TURNS, waiting_times)
-    avg_all = compute_avg(ALL_ROUTES, waiting_times)
-
-    print(
-        f"  Two Turns: {avg_two:.2f} s"
-        if avg_two is not None
-        else "  Two Turns: N/A"
-    )
-    print(
-        f"  One Turn:  {avg_one:.2f} s"
-        if avg_one is not None
-        else "  One Turn: N/A"
-    )
-    print(
-        f"  No Turns:  {avg_none:.2f} s"
-        if avg_none is not None
-        else "  No Turns: N/A"
-    )
-    print(
-        f"  Overall:   {avg_all:.2f} s"
-        if avg_all is not None
-        else "  Overall: N/A"
-    )
-
-    print("\nThroughput:")
-
-    thr_two = compute_throughput(
-        TWO_TURNS,
-        throughput
-    )
-    thr_one = compute_throughput(
-        ONE_TURN,
-        throughput
-    )
-    thr_none = compute_throughput(
-        NO_TURNS,
-        throughput
-    )
-    thr_all = compute_throughput(
-        ALL_ROUTES,
-        throughput
-    )
-
-    print(f"  Two Turns: {thr_two}")
-    print(f"  One Turn:  {thr_one}")
-    print(f"  No Turns:  {thr_none}")
-    print(f"  Overall:   {thr_all}")
-
-
-# ============================================================
-# TRAINING EPISODE
-# ============================================================
-
-def run_episode(agent, episode):
-    traci.start([
-        SUMO_BINARY,
-        "-c",
-        SUMO_CONFIG,
-    ])
-
-    try:
-        # -----------------------
-        # FORCE MANUAL TLS CONTROL
-        # -----------------------
-        for tls in TLS_ORDER:
-            traci.trafficlight.setProgram(
-                tls,
-                "0"
-            )
-
-            traci.trafficlight.setPhaseDuration(
-                tls,
-                999999
-            )
-
-        # Initial signal arrangement matches your previous setup.
-        initial_phases = [0, 0, 0, 1]
-
-        for idx, tls in enumerate(TLS_ORDER):
-            initial_state = (
-                PHASE_NS
-                if initial_phases[idx] == 0
-                else PHASE_EW
-            )
-
-            traci.trafficlight.setRedYellowGreenState(
-                tls,
-                initial_state
-            )
-
-        # -----------------------
-        # EPISODE DATA STRUCTURES
-        # -----------------------
-        depart_time = {}
-        route_of = {}
-        last_waiting_time = {}
-
-        travel_times = defaultdict(list)
-        waiting_times = defaultdict(list)
-        throughput = defaultdict(int)
-
-        queue_lengths = [
-            [
-                [[] for _ in range(NUM_LANES)]
-                for _ in range(NUM_SIDES)
-            ]
-            for _ in range(NUM_TLS)
-        ]
-
-        current_green_phase = initial_phases.copy()
-
-        last_green_phase = {
-            tls: initial_phases[idx]
-            for idx, tls in enumerate(TLS_ORDER)
-        }
-
-        signal_mode = [
-            "green"
-            for _ in range(NUM_TLS)
-        ]
-
-        green_elapsed = [0] * NUM_TLS
-        transition_timer = [0] * NUM_TLS
-        pending_phase = [None] * NUM_TLS
-
-        previous_states = [None] * NUM_TLS
-        previous_actions = [None] * NUM_TLS
-
-        episode_losses = []
-        episode_rewards = []
-
-        def sim_step():
-            traci.simulationStep()
-            t = traci.simulation.getTime()
-
-            # Vehicles that just departed
-            for veh in traci.simulation.getDepartedIDList():
-                depart_time[veh] = t
-                route_of[veh] = traci.vehicle.getRouteID(veh)
-                last_waiting_time[veh] = 0.0
-
-            # Update waiting times
-            for veh in traci.vehicle.getIDList():
-                last_waiting_time[veh] = (
-                    traci.vehicle.getAccumulatedWaitingTime(veh)
-                )
-
-            # Vehicles that just arrived
-            for veh in traci.simulation.getArrivedIDList():
-                if veh not in depart_time:
-                    continue
-
-                route = route_of[veh]
-                travel_time = t - depart_time[veh]
-                waiting_time = last_waiting_time.get(
-                    veh,
-                    0.0
-                )
-
-                travel_times[route].append(
-                    travel_time
-                )
-
-                waiting_times[route].append(
-                    waiting_time
-                )
-
-                throughput[route] += 1
-
-                depart_time.pop(veh, None)
-                route_of.pop(veh, None)
-                last_waiting_time.pop(veh, None)
-
-            # Queue history used for final reporting
-            for tls_index, tls in enumerate(TLS_ORDER):
-                lanes = traci.trafficlight.getControlledLanes(tls)
-                lanes = list(dict.fromkeys(lanes))
-
-                lanes_per_side = len(lanes) // NUM_SIDES
-
-                for side_index in range(NUM_SIDES):
-                    for lane_index in range(NUM_LANES):
-                        lane_pos = (
-                            side_index * lanes_per_side
-                            + lane_index
-                        )
-
-                        if lane_pos < len(lanes):
-                            lane_id = lanes[lane_pos]
-                            queue = get_lane_queue(lane_id)
-                        else:
-                            queue = 0
-
-                        queue_lengths[
-                            tls_index
-                        ][side_index][lane_index].append(
-                            queue
-                        )
-
-        print(
-            f"\nStarting episode {episode + 1}/{NUM_RUNS} "
-            f"with epsilon={agent.epsilon:.4f}"
-        )
-
-        while traci.simulation.getTime() < END_TIME:
-            # ----------------------------------------------------
-            # 1. Advance SUMO under the actions selected last step
-            # ----------------------------------------------------
-            sim_step()
-
-            done = (
-                traci.simulation.getTime()
-                >= END_TIME
-            )
-
-            # ----------------------------------------------------
-            # 2. Observe s_(t+1), reward, and store old experience
-            # ----------------------------------------------------
-            stored_experience = False
-
-            for idx, tls in enumerate(TLS_ORDER):
-                if previous_states[idx] is None:
-                    continue
-
-                next_state = get_presslight_state(
-                    tls,
-                    last_green_phase
-                )
-
-                reward = get_presslight_reward(
-                    tls,
-                    last_green_phase
-                )
-
-                episode_rewards.append(reward)
-
-                agent.remember(
-                    previous_states[idx],
-                    previous_actions[idx],
-                    reward,
-                    next_state,
-                    done,
-                )
-
-                stored_experience = True
-
-            # One shared-network update per SUMO step.
-            if stored_experience:
-                loss = agent.train_step()
-
-                if loss is not None:
-                    episode_losses.append(loss)
-
-            if done:
-                break
-
-            # ----------------------------------------------------
-            # 3. Observe current state and choose the next action
-            # ----------------------------------------------------
-            for idx, tls in enumerate(TLS_ORDER):
-                state = get_presslight_state(
-                    tls,
-                    last_green_phase
-                )
-
-                action = choose_effective_action(
-                    agent=agent,
-                    state=state,
-                    current_phase=current_green_phase[idx],
-                    signal_mode=signal_mode[idx],
-                    green_elapsed=green_elapsed[idx],
-                    pending_phase=pending_phase[idx],
-                )
-
-                previous_states[idx] = state
-                previous_actions[idx] = action
-
-                # ------------------------------------------------
-                # 4. Apply the chosen desired phase to the signal
-                # ------------------------------------------------
-                apply_signal_action(
-                    tls=tls,
-                    idx=idx,
-                    desired_action=action,
-                    current_green_phase=current_green_phase,
-                    last_green_phase=last_green_phase,
-                    signal_mode=signal_mode,
-                    green_elapsed=green_elapsed,
-                    transition_timer=transition_timer,
-                    pending_phase=pending_phase,
-                )
-
-        agent.decay_epsilon()
-
-        avg_loss = (
-            sum(episode_losses) / len(episode_losses)
-            if episode_losses
-            else None
-        )
-
-        avg_reward = (
-            sum(episode_rewards) / len(episode_rewards)
-            if episode_rewards
-            else None
-        )
-
-        loss_text = (
-            f"{avg_loss:.6f}"
-            if avg_loss is not None
-            else "N/A"
-        )
-
-        reward_text = (
-            f"{avg_reward:.6f}"
-            if avg_reward is not None
-            else "N/A"
-        )
-
-        print(
-            f"Finished episode {episode + 1}: "
-            f"epsilon={agent.epsilon:.4f}, "
-            f"memory={len(agent.memory)}, "
-            f"avg_loss={loss_text}, "
-            f"avg_reward={reward_text}"
-        )
-
-        print_episode_metrics(
-            queue_lengths,
-            travel_times,
-            waiting_times,
-            throughput,
-        )
-
-    finally:
-        traci.close()
-
-
-# ============================================================
-# TRAIN
-# ============================================================
-
-agent = PressLightAgent()
-
-for episode in range(NUM_RUNS):
-    run_episode(
-        agent,
-        episode
-    )
-
-agent.save(
-    "presslight_model.pt"
-)
-
-print(
-    "\nTraining complete. Model saved to presslight_model.pt"
-)
+    for r in route_list:
+        values.extend(data_dict.get(r, []))
+    return sum(values) / len(values) if len(values) > 0 else None
+
+def compute_throughput(route_list):
+    return sum(throughput.get(r, 0) for r in route_list)
+
+ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+
+# Queue lengths
+print("\nAverage Queue Length per TLS per Side/Lane:")
+LANE_LABELS = ["Right", "Straight", "Left"]
+
+for tls_index, tls in enumerate(TLS_ORDER):
+    print(f"\n  {tls}:")
+    for side_index in range(NUM_SIDES):
+        print(f"    Side {side_index}: ", end="")
+        for lane_index in range(NUM_LANES):
+            data = queue_lengths[tls_index][side_index][lane_index]
+            avg = sum(data) / len(data) if data else 0
+            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
+        print()
+
+# Travel time
+print("\nPRESSLIGHT")
+print("\nAverage Travel Time:")
+avg_two = compute_avg(TWO_TURNS, travel_times)
+avg_one = compute_avg(ONE_TURN, travel_times)
+avg_none = compute_avg(NO_TURNS, travel_times)
+avg_all = compute_avg(ALL_ROUTES, travel_times)
+
+print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
+print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
+print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
+print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+
+# Waiting time
+print("\nAverage Waiting Time:")
+avg_two = compute_avg(TWO_TURNS, waiting_times)
+avg_one = compute_avg(ONE_TURN, waiting_times)
+avg_none = compute_avg(NO_TURNS, waiting_times)
+avg_all = compute_avg(ALL_ROUTES, waiting_times)
+
+print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
+print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
+print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
+print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+
+# Throughput
+print("\nThroughput:")
+thr_two = compute_throughput(TWO_TURNS)
+thr_one = compute_throughput(ONE_TURN)
+thr_none = compute_throughput(NO_TURNS)
+thr_all = compute_throughput(ALL_ROUTES)
+
+print(f"  Two Turns: {thr_two}")
+print(f"  One Turn:  {thr_one}")
+print(f"  No Turns:  {thr_none}")
+print(f"  Overall:   {thr_all}")
