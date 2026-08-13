@@ -128,7 +128,7 @@ REG_K = 1
 
 LEFT_WEIGHT = 1.00
 RIGHT_WEIGHT = 0.47
-DOWNSTREAM_K = 0.5 #0.69 next
+DOWNSTREAM_K = 0.5
 
 pressure = [
     [[] for _ in range(NUM_SIDES)]
