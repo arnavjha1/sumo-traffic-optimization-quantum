@@ -11,99 +11,25 @@ EW_MOVEMENTS = [3, 4, 5, 9, 10, 11]
 
 class CoLightNetwork(nn.Module):
 
-    def __init__(self, state_size=13, action_size=2):
+    def __init__(self, state_size=5, action_size=2):
         super().__init__()
 
-        # Same encoder is used for both phases.
-        # Each phase contains 6 movement pressures.
-        self.phase_encoder = nn.Sequential(
-            nn.Linear(6, 32),
+        self.model = nn.Sequential(
+            nn.Linear(state_size, 64),
             nn.ReLU(),
-            nn.Linear(32, 32),
-            nn.ReLU()
-        )
-
-        # Competition network compares:
-        # NS representation
-        # EW representation
-        # current active phase
-        self.competition_scorer = nn.Sequential(
-            nn.Linear(32 + 32 + 1, 64),
+            nn.Linear(64, 64),
             nn.ReLU(),
-            nn.Linear(64, 32),
-            nn.ReLU(),
-            nn.Linear(32, 1)
+            nn.Linear(64, action_size)
         )
 
     def forward(self, x):
-
-        # First 12 values are movement pressures
-        movement_pressures = x[:, :12]
-
-        # Final value is current phase
-        current_phase = x[:, 12].unsqueeze(1)
-
-        # Extract movements belonging to each competing phase
-        ns_pressures = movement_pressures[:, NS_MOVEMENTS]
-        ew_pressures = movement_pressures[:, EW_MOVEMENTS]
-
-        # IMPORTANT:
-        # Both phases go through the SAME encoder
-        ns_features = self.phase_encoder(ns_pressures)
-        ew_features = self.phase_encoder(ew_pressures)
-
-        # Is the candidate phase currently active?
-        ns_is_current = (current_phase == 0).float()
-        ew_is_current = (current_phase == 1).float()
-
-        # -------------------------------------------------
-        # Explicit phase competition
-        # -------------------------------------------------
-
-        # Score NS while treating EW as its competitor
-        ns_vs_ew = torch.cat(
-            [
-                ns_features,
-                ew_features,
-                ns_is_current
-            ],
-            dim=1
-        )
-
-        q_ns = self.competition_scorer(
-            ns_vs_ew
-        )
-
-        # Score EW while treating NS as its competitor
-        ew_vs_ns = torch.cat(
-            [
-                ew_features,
-                ns_features,
-                ew_is_current
-            ],
-            dim=1
-        )
-
-        q_ew = self.competition_scorer(
-            ew_vs_ns
-        )
-
-        # Combine into [Q_NS, Q_EW]
-        q_values = torch.cat(
-            [
-                q_ns,
-                q_ew
-            ],
-            dim=1
-        )
-
-        return q_values
+        return self.model(x)
 
 
 class CoLightAgent:
     def __init__(
         self,
-        state_size=13,
+        state_size=5,
         action_size=2,
         learning_rate=0.001,
         gamma=0.95,

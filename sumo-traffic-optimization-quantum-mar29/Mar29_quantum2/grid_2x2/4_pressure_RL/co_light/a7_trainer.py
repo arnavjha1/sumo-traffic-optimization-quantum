@@ -94,6 +94,33 @@ def get_lane_queue(lane_id):
         if traci.vehicle.getSpeed(veh) < 0.1
     )
 
+def get_side_queues(tls):
+
+    lanes = traci.trafficlight.getControlledLanes(tls)
+
+    # Remove duplicate lane IDs while preserving order
+    lanes = list(dict.fromkeys(lanes))
+
+    lanes_per_side = len(lanes) // NUM_SIDES
+
+    side_queues = []
+
+    for side_index in range(NUM_SIDES):
+
+        start = side_index * lanes_per_side
+        end = start + lanes_per_side
+
+        side_lanes = lanes[start:end]
+
+        total_queue = sum(
+            get_lane_queue(lane)
+            for lane in side_lanes
+        )
+
+        side_queues.append(total_queue)
+
+    return side_queues
+
 def get_movement_pressures(tls):
 
     controlled_links = traci.trafficlight.getControlledLinks(tls)
@@ -153,10 +180,8 @@ def get_intersection_pressure(tls):
 
 def get_CoLight_state(tls, last_green_phase):
 
-    # Get the 12 movement-level pressures
-    movement_pressures = get_movement_pressures(tls)
+    side_queues = get_side_queues(tls)
 
-    # Determine which green phase is currently active
     current_state = traci.trafficlight.getRedYellowGreenState(tls)
 
     if current_state == PHASE_NS:
@@ -166,18 +191,19 @@ def get_CoLight_state(tls, last_green_phase):
         current_phase = 1
 
     else:
-        # During yellow/all-red, remember the previous green phase
+        # During yellow/all-red, use the most recent green phase
         current_phase = last_green_phase[tls]
 
-    # CoLight state:
-    # 12 movement pressures + current phase
-    return movement_pressures + [current_phase]
+    return side_queues + [current_phase]
+
 
 def get_CoLight_reward(tls, last_green_phase):
 
-    pressure = get_intersection_pressure(tls)
+    side_queues = get_side_queues(tls)
 
-    return -pressure
+    total_queue = sum(side_queues)
+
+    return -total_queue
 
 
 # ============================================================
@@ -632,7 +658,8 @@ def run_episode(agent, episode):
                         last_green_phase
                     )
 
-                    pressure = get_intersection_pressure(tls)
+                    side_queues = get_side_queues(tls)
+                    total_queue = sum(side_queues)
 
                     reward = get_CoLight_reward(
                         tls,
@@ -642,7 +669,8 @@ def run_episode(agent, episode):
                     print(f"\nTLS: {tls}")
                     print(f"State: {state}")
                     print(f"State length: {len(state)}")
-                    print(f"Intersection pressure: {pressure}")
+                    print(f"Side queues: {side_queues}")
+                    print(f"Total queue: {total_queue}")
                     print(f"Reward: {reward}")
 
                 state = get_CoLight_state(
@@ -650,26 +678,12 @@ def run_episode(agent, episode):
                     last_green_phase
                 )
 
-                movement_pressures = state[:12]
+                side_queues = state[:4]
 
-                ns_pressures = [
-                    movement_pressures[i]
-                    for i in [0, 1, 2, 6, 7, 8]
-                ]
+                print("\nA0 side queues:")
+                print(side_queues)
 
-                ew_pressures = [
-                    movement_pressures[i]
-                    for i in [3, 4, 5, 9, 10, 11]
-                ]
-
-                print("\nA0 NS movement pressures:")
-                print(ns_pressures)
-
-                print("A0 EW movement pressures:")
-                print(ew_pressures)
-
-                print("NS movement count:", len(ns_pressures))
-                print("EW movement count:", len(ew_pressures))
+                print("Side count:", len(side_queues))
 
                 import torch
 
