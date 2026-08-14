@@ -6,24 +6,43 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-NS_MOVEMENTS = [0, 1, 2, 6, 7, 8]
-EW_MOVEMENTS = [3, 4, 5, 9, 10, 11]
-
 class CoLightNetwork(nn.Module):
 
-    def __init__(self, state_size=5, action_size=2):
+    def __init__(
+        self,
+        state_size=5,
+        hidden_size=64,
+        action_size=2
+    ):
         super().__init__()
 
-        self.model = nn.Sequential(
-            nn.Linear(state_size, 64),
+        # -------------------------------------------------
+        # Shared local intersection encoder
+        # -------------------------------------------------
+        self.local_encoder = nn.Sequential(
+            nn.Linear(state_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(64, 64),
-            nn.ReLU(),
-            nn.Linear(64, action_size)
+            nn.Linear(hidden_size, hidden_size),
+            nn.ReLU()
+        )
+
+        # -------------------------------------------------
+        # Temporary Q-value head
+        # Graph attention will be inserted before this
+        # in the next step.
+        # -------------------------------------------------
+        self.q_head = nn.Linear(
+            hidden_size,
+            action_size
         )
 
     def forward(self, x):
-        return self.model(x)
+
+        local_features = self.local_encoder(x)
+
+        q_values = self.q_head(local_features)
+
+        return q_values
 
 
 class CoLightAgent:
@@ -43,8 +62,16 @@ class CoLightAgent:
         self.state_size = state_size
         self.action_size = action_size
 
-        self.model = CoLightNetwork(state_size, action_size)
-        self.target_model = CoLightNetwork(state_size, action_size)
+        self.model = CoLightNetwork(
+            state_size=state_size,
+            action_size=action_size
+        )
+
+        self.target_model = CoLightNetwork(
+            state_size=state_size,
+            action_size=action_size
+        )
+
         self.target_model.load_state_dict(self.model.state_dict())
         self.target_model.eval()
 

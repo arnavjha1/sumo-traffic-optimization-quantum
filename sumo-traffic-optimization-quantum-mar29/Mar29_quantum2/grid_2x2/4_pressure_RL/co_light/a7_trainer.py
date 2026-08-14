@@ -693,7 +693,23 @@ def run_episode(agent, episode):
                 ).unsqueeze(0)
 
                 with torch.no_grad():
-                    test_q_values = agent.model(test_state)
+
+                    local_features = agent.model.local_encoder(
+                        test_state
+                    )
+
+                    test_q_values = agent.model(
+                        test_state
+                    )
+
+                print("\nA0 local feature shape:")
+                print(local_features.shape)
+
+                print("A0 Q-values:")
+                print(test_q_values)
+
+                print("Q-value shape:")
+                print(test_q_values.shape)
 
                 print("\nA0 Q-values:")
                 print(test_q_values)
