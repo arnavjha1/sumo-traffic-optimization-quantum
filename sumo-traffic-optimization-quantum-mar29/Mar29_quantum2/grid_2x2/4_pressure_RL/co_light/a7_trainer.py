@@ -1,4 +1,5 @@
 import traci
+import torch
 from collections import defaultdict
 from agent import CoLightAgent
 
@@ -40,13 +41,18 @@ TLS_NEIGHBORS = {
     "B1": ["B1", "A1", "B0"],
 }
 
-# Adjacency matrix for the 2x2 grid of intersections
 ADJACENCY = [
-    [1, 1, 1, 0],
+    [1, 1, 1, 0], #A0=1, A1=1, B0=1, B1=0
     [1, 1, 0, 1],
     [1, 0, 1, 1],
     [0, 1, 1, 1],
 ]
+
+ADJACENCY_TENSOR = torch.tensor(
+    ADJACENCY,
+    dtype=torch.float32
+)
+
 
 NUM_TLS = 4
 NUM_SIDES = 4
@@ -685,8 +691,6 @@ def run_episode(agent, episode):
 
                 print("Side count:", len(side_queues))
 
-                import torch
-
                 test_state = torch.tensor(
                     state,
                     dtype=torch.float32
@@ -717,12 +721,52 @@ def run_episode(agent, episode):
                 print("Q-value shape:")
                 print(test_q_values.shape)
 
+                all_states = [
+                    get_CoLight_state(
+                        tls,
+                        last_green_phase
+                    )
+                    for tls in TLS_ORDER
+                ]
+
+                all_states_tensor = torch.tensor(
+                    all_states,
+                    dtype=torch.float32
+                ).unsqueeze(0)
+
+                with torch.no_grad():
+                    graph_q_values, attention_weights = (
+                        agent.model(
+                            all_states_tensor,
+                            ADJACENCY_TENSOR,
+                            return_attention=True
+                        )
+                    )
+
+                print("\n===== COLIGHT GRAPH ATTENTION CHECK =====")
+
+                print("All-state tensor shape:")
+                print(all_states_tensor.shape)
+
+                print("\nGraph Q-value shape:")
+                print(graph_q_values.shape)
+
+                print("\nAttention-weight shape:")
+                print(attention_weights.shape)
+
+                print("\nAttention weights:")
+                print(attention_weights)
+
+                #kind of useless, but just wanted to make sure tensor rows sumed up to 1
+                print("\nAttention row sums:")
+                print(
+                    attention_weights.sum(dim=-1)
+                )
+
+
                 print("\n===== END STATE CHECK =====\n")
 
-            done = (
-                traci.simulation.getTime()
-                >= END_TIME
-            )
+            done = (traci.simulation.getTime() >= END_TIME)
 
             # ----------------------------------------------------
             # 2. Observe s_(t+1), reward, and store old experience

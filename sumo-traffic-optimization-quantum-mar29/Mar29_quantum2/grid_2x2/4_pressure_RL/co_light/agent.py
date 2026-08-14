@@ -12,8 +12,12 @@ class CoLightNetwork(nn.Module):
         self,
         state_size=5,
         hidden_size=64,
-        action_size=2
+        action_size=2,
+        num_intersections=4
     ):
+        self.num_intersections = num_intersections
+        self.hidden_size = hidden_size
+        
         super().__init__()
 
         # -------------------------------------------------
@@ -27,6 +31,24 @@ class CoLightNetwork(nn.Module):
         )
 
         # -------------------------------------------------
+        # Graph-attention projections
+        # -------------------------------------------------
+        self.query_layer = nn.Linear(
+            hidden_size,
+            hidden_size
+        )
+
+        self.key_layer = nn.Linear(
+            hidden_size,
+            hidden_size
+        )
+
+        self.value_layer = nn.Linear(
+            hidden_size,
+            hidden_size
+        )
+
+        # -------------------------------------------------
         # Temporary Q-value head
         # Graph attention will be inserted before this
         # in the next step.
@@ -36,11 +58,100 @@ class CoLightNetwork(nn.Module):
             action_size
         )
 
-    def forward(self, x):
+    def graph_attention(
+        self,
+        local_features,
+        adjacency
+    ):
 
+        # local_features shape:
+        # [batch_size, num_intersections, hidden_size]
+
+        queries = self.query_layer(local_features)
+        keys = self.key_layer(local_features)
+        values = self.value_layer(local_features)
+
+        # -------------------------------------------------
+        # Compute attention scores
+        # -------------------------------------------------
+        scores = torch.matmul(
+            queries,
+            keys.transpose(1, 2)
+        )
+
+        scores = scores / (
+            self.hidden_size ** 0.5
+        )
+
+        # -------------------------------------------------
+        # Mask intersections that are NOT neighbors
+        # -------------------------------------------------
+        mask = adjacency.unsqueeze(0)
+
+        scores = scores.masked_fill(
+            mask == 0,
+            float("-inf")
+        )
+
+        # -------------------------------------------------
+        # Convert scores into weights
+        # -------------------------------------------------
+        attention_weights = torch.softmax(
+            scores,
+            dim=-1
+        )
+
+        # -------------------------------------------------
+        # Weighted combination of neighbor information
+        # -------------------------------------------------
+        attended_features = torch.matmul(
+            attention_weights,
+            values
+        )
+
+        return attended_features, attention_weights
+
+    def forward(self, x, adjacency=None, return_attention=False):
+
+        if x.dim() == 2:
+
+            local_features = self.local_encoder(x)
+
+            q_values = self.q_head(
+                local_features
+            )
+
+            return q_values
+
+        # -------------------------------------------------
+        # CoLight graph behavior:
+        #
+        # x shape:
+        # [batch_size, num_intersections, state_size]
+        # -------------------------------------------------
+        
         local_features = self.local_encoder(x)
 
-        q_values = self.q_head(local_features)
+        attended_features, attention_weights = (
+            self.graph_attention(
+                local_features,
+                adjacency
+            )
+        )
+
+        # Residual connection:
+        # retain local information AND add neighbor info
+        network_features = (
+            local_features
+            + attended_features
+        )
+
+        q_values = self.q_head(
+            network_features
+        )
+
+        if return_attention:
+            return q_values, attention_weights
 
         return q_values
 
