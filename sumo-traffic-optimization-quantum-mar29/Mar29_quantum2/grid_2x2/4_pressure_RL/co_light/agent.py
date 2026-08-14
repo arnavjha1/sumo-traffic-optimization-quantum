@@ -129,7 +129,7 @@ class CoLightNetwork(nn.Module):
         # x shape:
         # [batch_size, num_intersections, state_size]
         # -------------------------------------------------
-        
+
         local_features = self.local_encoder(x)
 
         attended_features, attention_weights = (
@@ -219,6 +219,56 @@ class CoLightAgent:
             q_values = self.model(state_tensor)
 
         return int(torch.argmax(q_values, dim=1).item())
+    
+    
+    def select_actions(
+        self,
+        states,
+        adjacency
+    ):
+        # states shape:
+        # [num_intersections, state_size]
+
+        # -------------------------------------------------
+        # Exploration
+        # -------------------------------------------------
+        if random.random() < self.epsilon:
+
+            return [
+                random.randrange(self.action_size)
+                for _ in range(len(states))
+            ]
+
+        # -------------------------------------------------
+        # Exploitation
+        # -------------------------------------------------
+        states_tensor = torch.tensor(
+            states,
+            dtype=torch.float32
+        ).unsqueeze(0)
+
+        adjacency_tensor = torch.tensor(
+            adjacency,
+            dtype=torch.float32
+        )
+
+        with torch.no_grad():
+
+            q_values = self.model(
+                states_tensor,
+                adjacency_tensor
+            )
+
+        # q_values shape:
+        # [1, num_intersections, action_size]
+
+        actions = torch.argmax(
+            q_values,
+            dim=2
+        )
+
+        return actions.squeeze(0).tolist()
+    
 
     def remember(self, state, action, reward, next_state, done):
         self.memory.append(

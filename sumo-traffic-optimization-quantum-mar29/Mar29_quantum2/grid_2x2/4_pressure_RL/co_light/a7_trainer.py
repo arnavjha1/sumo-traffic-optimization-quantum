@@ -763,6 +763,13 @@ def run_episode(agent, episode):
                     attention_weights.sum(dim=-1)
                 )
 
+                graph_actions_debug = torch.argmax(
+                    graph_q_values,
+                    dim=2
+                ).squeeze(0)
+
+                print("\nGraph actions from Q-values:")
+                print(graph_actions_debug)
 
                 print("\n===== END STATE CHECK =====\n")
 
@@ -843,26 +850,61 @@ def run_episode(agent, episode):
                         f"CoLight decision epoch at t={current_time}"
                     )
 
-                for idx, tls in enumerate(TLS_ORDER):
-
-                    state = get_CoLight_state(
+                # -------------------------------------------------
+                # Collect ALL intersection states simultaneously
+                # -------------------------------------------------
+                all_states = [
+                    get_CoLight_state(
                         tls,
                         last_green_phase
                     )
+                    for tls in TLS_ORDER
+                ]
 
-                    action = choose_effective_action(
-                        agent=agent,
-                        state=state,
-                        current_phase=current_green_phase[idx],
-                        signal_mode=signal_mode[idx],
-                        green_elapsed=green_elapsed[idx],
-                        pending_phase=pending_phase[idx],
-                    )
+                # -------------------------------------------------
+                # CoLight graph-based joint action selection
+                # -------------------------------------------------
+                graph_actions = agent.select_actions(
+                    all_states,
+                    ADJACENCY
+                )
+
+                # -------------------------------------------------
+                # Apply signal-transition constraints individually
+                # -------------------------------------------------
+                for idx, tls in enumerate(TLS_ORDER):
+
+                    state = all_states[idx]
+
+                    proposed_action = graph_actions[idx]
+
+                    if signal_mode[idx] != "green":
+
+                        if pending_phase[idx] is not None:
+                            action = pending_phase[idx]
+                        else:
+                            action = current_green_phase[idx]
+
+                    elif green_elapsed[idx] < MIN_CHANGE_TIME:
+
+                        action = current_green_phase[idx]
+
+                    elif green_elapsed[idx] >= MAX_GREEN_TIME:
+
+                        action = 1 - current_green_phase[idx]
+
+                    else:
+
+                        action = proposed_action
 
                     desired_actions[idx] = action
 
                     previous_states[idx] = state
-                    previous_actions[idx] = action
+                    previous_actions[idx] = action   
+
+                if current_time <= 50:
+                    print("Graph actions:", graph_actions)
+                    print("Applied actions:", desired_actions)
                 
             # ----------------------------------------------------
             # Apply the most recently selected desired action
