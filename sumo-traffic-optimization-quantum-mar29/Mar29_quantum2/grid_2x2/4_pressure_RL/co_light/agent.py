@@ -167,8 +167,9 @@ class CoLightAgent:
         epsilon_min=0.05,
         epsilon_decay=0.97,
         memory_size=10000,
-        batch_size=64,
+        batch_size=16,
         target_update_interval=200,
+        adjacency=None,
     ):
         self.state_size = state_size
         self.action_size = action_size
@@ -181,6 +182,11 @@ class CoLightAgent:
         self.target_model = CoLightNetwork(
             state_size=state_size,
             action_size=action_size
+        )
+
+        self.adjacency = torch.tensor(
+            adjacency,
+            dtype=torch.float32
         )
 
         self.target_model.load_state_dict(self.model.state_dict())
@@ -328,19 +334,36 @@ class CoLightAgent:
             dtype=torch.float32
         )
 
-        current_q = (
-            self.model(states)
-            .gather(1, actions.unsqueeze(1))
-            .squeeze(1)
+        all_current_q = self.model(
+            states,
+            self.adjacency
         )
 
+        current_q = all_current_q.gather(
+            2,
+            actions.unsqueeze(2)
+        ).squeeze(2)
+
+
         with torch.no_grad():
-            next_q = self.target_model(next_states).max(1)[0]
+            all_next_q = self.target_model(
+                next_states,
+                self.adjacency
+            )
+
+            next_q = all_next_q.max(
+                dim=2
+            )[0]
+
+            done_mask = dones.unsqueeze(1)
 
             target_q = (
                 rewards
-                + self.gamma * next_q * (1.0 - dones)
+                + self.gamma
+                * next_q
+                * (1.0 - done_mask)
             )
+
 
         loss = nn.SmoothL1Loss()(
             current_q,
@@ -357,10 +380,33 @@ class CoLightAgent:
 
         self.optimizer.step()
 
+        if self.training_steps == 0:
+
+            print("\n===== COLIGHT REPLAY SHAPE CHECK =====")
+
+            print("States shape:")
+            print(states.shape)
+
+            print("Actions shape:")
+            print(actions.shape)
+
+            print("Rewards shape:")
+            print(rewards.shape)
+
+            print("Next states shape:")
+            print(next_states.shape)
+
+            print("Dones shape:")
+            print(dones.shape)
+
+            print("===== END REPLAY SHAPE CHECK =====\n")
+
+
         self.training_steps += 1
 
         if self.training_steps % self.target_update_interval == 0:
             self.update_target_network()
+
 
         return loss.item()
 

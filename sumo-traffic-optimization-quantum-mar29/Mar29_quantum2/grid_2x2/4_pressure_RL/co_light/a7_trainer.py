@@ -560,8 +560,8 @@ def run_episode(agent, episode):
         transition_timer = [0] * NUM_TLS
         pending_phase = [None] * NUM_TLS
 
-        previous_states = [None] * NUM_TLS
-        previous_actions = [None] * NUM_TLS
+        previous_states = None
+        previous_actions = None
 
         desired_actions = initial_phases.copy()
 
@@ -782,59 +782,73 @@ def run_episode(agent, episode):
 
                 stored_experience = False
 
-                for idx, tls in enumerate(TLS_ORDER):
-                    if previous_states[idx] is None:
-                        continue
+                if previous_states is not None:
 
-                    next_state = get_CoLight_state(
-                        tls,
-                        last_green_phase
-                    )
+                    # ---------------------------------------------
+                    # Collect next state for the ENTIRE graph
+                    # ---------------------------------------------
+                    next_states = [
+                        get_CoLight_state(
+                            tls,
+                            last_green_phase
+                        )
+                        for tls in TLS_ORDER
+                    ]
 
-                    reward = get_CoLight_reward(
-                        tls,
-                        last_green_phase
-                    )
+                    # ---------------------------------------------
+                    # Collect one reward per intersection
+                    # ---------------------------------------------
+                    rewards = [
+                        get_CoLight_reward(
+                            tls,
+                            last_green_phase
+                        )
+                        for tls in TLS_ORDER
+                    ]
 
-                    episode_rewards.append(reward)
+                    episode_rewards.extend(rewards)
 
+                    # ---------------------------------------------
+                    # Store ONE whole-network transition
+                    # ---------------------------------------------
                     agent.remember(
-                        previous_states[idx],
-                        previous_actions[idx],
-                        reward,
-                        next_state,
+                        previous_states,
+                        previous_actions,
+                        rewards,
+                        next_states,
                         done,
                     )
 
-                    if current_time == 20 and tls == "A0":
-
-                        print("\n===== CoLight TRANSITION CHECK =====")
-
-                        print("Previous state:")
-                        print(previous_states[idx])
-
-                        print("Previous action:")
-                        print(previous_actions[idx])
-
-                        print("Reward:")
-                        print(reward)
-
-                        print("Next state:")
-                        print(next_state)
-
-                        print("Done:")
-                        print(done)
-
-                        print("===== END TRANSITION CHECK =====\n")
-
                     stored_experience = True
 
-                # One shared-network update per CoLight decision epoch
                 if stored_experience:
+
                     loss = agent.train_step()
 
                     if loss is not None:
                         episode_losses.append(loss)
+
+
+                if current_time == 20:
+
+                    print("\n===== CoLight GRAPH TRANSITION CHECK =====")
+
+                    print("Previous states:")
+                    print(previous_states)
+
+                    print("\nPrevious actions:")
+                    print(previous_actions)
+
+                    print("\nRewards:")
+                    print(rewards)
+
+                    print("\nNext states:")
+                    print(next_states)
+
+                    print("\nDone:")
+                    print(done)
+
+                    print("===== END GRAPH TRANSITION CHECK =====\n")
 
             if done:
                 break
@@ -899,8 +913,12 @@ def run_episode(agent, episode):
 
                     desired_actions[idx] = action
 
-                    previous_states[idx] = state
-                    previous_actions[idx] = action   
+                previous_states = [
+                    state.copy()
+                    for state in all_states
+                ]
+
+                previous_actions = desired_actions.copy()
 
                 if current_time <= 50:
                     print("Graph actions:", graph_actions)
@@ -973,7 +991,7 @@ def run_episode(agent, episode):
 # TRAIN
 # ============================================================
 
-agent = CoLightAgent()
+agent = CoLightAgent(adjacency=ADJACENCY)
 
 for episode in range(NUM_RUNS):
     run_episode(
