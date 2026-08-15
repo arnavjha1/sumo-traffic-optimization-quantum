@@ -167,7 +167,7 @@ class CoLightAgent:
         epsilon_min=0.05,
         epsilon_decay=0.97,
         memory_size=10000,
-        batch_size=16,
+        batch_size=64,
         target_update_interval=200,
         adjacency=None,
     ):

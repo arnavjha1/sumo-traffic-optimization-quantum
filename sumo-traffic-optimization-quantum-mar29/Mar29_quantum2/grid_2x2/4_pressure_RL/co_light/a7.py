@@ -1,3 +1,4 @@
+# CURRENT CODE
 import traci
 import torch
 from collections import defaultdict
@@ -5,9 +6,11 @@ from agent import CoLightAgent
 
 SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
+MODEL_PATH = "CoLight_model.pt"
 END_TIME = 600
 
-NUM_RUNS = 100
+# Frozen evaluation only: no replay, optimizer steps, epsilon decay, or model saving.
+
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -87,7 +90,7 @@ for i, tls in enumerate(TLS_ORDER):
 print("===== END GRAPH CHECK =====\n")
 
 # ============================================================
-# CoLight STATE / REWARD
+# CoLight STATE
 # ============================================================
 
 def get_lane_queue(lane_id):
@@ -144,15 +147,6 @@ def get_CoLight_state(tls, last_green_phase):
         current_phase = last_green_phase[tls]
 
     return side_queues + [current_phase]
-
-
-def get_CoLight_reward(tls, last_green_phase):
-
-    side_queues = get_side_queues(tls)
-
-    total_queue = sum(side_queues)
-
-    return -total_queue
 
 
 # ============================================================
@@ -388,11 +382,12 @@ def print_episode_metrics(
     print(f"  Overall:   {thr_all}")
 
 
+
 # ============================================================
-# TRAINING EPISODE
+# FROZEN COLIGHT EVALUATION
 # ============================================================
 
-def run_episode(agent, episode):
+def run_evaluation(agent):
     traci.start([
         SUMO_BINARY,
         "-c",
@@ -408,13 +403,13 @@ def run_episode(agent, episode):
                 tls,
                 "0"
             )
-
             traci.trafficlight.setPhaseDuration(
                 tls,
                 999999
             )
 
-        # Initial signal arrangement matches your previous setup.
+        # Same initial arrangement used during CoLight training.
+        # 0 = NS green, 1 = EW green.
         initial_phases = [0, 0, 0, 1]
 
         for idx, tls in enumerate(TLS_ORDER):
@@ -430,7 +425,7 @@ def run_episode(agent, episode):
             )
 
         # -----------------------
-        # EPISODE DATA STRUCTURES
+        # METRIC DATA STRUCTURES
         # -----------------------
         depart_time = {}
         route_of = {}
@@ -448,6 +443,9 @@ def run_episode(agent, episode):
             for _ in range(NUM_TLS)
         ]
 
+        # -----------------------
+        # SIGNAL STATE
+        # -----------------------
         current_green_phase = initial_phases.copy()
 
         last_green_phase = {
@@ -463,14 +461,7 @@ def run_episode(agent, episode):
         green_elapsed = [0] * NUM_TLS
         transition_timer = [0] * NUM_TLS
         pending_phase = [None] * NUM_TLS
-
-        previous_states = None
-        previous_actions = None
-
         desired_actions = initial_phases.copy()
-
-        episode_losses = []
-        episode_rewards = []
 
         def sim_step():
             traci.simulationStep()
@@ -482,7 +473,7 @@ def run_episode(agent, episode):
                 route_of[veh] = traci.vehicle.getRouteID(veh)
                 last_waiting_time[veh] = 0.0
 
-            # Update waiting times
+            # Update accumulated waiting times
             for veh in traci.vehicle.getIDList():
                 last_waiting_time[veh] = (
                     traci.vehicle.getAccumulatedWaitingTime(veh)
@@ -500,14 +491,8 @@ def run_episode(agent, episode):
                     0.0
                 )
 
-                travel_times[route].append(
-                    travel_time
-                )
-
-                waiting_times[route].append(
-                    waiting_time
-                )
-
+                travel_times[route].append(travel_time)
+                waiting_times[route].append(waiting_time)
                 throughput[route] += 1
 
                 depart_time.pop(veh, None)
@@ -518,7 +503,6 @@ def run_episode(agent, episode):
             for tls_index, tls in enumerate(TLS_ORDER):
                 lanes = traci.trafficlight.getControlledLanes(tls)
                 lanes = list(dict.fromkeys(lanes))
-
                 lanes_per_side = len(lanes) // NUM_SIDES
 
                 for side_index in range(NUM_SIDES):
@@ -540,74 +524,76 @@ def run_episode(agent, episode):
                             queue
                         )
 
-        print(
-            f"\nStarting episode {episode + 1}/{NUM_RUNS} "
-            f"with epsilon={agent.epsilon:.4f}"
-        )
+        print("\n===== FROZEN COLIGHT EVALUATION =====")
+        print(f"Model: {MODEL_PATH}")
+        print(f"Evaluation epsilon: {agent.epsilon:.4f}")
+        print(f"Simulation duration: {END_TIME} s")
 
         while traci.simulation.getTime() < END_TIME:
-            # ----------------------------------------------------
-            # 1. Advance SUMO under the actions selected last step
-            # ----------------------------------------------------
+            # Advance SUMO under the most recently selected actions.
             sim_step()
 
             current_time = int(traci.simulation.getTime())
+
+            # The t=END_TIME step has already been included in the metrics.
+            if current_time >= END_TIME:
+                break
 
             decision_time = (
                 current_time % DECISION_INTERVAL == 0
             )
 
-            if (episode == 0 or episode == NUM_RUNS - 1) and traci.simulation.getTime() == 100:
-
-                print("\n===== CoLight STATE CHECK AT t=100 =====")
-
-                for tls in TLS_ORDER:
-
-                    state = get_CoLight_state(
+            # ----------------------------------------------------
+            # FROZEN COLIGHT JOINT DECISION
+            # ----------------------------------------------------
+            if decision_time:
+                all_states = [
+                    get_CoLight_state(
                         tls,
                         last_green_phase
                     )
+                    for tls in TLS_ORDER
+                ]
 
-                    side_queues = get_side_queues(tls)
-                    total_queue = sum(side_queues)
-
-                    reward = get_CoLight_reward(
-                        tls,
-                        last_green_phase
-                    )
-
-                    print(f"\nTLS: {tls}")
-                    print(f"State: {state}")
-                    print(f"State length: {len(state)}")
-                    print(f"Side queues: {side_queues}")
-                    print(f"Total queue: {total_queue}")
-                    print(f"Reward: {reward}")
-
-                state = get_CoLight_state(
-                    "A0",
-                    last_green_phase
+                # epsilon == 0 in evaluation mode, so these are fully
+                # deterministic graph-aware actions from the frozen model.
+                graph_actions = agent.select_actions(
+                    all_states
                 )
 
-                side_queues = state[:4]
+                # Preserve the same signal-transition constraints used
+                # during training.
+                for idx, tls in enumerate(TLS_ORDER):
+                    proposed_action = graph_actions[idx]
 
-                print("\nA0 side queues:")
-                print(side_queues)
+                    if signal_mode[idx] != "green":
+                        if pending_phase[idx] is not None:
+                            action = pending_phase[idx]
+                        else:
+                            action = current_green_phase[idx]
 
-                print("Side count:", len(side_queues))
+                    elif green_elapsed[idx] < MIN_CHANGE_TIME:
+                        action = current_green_phase[idx]
 
-                test_state = torch.tensor(
-                    state,
-                    dtype=torch.float32
-                ).unsqueeze(0)
+                    elif green_elapsed[idx] >= MAX_GREEN_TIME:
+                        action = 1 - current_green_phase[idx]
 
-                with torch.no_grad():
-                    local_features = agent.model.local_encoder(
-                        test_state
+                    else:
+                        action = proposed_action
+
+                    desired_actions[idx] = action
+
+                if current_time <= 50:
+                    print(
+                        f"CoLight evaluation decision at t={current_time}"
                     )
+                    print("Graph actions:", graph_actions)
+                    print("Applied actions:", desired_actions)
 
-                print("\nA0 local feature shape:")
-                print(local_features.shape)
-
+            # ----------------------------------------------------
+            # OPTIONAL FROZEN-MODEL ATTENTION CHECK AT t=100
+            # ----------------------------------------------------
+            if current_time == 100:
                 all_states = [
                     get_CoLight_state(
                         tls,
@@ -625,197 +611,34 @@ def run_episode(agent, episode):
                     graph_q_values, attention_weights = (
                         agent.model(
                             all_states_tensor,
-                            ADJACENCY_TENSOR,
+                            agent.adjacency,
                             return_attention=True
                         )
                     )
-
-                print("\n===== COLIGHT GRAPH ATTENTION CHECK =====")
-
-                print("All-state tensor shape:")
-                print(all_states_tensor.shape)
-
-                print("\nGraph Q-value shape:")
-                print(graph_q_values.shape)
-
-                print("\nAttention-weight shape:")
-                print(attention_weights.shape)
-
-                print("\nAttention weights:")
-                print(attention_weights)
-
-                #kind of useless, but just wanted to make sure tensor rows sumed up to 1
-                print("\nAttention row sums:")
-                print(
-                    attention_weights.sum(dim=-1)
-                )
 
                 graph_actions_debug = torch.argmax(
                     graph_q_values,
                     dim=2
                 ).squeeze(0)
 
+                print("\n===== FROZEN COLIGHT ATTENTION CHECK =====")
+                print("All-state tensor shape:")
+                print(all_states_tensor.shape)
+                print("\nGraph Q-value shape:")
+                print(graph_q_values.shape)
+                print("\nAttention-weight shape:")
+                print(attention_weights.shape)
+                print("\nAttention weights:")
+                print(attention_weights)
+                print("\nAttention row sums:")
+                print(attention_weights.sum(dim=-1))
                 print("\nGraph actions from Q-values:")
                 print(graph_actions_debug)
+                print("===== END ATTENTION CHECK =====\n")
 
-                print("\n===== END STATE CHECK =====\n")
-
-            done = (traci.simulation.getTime() >= END_TIME)
-
-            # ----------------------------------------------------
-            # 2. Observe s_(t+1), reward, and store old experience
-            # ----------------------------------------------------
-            if decision_time:
-
-                stored_experience = False
-
-                if previous_states is not None:
-
-                    # ---------------------------------------------
-                    # Collect next state for the ENTIRE graph
-                    # ---------------------------------------------
-                    next_states = [
-                        get_CoLight_state(
-                            tls,
-                            last_green_phase
-                        )
-                        for tls in TLS_ORDER
-                    ]
-
-                    # ---------------------------------------------
-                    # Collect one reward per intersection
-                    # ---------------------------------------------
-                    rewards = [
-                        get_CoLight_reward(
-                            tls,
-                            last_green_phase
-                        )
-                        for tls in TLS_ORDER
-                    ]
-
-                    episode_rewards.extend(rewards)
-
-                    # ---------------------------------------------
-                    # Store ONE whole-network transition
-                    # ---------------------------------------------
-                    agent.remember(
-                        previous_states,
-                        previous_actions,
-                        rewards,
-                        next_states,
-                        done,
-                    )
-
-                    stored_experience = True
-
-                if stored_experience:
-
-                    loss = agent.train_step()
-
-                    if loss is not None:
-                        episode_losses.append(loss)
-
-
-                if episode == 0 and traci.simulation.getTime() == 20:
-
-                    print("\n===== CoLight GRAPH TRANSITION CHECK =====")
-
-                    print("Previous states:")
-                    print(previous_states)
-
-                    print("\nPrevious actions:")
-                    print(previous_actions)
-
-                    print("\nRewards:")
-                    print(rewards)
-
-                    print("\nNext states:")
-                    print(next_states)
-
-                    print("\nDone:")
-                    print(done)
-
-                    print("===== END GRAPH TRANSITION CHECK =====\n")
-
-            if done:
-                break
-
-            # ----------------------------------------------------
-            # 3. Observe current state and choose the next action
-            # ----------------------------------------------------
-
-            if decision_time:
-
-                if episode == 0 and traci.simulation.getTime() <= 50:
-                    print(
-                        f"CoLight decision epoch at t={current_time}"
-                    )
-
-                # -------------------------------------------------
-                # Collect ALL intersection states simultaneously
-                # -------------------------------------------------
-                all_states = [
-                    get_CoLight_state(
-                        tls,
-                        last_green_phase
-                    )
-                    for tls in TLS_ORDER
-                ]
-
-                # -------------------------------------------------
-                # CoLight graph-based joint action selection
-                # -------------------------------------------------
-                graph_actions = agent.select_actions(
-                    all_states
-                )
-
-                # -------------------------------------------------
-                # Apply signal-transition constraints individually
-                # -------------------------------------------------
-                for idx, tls in enumerate(TLS_ORDER):
-
-                    state = all_states[idx]
-
-                    proposed_action = graph_actions[idx]
-
-                    if signal_mode[idx] != "green":
-
-                        if pending_phase[idx] is not None:
-                            action = pending_phase[idx]
-                        else:
-                            action = current_green_phase[idx]
-
-                    elif green_elapsed[idx] < MIN_CHANGE_TIME:
-
-                        action = current_green_phase[idx]
-
-                    elif green_elapsed[idx] >= MAX_GREEN_TIME:
-
-                        action = 1 - current_green_phase[idx]
-
-                    else:
-
-                        action = proposed_action
-
-                    desired_actions[idx] = action
-
-                previous_states = [
-                    state.copy()
-                    for state in all_states
-                ]
-
-                previous_actions = desired_actions.copy()
-
-                if episode == 0 and traci.simulation.getTime() <= 50:
-                    print("Graph actions:", graph_actions)
-                    print("Applied actions:", desired_actions)
-                
-            # ----------------------------------------------------
-            # Apply the most recently selected desired action
-            # every SUMO second.
-            # ----------------------------------------------------
+            # Apply the most recently selected desired phase every SUMO
+            # second. This is the same state machine used during training.
             for idx, tls in enumerate(TLS_ORDER):
-
                 apply_signal_action(
                     tls=tls,
                     idx=idx,
@@ -828,68 +651,36 @@ def run_episode(agent, episode):
                     pending_phase=pending_phase,
                 )
 
-        agent.decay_epsilon()
-
-        avg_loss = (
-            sum(episode_losses) / len(episode_losses)
-            if episode_losses
-            else None
+        print_episode_metrics(
+            queue_lengths,
+            travel_times,
+            waiting_times,
+            throughput,
         )
-
-        avg_reward = (
-            sum(episode_rewards) / len(episode_rewards)
-            if episode_rewards
-            else None
-        )
-
-        loss_text = (
-            f"{avg_loss:.6f}"
-            if avg_loss is not None
-            else "N/A"
-        )
-
-        reward_text = (
-            f"{avg_reward:.6f}"
-            if avg_reward is not None
-            else "N/A"
-        )
-
-        print(
-            f"Finished episode {episode + 1}: "
-            f"epsilon={agent.epsilon:.4f}, "
-            f"memory={len(agent.memory)}, "
-            f"avg_loss={loss_text}, "
-            f"avg_reward={reward_text}"
-        )
-
-        if (episode + 1) % 10 == 0 or episode == NUM_RUNS - 1:
-            print_episode_metrics(
-                queue_lengths,
-                travel_times,
-                waiting_times,
-                throughput,
-            )
 
     finally:
         traci.close()
 
 
 # ============================================================
-# TRAIN
+# LOAD FROZEN MODEL AND RUN ONCE
 # ============================================================
 
-agent = CoLightAgent(adjacency=ADJACENCY)
-
-for episode in range(NUM_RUNS):
-    run_episode(
-        agent,
-        episode
-    )
-
-agent.save(
-    "CoLight_model.pt"
+agent = CoLightAgent(
+    adjacency=ADJACENCY
 )
 
-print(
-    "\nTraining complete. Model saved to CoLight_model.pt"
+agent.load(
+    MODEL_PATH
 )
+
+agent.set_evaluation_mode()
+
+print("\nFrozen CoLight model loaded.")
+print(f"Evaluation epsilon: {agent.epsilon}")
+
+run_evaluation(
+    agent
+)
+
+print("\nCoLight evaluation complete.")
