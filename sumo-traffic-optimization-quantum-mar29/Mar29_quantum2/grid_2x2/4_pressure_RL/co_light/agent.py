@@ -49,9 +49,9 @@ class CoLightNetwork(nn.Module):
         )
 
         # -------------------------------------------------
-        # Temporary Q-value head
-        # Graph attention will be inserted before this
-        # in the next step.
+        # Q-value head
+        # Converts each network-aware intersection
+        # representation into Q(NS) and Q(EW)
         # -------------------------------------------------
         self.q_head = nn.Linear(
             hidden_size,
@@ -208,29 +208,11 @@ class CoLightAgent:
         self.batch_size = batch_size
 
         self.target_update_interval = target_update_interval
-        self.training_steps = 0
-
-    def select_action(self, state):
-        # Exploration
-        if random.random() < self.epsilon:
-            return random.randrange(self.action_size)
-
-        # Exploitation
-        state_tensor = torch.tensor(
-            state,
-            dtype=torch.float32
-        ).unsqueeze(0)
-
-        with torch.no_grad():
-            q_values = self.model(state_tensor)
-
-        return int(torch.argmax(q_values, dim=1).item())
-    
+        self.training_steps = 0    
     
     def select_actions(
         self,
-        states,
-        adjacency
+        states
     ):
         # states shape:
         # [num_intersections, state_size]
@@ -253,16 +235,11 @@ class CoLightAgent:
             dtype=torch.float32
         ).unsqueeze(0)
 
-        adjacency_tensor = torch.tensor(
-            adjacency,
-            dtype=torch.float32
-        )
-
         with torch.no_grad():
 
             q_values = self.model(
                 states_tensor,
-                adjacency_tensor
+                self.adjacency
             )
 
         # q_values shape:

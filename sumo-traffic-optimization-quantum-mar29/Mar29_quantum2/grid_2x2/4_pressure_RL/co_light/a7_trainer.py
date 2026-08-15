@@ -127,63 +127,6 @@ def get_side_queues(tls):
 
     return side_queues
 
-def get_movement_pressures(tls):
-
-    controlled_links = traci.trafficlight.getControlledLinks(tls)
-
-    movement_pressures = []
-
-    for signal_index, link_group in enumerate(controlled_links):
-
-        # Normally there is one controlled link per signal index
-        # in your network.
-        link = link_group[0]
-
-        incoming_lane = link[0]
-        outgoing_lane = link[1]
-
-        incoming_queue = get_lane_queue(incoming_lane)
-        outgoing_queue = get_lane_queue(outgoing_lane)
-
-        pressure = incoming_queue - outgoing_queue
-
-        movement_pressures.append(pressure)
-
-    return movement_pressures
-
-def get_intersection_pressure(tls):
-
-    controlled_links = traci.trafficlight.getControlledLinks(tls)
-
-    incoming_lanes = set()
-    outgoing_lanes = set()
-
-    for link_group in controlled_links:
-        for link in link_group:
-
-            incoming_lane = link[0]
-            outgoing_lane = link[1]
-
-            incoming_lanes.add(incoming_lane)
-            outgoing_lanes.add(outgoing_lane)
-
-    total_incoming_queue = sum(
-        get_lane_queue(lane)
-        for lane in incoming_lanes
-    )
-
-    total_outgoing_queue = sum(
-        get_lane_queue(lane)
-        for lane in outgoing_lanes
-    )
-
-    pressure = abs(
-        total_incoming_queue
-        - total_outgoing_queue
-    )
-
-    return pressure
-
 def get_CoLight_state(tls, last_green_phase):
 
     side_queues = get_side_queues(tls)
@@ -215,36 +158,6 @@ def get_CoLight_reward(tls, last_green_phase):
 # ============================================================
 # SIGNAL TRANSITION LOGIC
 # ============================================================
-
-def choose_effective_action(
-    agent,
-    state,
-    current_phase,
-    signal_mode,
-    green_elapsed,
-    pending_phase,
-):
-    """
-    The agent only makes a new decision when the signal is in a green
-    state and the minimum green time has elapsed.
-
-    During minimum-green or transition periods, the environment holds
-    the required action. MAX_GREEN_TIME prevents indefinite starvation.
-    """
-
-    if signal_mode != "green":
-        if pending_phase is not None:
-            return pending_phase
-        return current_phase
-
-    if green_elapsed < MIN_CHANGE_TIME:
-        return current_phase
-
-    if green_elapsed >= MAX_GREEN_TIME:
-        return 1 - current_phase
-
-    return agent.select_action(state)
-
 
 def apply_signal_action(
     tls,
@@ -501,15 +414,6 @@ def run_episode(agent, episode):
                 999999
             )
 
-        print("\n===== DEBUG: MOVEMENT PRESSURES FOR A0 =====")
-
-        pressures = get_movement_pressures("A0")
-
-        for i, pressure in enumerate(pressures):
-            print(f"Movement {i}: pressure = {pressure}")
-
-        print("===== END DEBUG =====\n")
-
         # Initial signal arrangement matches your previous setup.
         initial_phases = [0, 0, 0, 1]
 
@@ -697,29 +601,12 @@ def run_episode(agent, episode):
                 ).unsqueeze(0)
 
                 with torch.no_grad():
-
                     local_features = agent.model.local_encoder(
-                        test_state
-                    )
-
-                    test_q_values = agent.model(
                         test_state
                     )
 
                 print("\nA0 local feature shape:")
                 print(local_features.shape)
-
-                print("A0 Q-values:")
-                print(test_q_values)
-
-                print("Q-value shape:")
-                print(test_q_values.shape)
-
-                print("\nA0 Q-values:")
-                print(test_q_values)
-
-                print("Q-value shape:")
-                print(test_q_values.shape)
 
                 all_states = [
                     get_CoLight_state(
@@ -879,8 +766,7 @@ def run_episode(agent, episode):
                 # CoLight graph-based joint action selection
                 # -------------------------------------------------
                 graph_actions = agent.select_actions(
-                    all_states,
-                    ADJACENCY
+                    all_states
                 )
 
                 # -------------------------------------------------
