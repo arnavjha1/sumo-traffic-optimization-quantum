@@ -22,134 +22,12 @@ TLS_ORDER = ["A0", "A1", "B0", "B1"]
 TLS_REG = ["A0", "A1", "B0"]
 TLS_INVERT = ["B1"]
 
-SCOOT_REGIONS = {
-    "R0": ["A0", "A1", "B0", "B1"]
-}
-
-SCOOT_NODES = {
-    "A0": {
-        "region": "R0",
-        "neighbors": ["A1", "B0"]
-    },
-
-    "A1": {
-        "region": "R0",
-        "neighbors": ["A0", "B1"]
-    },
-
-    "B0": {
-        "region": "R0",
-        "neighbors": ["A0", "B1"]
-    },
-
-    "B1": {
-        "region": "R0",
-        "neighbors": ["A1", "B0"]
-    }
-}
-
-SCOOT_CONNECTIONS = [
-    ("A0", "A1"),
-    ("A1", "A0"),
-
-    ("A0", "B0"),
-    ("B0", "A0"),
-
-    ("A1", "B1"),
-    ("B1", "A1"),
-
-    ("B0", "B1"),
-    ("B1", "B0")
+TLS_NEIGHBORS = [
+    ["A0", "B0", "A1"],  # A0 neighbors
+    ["A1", "B1", "A0"],  # A1 neighbors
+    ["B0", "A0", "B1"],  # B0 neighbors
+    ["B1", "A1", "B0"]   # B1 neighbors
 ]
-
-cycle_length = 120  # seconds
-scoot_links = {}
-
-for upstream_node, downstream_node in SCOOT_CONNECTIONS:
-
-    link_id = f"{upstream_node}->{downstream_node}"
-
-    scoot_links[link_id] = {
-        "upstream_node": upstream_node,
-        "downstream_node": downstream_node
-    }
-
-scoot_node_state = {}
-
-for tls in TLS_ORDER:
-
-    scoot_node_state[tls] = {
-        "region": SCOOT_NODES[tls]["region"],
-        "cycle_length": cycle_length,
-        "offset": 0
-    }
-
-scoot_region_state = {}
-
-for region_id, nodes in SCOOT_REGIONS.items():
-
-    scoot_region_state[region_id] = {
-        "nodes": nodes,
-        "cycle_length": cycle_length
-    }
-
-
-def validate_scoot_network():
-
-    print("\n===== SCOOT NETWORK CHECK =====")
-
-    for region_id, region_data in scoot_region_state.items():
-
-        print(f"\nRegion: {region_id}")
-        print(f"  Nodes: {region_data['nodes']}")
-        print(f"  Cycle length: {region_data['cycle_length']} s")
-
-    print("\nNodes:")
-
-    for tls in TLS_ORDER:
-
-        print(
-            f"  {tls}: "
-            f"region={scoot_node_state[tls]['region']}, "
-            f"neighbors={SCOOT_NODES[tls]['neighbors']}, "
-            f"cycle={scoot_node_state[tls]['cycle_length']}, "
-            f"offset={scoot_node_state[tls]['offset']}"
-        )
-
-    print("\nDirected SCOOT links:")
-
-    for link_id, link_data in scoot_links.items():
-
-        print(
-            f"  {link_id}: "
-            f"{link_data['upstream_node']} -> "
-            f"{link_data['downstream_node']}"
-        )
-
-    for tls, node_data in SCOOT_NODES.items():
-
-        for neighbor in node_data["neighbors"]:
-
-            if neighbor not in TLS_ORDER:
-                raise ValueError(
-                    f"Invalid SCOOT neighbor: {tls} -> {neighbor}"
-                )
-            
-    for upstream_node, downstream_node in SCOOT_CONNECTIONS:
-
-        if upstream_node not in TLS_ORDER:
-            raise ValueError(
-                f"Invalid upstream SCOOT node: {upstream_node}"
-            )
-
-        if downstream_node not in TLS_ORDER:
-            raise ValueError(
-                f"Invalid downstream SCOOT node: {downstream_node}"
-            )
-
-    print("\n===== END SCOOT NETWORK CHECK =====\n")
-
-
 
 traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 
@@ -179,6 +57,8 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 regular_cars = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 tIndex = []
+
+cycle_length = 120  # seconds
 
 for tls in TLS_REG:
     traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
@@ -247,8 +127,6 @@ def simStep(num_times = 1):
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-
-validate_scoot_network()
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -348,7 +226,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nSCOOT")
+print("\nFIXED")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
