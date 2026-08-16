@@ -62,7 +62,18 @@ SCOOT_CONNECTIONS = [
     ("B1", "B0")
 ]
 
+# ==========================================================
+# SCOOT VIRTUAL DETECTOR SETTINGS (simulation starts here)
+# ==========================================================
+
+traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 cycle_length = 120  # seconds
+
+
+DETECTOR_POSITION = 15.0     # meters from start of lane
+DETECTOR_ZONE_START = 10.0   # meters
+DETECTOR_ZONE_END = 20.0     # meters
+
 scoot_links = {}
 
 for upstream_node, downstream_node in SCOOT_CONNECTIONS:
@@ -150,8 +161,28 @@ def validate_scoot_network():
     print("\n===== END SCOOT NETWORK CHECK =====\n")
 
 
+def validate_scoot_detectors():
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+    print("\n===== SCOOT DETECTOR CHECK =====")
+
+    for tls in TLS_ORDER:
+
+        detector_ids = scoot_node_state[tls]["detectors"]
+
+        print(f"\n{tls}: {len(detector_ids)} detectors")
+
+        for detector_id in detector_ids:
+
+            detector = scoot_detectors[detector_id]
+
+            print(
+                f"  {detector['lane_id']} | "
+                f"edge={detector['edge_id']} | "
+                f"lane_length={detector['lane_length']:.1f} m | "
+                f"detector={detector['position']:.1f} m"
+            )
+
+    print("\n===== END SCOOT DETECTOR CHECK =====\n")
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -159,6 +190,125 @@ traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
 for tls in TLS_ORDER:
     traci.trafficlight.setProgram(tls, "0")
     traci.trafficlight.setPhaseDuration(tls, 999999)
+
+
+# -----------------------
+# SCOOT VIRTUAL DETECTORS
+# -----------------------
+scoot_detectors = {}
+previous_vehicle_positions = {}
+
+for tls in TLS_ORDER:
+    scoot_node_state[tls]["detectors"] = []
+
+def build_scoot_detectors():
+
+    for tls in TLS_ORDER:
+
+        lanes = traci.trafficlight.getControlledLanes(tls)
+
+        # Remove duplicate lanes while preserving order
+        lanes = list(dict.fromkeys(lanes))
+
+        for lane_id in lanes:
+
+            lane_length = traci.lane.getLength(lane_id)
+            edge_id = traci.lane.getEdgeID(lane_id)
+
+            detector_id = f"{tls}:{lane_id}"
+
+            scoot_detectors[detector_id] = {
+                "tls": tls,
+                "lane_id": lane_id,
+                "edge_id": edge_id,
+                "lane_length": lane_length,
+
+                "position": min(DETECTOR_POSITION, lane_length),
+
+                "zone_start": min(DETECTOR_ZONE_START, lane_length),
+                "zone_end": min(DETECTOR_ZONE_END, lane_length),
+
+                # Current measurements
+                "flow_this_step": 0,
+                "occupancy_this_step": 0,
+
+                # Historical measurements
+                "flow_history": [],
+                "occupancy_history": [],
+
+                # Totals for debugging
+                "total_flow": 0,
+                "occupied_steps": 0
+            }
+
+            scoot_node_state[tls]["detectors"].append(detector_id)
+
+def update_scoot_detectors():
+
+    global previous_vehicle_positions
+
+    current_vehicle_positions = {}
+
+    for detector_id, detector in scoot_detectors.items():
+
+        lane_id = detector["lane_id"]
+        detector_position = detector["position"]
+
+        zone_start = detector["zone_start"]
+        zone_end = detector["zone_end"]
+
+        vehicle_ids = traci.lane.getLastStepVehicleIDs(lane_id)
+
+        flow_count = 0
+        vehicles_in_zone = 0
+
+        for veh in vehicle_ids:
+
+            position = traci.vehicle.getLanePosition(veh)
+
+            current_vehicle_positions[veh] = (
+                lane_id,
+                position
+            )
+
+            # ----------------------------------------------
+            # FLOW DETECTION
+            # ----------------------------------------------
+
+            if veh in previous_vehicle_positions:
+
+                previous_lane, previous_position = (
+                    previous_vehicle_positions[veh]
+                )
+
+                if (
+                    previous_lane == lane_id
+                    and previous_position < detector_position
+                    and position >= detector_position
+                ):
+                    flow_count += 1
+
+            # ----------------------------------------------
+            # OCCUPANCY DETECTION
+            # ----------------------------------------------
+
+            if zone_start <= position <= zone_end:
+                vehicles_in_zone += 1
+
+        occupancy = 1 if vehicles_in_zone > 0 else 0
+
+        detector["flow_this_step"] = flow_count
+        detector["occupancy_this_step"] = occupancy
+
+        detector["flow_history"].append(flow_count)
+        detector["occupancy_history"].append(occupancy)
+
+        detector["total_flow"] += flow_count
+        detector["occupied_steps"] += occupancy
+
+    previous_vehicle_positions = current_vehicle_positions
+
+build_scoot_detectors()
 
 # -----------------------
 # DATA STRUCTURES
@@ -242,6 +392,8 @@ def simStep(num_times = 1):
                         regular_cars[tls_index][side_index][lane_index].append(0)
                         queue_lengths[tls_index][side_index][lane_index].append(0)
 
+        update_scoot_detectors()
+
 
 # -----------------------
 # SIMULATION LOOP
@@ -249,6 +401,7 @@ def simStep(num_times = 1):
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
 
 validate_scoot_network()
+validate_scoot_detectors()
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -258,9 +411,6 @@ while traci.simulation.getTime() < END_TIME:
     # SCOOT CONTROL LOGIC
 
     for tls in TLS_REG:
-        current_state = traci.trafficlight.getRedYellowGreenState(tls)
-        t = traci.simulation.getTime()
-
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < ((cycle_length / 2) - 5):
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
             sim_module[tIndex.index(tls)] += 1
@@ -285,10 +435,7 @@ while traci.simulation.getTime() < END_TIME:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tIndex.index(tls)] = 0
 
-    for tls in TLS_INVERT:
-        current_state = traci.trafficlight.getRedYellowGreenState(tls)
-        t = traci.simulation.getTime()
-        
+    for tls in TLS_INVERT:        
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < (cycle_length / 2) - 5:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
             sim_module[tIndex.index(tls)] += 1
@@ -315,6 +462,55 @@ while traci.simulation.getTime() < END_TIME:
     
     # ====================================================
 
+def print_scoot_detector_summary():
+
+    print("\n===== SCOOT DETECTOR SUMMARY =====")
+
+    for tls in TLS_ORDER:
+
+        detector_ids = scoot_node_state[tls]["detectors"]
+
+        total_flow = sum(
+            scoot_detectors[detector_id]["total_flow"]
+            for detector_id in detector_ids
+        )
+
+        total_occupied_steps = sum(
+            scoot_detectors[detector_id]["occupied_steps"]
+            for detector_id in detector_ids
+        )
+
+        print(
+            f"{tls}: "
+            f"detected vehicles={total_flow}, "
+            f"occupied detector-steps={total_occupied_steps}"
+        )
+
+    print("\nDetector details:")
+
+    for detector_id, detector in scoot_detectors.items():
+
+        samples = len(detector["occupancy_history"])
+
+        if samples > 0:
+            occupancy_percent = (
+                detector["occupied_steps"]
+                / samples
+                * 100
+            )
+        else:
+            occupancy_percent = 0.0
+
+        print(
+            f"  {detector_id}: "
+            f"flow={detector['total_flow']}, "
+            f"occupancy={occupancy_percent:.1f}%"
+        )
+
+    print("\n===== END SCOOT DETECTOR SUMMARY =====\n")
+
+
+print_scoot_detector_summary()
 traci.close()
 
 # -----------------------
