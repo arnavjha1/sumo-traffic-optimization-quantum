@@ -122,318 +122,26 @@ def simStep(num_times = 1):
                         regular_cars[tls_index][side_index][lane_index].append(0)
                         queue_lengths[tls_index][side_index][lane_index].append(0)
 
-QUEUE_K = 2
-DISCHARGE_QUEUE_K = 1
-REG_K = 1
-
-LEFT_WEIGHT = 1.00
-RIGHT_WEIGHT = 0.47
-DOWNSTREAM_K = 0.5
-
-pressure = [
-    [[] for _ in range(NUM_SIDES)]
-    for _ in range(NUM_TLS)
-]
-
-discharging_pressure = [
-    [[] for _ in range(NUM_SIDES)]
-    for _ in range(NUM_TLS)
-]
-
-
-def get_lane_queue(lane_id):
-    """
-    Number of stopped/queued vehicles on a lane.
-    Uses the same < 0.1 m/s threshold as the rest
-    of the simulation.
-    """
-
-    if lane_id is None or lane_id == "":
-        return 0
-
-    return sum(
-        1
-        for veh in traci.lane.getLastStepVehicleIDs(lane_id)
-        if traci.vehicle.getSpeed(veh) < 0.1
-    )
-
-
-def get_downstream_queue_for_side(tls, side_index):
-    """
-    Returns downstream congestion associated with
-    the incoming lanes belonging to one side of an
-    intersection.
-
-    Duplicate outgoing lanes are counted only once.
-    """
-
-    lanes = traci.trafficlight.getControlledLanes(tls)
-    lanes = list(dict.fromkeys(lanes))
-
-    lanes_per_side = len(lanes) // NUM_SIDES
-
-    start = side_index * lanes_per_side
-    end = start + lanes_per_side
-
-    incoming_lanes = lanes[start:end]
-
-    downstream_lanes = set()
-
-    for incoming_lane in incoming_lanes:
-
-        # SUMO returns all lane-to-lane connections
-        # leaving this incoming lane.
-        for link in traci.lane.getLinks(incoming_lane):
-
-            outgoing_lane = link[0]
-
-            if outgoing_lane:
-                downstream_lanes.add(outgoing_lane)
-
-    downstream_queue = sum(
-        get_lane_queue(lane_id)
-        for lane_id in downstream_lanes
-    )
-
-    return downstream_queue
-
-
-def compute_pressure():
-
-    for tls in TLS_ORDER:
-
-        tls_index = tIndex.index(tls)
-
-        for side_index in range(NUM_SIDES):
-
-            left_queue = (
-                queue_lengths[tls_index][side_index][2][-1]
-            )
-
-            left_reg = (
-                regular_cars[tls_index][side_index][2][-1]
-            )
-
-            straight_queue = (
-                queue_lengths[tls_index][side_index][1][-1]
-            )
-
-            straight_reg = (
-                regular_cars[tls_index][side_index][1][-1]
-            )
-
-            right_queue = (
-                queue_lengths[tls_index][side_index][0][-1]
-            )
-
-            right_reg = (
-                regular_cars[tls_index][side_index][0][-1]
-            )
-
-            # -----------------------------------------
-            # Original upstream pressure
-            # -----------------------------------------
-
-            upstream_pressure = (
-                QUEUE_K
-                * (
-                    LEFT_WEIGHT * left_queue
-                    + straight_queue
-                    + RIGHT_WEIGHT * right_queue
-                )
-                +
-                REG_K
-                * (
-                    LEFT_WEIGHT * left_reg
-                    + straight_reg
-                    + RIGHT_WEIGHT * right_reg
-                )
-            )
-
-            # -----------------------------------------
-            # NEW: downstream congestion
-            # -----------------------------------------
-
-            downstream_queue = (
-                get_downstream_queue_for_side(
-                    tls,
-                    side_index
-                )
-            )
-
-            # -----------------------------------------
-            # Net pressure
-            # -----------------------------------------
-
-            pressure_value = (
-                upstream_pressure
-                - DOWNSTREAM_K * downstream_queue
-            )
-
-            pressure[tls_index][side_index].append(
-                pressure_value
-            )
-
-
-def compute_discharging_pressure():
-
-    for tls in TLS_ORDER:
-
-        tls_index = tIndex.index(tls)
-
-        for side_index in range(NUM_SIDES):
-
-            left_queue = (
-                queue_lengths[tls_index][side_index][2][-1]
-            )
-
-            left_reg = (
-                regular_cars[tls_index][side_index][2][-1]
-            )
-
-            straight_queue = (
-                queue_lengths[tls_index][side_index][1][-1]
-            )
-
-            straight_reg = (
-                regular_cars[tls_index][side_index][1][-1]
-            )
-
-            right_queue = (
-                queue_lengths[tls_index][side_index][0][-1]
-            )
-
-            right_reg = (
-                regular_cars[tls_index][side_index][0][-1]
-            )
-
-            # -----------------------------------------
-            # Original discharging pressure
-            # -----------------------------------------
-
-            upstream_pressure = (
-                DISCHARGE_QUEUE_K
-                * (
-                    LEFT_WEIGHT * left_queue
-                    + straight_queue
-                    + RIGHT_WEIGHT * right_queue
-                )
-                +
-                REG_K
-                * (
-                    LEFT_WEIGHT * left_reg
-                    + straight_reg
-                    + RIGHT_WEIGHT * right_reg
-                )
-            )
-
-            # -----------------------------------------
-            # NEW: downstream congestion
-            # -----------------------------------------
-
-            downstream_queue = (
-                get_downstream_queue_for_side(
-                    tls,
-                    side_index
-                )
-            )
-
-            # -----------------------------------------
-            # Net discharging pressure
-            # -----------------------------------------
-
-            pressure_value = (
-                upstream_pressure
-                - DOWNSTREAM_K * downstream_queue
-            )
-
-            discharging_pressure[
-                tls_index
-            ][side_index].append(
-                pressure_value
-            )
-
-# ==========================================================
-# ENERGY-BASED PHASE OPTIMIZATION
-# ==========================================================
-
-LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 2             # tune between 0-10
-
-x_i = [[] for _ in range(NUM_TLS)]
-
-def optimize_x_i(tls_index, bias_i):
-
-    # First timestep initialization
-    if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
-            x_i[tls_index].append(-1)
-        return
-
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
-
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
-
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
-
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
-
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
-
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
-    else:
-        x_i[tls_index].append(current_x)
 
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-MIN_CHANGE_TIME = 16  # Minimum time to wait before allowing another change
 
 while traci.simulation.getTime() < END_TIME:
 
     simStep()
-    compute_pressure()
-    compute_discharging_pressure()
-
 
     # ====================================================
-    # QUEUE LENGTH ALGORITHM
+    # SCOOT CONTROL LOGIC
+
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
 
-        if(current_state == "GGgrrrGGgrrr"):
-            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        elif(current_state == "rrrGGgrrrGGg"):
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
-        else:
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        
-        optimize_x_i(tIndex.index(tls), bias_i)
-
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < ((cycle_length / 2) - 5):
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME and x_i[tIndex.index(tls)][-1] == -1):
-                sim_module[tIndex.index(tls)] = ((cycle_length / 2) - 5)
-            else:
-                sim_module[tIndex.index(tls)] += 1
+            sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= ((cycle_length / 2) - 5) and sim_module[tIndex.index(tls)] < ((cycle_length / 2) - 1):
             traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
@@ -445,10 +153,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= (cycle_length / 2) and sim_module[tIndex.index(tls)] < (cycle_length - 5):
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= (MIN_CHANGE_TIME + 60) and x_i[tIndex.index(tls)][-1] == 1):
-                sim_module[tIndex.index(tls)] = (cycle_length - 5)
-            else:
-                sim_module[tIndex.index(tls)] += 1
+            sim_module[tIndex.index(tls)] += 1
                 
         elif sim_module[tIndex.index(tls)] >= (cycle_length - 5) and sim_module[tIndex.index(tls)] < (cycle_length - 1):
             traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
@@ -461,23 +166,10 @@ while traci.simulation.getTime() < END_TIME:
     for tls in TLS_INVERT:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-
-        if(current_state == "GGgrrrGGgrrr"):
-            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        elif(current_state == "rrrGGgrrrGGg"):
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
-        else:
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        
-        optimize_x_i(tIndex.index(tls), bias_i)
-
         
         if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < (cycle_length / 2) - 5:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            if(sim_module[tIndex.index(tls)] >= MIN_CHANGE_TIME and x_i[tIndex.index(tls)][-1] == 1):
-                sim_module[tIndex.index(tls)] = (cycle_length / 2) - 5
-            else:
-                sim_module[tIndex.index(tls)] += 1
+            sim_module[tIndex.index(tls)] += 1
                 
         elif sim_module[tIndex.index(tls)] >= (cycle_length / 2) - 5 and sim_module[tIndex.index(tls)] < (cycle_length / 2) - 1:
             traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
@@ -489,10 +181,7 @@ while traci.simulation.getTime() < END_TIME:
 
         elif sim_module[tIndex.index(tls)] >= cycle_length / 2 and sim_module[tIndex.index(tls)] < (cycle_length - 5):
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            if(sim_module[tIndex.index(tls)] >= (MIN_CHANGE_TIME + 60) and x_i[tIndex.index(tls)][-1] == -1):
-                sim_module[tIndex.index(tls)] = cycle_length - 5
-            else:
-                sim_module[tIndex.index(tls)] += 1
+            sim_module[tIndex.index(tls)] += 1
 
         elif sim_module[tIndex.index(tls)] >= (cycle_length - 5) and sim_module[tIndex.index(tls)] < cycle_length - 1:
             traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
@@ -537,7 +226,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nCLASSICAL")
+print("\nSCOOT")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)
