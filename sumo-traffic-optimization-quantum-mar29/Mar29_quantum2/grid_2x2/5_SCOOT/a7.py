@@ -74,6 +74,13 @@ DETECTOR_POSITION = 15.0     # meters from start of lane
 DETECTOR_ZONE_START = 10.0   # meters
 DETECTOR_ZONE_END = 20.0     # meters
 
+# =========================
+# Traffic model settings
+# -------------------------
+SATURATION_FLOW_PER_LANE = 0.5   # veh/s/lane
+
+# =========================
+
 scoot_links = {}
 
 for upstream_node, downstream_node in SCOOT_CONNECTIONS:
@@ -289,12 +296,139 @@ def build_scoot_approaches():
 
                 # Current cyclic flow profiles
                 "flow_profile": [0.0] * cycle_length,
-                "occupancy_profile": [0.0] * cycle_length
+                "occupancy_profile": [0.0] * cycle_length,
+
+                # Traffic predicted at stop line
+                "arrival_profile": [0.0] * cycle_length,
+
+                # Predicted queue at stop line
+                "queue_profile": [0.0] * cycle_length
             }
 
         scoot_approaches[approach_id]["detectors"].append(
             detector_id
         )
+
+    # ======================================================
+    # CALCULATE APPROACH GEOMETRY
+    # ======================================================
+
+    for approach_id, approach in scoot_approaches.items():
+
+        detector_ids = approach["detectors"]
+
+        lane_lengths = []
+        lane_speeds = []
+
+        for detector_id in detector_ids:
+
+            detector = scoot_detectors[detector_id]
+
+            lane_id = detector["lane_id"]
+
+            lane_lengths.append(
+                detector["lane_length"]
+            )
+
+            lane_speeds.append(
+                traci.lane.getMaxSpeed(lane_id)
+            )
+        
+        num_lanes = len(detector_ids)
+        approach["num_lanes"] = num_lanes
+
+
+        average_lane_length = (
+            sum(lane_lengths)
+            / len(lane_lengths)
+        )
+
+        distance_to_stopline = (
+            average_lane_length
+            - DETECTOR_POSITION
+        )
+
+        distance_to_stopline = max(
+            0.0,
+            distance_to_stopline
+        )
+
+        approach["distance_to_stopline"] = (
+            distance_to_stopline
+        )
+
+        
+        average_speed = (
+            sum(lane_speeds)
+            / len(lane_speeds)
+        )
+
+        approach["cruise_speed"] = (
+            average_speed
+        )
+
+        if average_speed > 0:
+            travel_time = distance_to_stopline / average_speed
+        else:
+            travel_time = 0.0
+
+
+        travel_time_steps = max(
+            0,
+            int(round(travel_time))
+        )
+
+        approach["travel_time"] = (
+            travel_time
+        )
+
+        approach["travel_time_steps"] = (
+            travel_time_steps
+        )
+
+        first_detector_id = (
+            detector_ids[0]
+        )
+
+        first_lane_id = (
+            scoot_detectors[
+                first_detector_id
+            ]["lane_id"]
+        )
+
+        controlled_lanes = (
+            traci.trafficlight
+            .getControlledLanes(
+                approach["tls"]
+            )
+        )
+
+        controlled_lanes = list(
+            dict.fromkeys(
+                controlled_lanes
+            )
+        )
+
+        first_lane_position = (
+            controlled_lanes.index(
+                first_lane_id
+            )
+        )
+
+        lanes_per_side = (
+            len(controlled_lanes)
+            // 4
+        )
+
+        side_index = (
+            first_lane_position
+            // lanes_per_side
+        )
+
+        approach["side_index"] = (
+            side_index
+        )
+
 
 def update_scoot_detectors():
 
@@ -419,7 +553,153 @@ def update_cyclic_flow_profiles():
             approach["occupancy_sum"][cycle_position]
             / samples
         )
-    
+
+
+def update_stopline_arrival_profiles():
+
+    for approach_id, approach in scoot_approaches.items():
+
+        flow_profile = approach["flow_profile"]
+
+        travel_steps = (
+            approach["travel_time_steps"]
+        )
+
+        arrival_profile = (
+            [0.0] * cycle_length
+        )
+
+        for detector_second in range(
+            cycle_length
+        ):
+
+            stopline_second = (
+                detector_second
+                + travel_steps
+            ) % cycle_length
+
+            arrival_profile[
+                stopline_second
+            ] += flow_profile[
+                detector_second
+            ]
+
+        approach["arrival_profile"] = (
+            arrival_profile
+        )
+
+def is_approach_green(
+    tls,
+    side_index,
+    cycle_second
+):
+
+    half_cycle = cycle_length / 2
+
+    # ----------------------------------------------
+    # Normal intersections
+    # ----------------------------------------------
+
+    if tls in TLS_REG:
+
+        if side_index in [0, 2]:
+
+            return (
+                cycle_second
+                < half_cycle - 5
+            )
+
+        elif side_index in [1, 3]:
+
+            return (
+                cycle_second
+                >= half_cycle
+                and
+                cycle_second
+                < cycle_length - 5
+            )
+
+    # ----------------------------------------------
+    # Inverted intersection B1
+    # ----------------------------------------------
+
+    elif tls in TLS_INVERT:
+
+        if side_index in [1, 3]:
+
+            return (
+                cycle_second
+                < half_cycle - 5
+            )
+
+        elif side_index in [0, 2]:
+
+            return (
+                cycle_second
+                >= half_cycle
+                and
+                cycle_second
+                < cycle_length - 5
+            )
+
+    return False
+
+def update_predicted_queue_profiles():
+
+    for approach_id, approach in (
+        scoot_approaches.items()
+    ):
+
+        tls = approach["tls"]
+        side_index = approach["side_index"]
+
+        arrivals = (
+            approach["arrival_profile"]
+        )
+
+        num_lanes = approach["num_lanes"]
+
+        max_discharge = (
+            SATURATION_FLOW_PER_LANE
+            * num_lanes
+        )
+
+        queue_profile = (
+            [0.0] * cycle_length
+        )
+
+        queue = 0.0
+
+        for cycle_second in range(cycle_length):
+
+            # Vehicles arrive
+            queue += arrivals[
+                cycle_second
+            ]
+
+            green = is_approach_green(
+                tls,
+                side_index,
+                cycle_second
+            )
+
+            if green:
+
+                discharge = min(
+                    queue,
+                    max_discharge
+                )
+
+                queue -= discharge
+        
+            queue_profile[
+                cycle_second
+            ] = queue
+
+        approach["queue_profile"] = (
+            queue_profile
+        )
+
 
 build_scoot_detectors()
 build_scoot_approaches()
@@ -509,6 +789,8 @@ def simStep(num_times = 1):
         update_scoot_detectors()
         update_cyclic_flow_profiles()
 
+        update_stopline_arrival_profiles()
+        update_predicted_queue_profiles()
 
 # -----------------------
 # SIMULATION LOOP
@@ -725,13 +1007,109 @@ def print_cyclic_flow_profile_summary():
             f"max={max_samples}"
         )
 
+        print(
+            f"  lanes={approach['num_lanes']}, "
+            f"side={approach['side_index']}, "
+            f"distance_to_stopline="
+            f"{approach['distance_to_stopline']:.1f} m, "
+            f"speed="
+            f"{approach['cruise_speed']:.1f} m/s, "
+            f"travel_time="
+            f"{approach['travel_time']:.1f} s "
+            f"({approach['travel_time_steps']} steps)"
+        )
+
     print(
         "\n===== END SCOOT CYCLIC FLOW PROFILE CHECK =====\n"
+    )
+
+def print_queue_prediction_summary():
+
+    print(
+        "\n===== SCOOT QUEUE PREDICTION CHECK ====="
+    )
+
+    for approach_id, approach in (
+        scoot_approaches.items()
+    ):
+
+        arrivals = (
+            approach["arrival_profile"]
+        )
+
+        queues = (
+            approach["queue_profile"]
+        )
+
+        peak_arrival = max(arrivals)
+
+        peak_arrival_second = (
+            arrivals.index(
+                peak_arrival
+            )
+        )
+
+        max_queue = max(queues)
+
+        max_queue_second = (
+            queues.index(
+                max_queue
+            )
+        )
+
+        avg_queue = (
+            sum(queues)
+            / len(queues)
+        )
+
+        print(
+            f"\n{approach_id}"
+        )
+
+        print(
+            f"  travel time: "
+            f"{approach['travel_time']:.1f} s"
+        )
+
+        print(
+            f"  peak predicted arrival: "
+            f"{peak_arrival:.2f} veh/s "
+            f"at second "
+            f"{peak_arrival_second}"
+        )
+
+        print(
+            f"  max predicted queue: "
+            f"{max_queue:.2f} veh "
+            f"at second "
+            f"{max_queue_second}"
+        )
+
+        print(
+            f"  avg predicted queue: "
+            f"{avg_queue:.2f} veh"
+        )
+
+        print(
+            "  first 20 queue slots: "
+            + str(
+                [
+                    round(value, 2)
+                    for value
+                    in queues[:20]
+                ]
+            )
+        )
+
+    print(
+        "\n===== END SCOOT QUEUE PREDICTION CHECK =====\n"
     )
 
 
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
+print_queue_prediction_summary()
+
 traci.close()
 
 # -----------------------
