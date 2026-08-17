@@ -78,6 +78,10 @@ DETECTOR_ZONE_END = 20.0     # meters
 # Traffic model settings
 # -------------------------
 SATURATION_FLOW_PER_LANE = 0.5   # veh/s/lane
+SPLIT_CHANGE = 2                 # seconds per optimization
+MIN_EFFECTIVE_GREEN = 20         # temporary safety bound
+TOTAL_EFFECTIVE_GREEN = cycle_length - 10
+
 
 # =========================
 
@@ -99,7 +103,13 @@ for tls in TLS_ORDER:
     scoot_node_state[tls] = {
         "region": SCOOT_NODES[tls]["region"],
         "cycle_length": cycle_length,
-        "offset": 0
+        "offset": 0,
+
+        # SCOOT split state
+        "stage1_green": 55,
+        "stage2_green": 55,
+
+        "last_split_decision": "AS_DUE"
     }
 
 scoot_region_state = {}
@@ -594,59 +604,37 @@ def update_stopline_arrival_profiles():
             arrival_profile
         )
 
-def is_approach_green(
-    tls,
-    side_index,
-    cycle_second
-):
-
-    half_cycle = cycle_length / 2
-
-    # ----------------------------------------------
-    # Normal intersections
-    # ----------------------------------------------
+def is_approach_green(tls, side_index, cycle_second):
+    stage1_green = scoot_node_state[tls]["stage1_green"]
+    stage2_start = stage1_green + 5
 
     if tls in TLS_REG:
-
         if side_index in [0, 2]:
-
-            return (
-                cycle_second
-                < half_cycle - 5
-            )
+            return cycle_second < stage1_green
 
         elif side_index in [1, 3]:
-
-            return (
-                cycle_second
-                >= half_cycle
-                and
-                cycle_second
-                < cycle_length - 5
-            )
-
-    # ----------------------------------------------
-    # Inverted intersection B1
-    # ----------------------------------------------
+            return cycle_second >= stage2_start and cycle_second < cycle_length - 5
 
     elif tls in TLS_INVERT:
-
         if side_index in [1, 3]:
-
-            return (
-                cycle_second
-                < half_cycle - 5
-            )
-
+            return cycle_second < stage1_green
+    
         elif side_index in [0, 2]:
+            return cycle_second >= stage2_start and cycle_second < cycle_length - 5
 
-            return (
-                cycle_second
-                >= half_cycle
-                and
-                cycle_second
-                < cycle_length - 5
-            )
+    return False
+
+
+def is_stage1_approach(tls, side_index):
+    # Normal intersections:
+    # first stage serves sides 0 and 2
+    if tls in TLS_REG:
+        return side_index in [0, 2]
+
+    # Inverted B1:
+    # first stage serves sides 1 and 3
+    elif tls in TLS_INVERT:
+        return side_index in [1, 3]
 
     return False
 
@@ -785,6 +773,99 @@ def update_predicted_queue_profiles():
             queue_profile
         )
 
+def evaluate_split_candidate(tls, stage1_green):
+    stage2_green = TOTAL_EFFECTIVE_GREEN - stage1_green
+    worst_saturation = 0.0
+
+    for approach in scoot_approaches.values():
+
+        if approach["tls"] != tls:
+            continue
+
+        side_index = approach["side_index"]
+
+        if is_stage1_approach(tls, side_index):
+            effective_green = stage1_green
+        else:
+            effective_green = stage2_green
+
+
+        (
+            degree_of_saturation,
+            _,
+            _
+        ) = calculate_degree_of_saturation(
+            approach,
+            effective_green
+        )
+
+        worst_saturation = max(
+            worst_saturation,
+            degree_of_saturation
+        )
+
+    return worst_saturation
+
+def optimize_split(tls):
+    current_stage1 = scoot_node_state[tls]["stage1_green"]
+    
+    candidates = {
+        "EARLIER": (
+            current_stage1
+            - SPLIT_CHANGE
+        ),
+
+        "AS_DUE": (
+            current_stage1
+        ),
+
+        "LATER": (
+            current_stage1
+            + SPLIT_CHANGE
+        )
+    }
+
+    valid_candidates = {}
+
+    for decision, candidate_green in candidates.items():
+        candidate_stage2 = TOTAL_EFFECTIVE_GREEN - candidate_green
+        
+        if (candidate_green >= MIN_EFFECTIVE_GREEN
+            and
+            candidate_stage2 >= MIN_EFFECTIVE_GREEN
+        ):
+
+            valid_candidates[decision] = candidate_green
+
+        candidate_scores = {}
+
+    for decision, candidate_green in valid_candidates.items():
+        score = evaluate_split_candidate(tls, candidate_green)
+        candidate_scores[decision] = score
+
+    
+    decision_priority = {
+        "AS_DUE": 0,
+        "EARLIER": 1,
+        "LATER": 2
+    }
+
+    best_decision = min(
+        candidate_scores,
+        key=lambda decision: (
+            candidate_scores[decision],
+            decision_priority[decision]
+        )
+    )
+
+    best_stage1 = valid_candidates[best_decision]
+    best_stage2 = TOTAL_EFFECTIVE_GREEN - best_stage1
+    scoot_node_state[tls]["stage1_green"] = best_stage1
+    scoot_node_state[tls]["stage2_green"] = best_stage2
+    scoot_node_state[tls]["last_split_decision"] = best_decision
+
+    return best_decision, candidate_scores
+
 
 build_scoot_detectors()
 build_scoot_approaches()
@@ -882,6 +963,7 @@ def simStep(num_times = 1):
 # SIMULATION LOOP
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
+split_history = {tls: [] for tls in TLS_ORDER}  # Track split decisions for each TLS
 
 validate_scoot_network()
 validate_scoot_detectors()
@@ -890,59 +972,94 @@ validate_scoot_approaches()
 while traci.simulation.getTime() < END_TIME:
 
     simStep()
+    current_time = int(traci.simulation.getTime())
 
     # ====================================================
-    # SCOOT CONTROL LOGIC
+    # SCOOT SPLIT OPTIMIZER
+    # ====================================================
+
+    if current_time >= cycle_length:
+        for tls in TLS_ORDER:
+            tls_index = tIndex.index(tls)
+
+            if sim_module[tls_index] == 0:
+                decision, candidate_scores = optimize_split(tls)
+
+                split_history[tls].append(
+                    {
+                        "time": current_time,
+                        "decision": decision,
+                        "stage1_green":
+                            scoot_node_state[tls][
+                                "stage1_green"
+                            ],
+                        "stage2_green":
+                            scoot_node_state[tls][
+                                "stage2_green"
+                            ],
+                        "scores":
+                            candidate_scores.copy()
+                    }
+                )
+    # ====================================================
 
     for tls in TLS_REG:
-        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < ((cycle_length / 2) - 5):
+        tls_index = tIndex.index(tls)
+        stage1_green = scoot_node_state[tls]["stage1_green"]
+        stage2_start = stage1_green + 5
+        
+        if sim_module[tls_index] >= 0 and sim_module[tls_index] < stage1_green:
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= ((cycle_length / 2) - 5) and sim_module[tIndex.index(tls)] < ((cycle_length / 2) - 1):
+        elif sim_module[tls_index] >= stage1_green and sim_module[tls_index] < stage1_green + 4:
             traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= ((cycle_length / 2) - 1) and sim_module[tIndex.index(tls)] < cycle_length / 2:
+        elif sim_module[tls_index] >= stage1_green + 4 and sim_module[tls_index] < stage1_green + 5:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= (cycle_length / 2) and sim_module[tIndex.index(tls)] < (cycle_length - 5):
+        elif sim_module[tls_index] >= stage2_start and sim_module[tls_index] < (cycle_length - 5):
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
                 
-        elif sim_module[tIndex.index(tls)] >= (cycle_length - 5) and sim_module[tIndex.index(tls)] < (cycle_length - 1):
+        elif sim_module[tls_index] >= (cycle_length - 5) and sim_module[tls_index] < (cycle_length - 1):
             traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= (cycle_length - 1) and sim_module[tIndex.index(tls)] < cycle_length:
+        elif sim_module[tls_index] >= (cycle_length - 1) and sim_module[tls_index] < cycle_length:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tIndex.index(tls)] = 0
+            sim_module[tls_index] = 0
 
     for tls in TLS_INVERT:        
-        if sim_module[tIndex.index(tls)] >= 0 and sim_module[tIndex.index(tls)] < (cycle_length / 2) - 5:
+        tls_index = tIndex.index(tls)
+        stage1_green = scoot_node_state[tls]["stage1_green"]
+        stage2_start = stage1_green + 5
+        
+        if sim_module[tls_index] >= 0 and sim_module[tls_index] < stage1_green:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            sim_module[tIndex.index(tls)] += 1
-                
-        elif sim_module[tIndex.index(tls)] >= (cycle_length / 2) - 5 and sim_module[tIndex.index(tls)] < (cycle_length / 2) - 1:
+            sim_module[tls_index] += 1
+
+        elif sim_module[tls_index] >= stage1_green and sim_module[tls_index] < stage1_green + 4:
             traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= (cycle_length / 2) - 1 and sim_module[tIndex.index(tls)] < cycle_length / 2:
+        elif sim_module[tls_index] >= stage1_green + 4 and sim_module[tls_index] < stage1_green + 5:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= cycle_length / 2 and sim_module[tIndex.index(tls)] < (cycle_length - 5):
+        elif sim_module[tls_index] >= stage2_start and sim_module[tls_index] < (cycle_length - 5):
             traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            sim_module[tIndex.index(tls)] += 1
-
-        elif sim_module[tIndex.index(tls)] >= (cycle_length - 5) and sim_module[tIndex.index(tls)] < cycle_length - 1:
+            sim_module[tls_index] += 1
+                
+        elif sim_module[tls_index] >= (cycle_length - 5) and sim_module[tls_index] < (cycle_length - 1):
             traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
-            sim_module[tIndex.index(tls)] += 1
+            sim_module[tls_index] += 1
 
-        elif sim_module[tIndex.index(tls)] >= (cycle_length - 1) and sim_module[tIndex.index(tls)] < cycle_length:
+        elif sim_module[tls_index] >= (cycle_length - 1) and sim_module[tls_index] < cycle_length:
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tIndex.index(tls)] = 0
+            sim_module[tls_index] = 0
     
     # ====================================================
 
@@ -1254,15 +1371,66 @@ def print_degree_of_saturation_summary():
                 f"  {tls}: "
                 f"{worst_approach['degree_of_saturation'] * 100:.1f}%"
             )
-            
+
     print(
         "\n===== END SCOOT DEGREE OF SATURATION CHECK =====\n"
+    )
+
+def print_split_optimizer_summary():
+
+    print(
+        "\n===== SCOOT SPLIT OPTIMIZER CHECK ====="
+    )
+
+    for tls in TLS_ORDER:
+
+        print(f"\n{tls}:")
+
+        history = split_history[tls]
+
+        if not history:
+
+            print(
+                "  No split decisions made."
+            )
+            continue
+
+        for record in history:
+
+            print(
+                f"  t={record['time']}: "
+                f"{record['decision']} | "
+                f"stage1="
+                f"{record['stage1_green']} s | "
+                f"stage2="
+                f"{record['stage2_green']} s"
+            )
+
+            scores = record["scores"]
+
+            for decision in [
+                "EARLIER",
+                "AS_DUE",
+                "LATER"
+            ]:
+
+                if decision in scores:
+
+                    print(
+                        f"    {decision}: "
+                        f"max saturation="
+                        f"{scores[decision] * 100:.1f}%"
+                    )
+
+    print(
+        "\n===== END SCOOT SPLIT OPTIMIZER CHECK =====\n"
     )
 
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
 print_degree_of_saturation_summary()
+print_split_optimizer_summary()
 
 traci.close()
 
