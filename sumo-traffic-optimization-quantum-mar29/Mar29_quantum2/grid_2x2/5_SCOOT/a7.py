@@ -184,6 +184,26 @@ def validate_scoot_detectors():
 
     print("\n===== END SCOOT DETECTOR CHECK =====\n")
 
+def validate_scoot_approaches():
+
+    print("\n===== SCOOT APPROACH CHECK =====")
+
+    for approach_id, approach in scoot_approaches.items():
+
+        print(
+            f"{approach_id}: "
+            f"TLS={approach['tls']}, "
+            f"edge={approach['edge_id']}, "
+            f"detectors={len(approach['detectors'])}"
+        )
+
+    print(
+        f"\nTotal SCOOT approaches: "
+        f"{len(scoot_approaches)}"
+    )
+
+    print("\n===== END SCOOT APPROACH CHECK =====\n")
+
 # -----------------------
 # FORCE MANUAL TLS CONTROL
 # -----------------------
@@ -197,6 +217,7 @@ for tls in TLS_ORDER:
 # -----------------------
 scoot_detectors = {}
 previous_vehicle_positions = {}
+scoot_approaches = {}
 
 for tls in TLS_ORDER:
     scoot_node_state[tls]["detectors"] = []
@@ -242,6 +263,38 @@ def build_scoot_detectors():
             }
 
             scoot_node_state[tls]["detectors"].append(detector_id)
+
+def build_scoot_approaches():
+
+    for detector_id, detector in scoot_detectors.items():
+
+        tls = detector["tls"]
+        edge_id = detector["edge_id"]
+
+        approach_id = f"{edge_id}->{tls}"
+
+        if approach_id not in scoot_approaches:
+
+            scoot_approaches[approach_id] = {
+                "tls": tls,
+                "edge_id": edge_id,
+                "detectors": [],
+
+                # Running sums for each second of the cycle
+                "flow_sum": [0.0] * cycle_length,
+                "occupancy_sum": [0.0] * cycle_length,
+
+                # Number of observations made at each cycle second
+                "samples": [0] * cycle_length,
+
+                # Current cyclic flow profiles
+                "flow_profile": [0.0] * cycle_length,
+                "occupancy_profile": [0.0] * cycle_length
+            }
+
+        scoot_approaches[approach_id]["detectors"].append(
+            detector_id
+        )
 
 def update_scoot_detectors():
 
@@ -308,7 +361,68 @@ def update_scoot_detectors():
 
     previous_vehicle_positions = current_vehicle_positions
 
+def update_cyclic_flow_profiles():
+
+    current_time = int(traci.simulation.getTime())
+
+    cycle_position = (
+        (current_time - 1)
+        % cycle_length
+    )
+
+    for approach_id, approach in scoot_approaches.items():
+
+        detector_ids = approach["detectors"]
+
+        total_flow = 0
+        occupied_detectors = 0
+
+        for detector_id in detector_ids:
+
+            detector = scoot_detectors[detector_id]
+
+            total_flow += detector["flow_this_step"]
+
+            occupied_detectors += (
+                detector["occupancy_this_step"]
+            )
+
+        if len(detector_ids) > 0:
+
+            occupancy_fraction = (
+                occupied_detectors
+                / len(detector_ids)
+            )
+
+        else:
+
+            occupancy_fraction = 0.0
+
+        approach["flow_sum"][cycle_position] += (
+            total_flow
+        )
+
+        approach["occupancy_sum"][cycle_position] += (
+            occupancy_fraction
+        )
+
+        approach["samples"][cycle_position] += 1
+
+        samples = approach["samples"][cycle_position]
+
+        approach["flow_profile"][cycle_position] = (
+            approach["flow_sum"][cycle_position]
+            / samples
+        )
+
+        approach["occupancy_profile"][cycle_position] = (
+            approach["occupancy_sum"][cycle_position]
+            / samples
+        )
+    
+
 build_scoot_detectors()
+build_scoot_approaches()
 
 # -----------------------
 # DATA STRUCTURES
@@ -393,6 +507,7 @@ def simStep(num_times = 1):
                         queue_lengths[tls_index][side_index][lane_index].append(0)
 
         update_scoot_detectors()
+        update_cyclic_flow_profiles()
 
 
 # -----------------------
@@ -402,6 +517,7 @@ sim_module = [0] * len(tIndex)  # Track which module each TLS is in
 
 validate_scoot_network()
 validate_scoot_detectors()
+validate_scoot_approaches()
 
 while traci.simulation.getTime() < END_TIME:
 
@@ -509,8 +625,113 @@ def print_scoot_detector_summary():
 
     print("\n===== END SCOOT DETECTOR SUMMARY =====\n")
 
+def print_cyclic_flow_profile_summary():
+
+    print("\n===== SCOOT CYCLIC FLOW PROFILE CHECK =====")
+
+    for approach_id, approach in scoot_approaches.items():
+
+        flow_profile = approach["flow_profile"]
+        occupancy_profile = approach["occupancy_profile"]
+
+        observed_slots = sum(
+            1
+            for sample_count in approach["samples"]
+            if sample_count > 0
+        )
+
+        total_samples = sum(
+            approach["samples"]
+        )
+
+        peak_flow = max(flow_profile)
+
+        peak_flow_second = flow_profile.index(
+            peak_flow
+        )
+
+        peak_occupancy = max(
+            occupancy_profile
+        )
+
+        peak_occupancy_second = (
+            occupancy_profile.index(
+                peak_occupancy
+            )
+        )
+
+        print(
+            f"\n{approach_id}"
+        )
+
+        print(
+            f"  observed cycle slots: "
+            f"{observed_slots}/{cycle_length}"
+        )
+
+        print(
+            f"  total slot observations: "
+            f"{total_samples}"
+        )
+
+        print(
+            f"  peak avg flow: "
+            f"{peak_flow:.2f} veh/s "
+            f"at cycle second "
+            f"{peak_flow_second}"
+        )
+
+        print(
+            f"  peak avg occupancy: "
+            f"{peak_occupancy * 100:.1f}% "
+            f"at cycle second "
+            f"{peak_occupancy_second}"
+        )
+
+        print(
+            "  first 20 flow slots: "
+            + str(
+                [
+                    round(value, 2)
+                    for value
+                    in flow_profile[:20]
+                ]
+            )
+        )
+
+        print(
+            "  first 20 occupancy slots: "
+            + str(
+                [
+                    round(value, 2)
+                    for value
+                    in occupancy_profile[:20]
+                ]
+            )
+        )
+
+        
+        min_samples = min(
+            approach["samples"]
+        )
+
+        max_samples = max(
+            approach["samples"]
+        )
+
+        print(
+            f"  samples per cycle slot: "
+            f"min={min_samples}, "
+            f"max={max_samples}"
+        )
+
+    print(
+        "\n===== END SCOOT CYCLIC FLOW PROFILE CHECK =====\n"
+    )
+
 
 print_scoot_detector_summary()
+print_cyclic_flow_profile_summary()
 traci.close()
 
 # -----------------------
