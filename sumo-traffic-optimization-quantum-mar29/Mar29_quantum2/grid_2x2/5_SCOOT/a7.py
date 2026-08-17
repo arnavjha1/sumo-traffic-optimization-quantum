@@ -77,11 +77,13 @@ DETECTOR_ZONE_END = 20.0     # meters
 # =========================
 # Traffic model settings
 # -------------------------
-SATURATION_FLOW_PER_LANE = 0.5   # veh/s/lane
-SPLIT_CHANGE = 2                 # seconds per optimization
-MIN_EFFECTIVE_GREEN = 20         # temporary safety bound
-TOTAL_EFFECTIVE_GREEN = cycle_length - 10
+SATURATION_FLOW_PER_LANE = 0.5                                     # veh/s/lane
+SPLIT_CHANGE = 2                                                   # seconds per optimization
+TOTAL_EFFECTIVE_GREEN = cycle_length - 10                          # seconds
 
+MIN_EFFECTIVE_GREEN = 20                                           # temporary safety bound
+MAX_EFFECTIVE_GREEN = TOTAL_EFFECTIVE_GREEN - MIN_EFFECTIVE_GREEN  # seconds 
+MIN_SPLIT_IMPROVEMENT = 0.005                                      # don't change split unless saturation is improved by this much
 
 # =========================
 
@@ -220,6 +222,81 @@ def validate_scoot_approaches():
     )
 
     print("\n===== END SCOOT APPROACH CHECK =====\n")
+
+def validate_split_timings():
+
+    for tls in TLS_ORDER:
+
+        stage1_green = (
+            scoot_node_state[tls][
+                "stage1_green"
+            ]
+        )
+
+        stage2_green = (
+            scoot_node_state[tls][
+                "stage2_green"
+            ]
+        )
+
+        # ------------------------------------------
+        # Minimum green
+        # ------------------------------------------
+
+        if (
+            stage1_green
+            < MIN_EFFECTIVE_GREEN
+        ):
+            raise ValueError(
+                f"{tls}: stage 1 green "
+                f"below minimum"
+            )
+
+        if (
+            stage2_green
+            < MIN_EFFECTIVE_GREEN
+        ):
+            raise ValueError(
+                f"{tls}: stage 2 green "
+                f"below minimum"
+            )
+
+        # ------------------------------------------
+        # Maximum green
+        # ------------------------------------------
+
+        if (
+            stage1_green
+            > MAX_EFFECTIVE_GREEN
+        ):
+            raise ValueError(
+                f"{tls}: stage 1 green "
+                f"above maximum"
+            )
+
+        if (
+            stage2_green
+            > MAX_EFFECTIVE_GREEN
+        ):
+            raise ValueError(
+                f"{tls}: stage 2 green "
+                f"above maximum"
+            )
+
+        # ------------------------------------------
+        # Total effective green
+        # ------------------------------------------
+
+        if (
+            stage1_green
+            + stage2_green
+            != TOTAL_EFFECTIVE_GREEN
+        ):
+
+            raise ValueError(
+                f"{tls}: invalid total "
+                f"effective green"
+            )
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -832,7 +909,11 @@ def optimize_split(tls):
         
         if (candidate_green >= MIN_EFFECTIVE_GREEN
             and
+            candidate_green <= MAX_EFFECTIVE_GREEN
+            and
             candidate_stage2 >= MIN_EFFECTIVE_GREEN
+            and
+            candidate_stage2 <= MAX_EFFECTIVE_GREEN
         ):
 
             valid_candidates[decision] = candidate_green
@@ -858,13 +939,20 @@ def optimize_split(tls):
         )
     )
 
+    current_score = candidate_scores["AS_DUE"]
+    best_score = candidate_scores[best_decision]
+    improvement = current_score - best_score
+
+    if(best_decision != "AS_DUE" and improvement < MIN_SPLIT_IMPROVEMENT):
+        best_decision = "AS_DUE"
+
     best_stage1 = valid_candidates[best_decision]
     best_stage2 = TOTAL_EFFECTIVE_GREEN - best_stage1
     scoot_node_state[tls]["stage1_green"] = best_stage1
     scoot_node_state[tls]["stage2_green"] = best_stage2
     scoot_node_state[tls]["last_split_decision"] = best_decision
 
-    return best_decision, candidate_scores
+    return best_decision, candidate_scores, improvement
 
 
 build_scoot_detectors()
@@ -983,7 +1071,8 @@ while traci.simulation.getTime() < END_TIME:
             tls_index = tIndex.index(tls)
 
             if sim_module[tls_index] == 0:
-                decision, candidate_scores = optimize_split(tls)
+                decision, candidate_scores, improvement = optimize_split(tls)
+                validate_split_timings()
 
                 split_history[tls].append(
                     {
@@ -998,7 +1087,8 @@ while traci.simulation.getTime() < END_TIME:
                                 "stage2_green"
                             ],
                         "scores":
-                            candidate_scores.copy()
+                            candidate_scores.copy(),
+                        "improvement": improvement
                     }
                 )
     # ====================================================
@@ -1421,6 +1511,12 @@ def print_split_optimizer_summary():
                         f"max saturation="
                         f"{scores[decision] * 100:.1f}%"
                     )
+
+    print(
+        f"    candidate improvement: "
+        f"{record['improvement'] * 100:.2f} "
+        f"percentage points"
+    )
 
     print(
         "\n===== END SCOOT SPLIT OPTIMIZER CHECK =====\n"
