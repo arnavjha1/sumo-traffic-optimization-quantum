@@ -302,7 +302,13 @@ def build_scoot_approaches():
                 "arrival_profile": [0.0] * cycle_length,
 
                 # Predicted queue at stop line
-                "queue_profile": [0.0] * cycle_length
+                "queue_profile": [0.0] * cycle_length,
+
+                # Degree of saturation information
+                "demand_per_cycle": 0.0,
+                "effective_green": 0.0,
+                "capacity_per_cycle": 0.0,
+                "degree_of_saturation": 0.0
             }
 
         scoot_approaches[approach_id]["detectors"].append(
@@ -644,6 +650,85 @@ def is_approach_green(
 
     return False
 
+def calculate_degree_of_saturation(approach, effective_green):
+    # ----------------------------------------------
+    # Demand
+    # ----------------------------------------------
+
+    demand_per_cycle = sum(
+        approach["arrival_profile"]
+    )
+
+    # ----------------------------------------------
+    # Saturation capacity while green
+    # ----------------------------------------------
+
+    saturation_capacity_per_second = (
+        SATURATION_FLOW_PER_LANE
+        * approach["num_lanes"]
+    )
+
+    # ----------------------------------------------
+    # Total capacity available during this cycle
+    # ----------------------------------------------
+
+    capacity_per_cycle = (
+        saturation_capacity_per_second
+        * effective_green
+    )
+
+    # ----------------------------------------------
+    # Degree of saturation
+    # ----------------------------------------------
+
+    if capacity_per_cycle > 0:
+
+        degree_of_saturation = (
+            demand_per_cycle
+            / capacity_per_cycle
+        )
+
+    else:
+
+        if demand_per_cycle > 0:
+            degree_of_saturation = float("inf")
+        else:
+            degree_of_saturation = 0.0
+
+    return (
+        degree_of_saturation,
+        demand_per_cycle,
+        capacity_per_cycle
+    )
+
+def get_current_effective_green(tls, side_index):
+    green_seconds = 0
+
+    for cycle_second in range(cycle_length):
+        if is_approach_green(tls, side_index, cycle_second):
+            green_seconds += 1
+
+    return green_seconds
+
+
+def update_degrees_of_saturation():
+    for approach_id, approach in scoot_approaches.items():
+        tls = approach["tls"]
+        side_index = approach["side_index"]
+
+        effective_green = (
+            get_current_effective_green(tls, side_index)
+        )
+
+        (degree_of_saturation, demand_per_cycle, capacity_per_cycle 
+        ) = calculate_degree_of_saturation(approach, effective_green)
+
+        approach["effective_green"] = effective_green
+        approach["demand_per_cycle"] = demand_per_cycle
+        approach["capacity_per_cycle"] = capacity_per_cycle
+        approach["degree_of_saturation"] = degree_of_saturation
+
+
 def update_predicted_queue_profiles():
 
     for approach_id, approach in (
@@ -791,6 +876,7 @@ def simStep(num_times = 1):
 
         update_stopline_arrival_profiles()
         update_predicted_queue_profiles()
+        update_degrees_of_saturation()
 
 # -----------------------
 # SIMULATION LOOP
@@ -1105,10 +1191,78 @@ def print_queue_prediction_summary():
         "\n===== END SCOOT QUEUE PREDICTION CHECK =====\n"
     )
 
+def print_degree_of_saturation_summary():
+
+    print(
+        "\n===== SCOOT DEGREE OF SATURATION CHECK ====="
+    )
+
+    for approach_id, approach in (
+        scoot_approaches.items()
+    ):
+
+        degree = (
+            approach["degree_of_saturation"]
+        )
+
+        print(
+            f"\n{approach_id}"
+        )
+
+        print(
+            f"  demand per cycle: "
+            f"{approach['demand_per_cycle']:.2f} veh"
+        )
+
+        print(
+            f"  effective green: "
+            f"{approach['effective_green']:.0f} s"
+        )
+
+        print(
+            f"  capacity per cycle: "
+            f"{approach['capacity_per_cycle']:.2f} veh"
+        )
+
+        print(
+            f"  degree of saturation: "
+            f"{degree:.3f} "
+            f"({degree * 100:.1f}%)"
+        )
+
+    print("\nMaximum saturation by node:")
+
+    for tls in TLS_ORDER:
+
+        node_approaches = [
+            approach
+            for approach in scoot_approaches.values()
+            if approach["tls"] == tls
+        ]
+
+        if node_approaches:
+
+            worst_approach = max(
+                node_approaches,
+                key=lambda approach:
+                    approach[
+                        "degree_of_saturation"
+                    ]
+            )
+
+            print(
+                f"  {tls}: "
+                f"{worst_approach['degree_of_saturation'] * 100:.1f}%"
+            )
+            
+    print(
+        "\n===== END SCOOT DEGREE OF SATURATION CHECK =====\n"
+    )
 
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
+print_degree_of_saturation_summary()
 
 traci.close()
 
