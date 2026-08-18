@@ -78,7 +78,8 @@ DETECTOR_ZONE_END = 20.0     # meters
 # Traffic model settings
 # -------------------------
 SATURATION_FLOW_PER_LANE = 0.5                                     # veh/s/lane
-SPLIT_CHANGE = 2                                                   # seconds per optimization
+SPLIT_CHANGE = 2       
+OFFSET_CHANGE = 4
 TOTAL_EFFECTIVE_GREEN = cycle_length - 10                          # seconds
 
 MIN_EFFECTIVE_GREEN = 20                                           # temporary safety bound
@@ -112,6 +113,10 @@ for tls in TLS_ORDER:
         "cycle_length": cycle_length,
         "offset": 0,
 
+        # Offset optimizer state
+        "target_offset": 0,
+        "last_offset_decision": "AS_DUE",
+
         # SCOOT split state
         "stage1_green": 55,
         "stage2_green": 55,
@@ -127,6 +132,16 @@ for region_id, nodes in SCOOT_REGIONS.items():
         "nodes": nodes,
         "cycle_length": cycle_length
     }
+
+def normalize_offset(offset):
+    normalized = offset % cycle_length
+    if normalized > cycle_length / 2:
+        normalized -= cycle_length
+
+    return normalized
+
+def get_offset_cycle_second(cycle_second, offset):
+    return (cycle_second - offset) % cycle_length
 
 
 def validate_scoot_network():
@@ -687,12 +702,13 @@ def disperse_flow_profile(flow_profile, average_travel_time):
         else:
             upstream_flow = 0.0
 
-    if t > 0:
-        previous_downstream_flow = dispersed[t-1]
-    else:
-        previous_downstream_flow = 0.0
+        if t > 0:
+            previous_downstream_flow = dispersed[t-1]
+        else:
+            previous_downstream_flow = 0.0
 
-    dispersed[t] = smoothing_factor * upstream_flow + (1.0 - smoothing_factor) * previous_downstream_flow
+        dispersed[t] = smoothing_factor * upstream_flow + (1.0 - smoothing_factor) * previous_downstream_flow
+    
     final_cycle_start = len(repeated_profile) - cycle_length
     final_profile = dispersed[final_cycle_start:]
 
@@ -759,6 +775,330 @@ def is_approach_green(tls, side_index, cycle_second):
 
     return False
 
+def is_approach_green_at_offset(
+    tls,
+    side_index,
+    cycle_second,
+    offset
+):
+
+    local_second = (
+        get_offset_cycle_second(
+            cycle_second,
+            offset
+        )
+    )
+
+    stage1_green = (
+        scoot_node_state[tls][
+            "stage1_green"
+        ]
+    )
+
+    stage2_start = (
+        stage1_green + 5
+    )
+
+    if tls in TLS_REG:
+
+        if side_index in [0, 2]:
+
+            return (
+                local_second
+                < stage1_green
+            )
+
+        elif side_index in [1, 3]:
+
+            return (
+                local_second
+                >= stage2_start
+                and
+                local_second
+                < cycle_length - 5
+            )
+
+    elif tls in TLS_INVERT:
+
+        if side_index in [1, 3]:
+
+            return (
+                local_second
+                < stage1_green
+            )
+
+        elif side_index in [0, 2]:
+
+            return (
+                local_second
+                >= stage2_start
+                and
+                local_second
+                < cycle_length - 5
+            )
+
+    return False
+
+def calculate_queue_for_offset(
+    approach,
+    candidate_offset
+):
+
+    tls = approach["tls"]
+
+    side_index = (
+        approach["side_index"]
+    )
+
+    arrivals = (
+        approach["arrival_profile"]
+    )
+
+    num_lanes = (
+        approach["num_lanes"]
+    )
+
+    max_discharge = (
+        SATURATION_FLOW_PER_LANE
+        * num_lanes
+    )
+
+    queue_profile = (
+        [0.0] * cycle_length
+    )
+
+    queue = 0.0
+
+    for cycle_second in range(
+        cycle_length
+    ):
+
+        queue += (
+            arrivals[
+                cycle_second
+            ]
+        )
+
+        green = (
+            is_approach_green_at_offset(
+                tls,
+                side_index,
+                cycle_second,
+                candidate_offset
+            )
+        )
+
+        if green:
+
+            discharge = min(
+                queue,
+                max_discharge
+            )
+
+            queue -= discharge
+
+        queue_profile[
+            cycle_second
+        ] = queue
+
+    return queue_profile
+
+def calculate_stops_for_offset(
+    approach,
+    queue_profile,
+    candidate_offset
+):
+
+    tls = approach["tls"]
+
+    side_index = (
+        approach["side_index"]
+    )
+
+    arrivals = (
+        approach["arrival_profile"]
+    )
+
+    predicted_stops = 0.0
+
+    for cycle_second in range(
+        cycle_length
+    ):
+
+        arriving_vehicles = (
+            arrivals[
+                cycle_second
+            ]
+        )
+
+        green = (
+            is_approach_green_at_offset(
+                tls,
+                side_index,
+                cycle_second,
+                candidate_offset
+            )
+        )
+
+        if not green:
+
+            predicted_stops += (
+                arriving_vehicles
+            )
+
+        elif (
+            cycle_second > 0
+            and
+            queue_profile[
+                cycle_second - 1
+            ] > 0
+        ):
+
+            predicted_stops += (
+                arriving_vehicles
+            )
+
+    return predicted_stops
+
+def calculate_pi_for_offset(
+    approach,
+    candidate_offset
+):
+
+    queue_profile = (
+        calculate_queue_for_offset(
+            approach,
+            candidate_offset
+        )
+    )
+
+    predicted_delay = sum(
+        queue_profile
+    )
+
+    predicted_stops = (
+        calculate_stops_for_offset(
+            approach,
+            queue_profile,
+            candidate_offset
+        )
+    )
+
+    performance_index = (
+        predicted_delay
+        + STOP_PENALTY
+        * predicted_stops
+    )
+
+    return performance_index
+
+def evaluate_offset_candidate(
+    tls,
+    candidate_offset
+):
+
+    total_pi = 0.0
+
+    for approach in (
+        scoot_approaches.values()
+    ):
+
+        if approach["tls"] != tls:
+            continue
+
+        approach_pi = (
+            calculate_pi_for_offset(
+                approach,
+                candidate_offset
+            )
+        )
+
+        total_pi += approach_pi
+
+    return total_pi
+
+def optimize_offset(tls):
+
+    current_offset = (
+        scoot_node_state[tls][
+            "target_offset"
+        ]
+    )
+
+    candidates = {
+        "EARLIER":
+            normalize_offset(
+                current_offset
+                - OFFSET_CHANGE
+            ),
+
+        "AS_DUE":
+            normalize_offset(
+                current_offset
+            ),
+
+        "LATER":
+            normalize_offset(
+                current_offset
+                + OFFSET_CHANGE
+            )
+    }
+
+    candidate_scores = {}
+
+    for (
+        decision,
+        candidate_offset
+    ) in candidates.items():
+
+        score = (
+            evaluate_offset_candidate(
+                tls,
+                candidate_offset
+            )
+        )
+
+        candidate_scores[
+            decision
+        ] = score
+
+    decision_priority = {
+        "AS_DUE": 0,
+        "EARLIER": 1,
+        "LATER": 2
+    }
+
+    best_decision = min(
+        candidate_scores,
+        key=lambda decision: (
+            candidate_scores[
+                decision
+            ],
+            decision_priority[
+                decision
+            ]
+        )
+    )
+
+    best_offset = (
+        candidates[
+            best_decision
+        ]
+    )
+
+    scoot_node_state[tls][
+        "target_offset"
+    ] = best_offset
+
+    scoot_node_state[tls][
+        "last_offset_decision"
+    ] = best_decision
+
+    return (
+        best_decision,
+        candidate_scores,
+        best_offset
+    )
 
 def is_stage1_approach(tls, side_index):
     # Normal intersections:
@@ -1151,6 +1491,7 @@ def simStep(num_times = 1):
 # -----------------------
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
 split_history = {tls: [] for tls in TLS_ORDER}  # Track split decisions for each TLS
+offset_history = {tls: [] for tls in TLS_ORDER}
 
 validate_scoot_network()
 validate_scoot_detectors()
@@ -1190,7 +1531,31 @@ while traci.simulation.getTime() < END_TIME:
                         "improvement": improvement
                     }
                 )
+    
     # ====================================================
+    # SCOOT OFFSET OPTIMIZER
+    # ====================================================
+
+    if (current_time >= 2 * cycle_length and current_time % cycle_length == 1):
+        for tls in ["A1", "B0", "B1"]:
+            decision, candidate_scores, best_offset = optimize_offset(tls)
+            offset_history[tls].append(
+                {
+                    "time":
+                        current_time,
+
+                    "decision":
+                        decision,
+
+                    "offset":
+                        best_offset,
+
+                    "scores":
+                        candidate_scores.copy()
+                }
+            )
+        
+    # ==========================================
 
     for tls in TLS_REG:
         tls_index = tIndex.index(tls)
@@ -1785,6 +2150,67 @@ def print_platoon_dispersion_summary():
         "\n===== END SCOOT PLATOON DISPERSION CHECK =====\n"
     )
 
+def print_offset_optimizer_summary():
+
+    print(
+        "\n===== SCOOT OFFSET OPTIMIZER CHECK ====="
+    )
+
+    print(
+        "\nA0: regional reference offset = 0 s"
+    )
+
+    for tls in [
+        "A1",
+        "B0",
+        "B1"
+    ]:
+
+        print(
+            f"\n{tls}:"
+        )
+
+        history = (
+            offset_history[tls]
+        )
+
+        if not history:
+
+            print(
+                "  No offset decisions made."
+            )
+
+            continue
+
+        for record in history:
+
+            print(
+                f"  t={record['time']}: "
+                f"{record['decision']} | "
+                f"target offset="
+                f"{record['offset']} s"
+            )
+
+            scores = (
+                record["scores"]
+            )
+
+            for decision in [
+                "EARLIER",
+                "AS_DUE",
+                "LATER"
+            ]:
+
+                print(
+                    f"    {decision}: "
+                    f"PI="
+                    f"{scores[decision]:.2f}"
+                )
+
+    print(
+        "\n===== END SCOOT OFFSET OPTIMIZER CHECK =====\n"
+    )
+
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
@@ -1792,6 +2218,7 @@ print_degree_of_saturation_summary()
 print_split_optimizer_summary()
 print_performance_index_summary()
 print_platoon_dispersion_summary()
+print_offset_optimizer_summary()
 
 traci.close()
 
