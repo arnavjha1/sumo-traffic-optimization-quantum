@@ -889,7 +889,7 @@ def calculate_performance_index(approach):
     return performance_index, predicted_delay, predicted_stops
 
 def update_performance_indices():
-    for approach_id, approach in scoot_approaches.items()
+    for approach_id, approach in scoot_approaches.items():
         pI, pD, pS = calculate_performance_index(approach)
         approach["predicted_delay"] = pD
         approach["predicted_stops"] = pS
