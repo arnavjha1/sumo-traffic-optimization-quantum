@@ -86,6 +86,10 @@ MAX_EFFECTIVE_GREEN = TOTAL_EFFECTIVE_GREEN - MIN_EFFECTIVE_GREEN  # seconds
 MIN_SPLIT_IMPROVEMENT = 0.005                                      # don't change split unless saturation is improved by this much
 
 STOP_PENALTY = 20.0
+PLATOON_DISPERSION_ALPHA = 0.35
+PLATOON_TRAVEL_TIME_FACTOR = 0.80
+
+DISPERSION_WARMUP_CYCLES = 5
 # =========================
 
 scoot_links = {}
@@ -388,6 +392,9 @@ def build_scoot_approaches():
 
                 # Traffic predicted at stop line
                 "arrival_profile": [0.0] * cycle_length,
+                "dispersed_arrival_profile": [0.0] * cycle_length,
+                "dispersion_lag_steps": 0,
+                "dispersion_smoothing_factor": 0.0,
 
                 # Predicted queue at stop line
                 "queue_profile": [0.0] * cycle_length,
@@ -401,7 +408,7 @@ def build_scoot_approaches():
                 # SCOOT performance measures
                 "predicted_delay": 0.0,
                 "predicted_stops": 0.0,
-                "performance_index": 0.0
+                "performance_index": 0.0,
             }
 
         scoot_approaches[approach_id]["detectors"].append(
@@ -524,9 +531,20 @@ def build_scoot_approaches():
             // lanes_per_side
         )
 
-        approach["side_index"] = (
-            side_index
-        )
+        approach["side_index"] = side_index
+        approach["is_internal_link"] = False
+        approach["upstream_node"] = None
+
+        for (upstream_node, downstream_node) in SCOOT_CONNECTIONS:
+            expected_edge = (
+                f"{upstream_node}"
+                f"{downstream_node}"
+            )
+
+            if (approach["edge_id"] == expected_edge and approach["tls"] == downstream_node):
+                approach["is_internal_link"] = True
+                approach["upstream_node"] = upstream_node
+                break
 
 
 def update_scoot_detectors():
@@ -653,39 +671,73 @@ def update_cyclic_flow_profiles():
             / samples
         )
 
+def disperse_flow_profile(flow_profile, average_travel_time):
+    alpha = PLATOON_DISPERSION_ALPHA
+    beta = PLATOON_TRAVEL_TIME_FACTOR
+
+    lag_steps = max(1, int(round(beta * average_travel_time)))
+    smoothing_factor = 1.0 / (1.0 + alpha * beta * average_travel_time)
+    repeated_profile = flow_profile * DISPERSION_WARMUP_CYCLES
+    dispersed = [0.0] * len(repeated_profile)
+
+    for t in range(len(repeated_profile)):
+        source_index = t - lag_steps
+        if source_index >= 0:
+            upstream_flow = repeated_profile[source_index]
+        else:
+            upstream_flow = 0.0
+
+    if t > 0:
+        previous_downstream_flow = dispersed[t-1]
+    else:
+        previous_downstream_flow = 0.0
+
+    dispersed[t] = smoothing_factor * upstream_flow + (1.0 - smoothing_factor) * previous_downstream_flow
+    final_cycle_start = len(repeated_profile) - cycle_length
+    final_profile = dispersed[final_cycle_start:]
+
+    return final_profile, lag_steps, smoothing_factor
 
 def update_stopline_arrival_profiles():
 
-    for approach_id, approach in scoot_approaches.items():
+    for approach_id, approach in (
+        scoot_approaches.items()
+    ):
 
-        flow_profile = approach["flow_profile"]
-
-        travel_steps = (
-            approach["travel_time_steps"]
+        flow_profile = (
+            approach["flow_profile"]
         )
 
-        arrival_profile = (
-            [0.0] * cycle_length
+        average_travel_time = (
+            approach["travel_time"]
         )
 
-        for detector_second in range(
-            cycle_length
-        ):
+        (
+            dispersed_profile,
+            lag_steps,
+            smoothing_factor
 
-            stopline_second = (
-                detector_second
-                + travel_steps
-            ) % cycle_length
-
-            arrival_profile[
-                stopline_second
-            ] += flow_profile[
-                detector_second
-            ]
-
-        approach["arrival_profile"] = (
-            arrival_profile
+        ) = disperse_flow_profile(
+            flow_profile,
+            average_travel_time
         )
+
+        approach[
+            "dispersed_arrival_profile"
+        ] = dispersed_profile
+
+        approach[
+            "arrival_profile"
+        ] = dispersed_profile
+
+        approach[
+            "dispersion_lag_steps"
+        ] = lag_steps
+
+        approach[
+            "dispersion_smoothing_factor"
+        ] = smoothing_factor
+
 
 def is_approach_green(tls, side_index, cycle_second):
     stage1_green = scoot_node_state[tls]["stage1_green"]
@@ -884,7 +936,7 @@ def calculate_predicted_stops(approach):
 def calculate_performance_index(approach):
     predicted_delay = sum(approach["queue_profile"])
     predicted_stops = calculate_predicted_stops(approach)
-    performance_index = predicted_delay + STOP_PENALTY + predicted_stops
+    performance_index = predicted_delay + STOP_PENALTY * predicted_stops
 
     return performance_index, predicted_delay, predicted_stops
 
@@ -1637,12 +1689,109 @@ def print_performance_index_summary():
         "\n===== END SCOOT PERFORMANCE INDEX CHECK =====\n"
     )
 
+def print_platoon_dispersion_summary():
+
+    print(
+        "\n===== SCOOT PLATOON DISPERSION CHECK ====="
+    )
+
+    for approach_id, approach in (
+        scoot_approaches.items()
+    ):
+
+        if not approach[
+            "is_internal_link"
+        ]:
+            continue
+
+        original = (
+            approach["flow_profile"]
+        )
+
+        dispersed = (
+            approach[
+                "dispersed_arrival_profile"
+            ]
+        )
+
+        original_peak = max(original)
+        dispersed_peak = max(dispersed)
+
+        original_total = sum(original)
+        dispersed_total = sum(dispersed)
+
+        print(
+            f"\n{approach_id}"
+        )
+
+        print(
+            f"  upstream node: "
+            f"{approach['upstream_node']}"
+        )
+
+        print(
+            f"  downstream node: "
+            f"{approach['tls']}"
+        )
+
+        print(
+            f"  travel time: "
+            f"{approach['travel_time']:.2f} s"
+        )
+
+        print(
+            f"  lag steps: "
+            f"{approach['dispersion_lag_steps']}"
+        )
+
+        print(
+            f"  smoothing factor: "
+            f"{approach['dispersion_smoothing_factor']:.3f}"
+        )
+
+        print(
+            f"  original peak: "
+            f"{original_peak:.3f}"
+        )
+
+        print(
+            f"  dispersed peak: "
+            f"{dispersed_peak:.3f}"
+        )
+
+        print(
+            f"  original total flow: "
+            f"{original_total:.2f}"
+        )
+
+        print(
+            f"  dispersed total flow: "
+            f"{dispersed_total:.2f}"
+        )
+
+        flow_difference = abs(
+            original_total
+            - dispersed_total
+        )
+
+        if flow_difference > 0.5:
+
+            print(
+                "  WARNING: large flow "
+                "difference after dispersion"
+            )
+
+    print(
+        "\n===== END SCOOT PLATOON DISPERSION CHECK =====\n"
+    )
+
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
 print_degree_of_saturation_summary()
 print_split_optimizer_summary()
 print_performance_index_summary()
+print_platoon_dispersion_summary()
 
 traci.close()
 
