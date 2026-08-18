@@ -85,6 +85,7 @@ MIN_EFFECTIVE_GREEN = 20                                           # temporary s
 MAX_EFFECTIVE_GREEN = TOTAL_EFFECTIVE_GREEN - MIN_EFFECTIVE_GREEN  # seconds 
 MIN_SPLIT_IMPROVEMENT = 0.005                                      # don't change split unless saturation is improved by this much
 
+STOP_PENALTY = 20.0
 # =========================
 
 scoot_links = {}
@@ -395,7 +396,12 @@ def build_scoot_approaches():
                 "demand_per_cycle": 0.0,
                 "effective_green": 0.0,
                 "capacity_per_cycle": 0.0,
-                "degree_of_saturation": 0.0
+                "degree_of_saturation": 0.0,
+
+                # SCOOT performance measures
+                "predicted_delay": 0.0,
+                "predicted_stops": 0.0,
+                "performance_index": 0.0
             }
 
         scoot_approaches[approach_id]["detectors"].append(
@@ -850,6 +856,46 @@ def update_predicted_queue_profiles():
             queue_profile
         )
 
+def calculate_predicted_stops(approach):
+    tls = approach["tls"]
+    side_index = approach["side_index"]
+    arrivals = approach["arrival_profile"]
+    queue_profile = approach["queue_profile"]
+
+    predicted_stops = 0.0
+
+    for cycle_second in range(cycle_length):
+        arriving_vehicles = arrivals[cycle_second]
+        green = is_approach_green(tls, side_index, cycle_second)
+
+        if not green:
+            predicted_stops += arriving_vehicles
+
+        # ------------------------------------------
+        # Vehicles arriving during green can
+        # still stop if a queue already exists
+        # ------------------------------------------
+
+        elif (cycle_second > 0 and queue_profile[cycle_second - 1] > 0):
+            predicted_stops += arriving_vehicles
+
+    return predicted_stops
+
+def calculate_performance_index(approach):
+    predicted_delay = sum(approach["queue_profile"])
+    predicted_stops = calculate_predicted_stops(approach)
+    performance_index = predicted_delay + STOP_PENALTY + predicted_stops
+
+    return performance_index, predicted_delay, predicted_stops
+
+def update_performance_indices():
+    for approach_id, approach in scoot_approaches.items()
+        pI, pD, pS = calculate_performance_index(approach)
+        approach["predicted_delay"] = pD
+        approach["predicted_stops"] = pS
+        approach["performance_index"] = pI
+
+
 def evaluate_split_candidate(tls, stage1_green):
     stage2_green = TOTAL_EFFECTIVE_GREEN - stage1_green
     worst_saturation = 0.0
@@ -1046,6 +1092,7 @@ def simStep(num_times = 1):
         update_stopline_arrival_profiles()
         update_predicted_queue_profiles()
         update_degrees_of_saturation()
+        update_performance_indices()
 
 # -----------------------
 # SIMULATION LOOP
@@ -1522,11 +1569,80 @@ def print_split_optimizer_summary():
         "\n===== END SCOOT SPLIT OPTIMIZER CHECK =====\n"
     )
 
+def print_performance_index_summary():
+
+    print(
+        "\n===== SCOOT PERFORMANCE INDEX CHECK ====="
+    )
+
+    for approach_id, approach in (
+        scoot_approaches.items()
+    ):
+
+        print(
+            f"\n{approach_id}"
+        )
+
+        print(
+            f"  predicted delay: "
+            f"{approach['predicted_delay']:.2f} "
+            f"veh-s"
+        )
+
+        print(
+            f"  predicted stops: "
+            f"{approach['predicted_stops']:.2f} veh"
+        )
+
+        print(
+            f"  performance index: "
+            f"{approach['performance_index']:.2f}"
+        )
+
+    print(
+        "\nTotal Performance Index by node:"
+    )
+
+    for tls in TLS_ORDER:
+
+        node_pi = sum(
+            approach[
+                "performance_index"
+            ]
+            for approach
+            in scoot_approaches.values()
+            if approach["tls"] == tls
+        )
+
+        print(
+            f"  {tls}: "
+            f"{node_pi:.2f}"
+        )
+
+
+    network_pi = sum(
+        approach[
+            "performance_index"
+        ]
+        for approach
+        in scoot_approaches.values()
+    )
+
+    print(
+        f"\nNetwork Performance Index: "
+        f"{network_pi:.2f}"
+    )
+
+    print(
+        "\n===== END SCOOT PERFORMANCE INDEX CHECK =====\n"
+    )
+
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
 print_degree_of_saturation_summary()
 print_split_optimizer_summary()
+print_performance_index_summary()
 
 traci.close()
 
