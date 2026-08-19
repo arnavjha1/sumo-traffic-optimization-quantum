@@ -277,6 +277,96 @@ def rescale_node_splits_for_cycle(tls, old_effective_green):
     scoot_node_state[tls]["stage2_green"] = new_stage2
 
 
+model_ready = True
+
+def apply_target_region_cycle(
+    region_id
+):
+
+    global cycle_length
+    global model_ready
+
+    target_cycle = (
+        scoot_region_state[
+            region_id
+        ][
+            "target_cycle_length"
+        ]
+    )
+
+    if target_cycle == cycle_length:
+        return False
+
+    old_cycle = cycle_length
+
+    old_effective_green = (
+        TOTAL_EFFECTIVE_GREEN
+    )
+
+    # ------------------------------------------
+    # Apply new regional cycle
+    # ------------------------------------------
+
+    cycle_length = target_cycle
+
+    update_cycle_dependent_settings()
+
+    # ------------------------------------------
+    # Update region/node cycle state
+    # ------------------------------------------
+
+    scoot_region_state[
+        region_id
+    ]["cycle_length"] = cycle_length
+
+    for tls in (
+        scoot_region_state[
+            region_id
+        ]["nodes"]
+    ):
+
+        scoot_node_state[tls][
+            "cycle_length"
+        ] = cycle_length
+
+        rescale_node_splits_for_cycle(
+            tls,
+            old_effective_green
+        )
+
+    model_ready = False
+    # ------------------------------------------
+    # Rebuild cycle-based traffic profiles
+    # ------------------------------------------
+
+    reset_cyclic_profiles_for_new_cycle()
+
+    print(
+        "\n===== SCOOT CYCLE APPLIED ====="
+    )
+
+    print(
+        f"Cycle changed: "
+        f"{old_cycle} -> "
+        f"{cycle_length} s"
+    )
+
+    for tls in TLS_ORDER:
+
+        print(
+            f"  {tls}: "
+            f"stage1="
+            f"{scoot_node_state[tls]['stage1_green']} s, "
+            f"stage2="
+            f"{scoot_node_state[tls]['stage2_green']} s"
+        )
+
+    print(
+        "===== END SCOOT CYCLE APPLIED =====\n"
+    )
+
+    return True
+
 def find_critical_node(
     region_id
 ):
@@ -892,7 +982,7 @@ def update_scoot_detectors():
 
     previous_vehicle_positions = current_vehicle_positions
 
-def update_cyclic_flow_profiles():
+def update_cyclic_flow_profiles(cycle_position):
 
     current_time = int(traci.simulation.getTime())
 
@@ -1021,24 +1111,9 @@ def update_stopline_arrival_profiles():
 
 
 def is_approach_green(tls, side_index, cycle_second):
-    stage1_green = scoot_node_state[tls]["stage1_green"]
-    stage2_start = stage1_green + 5
+    actual_offset = scoot_node_state[tls]["offset"]
+    return is_approach_green_at_offset(tls, side_index, cycle_second, actual_offset)
 
-    if tls in TLS_REG:
-        if side_index in [0, 2]:
-            return cycle_second < stage1_green
-
-        elif side_index in [1, 3]:
-            return cycle_second >= stage2_start and cycle_second < cycle_length - 5
-
-    elif tls in TLS_INVERT:
-        if side_index in [1, 3]:
-            return cycle_second < stage1_green
-    
-        elif side_index in [0, 2]:
-            return cycle_second >= stage2_start and cycle_second < cycle_length - 5
-
-    return False
 
 def is_approach_green_at_offset(
     tls,
@@ -1671,6 +1746,82 @@ def optimize_split(tls):
 
     return best_decision, candidate_scores, improvement
 
+def get_actual_local_cycle_second(tls, regional_second):
+    offset = scoot_node_state[tls]["offset"]
+    return (regional_second - offset) % cycle_length
+
+def apply_signal_state(tls, local_second):
+    stage1_green = scoot_node_state[tls]["stage1_green"]
+    stage2_start = stage1_green + 5
+
+    if tls in TLS_REG:
+        if local_second < stage1_green:
+            state = "GGgrrrGGgrrr"
+
+        elif local_second < stage1_green + 4:
+            state = "yyyrrryyyrrr"
+            
+        elif local_second < stage1_green + 5:
+            state = "rrrrrrrrrrrr"
+
+        elif local_second < cycle_length - 5:
+            state = "rrrGGgrrrGGg"
+
+        elif local_second < cycle_length - 1:
+            state = "rrryyyrrryyy"
+
+        else:
+            state = "rrrrrrrrrrrr"
+
+    # ==================================================
+    # INVERTED B1
+    # ==================================================
+
+    else:
+        if local_second < stage1_green:
+            state = "rrrGGgrrrGGg"
+
+        elif local_second < stage1_green + 4:
+            state = "rrryyyrrryyy"
+            
+        elif local_second < stage1_green + 5:
+            state = "rrrrrrrrrrrr"
+
+        elif local_second < cycle_length - 5:
+            state = "GGgrrrGGgrrr"
+
+        elif local_second < cycle_length - 1:
+            state = "yyyrrryyyrrr"
+
+        else:
+            state = "rrrrrrrrrrrr"
+
+    traci.trafficlight.setRedYellowGreenState(
+        tls,
+        state
+    )
+
+def apply_target_offsets():
+    print("\n===== SCOOT OFFSETS APPLIED =====")
+
+    scoot_node_state["A0"]["offset"] = 0
+
+    # Apply offsets for every other signal but A0 since it is reference
+    for tls in ["A1","B0","B1"]:
+
+        old_offset = scoot_node_state[tls]["offset"]
+        new_offset = scoot_node_state[tls]["target_offset"]
+
+        new_offset = normalize_offset(new_offset)
+        scoot_node_state[tls]["offset"] = new_offset
+
+        print(
+            f"{tls}: "
+            f"{old_offset} -> "
+            f"{new_offset} s"
+        )
+
+    print("===== END SCOOT OFFSETS APPLIED =====\n")
 
 build_scoot_detectors()
 build_scoot_approaches()
@@ -1758,65 +1909,107 @@ def simStep(num_times = 1):
                         queue_lengths[tls_index][side_index][lane_index].append(0)
 
         update_scoot_detectors()
-        update_cyclic_flow_profiles()
-
-        update_stopline_arrival_profiles()
-        update_predicted_queue_profiles()
-        update_degrees_of_saturation()
-        update_performance_indices()
 
 # -----------------------
 # SIMULATION LOOP
 # -----------------------
-sim_module = [0] * len(tIndex)  # Track which module each TLS is in
-split_history = {tls: [] for tls in TLS_ORDER}  # Track split decisions for each TLS
-offset_history = {tls: [] for tls in TLS_ORDER}
+regional_cycle_second = 0
+
+integration_enabled = False
+
+split_history = {
+    tls: []
+    for tls in TLS_ORDER
+}
+
+offset_history = {
+    tls: []
+    for tls in TLS_ORDER
+}
+
 cycle_history = []
+
+integration_history = []
 
 validate_scoot_network()
 validate_scoot_detectors()
 validate_scoot_approaches()
 
 while traci.simulation.getTime() < END_TIME:
-
     simStep()
     current_time = int(traci.simulation.getTime())
 
-    # ====================================================
-    # SCOOT SPLIT OPTIMIZER
-    # ====================================================
+    update_cyclic_flow_profiles(regional_cycle_second)
+    update_stopline_arrival_profiles()
+    update_predicted_queue_profiles()
+    update_degrees_of_saturation()
+    update_performance_indices()
 
-    if current_time >= cycle_length:
+    if not model_ready:
+        enough_samples = all(
+            min(approach["samples"]) >= 1
+
+            for approach in scoot_approaches.values()
+        )
+
+        if enough_samples:
+            model_ready = True
+            print("\n===== SCOOT MODEL READY =====")
+            print(
+                f"Model rebuilt for "
+                f"{cycle_length}-second cycle."
+            )
+            print("===== END SCOOT MODEL READY =====\n")
+
+
+    # 1. ENABLE FULL INTEGRATION AFTER INITIAL LEARNING
+
+    if (not integration_enabled and current_time >= 240):
+        integration_enabled = True
+        print("\n===== SCOOT INTEGRATION ENABLED =====\n")
+
+
+    # 2. SPLIT OPTIMIZER
+
+    if (model_ready and regional_cycle_second == 0 and current_time >= cycle_length):
+
         for tls in TLS_ORDER:
-            tls_index = tIndex.index(tls)
+            decision, candidate_scores, improvement = optimize_split(tls)
+            validate_split_timings()
 
-            if sim_module[tls_index] == 0:
-                decision, candidate_scores, improvement = optimize_split(tls)
-                validate_split_timings()
+            split_history[tls].append(
+                {
+                    "time":
+                        current_time,
 
-                split_history[tls].append(
-                    {
-                        "time": current_time,
-                        "decision": decision,
-                        "stage1_green":
-                            scoot_node_state[tls][
-                                "stage1_green"
-                            ],
-                        "stage2_green":
-                            scoot_node_state[tls][
-                                "stage2_green"
-                            ],
-                        "scores":
-                            candidate_scores.copy(),
-                        "improvement": improvement
-                    }
-                )
-    
-    # ====================================================
-    # SCOOT OFFSET OPTIMIZER
-    # ====================================================
+                    "decision":
+                        decision,
 
-    if (current_time >= 2 * cycle_length and current_time % cycle_length == 1):
+                    "stage1_green":
+                        scoot_node_state[
+                            tls
+                        ][
+                            "stage1_green"
+                        ],
+
+                    "stage2_green":
+                        scoot_node_state[
+                            tls
+                        ][
+                            "stage2_green"
+                        ],
+
+                    "scores":
+                        candidate_scores.copy(),
+
+                    "improvement":
+                        improvement
+                }
+            )
+
+    # 3. OFFSET OPTIMIZER
+
+    if (model_ready and regional_cycle_second == 0 and current_time >= 240):
         for tls in ["A1", "B0", "B1"]:
             decision, candidate_scores, best_offset = optimize_offset(tls)
             offset_history[tls].append(
@@ -1834,13 +2027,21 @@ while traci.simulation.getTime() < END_TIME:
                         candidate_scores.copy()
                 }
             )
-        
-    # ====================================================
-    # SCOOT REGIONAL CYCLE OPTIMIZER
-    # ====================================================
 
-    if (current_time >= CYCLE_OPTIMIZER_INTERVAL and current_time % CYCLE_OPTIMIZER_INTERVAL == 0):
-        decision, target_cycle, critical_node, node_results = optimize_region_cycle("R0")
+    # 4. REGIONAL CYCLE OPTIMIZER
+
+    if (model_ready and current_time >= CYCLE_OPTIMIZER_INTERVAL and current_time % CYCLE_OPTIMIZER_INTERVAL == 0):
+
+        (
+            decision,
+            target_cycle,
+            critical_node,
+            node_results
+
+        ) = optimize_region_cycle(
+            "R0"
+        )
+
         cycle_history.append(
             {
                 "time":
@@ -1860,67 +2061,101 @@ while traci.simulation.getTime() < END_TIME:
             }
         )
 
-    # ==========================================
 
-    for tls in TLS_REG:
-        tls_index = tIndex.index(tls)
-        stage1_green = scoot_node_state[tls]["stage1_green"]
-        stage2_start = stage1_green + 5
-        
-        if sim_module[tls_index] >= 0 and sim_module[tls_index] < stage1_green:
-            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            sim_module[tls_index] += 1
+    # 5. APPLY CURRENT REAL SIGNAL STATES
 
-        elif sim_module[tls_index] >= stage1_green and sim_module[tls_index] < stage1_green + 4:
-            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
-            sim_module[tls_index] += 1
+    for tls in TLS_ORDER:
 
-        elif sim_module[tls_index] >= stage1_green + 4 and sim_module[tls_index] < stage1_green + 5:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] += 1
+        local_second = (
+            get_actual_local_cycle_second(
+                tls,
+                regional_cycle_second
+            )
+        )
 
-        elif sim_module[tls_index] >= stage2_start and sim_module[tls_index] < (cycle_length - 5):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            sim_module[tls_index] += 1
-                
-        elif sim_module[tls_index] >= (cycle_length - 5) and sim_module[tls_index] < (cycle_length - 1):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
-            sim_module[tls_index] += 1
+        apply_signal_state(
+            tls,
+            local_second
+        )
 
-        elif sim_module[tls_index] >= (cycle_length - 1) and sim_module[tls_index] < cycle_length:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] = 0
-
-    for tls in TLS_INVERT:        
-        tls_index = tIndex.index(tls)
-        stage1_green = scoot_node_state[tls]["stage1_green"]
-        stage2_start = stage1_green + 5
-        
-        if sim_module[tls_index] >= 0 and sim_module[tls_index] < stage1_green:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            sim_module[tls_index] += 1
-
-        elif sim_module[tls_index] >= stage1_green and sim_module[tls_index] < stage1_green + 4:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
-            sim_module[tls_index] += 1
-
-        elif sim_module[tls_index] >= stage1_green + 4 and sim_module[tls_index] < stage1_green + 5:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] += 1
-
-        elif sim_module[tls_index] >= stage2_start and sim_module[tls_index] < (cycle_length - 5):
-            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            sim_module[tls_index] += 1
-                
-        elif sim_module[tls_index] >= (cycle_length - 5) and sim_module[tls_index] < (cycle_length - 1):
-            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
-            sim_module[tls_index] += 1
-
-        elif sim_module[tls_index] >= (cycle_length - 1) and sim_module[tls_index] < cycle_length:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] = 0
-    
     # ====================================================
+    # 6. REGIONAL CYCLE BOUNDARY
+    #
+    # Apply new cycle + offsets ONLY here.
+    # ====================================================
+
+    regional_cycle_second += 1
+
+    if (
+        regional_cycle_second
+        >= cycle_length
+    ):
+
+        regional_cycle_second = 0
+
+        if integration_enabled:
+
+            apply_target_region_cycle(
+                "R0"
+            )
+
+            apply_target_offsets()
+
+            # Make sure the first state of the
+            # newly applied timing plan is active
+            # before the next SUMO second begins.
+            for tls in TLS_ORDER:
+
+                local_second = (
+                    get_actual_local_cycle_second(
+                        tls,
+                        regional_cycle_second
+                    )
+                )
+
+                apply_signal_state(
+                    tls,
+                    local_second
+                )
+
+            integration_history.append(
+                {
+                    "time":
+                        current_time,
+
+                    "cycle":
+                        cycle_length,
+
+                    "offsets": {
+                        tls:
+                            scoot_node_state[
+                                tls
+                            ][
+                                "offset"
+                            ]
+
+                        for tls in TLS_ORDER
+                    },
+
+                    "splits": {
+                        tls: (
+                            scoot_node_state[
+                                tls
+                            ][
+                                "stage1_green"
+                            ],
+
+                            scoot_node_state[
+                                tls
+                            ][
+                                "stage2_green"
+                            ]
+                        )
+
+                        for tls in TLS_ORDER
+                    }
+                }
+            )
 
 def print_scoot_detector_summary():
 
@@ -2552,6 +2787,40 @@ def print_cycle_optimizer_summary():
         "\n===== END SCOOT REGIONAL CYCLE OPTIMIZER CHECK =====\n"
     )
 
+def print_integration_summary():
+
+    print(
+        "\n===== SCOOT INTEGRATION CHECK ====="
+    )
+
+    if not integration_history:
+
+        print(
+            "No integrated timing changes applied."
+        )
+
+    for record in integration_history:
+
+        print(
+            f"\nt={record['time']}: "
+            f"active cycle="
+            f"{record['cycle']} s"
+        )
+
+        print(
+            f"  offsets: "
+            f"{record['offsets']}"
+        )
+
+        print(
+            f"  splits: "
+            f"{record['splits']}"
+        )
+
+    print(
+        "\n===== END SCOOT INTEGRATION CHECK =====\n"
+    )
+
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
@@ -2561,6 +2830,7 @@ print_performance_index_summary()
 print_platoon_dispersion_summary()
 print_offset_optimizer_summary()
 print_cycle_optimizer_summary()
+print_integration_summary()
 
 traci.close()
 
