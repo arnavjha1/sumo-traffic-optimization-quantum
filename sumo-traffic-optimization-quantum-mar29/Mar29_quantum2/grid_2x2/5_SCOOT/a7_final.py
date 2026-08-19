@@ -2516,76 +2516,6 @@ while traci.simulation.getTime() < END_TIME:
                 }
             )
 
-def print_integration_summary():
-
-    print(
-        "\n===== SCOOT INTEGRATION CHECK ====="
-    )
-
-    if not integration_history:
-
-        print(
-            "No integrated timing changes applied."
-        )
-
-    for record in integration_history:
-
-        print(
-            f"\nt={record['time']}: "
-            f"active cycle="
-            f"{record['cycle']} s"
-        )
-
-        print(
-            f"  offsets: "
-            f"{record['offsets']}"
-        )
-
-        print(
-            f"  splits: "
-            f"{record['splits']}"
-        )
-
-    print(
-        "\n===== END SCOOT INTEGRATION CHECK =====\n"
-    )
-
-def print_final_scoot_state():
-
-    print(
-        "\n===== FINAL SCOOT STATE ====="
-    )
-
-    print(
-        f"Active regional cycle: "
-        f"{cycle_length} s"
-    )
-
-    print(
-        f"Target regional cycle: "
-        f"{scoot_region_state['R0']['target_cycle_length']} s"
-    )
-
-    print("\nNodes:")
-
-    for tls in TLS_ORDER:
-
-        print(
-            f"  {tls}: "
-            f"stage1="
-            f"{scoot_node_state[tls]['stage1_green']} s, "
-            f"stage2="
-            f"{scoot_node_state[tls]['stage2_green']} s, "
-            f"offset="
-            f"{scoot_node_state[tls]['offset']} s, "
-            f"target_offset="
-            f"{scoot_node_state[tls]['target_offset']} s"
-        )
-
-    print(
-        "\n===== END FINAL SCOOT STATE =====\n"
-    )
-
 def print_scoot_experiment_summary():
 
     print(
@@ -2619,8 +2549,6 @@ def print_scoot_experiment_summary():
         "\n===== END SCOOT CONTROLLER SUMMARY =====\n"
     )
 
-print_integration_summary()
-print_final_scoot_state()
 print_scoot_experiment_summary()
 
 traci.close()
