@@ -672,6 +672,138 @@ def validate_split_timings():
                 f"{tls}: invalid total "
                 f"effective green"
             )
+        
+def validate_integrated_scoot():
+
+    # =====================================================
+    # 1. REGIONAL CYCLE CHECK
+    # =====================================================
+
+    if not (
+        MIN_REGION_CYCLE
+        <= cycle_length
+        <= MAX_REGION_CYCLE
+    ):
+
+        raise ValueError(
+            f"Invalid cycle length: "
+            f"{cycle_length}"
+        )
+
+
+    # =====================================================
+    # 2. REGIONAL CLOCK CHECK
+    # =====================================================
+
+    if not (
+        0
+        <= regional_cycle_second
+        < cycle_length
+    ):
+
+        raise ValueError(
+            f"Invalid regional cycle second: "
+            f"{regional_cycle_second}"
+        )
+
+
+    # =====================================================
+    # 3. NODE TIMING CHECKS
+    # =====================================================
+
+    for tls in TLS_ORDER:
+
+        stage1 = (
+            scoot_node_state[tls][
+                "stage1_green"
+            ]
+        )
+
+        stage2 = (
+            scoot_node_state[tls][
+                "stage2_green"
+            ]
+        )
+
+        offset = (
+            scoot_node_state[tls][
+                "offset"
+            ]
+        )
+
+        # Minimum green
+        if (
+            stage1 < MIN_EFFECTIVE_GREEN
+            or
+            stage2 < MIN_EFFECTIVE_GREEN
+        ):
+
+            raise ValueError(
+                f"{tls}: green below minimum"
+            )
+
+        # Total green must match active cycle
+        if (
+            stage1
+            + stage2
+            != TOTAL_EFFECTIVE_GREEN
+        ):
+
+            raise ValueError(
+                f"{tls}: "
+                f"stage1 + stage2 "
+                f"does not equal "
+                f"TOTAL_EFFECTIVE_GREEN"
+            )
+
+        # Offset should remain inside
+        # one normalized cycle
+        if abs(offset) > (
+            cycle_length / 2
+        ):
+
+            raise ValueError(
+                f"{tls}: invalid offset "
+                f"{offset}"
+            )
+
+
+    # =====================================================
+    # 4. PROFILE-LENGTH CHECKS
+    # =====================================================
+
+    for (
+        approach_id,
+        approach
+    ) in scoot_approaches.items():
+
+        profile_names = [
+            "flow_profile",
+            "occupancy_profile",
+            "arrival_profile",
+            "dispersed_arrival_profile",
+            "queue_profile"
+        ]
+
+        for profile_name in (
+            profile_names
+        ):
+
+            if (
+                len(
+                    approach[
+                        profile_name
+                    ]
+                )
+                != cycle_length
+            ):
+
+                raise ValueError(
+                    f"{approach_id}: "
+                    f"{profile_name} "
+                    f"length != "
+                    f"{cycle_length}"
+                )
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -771,6 +903,13 @@ def build_scoot_approaches():
 
                 # Degree of saturation information
                 "demand_per_cycle": 0.0,
+
+                # Vehicles left unserved from previous cycle
+                "residual_queue": 0.0,
+
+                # Demand + residual queue
+                "effective_demand_per_cycle": 0.0,
+
                 "effective_green": 0.0,
                 "capacity_per_cycle": 0.0,
                 "degree_of_saturation": 0.0,
@@ -1468,12 +1607,166 @@ def is_stage1_approach(tls, side_index):
     return False
 
 def calculate_degree_of_saturation(approach, effective_green):
-    # ----------------------------------------------
-    # Demand
-    # ----------------------------------------------
 
+    # =====================================================
+    # MOVEMENT / LANE LEVEL SATURATION
+    #
+    # Lane 0 = Right
+    # Lane 1 = Straight
+    # Lane 2 = Left
+    # =====================================================
+
+    lane_residual_queues = (
+        approach.get(
+            "lane_residual_queues",
+            [0.0, 0.0, 0.0]
+        )
+    )
+
+    lane_demands = [
+        0.0,
+        0.0,
+        0.0
+    ]
+
+    lane_saturations = [
+        0.0,
+        0.0,
+        0.0
+    ]
+
+    # Capacity of ONE lane during its green
+    lane_capacity = (
+        SATURATION_FLOW_PER_LANE
+        * effective_green
+    )
+
+    # =====================================================
+    # Get demand separately from each detector/lane
+    # =====================================================
+
+    for detector_id in approach["detectors"]:
+
+        detector = (
+            scoot_detectors[
+                detector_id
+            ]
+        )
+
+        lane_id = detector[
+            "lane_id"
+        ]
+
+        # SUMO lane IDs end with:
+        # _0 = Right
+        # _1 = Straight
+        # _2 = Left
+        lane_index = int(
+            lane_id.rsplit(
+                "_",
+                1
+            )[1]
+        )
+
+        # Use approximately one active cycle
+        # of observed detector flow.
+        recent_flow = (
+            detector[
+                "flow_history"
+            ][
+                -cycle_length:
+            ]
+        )
+
+        lane_demand = sum(
+            recent_flow
+        )
+
+        lane_demands[
+            lane_index
+        ] = lane_demand
+
+    # =====================================================
+    # Calculate saturation separately for each lane
+    # =====================================================
+
+    for lane_index in range(
+        NUM_LANES
+    ):
+
+        effective_lane_demand = (
+            lane_demands[
+                lane_index
+            ]
+            +
+            lane_residual_queues[
+                lane_index
+            ]
+        )
+
+        if lane_capacity > 0:
+
+            lane_saturations[
+                lane_index
+            ] = (
+                effective_lane_demand
+                / lane_capacity
+            )
+
+        elif effective_lane_demand > 0:
+
+            lane_saturations[
+                lane_index
+            ] = float("inf")
+
+        else:
+
+            lane_saturations[
+                lane_index
+            ] = 0.0
+
+    # =====================================================
+    # Critical movement controls approach saturation
+    # =====================================================
+
+    degree_of_saturation = max(
+        lane_saturations
+    )
+
+    critical_lane = (
+        lane_saturations.index(
+            degree_of_saturation
+        )
+    )
+
+    # Save these for debugging
+    approach[
+        "lane_demands"
+    ] = lane_demands
+
+    approach[
+        "lane_saturations"
+    ] = lane_saturations
+
+    approach[
+        "critical_lane"
+    ] = critical_lane
+
+    # Keep the old approach-level bookkeeping
+    # so the rest of your code does not break.
     demand_per_cycle = sum(
-        approach["arrival_profile"]
+        lane_demands
+    )
+
+    capacity_per_cycle = (
+        lane_capacity
+        * approach["num_lanes"]
+    )
+
+    return (
+        degree_of_saturation,
+        demand_per_cycle,
+        capacity_per_cycle
     )
 
     # ----------------------------------------------
@@ -1501,7 +1794,7 @@ def calculate_degree_of_saturation(approach, effective_green):
     if capacity_per_cycle > 0:
 
         degree_of_saturation = (
-            demand_per_cycle
+            effective_demand
             / capacity_per_cycle
         )
 
@@ -1544,6 +1837,7 @@ def update_degrees_of_saturation():
         approach["demand_per_cycle"] = demand_per_cycle
         approach["capacity_per_cycle"] = capacity_per_cycle
         approach["degree_of_saturation"] = degree_of_saturation
+        approach["effective_demand_per_cycle"] = demand_per_cycle + approach.get("residual_queue", 0.0)
 
 
 def update_predicted_queue_profiles():
@@ -1846,6 +2140,68 @@ queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] 
 regular_cars = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
 tIndex = []
 
+def get_actual_residual_queue(approach):
+    tls = approach["tls"]
+    side_index = approach["side_index"]
+    tls_index = TLS_ORDER.index(tls)
+    residual_queue = 0.0
+
+    for lane_index in range(NUM_LANES):
+        history = queue_lengths[tls_index][side_index][lane_index]
+
+        if history:
+            residual_queue += history[-1]
+
+    return residual_queue
+
+def snapshot_residual_queues():
+
+    for approach_id, approach in scoot_approaches.items():
+
+        tls = approach["tls"]
+        side_index = approach["side_index"]
+
+        tls_index = TLS_ORDER.index(tls)
+
+        lane_residual_queues = []
+
+        # Lane mapping:
+        # 0 = Right
+        # 1 = Straight
+        # 2 = Left
+        for lane_index in range(NUM_LANES):
+
+            history = (
+                queue_lengths[
+                    tls_index
+                ][
+                    side_index
+                ][
+                    lane_index
+                ]
+            )
+
+            if history:
+                residual_queue = history[-1]
+            else:
+                residual_queue = 0.0
+
+            lane_residual_queues.append(
+                residual_queue
+            )
+
+        # Store each lane separately
+        approach[
+            "lane_residual_queues"
+        ] = lane_residual_queues
+
+        # Keep old total value too
+        approach[
+            "residual_queue"
+        ] = sum(
+            lane_residual_queues
+        )
+
 for tls in TLS_REG:
     traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
     tIndex.append(tls)
@@ -2077,6 +2433,8 @@ while traci.simulation.getTime() < END_TIME:
             tls,
             local_second
         )
+    
+    validate_integrated_scoot()
 
     # ====================================================
     # 6. REGIONAL CYCLE BOUNDARY
@@ -2092,6 +2450,7 @@ while traci.simulation.getTime() < END_TIME:
     ):
 
         regional_cycle_second = 0
+        snapshot_residual_queues()
 
         if integration_enabled:
 
@@ -2423,6 +2782,16 @@ def print_degree_of_saturation_summary():
         print(
             f"  demand per cycle: "
             f"{approach['demand_per_cycle']:.2f} veh"
+        )
+
+        print(
+            f"  residual queue: "
+            f"{approach['residual_queue']:.2f} veh"
+        )
+
+        print(
+            f"  effective demand: "
+            f"{approach['effective_demand_per_cycle']:.2f} veh"
         )
 
         print(
@@ -2821,6 +3190,42 @@ def print_integration_summary():
         "\n===== END SCOOT INTEGRATION CHECK =====\n"
     )
 
+def print_final_scoot_state():
+
+    print(
+        "\n===== FINAL SCOOT STATE ====="
+    )
+
+    print(
+        f"Active regional cycle: "
+        f"{cycle_length} s"
+    )
+
+    print(
+        f"Target regional cycle: "
+        f"{scoot_region_state['R0']['target_cycle_length']} s"
+    )
+
+    print("\nNodes:")
+
+    for tls in TLS_ORDER:
+
+        print(
+            f"  {tls}: "
+            f"stage1="
+            f"{scoot_node_state[tls]['stage1_green']} s, "
+            f"stage2="
+            f"{scoot_node_state[tls]['stage2_green']} s, "
+            f"offset="
+            f"{scoot_node_state[tls]['offset']} s, "
+            f"target_offset="
+            f"{scoot_node_state[tls]['target_offset']} s"
+        )
+
+    print(
+        "\n===== END FINAL SCOOT STATE =====\n"
+    )
+
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
@@ -2831,6 +3236,7 @@ print_platoon_dispersion_summary()
 print_offset_optimizer_summary()
 print_cycle_optimizer_summary()
 print_integration_summary()
+print_final_scoot_state()
 
 traci.close()
 
