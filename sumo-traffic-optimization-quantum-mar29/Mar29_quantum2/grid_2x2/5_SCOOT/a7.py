@@ -91,6 +91,20 @@ PLATOON_DISPERSION_ALPHA = 0.35
 PLATOON_TRAVEL_TIME_FACTOR = 0.80
 
 DISPERSION_WARMUP_CYCLES = 5
+OFFSET_QUEUE_WARMUP_CYCLES = 5
+
+# ==========================================================
+# SCOOT REGIONAL CYCLE OPTIMIZER SETTINGS
+# ==========================================================
+
+IDEAL_SATURATION = 0.90
+
+CYCLE_CHANGE = 4
+
+MIN_REGION_CYCLE = 60
+MAX_REGION_CYCLE = 180
+
+CYCLE_OPTIMIZER_INTERVAL = 300
 # =========================
 
 scoot_links = {}
@@ -111,6 +125,7 @@ for tls in TLS_ORDER:
     scoot_node_state[tls] = {
         "region": SCOOT_NODES[tls]["region"],
         "cycle_length": cycle_length,
+        "minimum_practical_cycle": cycle_length,
         "offset": 0,
 
         # Offset optimizer state
@@ -127,10 +142,12 @@ for tls in TLS_ORDER:
 scoot_region_state = {}
 
 for region_id, nodes in SCOOT_REGIONS.items():
-
     scoot_region_state[region_id] = {
         "nodes": nodes,
-        "cycle_length": cycle_length
+        "cycle_length": cycle_length,
+
+        "target_cycle_length": cycle_length,
+        "critical_node": None
     }
 
 def normalize_offset(offset):
@@ -142,6 +159,254 @@ def normalize_offset(offset):
 
 def get_offset_cycle_second(cycle_second, offset):
     return (cycle_second - offset) % cycle_length
+
+def get_node_max_saturation(tls):
+
+    node_saturations = []
+
+    for approach in (
+        scoot_approaches.values()
+    ):
+
+        if approach["tls"] == tls:
+
+            node_saturations.append(
+                approach[
+                    "degree_of_saturation"
+                ]
+            )
+
+    if not node_saturations:
+        return 0.0
+
+    return max(
+        node_saturations
+    )
+
+def update_node_minimum_practical_cycle(
+    tls
+):
+
+    max_saturation = (
+        get_node_max_saturation(
+            tls
+        )
+    )
+
+    current_mpcy = (
+        scoot_node_state[tls][
+            "minimum_practical_cycle"
+        ]
+    )
+
+    if (
+        max_saturation
+        > IDEAL_SATURATION
+    ):
+
+        new_mpcy = (
+            current_mpcy
+            + CYCLE_CHANGE
+        )
+
+    else:
+
+        new_mpcy = (
+            current_mpcy
+            - CYCLE_CHANGE
+        )
+
+    new_mpcy = max(
+        MIN_REGION_CYCLE,
+        min(
+            MAX_REGION_CYCLE,
+            new_mpcy
+        )
+    )
+
+    scoot_node_state[tls][
+        "minimum_practical_cycle"
+    ] = new_mpcy
+
+    return (
+        new_mpcy,
+        max_saturation
+    )    
+
+def update_cycle_dependent_settings():
+    global TOTAL_EFFECTIVE_GREEN
+    global MAX_EFFECTIVE_GREEN
+
+    TOTAL_EFFECTIVE_GREEN = cycle_length - 10
+    MAX_EFFECTIVE_GREEN = TOTAL_EFFECTIVE_GREEN - MIN_EFFECTIVE_GREEN
+
+def reset_cyclic_profiles_for_new_cycle():
+    for approach in scoot_approaches.values():
+        approach["flow_sum"] = [0.0] * cycle_length
+        approach["occupancy_sum"] = [0.0] * cycle_length
+        approach["samples"] = [0] * cycle_length
+        approach["flow_profile"] = [0.0] * cycle_length
+
+        approach["occupancy_profile"] = [0.0] * cycle_length
+        approach["arrival_profile"] = [0.0] * cycle_length
+        approach["dispersed_arrival_profile"] = [0.0] * cycle_length
+        approach["queue_profile"] = [0.0] * cycle_length
+
+
+def rescale_node_splits_for_cycle(tls, old_effective_green):
+    old_stage1 = scoot_node_state[tls]["stage1_green"]
+
+    if old_effective_green > 0:
+        stage1_ratio = old_stage1 / old_effective_green
+    else:
+        stage1_ratio = 0.5
+
+    new_stage1 = int(round(stage1_ratio * TOTAL_EFFECTIVE_GREEN))
+
+    # Enforce min and max green
+    new_stage1 = max(
+        MIN_EFFECTIVE_GREEN,
+        min(
+            MAX_EFFECTIVE_GREEN,
+            new_stage1
+        )
+    )
+
+    new_stage2 = TOTAL_EFFECTIVE_GREEN - new_stage1
+    scoot_node_state[tls]["stage1_green"] = new_stage1
+    scoot_node_state[tls]["stage2_green"] = new_stage2
+
+
+def find_critical_node(
+    region_id
+):
+
+    nodes = (
+        scoot_region_state[
+            region_id
+        ]["nodes"]
+    )
+
+    critical_node = max(
+        nodes,
+        key=lambda tls: (
+            scoot_node_state[tls][
+                "minimum_practical_cycle"
+            ],
+            get_node_max_saturation(
+                tls
+            )
+        )
+    )
+
+    return critical_node
+
+def optimize_region_cycle(
+    region_id
+):
+
+    node_results = {}
+
+    nodes = (
+        scoot_region_state[
+            region_id
+        ]["nodes"]
+    )
+
+    for tls in nodes:
+
+        (
+            new_mpcy,
+            max_saturation
+
+        ) = update_node_minimum_practical_cycle(
+            tls
+        )
+
+        node_results[tls] = {
+            "mpcy": new_mpcy,
+            "max_saturation":
+                max_saturation
+        }
+    
+    critical_node = (
+        find_critical_node(
+            region_id
+        )
+    )
+
+    critical_mpcy = (
+        scoot_node_state[
+            critical_node
+        ][
+            "minimum_practical_cycle"
+        ]
+    )
+
+    current_target = (
+        scoot_region_state[
+            region_id
+        ][
+            "target_cycle_length"
+        ]
+    )
+
+    if (
+        critical_mpcy
+        > current_target
+    ):
+
+        new_target = min(
+            current_target
+            + CYCLE_CHANGE,
+            critical_mpcy
+        )
+
+        decision = "INCREASE"
+
+    elif (
+        critical_mpcy
+        < current_target
+    ):
+
+        new_target = max(
+            current_target
+            - CYCLE_CHANGE,
+            critical_mpcy
+        )
+
+        decision = "DECREASE"
+
+    else:
+
+        new_target = (
+            current_target
+        )
+
+        decision = "AS_DUE"
+
+    new_target = max(
+        MIN_REGION_CYCLE,
+        min(
+            MAX_REGION_CYCLE,
+            new_target
+        )
+    )
+
+    scoot_region_state[
+        region_id
+    ][
+        "target_cycle_length"
+    ] = new_target
+
+    scoot_region_state[
+        region_id
+    ][
+        "critical_node"
+    ] = critical_node
+
+    return decision, new_target, critical_node, node_results
+
 
 
 def validate_scoot_network():
@@ -838,45 +1103,50 @@ def is_approach_green_at_offset(
             )
 
     return False
-
 def calculate_queue_for_offset(
     approach,
     candidate_offset
 ):
 
     tls = approach["tls"]
+    side_index = approach["side_index"]
 
-    side_index = (
-        approach["side_index"]
-    )
+    arrivals = approach[
+        "arrival_profile"
+    ]
 
-    arrivals = (
-        approach["arrival_profile"]
-    )
-
-    num_lanes = (
-        approach["num_lanes"]
-    )
+    num_lanes = approach[
+        "num_lanes"
+    ]
 
     max_discharge = (
         SATURATION_FLOW_PER_LANE
         * num_lanes
     )
 
-    queue_profile = (
-        [0.0] * cycle_length
+    # Repeat arrivals so the queue can settle
+    repeated_arrivals = (
+        arrivals
+        * OFFSET_QUEUE_WARMUP_CYCLES
+    )
+
+    repeated_queue = (
+        [0.0]
+        * len(repeated_arrivals)
     )
 
     queue = 0.0
 
-    for cycle_second in range(
-        cycle_length
+    for t in range(
+        len(repeated_arrivals)
     ):
 
+        cycle_second = (
+            t % cycle_length
+        )
+
         queue += (
-            arrivals[
-                cycle_second
-            ]
+            repeated_arrivals[t]
         )
 
         green = (
@@ -897,9 +1167,19 @@ def calculate_queue_for_offset(
 
             queue -= discharge
 
-        queue_profile[
-            cycle_second
-        ] = queue
+        repeated_queue[t] = queue
+
+    # Keep only the final settled cycle
+    final_cycle_start = (
+        len(repeated_queue)
+        - cycle_length
+    )
+
+    queue_profile = (
+        repeated_queue[
+            final_cycle_start:
+        ]
+    )
 
     return queue_profile
 
@@ -947,10 +1227,9 @@ def calculate_stops_for_offset(
             )
 
         elif (
-            cycle_second > 0
-            and
             queue_profile[
-                cycle_second - 1
+                (cycle_second - 1)
+                % cycle_length
             ] > 0
         ):
 
@@ -1492,6 +1771,7 @@ def simStep(num_times = 1):
 sim_module = [0] * len(tIndex)  # Track which module each TLS is in
 split_history = {tls: [] for tls in TLS_ORDER}  # Track split decisions for each TLS
 offset_history = {tls: [] for tls in TLS_ORDER}
+cycle_history = []
 
 validate_scoot_network()
 validate_scoot_detectors()
@@ -1555,6 +1835,31 @@ while traci.simulation.getTime() < END_TIME:
                 }
             )
         
+    # ====================================================
+    # SCOOT REGIONAL CYCLE OPTIMIZER
+    # ====================================================
+
+    if (current_time >= CYCLE_OPTIMIZER_INTERVAL and current_time % CYCLE_OPTIMIZER_INTERVAL == 0):
+        decision, target_cycle, critical_node, node_results = optimize_region_cycle("R0")
+        cycle_history.append(
+            {
+                "time":
+                    current_time,
+
+                "decision":
+                    decision,
+
+                "target_cycle":
+                    target_cycle,
+
+                "critical_node":
+                    critical_node,
+
+                "nodes":
+                    node_results
+            }
+        )
+
     # ==========================================
 
     for tls in TLS_REG:
@@ -2211,6 +2516,42 @@ def print_offset_optimizer_summary():
         "\n===== END SCOOT OFFSET OPTIMIZER CHECK =====\n"
     )
 
+def print_cycle_optimizer_summary():
+
+    print(
+        "\n===== SCOOT REGIONAL CYCLE OPTIMIZER CHECK ====="
+    )
+
+    for record in cycle_history:
+
+        print(
+            f"\nt={record['time']}: "
+            f"{record['decision']} | "
+            f"target cycle="
+            f"{record['target_cycle']} s | "
+            f"critical node="
+            f"{record['critical_node']}"
+        )
+
+        for (
+            tls,
+            data
+        ) in record[
+            "nodes"
+        ].items():
+
+            print(
+                f"  {tls}: "
+                f"max saturation="
+                f"{data['max_saturation'] * 100:.1f}% | "
+                f"MPCY="
+                f"{data['mpcy']} s"
+            )
+
+    print(
+        "\n===== END SCOOT REGIONAL CYCLE OPTIMIZER CHECK =====\n"
+    )
+
 print_scoot_detector_summary()
 print_cyclic_flow_profile_summary()
 print_queue_prediction_summary()
@@ -2219,6 +2560,7 @@ print_split_optimizer_summary()
 print_performance_index_summary()
 print_platoon_dispersion_summary()
 print_offset_optimizer_summary()
+print_cycle_optimizer_summary()
 
 traci.close()
 
