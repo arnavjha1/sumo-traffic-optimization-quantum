@@ -3,7 +3,7 @@ from collections import defaultdict
 from agent import PressLightAgent
 
 SUMO_BINARY = "sumo"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
+SUMO_CONFIG = "sim2x2_a4.sumocfg"
 END_TIME = 600
 
 MODEL_PATH = "presslight_model_v1.pt"

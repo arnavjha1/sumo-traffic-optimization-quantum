@@ -30,20 +30,21 @@ class CoLightNetwork(nn.Module):
             nn.ReLU()
         )
 
+        self.attention_norm = nn.LayerNorm(hidden_size)
+
         # -------------------------------------------------
         # Graph-attention projections
         # -------------------------------------------------
-        self.query_layer = nn.Linear(
-            hidden_size,
-            hidden_size
-        )
+        self.num_heads = 4
+        self.head_dim = hidden_size // self.num_heads
 
-        self.key_layer = nn.Linear(
-            hidden_size,
-            hidden_size
-        )
+        assert hidden_size % self.num_heads == 0
 
-        self.value_layer = nn.Linear(
+        self.query_layer = nn.Linear(hidden_size, hidden_size)
+        self.key_layer = nn.Linear(hidden_size, hidden_size)
+        self.value_layer = nn.Linear(hidden_size, hidden_size)
+
+        self.attention_output = nn.Linear(
             hidden_size,
             hidden_size
         )
@@ -58,55 +59,83 @@ class CoLightNetwork(nn.Module):
             action_size
         )
 
-    def graph_attention(
-        self,
-        local_features,
-        adjacency
-    ):
+    def graph_attention(self, local_features, adjacency):
+        batch_size = local_features.size(0)
+        num_intersections = local_features.size(1)
 
-        # local_features shape:
-        # [batch_size, num_intersections, hidden_size]
+        normalized_features = self.attention_norm(local_features)
+        queries = self.query_layer(normalized_features)
+        keys = self.key_layer(normalized_features)
+        values = self.value_layer(normalized_features)
 
-        queries = self.query_layer(local_features)
-        keys = self.key_layer(local_features)
-        values = self.value_layer(local_features)
+        # [B, N, H] -> [B, heads, N, head_dim]
+        queries = queries.view(
+            batch_size,
+            num_intersections,
+            self.num_heads,
+            self.head_dim
+        ).transpose(1, 2)
 
-        # -------------------------------------------------
-        # Compute attention scores
-        # -------------------------------------------------
+        keys = keys.view(
+            batch_size,
+            num_intersections,
+            self.num_heads,
+            self.head_dim
+        ).transpose(1, 2)
+
+        values = values.view(
+            batch_size,
+            num_intersections,
+            self.num_heads,
+            self.head_dim
+        ).transpose(1, 2)
+
+        # [B, heads, N, N]
         scores = torch.matmul(
             queries,
-            keys.transpose(1, 2)
+            keys.transpose(-2, -1)
         )
 
         scores = scores / (
-            self.hidden_size ** 0.5
+            self.head_dim ** 0.5
         )
 
-        # -------------------------------------------------
-        # Mask intersections that are NOT neighbors
-        # -------------------------------------------------
-        mask = adjacency.unsqueeze(0)
+        # adjacency:
+        # [N, N] -> [1, 1, N, N]
+        mask = adjacency.unsqueeze(0).unsqueeze(0)
 
         scores = scores.masked_fill(
             mask == 0,
             float("-inf")
         )
 
-        # -------------------------------------------------
-        # Convert scores into weights
-        # -------------------------------------------------
+        ATTENTION_TEMPERATURE = 2.0
+
         attention_weights = torch.softmax(
-            scores,
+            scores / ATTENTION_TEMPERATURE,
             dim=-1
         )
-
-        # -------------------------------------------------
-        # Weighted combination of neighbor information
-        # -------------------------------------------------
+        
+        # [B, heads, N, head_dim]
         attended_features = torch.matmul(
             attention_weights,
             values
+        )
+
+        # Back to [B, N, H]
+        attended_features = (
+            attended_features
+            .transpose(1, 2)
+            .contiguous()
+            .view(
+                batch_size,
+                num_intersections,
+                self.hidden_size
+            )
+        )
+
+        attended_features = self.attention_output(
+            attended_features
         )
 
         return attended_features, attention_weights
@@ -161,12 +190,12 @@ class CoLightAgent:
         self,
         state_size=14,
         action_size=2,
-        learning_rate=0.001,
+        learning_rate=0.0005,
         gamma=0.95,
         epsilon=1.0,
         epsilon_min=0.05,
-        epsilon_decay=0.97,
-        memory_size=10000,
+        epsilon_decay=0.99,
+        memory_size=50000,
         batch_size=64,
         target_update_interval=200,
         adjacency=None,

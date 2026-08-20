@@ -7,7 +7,7 @@ SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
-NUM_RUNS = 100
+NUM_RUNS = 5
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -698,6 +698,11 @@ def run_episode(agent, episode):
 
                 print("\nGraph actions from Q-values:")
                 print(graph_actions_debug)
+
+                mean_attention = attention_weights.mean(dim=1)
+
+                print("\nMean attention across heads:")
+                print(mean_attention)
 
                 print("\n===== END STATE CHECK =====\n")
 
