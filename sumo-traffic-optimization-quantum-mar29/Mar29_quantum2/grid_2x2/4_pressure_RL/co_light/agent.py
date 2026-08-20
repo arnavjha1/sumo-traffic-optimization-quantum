@@ -10,7 +10,7 @@ class CoLightNetwork(nn.Module):
 
     def __init__(
         self,
-        state_size=5,
+        state_size=14,
         hidden_size=64,
         action_size=2,
         num_intersections=4
@@ -159,7 +159,7 @@ class CoLightNetwork(nn.Module):
 class CoLightAgent:
     def __init__(
         self,
-        state_size=5,
+        state_size=14,
         action_size=2,
         learning_rate=0.001,
         gamma=0.95,

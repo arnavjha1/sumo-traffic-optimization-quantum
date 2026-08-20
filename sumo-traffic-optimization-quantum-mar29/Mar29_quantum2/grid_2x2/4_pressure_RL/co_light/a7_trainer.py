@@ -7,7 +7,7 @@ SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
-NUM_RUNS = 100
+NUM_RUNS = 5
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -66,7 +66,7 @@ YELLOW_EW_TO_NS = "rrryyyrrryyy"
 ALL_RED = "rrrrrrrrrrrr"
 
 # update constants to more closely reflect CoLight paper
-MIN_CHANGE_TIME = 0
+MIN_CHANGE_TIME = 10
 MAX_GREEN_TIME = 999999
 YELLOW_TIME = 3
 ALL_RED_TIME = 2
@@ -100,6 +100,27 @@ def get_lane_queue(lane_id):
         if traci.vehicle.getSpeed(veh) < 0.1
     )
 
+def get_lane_vehicle_count(lane_id):
+
+    if lane_id is None or lane_id == "":
+        return 0
+
+    return traci.lane.getLastStepVehicleNumber(lane_id)
+
+def get_lane_vehicle_counts(tls):
+
+    lanes = traci.trafficlight.getControlledLanes(tls)
+
+    # Remove duplicate lane IDs while preserving order
+    lanes = list(dict.fromkeys(lanes))
+
+    lane_counts = [
+        get_lane_vehicle_count(lane)
+        for lane in lanes
+    ]
+
+    return lane_counts
+
 def get_side_queues(tls):
 
     lanes = traci.trafficlight.getControlledLanes(tls)
@@ -129,7 +150,8 @@ def get_side_queues(tls):
 
 def get_CoLight_state(tls, last_green_phase):
 
-    side_queues = get_side_queues(tls)
+    # 12 lane-level vehicle counts
+    lane_vehicle_counts = get_lane_vehicle_counts(tls)
 
     current_state = traci.trafficlight.getRedYellowGreenState(tls)
 
@@ -143,7 +165,13 @@ def get_CoLight_state(tls, last_green_phase):
         # During yellow/all-red, use the most recent green phase
         current_phase = last_green_phase[tls]
 
-    return side_queues + [current_phase]
+    # One-hot phase encoding
+    if current_phase == 0:
+        phase_one_hot = [1, 0]
+    else:
+        phase_one_hot = [0, 1]
+
+    return lane_vehicle_counts + phase_one_hot
 
 
 def get_CoLight_reward(tls, last_green_phase):
@@ -273,6 +301,7 @@ def print_episode_metrics(
     waiting_times,
     throughput,
 ):
+    
     print("\n===== PERFORMANCE METRICS =====")
 
     print("\nAverage Queue Length per TLS per Side/Lane:")
@@ -398,6 +427,18 @@ def run_episode(agent, episode):
         "-c",
         SUMO_CONFIG,
     ])
+
+    print("\n===== COLIGHT LANE ORDER CHECK =====")
+
+    for tls in TLS_ORDER:
+        lanes = traci.trafficlight.getControlledLanes(tls)
+        unique_lanes = list(dict.fromkeys(lanes))
+
+        print(f"\n{tls}:")
+        for i, lane in enumerate(unique_lanes):
+            print(i, lane)
+
+    print("===== END LANE ORDER CHECK =====\n")
 
     try:
         # -----------------------
@@ -588,7 +629,7 @@ def run_episode(agent, episode):
                     last_green_phase
                 )
 
-                side_queues = state[:4]
+                side_queues = get_side_queues("A0")
 
                 print("\nA0 side queues:")
                 print(side_queues)
