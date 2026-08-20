@@ -4,7 +4,7 @@ import torch
 from collections import defaultdict
 from agent import CoLightAgent
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 MODEL_PATH = "CoLight_model.pt"
 END_TIME = 600
@@ -69,7 +69,7 @@ YELLOW_EW_TO_NS = "rrryyyrrryyy"
 ALL_RED = "rrrrrrrrrrrr"
 
 # update constants to more closely reflect CoLight paper
-MIN_CHANGE_TIME = 0
+MIN_CHANGE_TIME = 10
 MAX_GREEN_TIME = 999999
 YELLOW_TIME = 3
 ALL_RED_TIME = 2
@@ -103,6 +103,29 @@ def get_lane_queue(lane_id):
         if traci.vehicle.getSpeed(veh) < 0.1
     )
 
+def get_lane_vehicle_count(lane_id):
+
+    if lane_id is None or lane_id == "":
+        return 0
+
+    return traci.lane.getLastStepVehicleNumber(lane_id)
+
+
+def get_lane_vehicle_counts(tls):
+
+    lanes = traci.trafficlight.getControlledLanes(tls)
+
+    # Remove duplicate lane IDs while preserving order.
+    # The trained CoLight model expects these 12 lane-level counts
+    # in the same order used during training.
+    lanes = list(dict.fromkeys(lanes))
+
+    return [
+        get_lane_vehicle_count(lane)
+        for lane in lanes
+    ]
+
+
 def get_side_queues(tls):
 
     lanes = traci.trafficlight.getControlledLanes(tls)
@@ -130,9 +153,12 @@ def get_side_queues(tls):
 
     return side_queues
 
+
 def get_CoLight_state(tls, last_green_phase):
 
-    side_queues = get_side_queues(tls)
+    # Match the trainer exactly:
+    # 12 lane-level vehicle counts + 2-value one-hot phase = 14 features.
+    lane_vehicle_counts = get_lane_vehicle_counts(tls)
 
     current_state = traci.trafficlight.getRedYellowGreenState(tls)
 
@@ -143,10 +169,15 @@ def get_CoLight_state(tls, last_green_phase):
         current_phase = 1
 
     else:
-        # During yellow/all-red, use the most recent green phase
+        # During yellow/all-red, use the most recent green phase.
         current_phase = last_green_phase[tls]
 
-    return side_queues + [current_phase]
+    if current_phase == 0:
+        phase_one_hot = [1, 0]
+    else:
+        phase_one_hot = [0, 1]
+
+    return lane_vehicle_counts + phase_one_hot
 
 
 # ============================================================
@@ -667,6 +698,7 @@ def run_evaluation(agent):
 # ============================================================
 
 agent = CoLightAgent(
+    state_size=14,
     adjacency=ADJACENCY
 )
 
