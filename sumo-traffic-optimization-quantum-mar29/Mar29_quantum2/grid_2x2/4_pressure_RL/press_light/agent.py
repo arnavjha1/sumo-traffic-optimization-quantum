@@ -32,7 +32,7 @@ class PressLightAgent:
         gamma=0.95,
         epsilon=1.0,
         epsilon_min=0.05,
-        epsilon_decay=0.97,
+        epsilon_decay=0.99,
         memory_size=10000,
         batch_size=64,
         target_update_interval=200,
