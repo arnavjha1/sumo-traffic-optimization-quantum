@@ -3,7 +3,7 @@ from collections import defaultdict
 from agent import MPLightAgent
 
 SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
+SUMO_CONFIG = "sim2x2_a6.sumocfg"
 END_TIME = 600
 
 MODEL_PATH = "MPLight_model_v1.pt"

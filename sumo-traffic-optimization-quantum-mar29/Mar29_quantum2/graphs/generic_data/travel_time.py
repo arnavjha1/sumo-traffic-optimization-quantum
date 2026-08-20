@@ -8,9 +8,9 @@ import numpy as np
 alpha = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 #              0.0     0.1     0.2     0.3     0.4     0.5     0.6     0.7    0.8    0.9     1.0
 fixed =     [105.85, 107.95, 105.65, 108.48, 108.78, 107.73, 112.06, 104.49, 98.41, 82.94,  72.19]
-queue =     [ 81.00,  81.94,  81.22,  82.75,  87.11, 104.13, 108.63, 100.86, 90.14, 79.44,  80.65]
 classical = [ 79.79,  79.79,  79.82,  82.11,  85.76, 100.28,  99.96,  99.54, 84.46, 84.61,  86.24]
 o_quantum = [ 81.59,  81.77,  80.41,  83.04,  88.41,  91.45,  92.47,  98.08, 95.97, 95.91, 101.45]
+mplight =   [ 82.95,  84.62,  85.32,  87.94,  90.54,  99.18, 100.80,  96.73, 83.06, 86.80,  88.42]
 
 results_file = (
     Path(__file__).resolve().parents[2]
@@ -58,8 +58,8 @@ plt.fill_between(
 )
 
 plt.plot(alpha, fixed, color='tab:blue', linewidth=2.5, label='Fixed-Time')
-plt.plot(alpha, queue, color='tab:orange', linewidth=2.5, label='Queue-Based')
 plt.plot(alpha, classical, color='tab:green', linewidth=2.5, label='Classical Optimization')
+plt.plot(alpha, mplight, color='tab:purple', linewidth=2.5, label='MPLight')
 plt.plot(
     alpha,
     quantum,
@@ -69,8 +69,8 @@ plt.plot(
 )
 
 plt.scatter(alpha, fixed, s=50, color='tab:blue')
-plt.scatter(alpha, queue, s=50, color='tab:orange')
 plt.scatter(alpha, classical, s=50, color='tab:green')
+plt.scatter(alpha, mplight, s=50, color='tab:purple')
 plt.scatter(alpha, quantum, s=50, color=quantum_color)
 
 plt.xlabel('Probability of Straight (α)')

@@ -9,9 +9,9 @@ alpha = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 #              0.0   0.1   0.2   0.3   0.4   0.5   0.6   0.7   0.8   0.9   1.0
 fixed =      [ 838,  831,  877,  909,  906,  852,  824,  791,  846,  895,  944]
-queue =      [ 955,  976,  986, 1024, 1024,  708,  889,  904,  903,  905,  830]
 classical =  [ 908,  924,  949,  978,  996,  910,  938,  946,  926,  825,  763]
 o_quantum =  [ 855,  871,  923,  940, 1014, 1012,  923,  927,  843,  747,  680]
+mplight =    [ 942,  937,  946,  967,  907,  807,  953,  958,  912,  817,  756]
 
 results_file = (
     Path(__file__).resolve().parents[2]
@@ -59,8 +59,8 @@ plt.fill_between(
 )
 
 plt.plot(alpha, fixed, color='tab:blue', linewidth=2.5, label='Fixed-Time')
-plt.plot(alpha, queue, color='tab:orange', linewidth=2.5, label='Queue-Based')
 plt.plot(alpha, classical, color='tab:green', linewidth=2.5, label='Classical Optimization')
+plt.plot(alpha, mplight, color='tab:purple', linewidth=2.5, label='MPLight')
 plt.plot(
     alpha,
     quantum,
@@ -70,8 +70,8 @@ plt.plot(
 )
 
 plt.scatter(alpha, fixed, s=50, color='tab:blue')
-plt.scatter(alpha, queue, s=50, color='tab:orange')
 plt.scatter(alpha, classical, s=50, color='tab:green')
+plt.scatter(alpha, mplight, s=50, color='tab:purple')
 plt.scatter(alpha, quantum, s=50, color=quantum_color)
 
 plt.xlabel('Probability of Straight (⍺)')
