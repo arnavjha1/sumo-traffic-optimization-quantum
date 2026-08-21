@@ -1,7 +1,7 @@
 import traci
 from collections import defaultdict
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
@@ -343,7 +343,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nQUANTUM")
+print("\nMAX PRESSURE")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)

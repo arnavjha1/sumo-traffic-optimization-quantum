@@ -12,6 +12,7 @@ fixed =      [ 838,  831,  877,  909,  906,  852,  824,  791,  846,  895,  944]
 classical =  [ 908,  924,  949,  978,  996,  910,  938,  946,  926,  825,  763]
 o_quantum =  [ 855,  871,  923,  940, 1014, 1012,  923,  927,  843,  747,  680]
 mplight =    [ 942,  937,  946,  967,  907,  807,  953,  958,  912,  817,  756]
+presslight =  [ 912,  946,  961,  975,  964,  768,  936,  922,  906,  803,  752]
 
 results_file = (
     Path(__file__).resolve().parents[2]
@@ -61,6 +62,7 @@ plt.fill_between(
 plt.plot(alpha, fixed, color='tab:blue', linewidth=2.5, label='Fixed-Time')
 plt.plot(alpha, classical, color='tab:green', linewidth=2.5, label='Classical Optimization')
 plt.plot(alpha, mplight, color='tab:purple', linewidth=2.5, label='MPLight')
+plt.plot(alpha, presslight, color='tab:brown', linewidth=2.5, label='PressLight')
 plt.plot(
     alpha,
     quantum,
@@ -72,6 +74,7 @@ plt.plot(
 plt.scatter(alpha, fixed, s=50, color='tab:blue')
 plt.scatter(alpha, classical, s=50, color='tab:green')
 plt.scatter(alpha, mplight, s=50, color='tab:purple')
+plt.scatter(alpha, presslight, s=50, color='tab:brown')
 plt.scatter(alpha, quantum, s=50, color=quantum_color)
 
 plt.xlabel('Probability of Straight (⍺)')
