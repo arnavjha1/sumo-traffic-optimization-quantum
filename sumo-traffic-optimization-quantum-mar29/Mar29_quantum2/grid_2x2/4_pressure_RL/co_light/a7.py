@@ -6,7 +6,7 @@ from agent import CoLightAgent
 
 SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_a7.sumocfg"
-MODEL_PATH = "CoLight_model.pt"
+MODEL_PATH = "CoLight_model_v1.pt"
 END_TIME = 600
 
 # Frozen evaluation only: no replay, optimizer steps, epsilon decay, or model saving.
