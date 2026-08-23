@@ -2,9 +2,9 @@ from pathlib import Path
 import pandas as pd
 
 ALPHA_CSV = Path("data_analysis/generated_data/alpha_citywide_summary.csv")
-OUTPUT_CSV = Path("data_analysis/generated_data/generated_route_probabilities.csv")
+OUTPUT_CSV = Path("data_analysis/generated_data/generated_route_probabilities_3x3.csv")
 
-MAX_DECISIONS = 3
+MAX_TURNS = 3
 
 # Nodes: A1 top-left, B1 top-right, A0 bottom-left, B0 bottom-right
 # Each option: outgoing_edge, next_node, movement_direction
@@ -141,15 +141,25 @@ def classify_turn(in_dir, out_dir):
 def generate_routes_from_start(start_edge, start_node, start_direction, alpha):
     routes = []
 
-    def dfs(node, current_direction, edges, movements, probability, decisions):
-        if decisions >= MAX_DECISIONS:
-            return
-
+    def dfs(node, current_direction, edges, movements, probability, turn_count, visited_nodes):
         for out_edge, next_node, out_direction in GRAPH[node]:
+
+            # Prevent routes from looping back through an intersection for num_edges > 3, only an issue for the 3x3 grid
+            if next_node is not None and next_node in visited_nodes:
+                continue
+
             turn = classify_turn(current_direction, out_direction)
 
             # Avoid U-turns
             if turn == "uturn":
+                continue
+
+            new_turn_count = turn_count
+
+            if turn in ("left", "right"):
+                new_turn_count += 1
+
+            if new_turn_count > MAX_TURNS:
                 continue
 
             turn_prob = alpha[turn]
@@ -162,7 +172,8 @@ def generate_routes_from_start(start_edge, start_node, start_direction, alpha):
                     "start_edge": start_edge,
                     "route_edges": " ".join(new_edges),
                     "movement_sequence": " ".join(new_movements),
-                    "decisions": decisions + 1,
+                    "turns": new_turn_count,
+                    "intersections": len(new_movements),
                     "raw_probability": new_probability,
                 })
             else:
@@ -172,8 +183,10 @@ def generate_routes_from_start(start_edge, start_node, start_direction, alpha):
                     new_edges,
                     new_movements,
                     new_probability,
-                    decisions + 1,
+                    new_turn_count,
+                    visited_nodes | {next_node},
                 )
+
 
     dfs(
         start_node,
@@ -182,6 +195,7 @@ def generate_routes_from_start(start_edge, start_node, start_direction, alpha):
         [],
         1.0,
         0,
+        {start_node},
     )
 
     return routes
@@ -218,9 +232,64 @@ def main():
     OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False)
 
-    print(f"Saved route probability CSV to: {OUTPUT_CSV}")
-    print()
-    print("Probability sum by starting edge:")
-    print(df.groupby("start_edge")["normalized_probability"].sum())
+    print("\n===== 3x3 ROUTE GENERATION CHECK =====")
+
+    print(f"\nTotal routes generated: {len(df)}")
+
+    print("\nRoutes per starting edge:")
+    print(df.groupby("start_edge").size())
+
+    print("\nProbability sum by starting edge:")
+    print(
+        df.groupby("start_edge")["normalized_probability"].sum()
+    )
+
+
+    print("\nTurn-count distribution:")
+    print(df["turns"].value_counts().sort_index())
+
+    print("\nIntersection-count distribution:")
+    print(df["intersections"].value_counts().sort_index())
+
+    print("\nMaximum turns:")
+    print(df["turns"].max())
+
+    print("\nMaximum intersections traversed:")
+    print(df["intersections"].max())
+
+
+    print("\nSample routes:")
+    print(
+        df[
+            [
+                "route_id",
+                "start_edge",
+                "route_edges",
+                "movement_sequence",
+                "turns",
+                "intersections",
+                "normalized_probability",
+            ]
+        ].head(20).to_string(index=False)
+    )
+
+    print("\nLongest-route examples:")
+    print(
+        df.loc[
+            df["turns"] == df["turns"].max(),
+            [
+                "route_id",
+                "start_edge",
+                "route_edges",
+                "movement_sequence",
+                "turns",
+                "intersections",
+            ],
+        ].head(10).to_string(index=False)
+    )
+
+    print("\n===== END 3x3 ROUTE GENERATION CHECK =====")
+
+    print(f"\nSaved route probability CSV to: {OUTPUT_CSV}")
 
 main()
