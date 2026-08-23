@@ -53,6 +53,22 @@ alpha_summary = pd.read_csv(ALPHA_SUMMARY_CSV)
 hourly_constants = pd.read_csv(HOURLY_CONSTANTS_CSV)
 route_probabilities = pd.read_csv(ROUTE_PROBABILITIES_CSV)
 
+print("\n===== 3x3 ROUTE INPUT CHECK =====")
+print(f"Total routes loaded: {len(route_probabilities)}")
+print(f"Unique start edges: {route_probabilities['start_edge'].nunique()}")
+
+print("\nRoutes per start edge:")
+print(route_probabilities.groupby("start_edge").size())
+
+print("\nProbability sum per start edge:")
+print(
+    route_probabilities.groupby("start_edge")[
+        "normalized_probability"
+    ].sum()
+)
+
+print("===== END 3x3 ROUTE INPUT CHECK =====\n")
+
 # 3. Extract needed values
 alpha_straight = float(alpha_summary["mean_alpha_straight"].iloc[0])
 alpha_left = float(alpha_summary["mean_alpha_left"].iloc[0])
@@ -80,8 +96,10 @@ df_24x3["demand_scale"] = DEMAND_SCALE
 df_24x3["scaled_hourly_rate_per_entry"] = (
     df_24x3["base_hourly_rate_per_entry"] * DEMAND_SCALE
 )
+
+NUM_ENTRY_EDGES = 12
 df_24x3["scaled_total_network_vph_expected"] = (
-    df_24x3["scaled_hourly_rate_per_entry"] * 8
+    df_24x3["scaled_hourly_rate_per_entry"] * NUM_ENTRY_EDGES
 )
 
 print("\nHourly demand table:")
@@ -90,20 +108,20 @@ print(df_24x3)
 hourly_demand_path = PROCESS_OUTPUT_DIR / "route_generation_hourly_demand.csv"
 df_24x3.to_csv(hourly_demand_path, index=False)
 
-# 5. Build 72x2 array: [route_edges, normalized_probability]
+# 5. Build route probability table: [route_edges, normalized_probability]
 route_probability_array = route_probabilities[
     ["route_edges", "normalized_probability"]
 ].to_numpy(dtype=object)
 
-df_72x2 = pd.DataFrame(
+df_routes = pd.DataFrame(
     route_probability_array,
     columns=["route_tiles", "normalized_probability"],
 )
 
 print("\nRoute probability table:")
-print(df_72x2)
+print(df_routes)
 
-# 6. Write route XML with 72 routes and 24 hourly flows per route
+# 6. Write route XML with generated routes and 24 hourly flows per route
 routes_root = ET.Element("routes")
 
 ET.SubElement(
