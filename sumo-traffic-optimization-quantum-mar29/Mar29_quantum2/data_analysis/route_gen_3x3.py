@@ -9,13 +9,13 @@ from pathlib import Path
 BASE_DIR = Path("data_analysis")
 ALPHA_SCRIPT = BASE_DIR / "calc_alpha.py"
 TRAFFIC_SCRIPT = BASE_DIR / "calc_traffic_over_time.py"
-ROUTE_PROBABILITY_SCRIPT = BASE_DIR / "route_probability_gen.py"
+ROUTE_PROBABILITY_SCRIPT = BASE_DIR / "route_probability_gen_3x3.py"
 
 ALPHA_SUMMARY_CSV = BASE_DIR / "generated_data" / "alpha_citywide_summary.csv"
 HOURLY_CONSTANTS_CSV = BASE_DIR / "generated_data" / "calculated_hourly_constants.csv"
-ROUTE_PROBABILITIES_CSV = BASE_DIR / "generated_data" / "generated_route_probabilities.csv"
+ROUTE_PROBABILITIES_CSV = BASE_DIR / "generated_data" / "generated_route_probabilities_3x3.csv"
 
-ROUTES_OUTPUT_XML = Path("routes_2x2") / "routes2x2_data.rou.xml"
+ROUTES_OUTPUT_XML = Path("grid_3x3/routes_3x3") / "routes3x3_data.rou.xml"
 
 # Debug/process output folder
 PROCESS_OUTPUT_DIR = BASE_DIR / "simulation_process_data"

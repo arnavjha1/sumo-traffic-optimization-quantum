@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-08-20T20:07:45.165022-08:00 by Eclipse SUMO netedit 1.25.0
+<!-- generated on 2026-08-21T21:20:29.291717-08:00 by Eclipse SUMO netedit 1.25.0
 <neteditConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
 
     <input>
@@ -660,6 +660,11 @@
         <lane id="C0C1_1" index="1" speed="13.89" length="72.77" shape="204.80,13.61 204.80,86.38"/>
         <lane id="C0C1_2" index="2" speed="13.89" length="72.77" shape="201.60,13.61 201.60,86.38"/>
     </edge>
+    <edge id="C0_0" from="C0" to="J14" priority="-1">
+        <lane id="C0_0_0" index="0" speed="13.89" length="47.45" shape="192.01,-13.60 192.05,-61.06"/>
+        <lane id="C0_0_1" index="1" speed="13.89" length="47.45" shape="195.21,-13.60 195.25,-61.05"/>
+        <lane id="C0_0_2" index="2" speed="13.89" length="47.45" shape="198.41,-13.60 198.45,-61.05"/>
+    </edge>
     <edge id="C0_1" from="C0" to="J8" priority="-1">
         <lane id="C0_1_0" index="0" speed="13.89" length="39.76" shape="213.62,-7.98 253.38,-7.93"/>
         <lane id="C0_1_1" index="1" speed="13.89" length="39.76" shape="213.62,-4.78 253.38,-4.73"/>
@@ -704,11 +709,6 @@
         <lane id="C2_1_0" index="0" speed="13.89" length="39.48" shape="213.60,192.01 253.08,192.02"/>
         <lane id="C2_1_1" index="1" speed="13.89" length="39.48" shape="213.60,195.21 253.08,195.22"/>
         <lane id="C2_1_2" index="2" speed="13.89" length="39.48" shape="213.60,198.41 253.08,198.42"/>
-    </edge>
-    <edge id="E12" from="C0" to="J14" priority="-1">
-        <lane id="E12_0" index="0" speed="13.89" length="47.45" shape="192.01,-13.60 192.05,-61.06"/>
-        <lane id="E12_1" index="1" speed="13.89" length="47.45" shape="195.21,-13.60 195.25,-61.05"/>
-        <lane id="E12_2" index="2" speed="13.89" length="47.45" shape="198.41,-13.60 198.45,-61.05"/>
     </edge>
 
     <tlLogic id="A0" type="static" programID="0" offset="0">
@@ -934,7 +934,7 @@
     <junction id="J11" type="dead_end" x="-59.24" y="-0.00" incLanes="A0_1_0 A0_1_1 A0_1_2" intLanes="" shape="-59.24,0.00 -59.24,9.60 -59.24,0.00"/>
     <junction id="J12" type="dead_end" x="-0.07" y="-58.91" incLanes="A0_0_0 A0_0_1 A0_0_2" intLanes="" shape="-0.07,-58.91 -9.67,-58.90 -0.07,-58.91"/>
     <junction id="J13" type="dead_end" x="99.99" y="-61.27" incLanes="B0_0_0 B0_0_1 B0_0_2" intLanes="" shape="99.99,-61.27 90.39,-61.27 99.99,-61.27"/>
-    <junction id="J14" type="dead_end" x="200.05" y="-61.05" incLanes="E12_0 E12_1 E12_2" intLanes="" shape="200.05,-61.05 190.45,-61.06 200.05,-61.05"/>
+    <junction id="J14" type="dead_end" x="200.05" y="-61.05" incLanes="C0_0_0 C0_0_1 C0_0_2" intLanes="" shape="200.05,-61.05 190.45,-61.06 200.05,-61.05"/>
     <junction id="J2" type="dead_end" x="199.93" y="248.95" incLanes="C2_0_0 C2_0_1 C2_0_2" intLanes="" shape="199.93,248.95 209.53,248.96 199.93,248.95"/>
     <junction id="J3" type="dead_end" x="253.08" y="200.02" incLanes="C2_1_0 C2_1_1 C2_1_2" intLanes="" shape="253.08,200.02 253.08,190.42 253.08,200.02"/>
     <junction id="J7" type="dead_end" x="253.63" y="99.89" incLanes="C1_1_0 C1_1_1 C1_1_2" intLanes="" shape="253.63,99.89 253.61,90.29 253.63,99.89"/>
@@ -1004,7 +1004,7 @@
     <connection from="-C0_0" to="C0B0" fromLane="2" toLane="2" via=":C0_8_0" tl="C0" linkIndex="8" dir="l" state="o"/>
     <connection from="-C0_1" to="C0C1" fromLane="0" toLane="0" via=":C0_3_0" tl="C0" linkIndex="3" dir="r" state="O"/>
     <connection from="-C0_1" to="C0B0" fromLane="1" toLane="1" via=":C0_4_0" tl="C0" linkIndex="4" dir="s" state="o"/>
-    <connection from="-C0_1" to="E12" fromLane="2" toLane="2" via=":C0_5_0" tl="C0" linkIndex="5" dir="l" state="o"/>
+    <connection from="-C0_1" to="C0_0" fromLane="2" toLane="2" via=":C0_5_0" tl="C0" linkIndex="5" dir="l" state="o"/>
     <connection from="-C1_1" to="C1C2" fromLane="0" toLane="0" via=":C1_3_0" tl="C1" linkIndex="3" dir="r" state="O"/>
     <connection from="-C1_1" to="C1B1" fromLane="1" toLane="1" via=":C1_4_0" tl="C1" linkIndex="4" dir="s" state="o"/>
     <connection from="-C1_1" to="C1C0" fromLane="2" toLane="2" via=":C1_5_0" tl="C1" linkIndex="5" dir="l" state="o"/>
@@ -1041,7 +1041,7 @@
     <connection from="B0B1" to="B1C1" fromLane="0" toLane="0" via=":B1_6_0" tl="B1" linkIndex="6" dir="r" state="O"/>
     <connection from="B0B1" to="B1B2" fromLane="1" toLane="1" via=":B1_7_0" tl="B1" linkIndex="7" dir="s" state="O"/>
     <connection from="B0B1" to="B1A1" fromLane="2" toLane="2" via=":B1_8_0" tl="B1" linkIndex="8" dir="l" state="o"/>
-    <connection from="B0C0" to="E12" fromLane="0" toLane="0" via=":C0_9_0" tl="C0" linkIndex="9" dir="r" state="O"/>
+    <connection from="B0C0" to="C0_0" fromLane="0" toLane="0" via=":C0_9_0" tl="C0" linkIndex="9" dir="r" state="O"/>
     <connection from="B0C0" to="C0_1" fromLane="1" toLane="1" via=":C0_10_0" tl="C0" linkIndex="10" dir="s" state="o"/>
     <connection from="B0C0" to="C0C1" fromLane="2" toLane="2" via=":C0_11_0" tl="C0" linkIndex="11" dir="l" state="o"/>
     <connection from="B1A1" to="A1A2" fromLane="0" toLane="0" via=":A1_3_0" tl="A1" linkIndex="3" dir="r" state="O"/>
@@ -1075,7 +1075,7 @@
     <connection from="C1B1" to="B1A1" fromLane="1" toLane="1" via=":B1_4_0" tl="B1" linkIndex="4" dir="s" state="o"/>
     <connection from="C1B1" to="B1B0" fromLane="2" toLane="2" via=":B1_5_0" tl="B1" linkIndex="5" dir="l" state="o"/>
     <connection from="C1C0" to="C0B0" fromLane="0" toLane="0" via=":C0_0_0" tl="C0" linkIndex="0" dir="r" state="O"/>
-    <connection from="C1C0" to="E12" fromLane="1" toLane="1" via=":C0_1_0" tl="C0" linkIndex="1" dir="s" state="O"/>
+    <connection from="C1C0" to="C0_0" fromLane="1" toLane="1" via=":C0_1_0" tl="C0" linkIndex="1" dir="s" state="O"/>
     <connection from="C1C0" to="C0_1" fromLane="2" toLane="2" via=":C0_2_0" tl="C0" linkIndex="2" dir="l" state="o"/>
     <connection from="C1C2" to="C2_1" fromLane="0" toLane="0" via=":C2_3_0" tl="C2" linkIndex="3" dir="r" state="O"/>
     <connection from="C1C2" to="C2_0" fromLane="1" toLane="1" via=":C2_4_0" tl="C2" linkIndex="4" dir="s" state="o"/>
@@ -1184,18 +1184,18 @@
     <connection from=":B2_11" to="B2C2" fromLane="0" toLane="2" via=":B2_15_0" dir="l" state="m"/>
     <connection from=":B2_15" to="B2C2" fromLane="0" toLane="2" dir="l" state="M"/>
     <connection from=":C0_0" to="C0B0" fromLane="0" toLane="0" dir="r" state="M"/>
-    <connection from=":C0_1" to="E12" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":C0_1" to="C0_0" fromLane="0" toLane="1" dir="s" state="M"/>
     <connection from=":C0_2" to="C0_1" fromLane="0" toLane="2" via=":C0_12_0" dir="l" state="m"/>
     <connection from=":C0_12" to="C0_1" fromLane="0" toLane="2" dir="l" state="M"/>
     <connection from=":C0_3" to="C0C1" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":C0_4" to="C0B0" fromLane="0" toLane="1" dir="s" state="M"/>
-    <connection from=":C0_5" to="E12" fromLane="0" toLane="2" via=":C0_13_0" dir="l" state="m"/>
-    <connection from=":C0_13" to="E12" fromLane="0" toLane="2" dir="l" state="M"/>
+    <connection from=":C0_5" to="C0_0" fromLane="0" toLane="2" via=":C0_13_0" dir="l" state="m"/>
+    <connection from=":C0_13" to="C0_0" fromLane="0" toLane="2" dir="l" state="M"/>
     <connection from=":C0_6" to="C0_1" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":C0_7" to="C0C1" fromLane="0" toLane="1" dir="s" state="M"/>
     <connection from=":C0_8" to="C0B0" fromLane="0" toLane="2" via=":C0_14_0" dir="l" state="m"/>
     <connection from=":C0_14" to="C0B0" fromLane="0" toLane="2" dir="l" state="M"/>
-    <connection from=":C0_9" to="E12" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":C0_9" to="C0_0" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":C0_10" to="C0_1" fromLane="0" toLane="1" dir="s" state="M"/>
     <connection from=":C0_11" to="C0C1" fromLane="0" toLane="2" via=":C0_15_0" dir="l" state="m"/>
     <connection from=":C0_15" to="C0C1" fromLane="0" toLane="2" dir="l" state="M"/>

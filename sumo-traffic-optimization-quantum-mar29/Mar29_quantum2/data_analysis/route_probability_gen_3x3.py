@@ -9,42 +9,103 @@ MAX_DECISIONS = 3
 # Nodes: A1 top-left, B1 top-right, A0 bottom-left, B0 bottom-right
 # Each option: outgoing_edge, next_node, movement_direction
 GRAPH = {
-    "A1": [
-        ("E7", None, "W"),        # exit west
-        ("A1B1", "B1", "E"),      # go east
-        ("A1A0", "A0", "S"),      # go south
-        ("E6", None, "N"),        # exit north
-    ],
-    "B1": [
-        ("B1A1", "A1", "W"),      # go west
-        ("E1", None, "E"),        # exit east
-        ("B1B0", "B0", "S"),      # go south
-        ("E0", None, "N"),        # exit north
-    ],
+    # --------------------------------------------------
+    # LEFT COLUMN
+    # --------------------------------------------------
+
     "A0": [
-        ("E5", None, "W"),        # exit west
-        ("A0B0", "B0", "E"),      # go east
-        ("E3", None, "S"),        # exit south
-        ("A0A1", "A1", "N"),      # go north
+        ("A0_1", None, "W"),       # exit west
+        ("A0B0", "B0", "E"),       # go east
+        ("A0_0", None, "S"),       # exit south
+        ("A0A1", "A1", "N"),       # go north
     ],
+
+    "A1": [
+        ("A1_1", None, "W"),       # exit west
+        ("A1B1", "B1", "E"),       # go east
+        ("A1A0", "A0", "S"),       # go south
+        ("A1A2", "A2", "N"),       # go north
+    ],
+
+    "A2": [
+        ("A2_1", None, "W"),       # exit west
+        ("A2B2", "B2", "E"),       # go east
+        ("A2A1", "A1", "S"),       # go south
+        ("A2_0", None, "N"),       # exit north
+    ],
+
+    # --------------------------------------------------
+    # MIDDLE COLUMN
+    # --------------------------------------------------
+
     "B0": [
-        ("B0A0", "A0", "W"),      # go west
-        ("E4", None, "E"),        # exit east
-        ("E2", None, "S"),        # exit south
-        ("B0B1", "B1", "N"),      # go north
+        ("B0A0", "A0", "W"),       # go west
+        ("B0C0", "C0", "E"),       # go east
+        ("B0_0", None, "S"),       # exit south
+        ("B0B1", "B1", "N"),       # go north
+    ],
+
+    "B1": [
+        ("B1A1", "A1", "W"),       # go west
+        ("B1C1", "C1", "E"),       # go east
+        ("B1B0", "B0", "S"),       # go south
+        ("B1B2", "B2", "N"),       # go north
+    ],
+
+    "B2": [
+        ("B2A2", "A2", "W"),       # go west
+        ("B2C2", "C2", "E"),       # go east
+        ("B2B1", "B1", "S"),       # go south
+        ("B2_0", None, "N"),       # exit north
+    ],
+
+    # --------------------------------------------------
+    # RIGHT COLUMN
+    # --------------------------------------------------
+
+    "C0": [
+        ("C0B0", "B0", "W"),       # go west
+        ("C0_1", None, "E"),       # exit east
+        ("C0_0", None, "S"),        # exit south
+        ("C0C1", "C1", "N"),       # go north
+    ],
+
+    "C1": [
+        ("C1B1", "B1", "W"),       # go west
+        ("C1_1", None, "E"),       # exit east
+        ("C1C0", "C0", "S"),       # go south
+        ("C1C2", "C2", "N"),       # go north
+    ],
+
+    "C2": [
+        ("C2B2", "B2", "W"),       # go west
+        ("C2_1", None, "E"),       # exit east
+        ("C2C1", "C1", "S"),       # go south
+        ("C2_0", None, "N"),       # exit north
     ],
 }
 
 # Starting edges: edge enters node while moving in direction
 STARTS = {
-    "-E6": ("A1", "S"),
-    "-E7": ("A1", "E"),
-    "-E0": ("B1", "S"),
-    "-E1": ("B1", "W"),
-    "-E5": ("A0", "E"),
-    "-E3": ("A0", "N"),
-    "-E4": ("B0", "W"),
-    "-E2": ("B0", "N"),
+    # Bottom boundary -> entering north
+    "-A0_0": ("A0", "N"),
+    "-B0_0": ("B0", "N"),
+    "-C0_0": ("C0", "N"),
+
+    # Left boundary -> entering east
+    "-A0_1": ("A0", "E"),
+    "-A1_1": ("A1", "E"),
+    "-A2_1": ("A2", "E"),
+
+    # Top boundary -> entering south
+    "-A2_0": ("A2", "S"),
+    "-B2_0": ("B2", "S"),
+    "-C2_0": ("C2", "S"),
+
+    # Right boundary -> entering west
+    "-C0_1": ("C0", "W"),
+    "-C1_1": ("C1", "W"),
+    "-C2_1": ("C2", "W"),
 }
 
 LEFT_OF = {
