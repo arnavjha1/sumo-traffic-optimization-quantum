@@ -21,8 +21,12 @@ ROUTES_OUTPUT_XML = Path("grid_3x3/routes_3x3") / "routes3x3_data.rou.xml"
 PROCESS_OUTPUT_DIR = BASE_DIR / "simulation_process_data"
 PROCESS_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Scale demand down to avoid oversaturating the 2x2 network.
+# Scale demand down to avoid oversaturating the network.
 DEMAND_SCALE = 0.45
+
+# Warm-up period before the official 24-hour measurement window.
+# Use midnight (hour 0) demand during warm-up.
+WARMUP_TIME = 600  # seconds (10 minutes)
 
 # 1. Run scripts and wait for completion
 subprocess.run([sys.executable, str(ALPHA_SCRIPT)], check=True)
@@ -148,6 +152,48 @@ for _, route in route_probabilities.iterrows():
 
 validation_rows = []
 
+# Write warm-up flows first using hour-0 (midnight) demand.
+warmup_base_hourly_rate = data_array[0, 0]
+warmup_scaled_hourly_rate = warmup_base_hourly_rate * DEMAND_SCALE
+
+for _, route in route_probabilities.iterrows():
+    route_id = str(route["route_id"])
+    route_edges = str(route["route_edges"])
+    start_edge = str(route["start_edge"]) if "start_edge" in route else route_edges.split()[0]
+    route_probability = float(route["normalized_probability"])
+    vehs_per_hour = warmup_scaled_hourly_rate * route_probability
+
+    validation_rows.append(
+        {
+            "period": "warmup",
+            "hour": -1,
+            "begin": 0,
+            "end": WARMUP_TIME,
+            "route_id": route_id,
+            "start_edge": start_edge,
+            "route_edges": route_edges,
+            "route_probability": route_probability,
+            "base_hourly_rate_per_entry": warmup_base_hourly_rate,
+            "demand_scale": DEMAND_SCALE,
+            "scaled_hourly_rate_per_entry": warmup_scaled_hourly_rate,
+            "vehs_per_hour": vehs_per_hour,
+        }
+    )
+
+    ET.SubElement(
+        routes_root,
+        "flow",
+        {
+            "id": f"{route_id}_warmup",
+            "type": "car",
+            "route": route_id,
+            "begin": "0",
+            "end": str(WARMUP_TIME),
+            "vehsPerHour": f"{vehs_per_hour:.6f}",
+        },
+    )
+
+# Official 24-hour measurement window starts after warm-up.
 for hour in range(24):
     base_hourly_rate = data_array[hour, 0]
     scaled_hourly_rate = base_hourly_rate * DEMAND_SCALE
@@ -158,13 +204,14 @@ for hour in range(24):
         start_edge = str(route["start_edge"]) if "start_edge" in route else route_edges.split()[0]
         route_probability = float(route["normalized_probability"])
 
-        begin = hour * 3600
-        end = (hour + 1) * 3600
+        begin = WARMUP_TIME + hour * 3600
+        end = WARMUP_TIME + (hour + 1) * 3600
 
         vehs_per_hour = scaled_hourly_rate * route_probability
 
         validation_rows.append(
             {
+                "period": "measurement",
                 "hour": hour,
                 "begin": begin,
                 "end": end,
@@ -210,7 +257,9 @@ validation_df = pd.DataFrame(validation_rows)
 validation_path = PROCESS_OUTPUT_DIR / "route_generation_validation.csv"
 validation_df.to_csv(validation_path, index=False)
 
-hourly_validation = validation_df.groupby("hour").agg(
+measurement_validation_df = validation_df[validation_df["period"] == "measurement"]
+
+hourly_validation = measurement_validation_df.groupby("hour").agg(
     total_network_vph=("vehs_per_hour", "sum"),
     max_route_vph=("vehs_per_hour", "max"),
     min_route_vph=("vehs_per_hour", "min"),
@@ -224,7 +273,7 @@ hourly_validation = validation_df.groupby("hour").agg(
 hourly_validation_path = PROCESS_OUTPUT_DIR / "route_generation_hourly_summary.csv"
 hourly_validation.to_csv(hourly_validation_path, index=False)
 
-start_edge_validation = validation_df.groupby(["hour", "start_edge"]).agg(
+start_edge_validation = measurement_validation_df.groupby(["hour", "start_edge"]).agg(
     start_edge_vph=("vehs_per_hour", "sum"),
     route_probability_sum=("route_probability", "sum"),
     route_count=("route_id", "count"),
@@ -232,6 +281,9 @@ start_edge_validation = validation_df.groupby(["hour", "start_edge"]).agg(
 
 start_edge_validation_path = PROCESS_OUTPUT_DIR / "route_generation_start_edge_summary.csv"
 start_edge_validation.to_csv(start_edge_validation_path, index=False)
+
+print(f"\nWarm-up period: 0 to {WARMUP_TIME} s using hour-0 demand")
+print(f"Official measurement window: {WARMUP_TIME} to {WARMUP_TIME + 24 * 3600} s")
 
 print("\nRoute generation hourly summary:")
 print(hourly_validation)
