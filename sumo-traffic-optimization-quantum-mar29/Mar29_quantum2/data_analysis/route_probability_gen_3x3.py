@@ -288,6 +288,52 @@ def main():
         ].head(10).to_string(index=False)
     )
 
+    def route_has_repeated_nodes(route_edges):
+        edges = route_edges.split()
+
+        visited = set()
+
+        for edge in edges:
+            # Internal grid edge like A0B0 means A0 -> B0
+            if len(edge) == 4 and edge[0] in "ABC" and edge[2] in "ABC":
+                from_node = edge[:2]
+                to_node = edge[2:]
+
+                visited.add(from_node)
+
+                if to_node in visited:
+                    return True
+
+                visited.add(to_node)
+
+        return False
+
+
+    repeated_route_count = df["route_edges"].apply(
+        route_has_repeated_nodes
+    ).sum()
+
+    print("\nRoutes containing repeated intersections:")
+    print(repeated_route_count)
+
+    print("\nRoute probability range:")
+    print(f"Minimum: {df['normalized_probability'].min():.8f}")
+    print(f"Maximum: {df['normalized_probability'].max():.8f}")
+
+    print("\nTotal normalized probability across all starts:")
+    print(df["normalized_probability"].sum())
+
+    routes_per_start = df.groupby("start_edge").size()
+
+    print("\nRoute-count symmetry check:")
+    print(f"Minimum routes per start: {routes_per_start.min()}")
+    print(f"Maximum routes per start: {routes_per_start.max()}")
+
+    if routes_per_start.nunique() == 1:
+        print("PASS: all starting edges have equal route counts")
+    else:
+        print("WARNING: route counts differ across starting edges")
+
     print("\n===== END 3x3 ROUTE GENERATION CHECK =====")
 
     print(f"\nSaved route probability CSV to: {OUTPUT_CSV}")
