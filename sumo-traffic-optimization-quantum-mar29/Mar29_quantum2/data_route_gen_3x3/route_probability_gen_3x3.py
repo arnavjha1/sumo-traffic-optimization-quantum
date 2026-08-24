@@ -200,7 +200,7 @@ def generate_routes_from_start(start_edge, start_node, start_direction, alpha):
 def main(alpha_straight=0.5):
     alpha_index = int(round(alpha_straight * 10))
     output_csv = Path(
-        f"data_analysis/generated_data/600s_3x3/"
+        f"data_route_gen_3x3/generated_data/"
         f"generated_route_probabilities_3x3_a{alpha_index}.csv"
     )
 
