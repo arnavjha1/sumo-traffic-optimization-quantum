@@ -2,6 +2,7 @@ import subprocess
 import re
 import statistics
 import json
+import os
 from pathlib import Path
 
 
@@ -9,7 +10,8 @@ from pathlib import Path
 # CONFIG
 # =============================
 
-NUM_RUNS = 50
+NUM_RUNS = 1
+QAOA_SHOTS = 512  # Change to 200/500/1000 for separate shot-sensitivity batches.
 
 BASE_DIR = Path(__file__).parent
 QUANTUM_DIR = BASE_DIR / "grid_2x2/3_quantum"
@@ -17,7 +19,7 @@ OUTPUT_DIR = BASE_DIR / "quantum_data"
 
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-FILES = [QUANTUM_DIR / f"3_quantum_a{i}.py" for i in range(11)]
+FILES = [QUANTUM_DIR / f"a{i}.py" for i in range(11)]
 
 
 # =============================
@@ -43,13 +45,21 @@ def extract_metrics(output):
         re.DOTALL
     )
 
-    if not travel_match or not waiting_match or not throughput_match:
-        raise ValueError("Could not parse travel time, waiting time, or throughput.")
+    energy_match = re.search(
+        r"ENERGY_JSON:\s*(\{.*\})",
+        output
+    )
+
+    if not travel_match or not waiting_match or not throughput_match or not energy_match:
+        raise ValueError("Could not parse traffic metrics or ENERGY_JSON.")
+
+    energy_metrics = json.loads(energy_match.group(1))
 
     return {
         "throughput": int(throughput_match.group(1)),
         "average_waiting_time": float(waiting_match.group(1)),
         "average_travel_time": float(travel_match.group(1)),
+        **energy_metrics,
     }
 
 
@@ -94,6 +104,11 @@ all_results = {}
 throughput_averages = []
 waiting_time_averages = []
 travel_time_averages = []
+selected_energy_averages = []
+exact_energy_averages = []
+optimality_gap_averages = []
+recovery_rate_averages = []
+energy_reduction_averages = []
 
 for file_path in FILES:
     simulation_name = file_path.stem
@@ -111,12 +126,16 @@ for file_path in FILES:
 
         try:
 
+            run_env = os.environ.copy()
+            run_env["QAOA_SHOTS"] = str(QAOA_SHOTS)
+
             result = subprocess.run(
                 ["python", str(file_path)],
                 capture_output=True,
                 text=True,
                 cwd=BASE_DIR,
-                timeout=3600
+                timeout=3600,
+                env=run_env
             )
 
             output = result.stdout
@@ -136,6 +155,15 @@ for file_path in FILES:
                 "throughput": metrics["throughput"],
                 "average_waiting_time": metrics["average_waiting_time"],
                 "average_travel_time": metrics["average_travel_time"],
+                "shots": metrics["shots"],
+                "num_decisions": metrics["num_decisions"],
+                "optimal_hits": metrics["optimal_hits"],
+                "optimum_recovery_rate": metrics["optimum_recovery_rate"],
+                "average_selected_energy": metrics["average_selected_energy"],
+                "average_exact_min_energy": metrics["average_exact_min_energy"],
+                "average_optimality_gap": metrics["average_optimality_gap"],
+                "maximum_optimality_gap": metrics["maximum_optimality_gap"],
+                "average_energy_reduction": metrics["average_energy_reduction"],
                 "raw_output": output
             })
 
@@ -173,15 +201,30 @@ for file_path in FILES:
     throughputs = [run["throughput"] for run in successful_runs]
     waiting_times = [run["average_waiting_time"] for run in successful_runs]
     travel_times = [run["average_travel_time"] for run in successful_runs]
+    selected_energies = [run["average_selected_energy"] for run in successful_runs]
+    exact_energies = [run["average_exact_min_energy"] for run in successful_runs]
+    optimality_gaps = [run["average_optimality_gap"] for run in successful_runs]
+    recovery_rates = [run["optimum_recovery_rate"] for run in successful_runs]
+    energy_reductions = [run["average_energy_reduction"] for run in successful_runs]
 
     throughput_stats = calculate_stats(throughputs)
     waiting_stats = calculate_stats(waiting_times)
     travel_stats = calculate_stats(travel_times)
+    selected_energy_stats = calculate_stats(selected_energies)
+    exact_energy_stats = calculate_stats(exact_energies)
+    optimality_gap_stats = calculate_stats(optimality_gaps)
+    recovery_rate_stats = calculate_stats(recovery_rates)
+    energy_reduction_stats = calculate_stats(energy_reductions)
 
     if successful_runs:
         throughput_averages.append(throughput_stats["mean"])
         waiting_time_averages.append(waiting_stats["mean"])
         travel_time_averages.append(travel_stats["mean"])
+        selected_energy_averages.append(selected_energy_stats["mean"])
+        exact_energy_averages.append(exact_energy_stats["mean"])
+        optimality_gap_averages.append(optimality_gap_stats["mean"])
+        recovery_rate_averages.append(recovery_rate_stats["mean"])
+        energy_reduction_averages.append(energy_reduction_stats["mean"])
 
     all_results[simulation_name] = {
         "source_file": str(file_path),
@@ -192,6 +235,11 @@ for file_path in FILES:
             "throughput": throughput_stats,
             "average_waiting_time": waiting_stats,
             "average_travel_time": travel_stats,
+            "average_selected_energy": selected_energy_stats,
+            "average_exact_min_energy": exact_energy_stats,
+            "average_optimality_gap": optimality_gap_stats,
+            "optimum_recovery_rate": recovery_rate_stats,
+            "average_energy_reduction": energy_reduction_stats,
         }
     }
 
@@ -204,12 +252,22 @@ overall_summary = {
     "throughput": calculate_stats(throughput_averages),
     "average_waiting_time": calculate_stats(waiting_time_averages),
     "average_travel_time": calculate_stats(travel_time_averages),
+    "average_selected_energy": calculate_stats(selected_energy_averages),
+    "average_exact_min_energy": calculate_stats(exact_energy_averages),
+    "average_optimality_gap": calculate_stats(optimality_gap_averages),
+    "optimum_recovery_rate": calculate_stats(recovery_rate_averages),
+    "average_energy_reduction": calculate_stats(energy_reduction_averages),
 }
 
 all_results["summary"] = {
     "throughput_averages_by_file": throughput_averages,
     "waiting_time_averages_by_file": waiting_time_averages,
     "travel_time_averages_by_file": travel_time_averages,
+    "selected_energy_averages_by_file": selected_energy_averages,
+    "exact_energy_averages_by_file": exact_energy_averages,
+    "optimality_gap_averages_by_file": optimality_gap_averages,
+    "recovery_rate_averages_by_file": recovery_rate_averages,
+    "energy_reduction_averages_by_file": energy_reduction_averages,
     "overall_summary": overall_summary,
 }
 

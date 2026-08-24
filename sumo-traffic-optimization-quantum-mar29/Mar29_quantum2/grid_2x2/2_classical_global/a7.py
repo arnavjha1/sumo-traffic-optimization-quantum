@@ -1,9 +1,13 @@
+# CLASSICAL GLOBAL
+
 import traci
+import json
+from itertools import product
 from collections import defaultdict
-from annealer_quantum import quantum_decision
+from annealer_classical import quantum_decision
 
 SUMO_BINARY = "sumo"
-SUMO_CONFIG = "sim2x2_a10.sumocfg"
+SUMO_CONFIG = "sim2x2_a7.sumocfg"
 END_TIME = 600
 
 # -----------------------
@@ -53,6 +57,9 @@ throughput = defaultdict(int)
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
 NUM_LANES = 3       # Left=2, Straight=1, Right=0
+
+# Use the same Ising objective as the QAOA controller for direct comparison.
+ENERGY_LAMBDA = 10
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
@@ -160,6 +167,54 @@ def compute_discharging_pressure():
 
 
 x_i = [[] for _ in range(NUM_TLS)]
+
+# -----------------------
+# ENERGY BENCHMARKING
+# -----------------------
+energy_selected = []
+energy_exact = []
+energy_gaps = []
+energy_reductions = []
+energy_optimum_hits = 0
+
+def calculate_ising_energy(bitstring, biases, prev_state, neighbors, coupling_strength=2):
+    # Same Ising objective used by the QAOA controller.
+    spins = [1 if bit == "1" else -1 for bit in bitstring]
+    prev_spins = [2 * state - 1 for state in prev_state]
+
+    energy = 0.0
+
+    for i in range(NUM_TLS):
+        energy += -biases[i] * spins[i]
+        energy += -ENERGY_LAMBDA * prev_spins[i] * spins[i]
+
+        for j in neighbors[i]:
+            if i < j:
+                energy += -coupling_strength * spins[i] * spins[j]
+
+    return energy
+
+def exact_global_minimum(biases, prev_state, neighbors, coupling_strength=2):
+    best_energy = float("inf")
+    best_states = []
+
+    for state_tuple in product("01", repeat=NUM_TLS):
+        state = "".join(state_tuple)
+        energy = calculate_ising_energy(
+            state,
+            biases,
+            prev_state,
+            neighbors,
+            coupling_strength
+        )
+
+        if energy < best_energy - 1e-12:
+            best_energy = energy
+            best_states = [state]
+        elif abs(energy - best_energy) <= 1e-12:
+            best_states.append(state)
+
+    return best_energy, best_states
 
 # -----------------------
 # SIMULATION LOOP
@@ -315,6 +370,37 @@ while traci.simulation.getTime() < END_TIME:
         coupling_strength=2
     )
 
+    # Evaluate the classical global choice under the same Ising objective as QAOA.
+    selected_energy = calculate_ising_energy(
+        bitstring,
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+    exact_min_energy, exact_states = exact_global_minimum(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+    previous_bitstring = "".join(str(state) for state in prev_state)
+    previous_energy = calculate_ising_energy(
+        previous_bitstring,
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    gap = selected_energy - exact_min_energy
+    energy_selected.append(selected_energy)
+    energy_exact.append(exact_min_energy)
+    energy_gaps.append(gap)
+    energy_reductions.append(previous_energy - selected_energy)
+    if abs(gap) <= 1e-9:
+        energy_optimum_hits += 1
+
     print(traci.simulation.getTime())
 
     # Update x_i with quantum decisions
@@ -390,3 +476,41 @@ print(f"  Two Turns: {thr_two}")
 print(f"  One Turn:  {thr_one}")
 print(f"  No Turns:  {thr_none}")
 print(f"  Overall:   {thr_all}")
+
+# -----------------------
+# ENERGY BENCHMARK RESULTS
+# -----------------------
+if energy_selected:
+    energy_summary = {
+        "num_decisions": len(energy_selected),
+        "optimal_hits": energy_optimum_hits,
+        "optimum_recovery_rate": energy_optimum_hits / len(energy_selected),
+        "average_selected_energy": sum(energy_selected) / len(energy_selected),
+        "average_exact_min_energy": sum(energy_exact) / len(energy_exact),
+        "average_optimality_gap": sum(energy_gaps) / len(energy_gaps),
+        "maximum_optimality_gap": max(energy_gaps),
+        "average_energy_reduction": sum(energy_reductions) / len(energy_reductions)
+    }
+else:
+    energy_summary = {
+        "num_decisions": 0,
+        "optimal_hits": 0,
+        "optimum_recovery_rate": 0.0,
+        "average_selected_energy": None,
+        "average_exact_min_energy": None,
+        "average_optimality_gap": None,
+        "maximum_optimality_gap": None,
+        "average_energy_reduction": None
+    }
+
+print("\n===== ENERGY BENCHMARK =====")
+print(f"Energy Decisions: {energy_summary['num_decisions']}")
+print(f"Optimal Hits: {energy_summary['optimal_hits']}")
+print(f"Optimum Recovery Rate: {energy_summary['optimum_recovery_rate']:.6f}")
+if energy_summary["average_selected_energy"] is not None:
+    print(f"Average Selected Energy: {energy_summary['average_selected_energy']:.6f}")
+    print(f"Average Exact Minimum Energy: {energy_summary['average_exact_min_energy']:.6f}")
+    print(f"Average Optimality Gap: {energy_summary['average_optimality_gap']:.6f}")
+    print(f"Maximum Optimality Gap: {energy_summary['maximum_optimality_gap']:.6f}")
+    print(f"Average Energy Reduction: {energy_summary['average_energy_reduction']:.6f}")
+print("ENERGY_JSON: " + json.dumps(energy_summary))
