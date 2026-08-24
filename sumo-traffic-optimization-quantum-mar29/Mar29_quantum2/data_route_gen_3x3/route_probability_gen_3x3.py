@@ -345,4 +345,15 @@ def main(alpha_straight=0.5):
     print(f"Right:    {alpha['right']:.2f}")
     print("==========================\n")
 
-main()
+
+for alpha_index in range(11):
+    alpha_straight = alpha_index / 10.0
+
+    print("\n" + "=" * 60)
+    print(
+        f"GENERATING ALPHA CASE a{alpha_index} "
+        f"(alpha = {alpha_straight:.1f})"
+    )
+    print("=" * 60)
+
+    main(alpha_straight)

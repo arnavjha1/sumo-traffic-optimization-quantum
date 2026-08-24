@@ -1,0 +1,445 @@
+route_id,start_edge,route_edges,movement_sequence,turns,intersections,raw_probability,normalized_probability
+r0,-A0_0,-A0_0 A0_1,left,1,1,0.5,0.6666666666666666
+r1,-A0_0,-A0_0 A0B0 B0C0 C0_1,right straight straight,1,3,0.0,0.0
+r2,-A0_0,-A0_0 A0B0 B0C0 C0_0,right straight right,2,3,0.0,0.0
+r3,-A0_0,-A0_0 A0B0 B0C0 C0C1 C1B1 B1A1 A1_1,right straight left left straight straight,3,6,0.0,0.0
+r4,-A0_0,-A0_0 A0B0 B0C0 C0C1 C1_1,right straight left right,3,4,0.0,0.0
+r5,-A0_0,-A0_0 A0B0 B0C0 C0C1 C1C2 C2B2 B2A2 A2_1,right straight left straight left straight straight,3,7,0.0,0.0
+r6,-A0_0,-A0_0 A0B0 B0C0 C0C1 C1C2 C2_1,right straight left straight right,3,5,0.0,0.0
+r7,-A0_0,-A0_0 A0B0 B0C0 C0C1 C1C2 C2_0,right straight left straight straight,2,5,0.0,0.0
+r8,-A0_0,-A0_0 A0B0 B0_0,right right,2,2,0.25,0.3333333333333333
+r9,-A0_0,-A0_0 A0B0 B0B1 B1A1 A1_1,right left left straight,3,4,0.0,0.0
+r10,-A0_0,-A0_0 A0B0 B0B1 B1C1 C1_1,right left right straight,3,4,0.0,0.0
+r11,-A0_0,-A0_0 A0B0 B0B1 B1B2 B2A2 A2_1,right left straight left straight,3,5,0.0,0.0
+r12,-A0_0,-A0_0 A0B0 B0B1 B1B2 B2C2 C2_1,right left straight right straight,3,5,0.0,0.0
+r13,-A0_0,-A0_0 A0B0 B0B1 B1B2 B2_0,right left straight straight,2,4,0.0,0.0
+r14,-A0_0,-A0_0 A0A1 A1_1,straight left,1,2,0.0,0.0
+r15,-A0_0,-A0_0 A0A1 A1B1 B1C1 C1_1,straight right straight straight,1,4,0.0,0.0
+r16,-A0_0,-A0_0 A0A1 A1B1 B1C1 C1C0 C0_1,straight right straight right left,3,5,0.0,0.0
+r17,-A0_0,-A0_0 A0A1 A1B1 B1C1 C1C0 C0_0,straight right straight right straight,2,5,0.0,0.0
+r18,-A0_0,-A0_0 A0A1 A1B1 B1C1 C1C2 C2B2 B2A2 A2_1,straight right straight left left straight straight,3,7,0.0,0.0
+r19,-A0_0,-A0_0 A0A1 A1B1 B1C1 C1C2 C2_1,straight right straight left right,3,5,0.0,0.0
+r20,-A0_0,-A0_0 A0A1 A1B1 B1C1 C1C2 C2_0,straight right straight left straight,2,5,0.0,0.0
+r21,-A0_0,-A0_0 A0A1 A1B1 B1B0 B0C0 C0_1,straight right right left straight,3,5,0.0,0.0
+r22,-A0_0,-A0_0 A0A1 A1B1 B1B0 B0_0,straight right right straight,2,4,0.0,0.0
+r23,-A0_0,-A0_0 A0A1 A1B1 B1B2 B2A2 A2_1,straight right left left straight,3,5,0.0,0.0
+r24,-A0_0,-A0_0 A0A1 A1B1 B1B2 B2C2 C2_1,straight right left right straight,3,5,0.0,0.0
+r25,-A0_0,-A0_0 A0A1 A1B1 B1B2 B2_0,straight right left straight,2,4,0.0,0.0
+r26,-A0_0,-A0_0 A0A1 A1A2 A2_1,straight straight left,1,3,0.0,0.0
+r27,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2C2 C2_1,straight straight right straight straight,1,5,0.0,0.0
+r28,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2C2 C2C1 C1_1,straight straight right straight right left,3,6,0.0,0.0
+r29,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2C2 C2C1 C1C0 C0_1,straight straight right straight right straight left,3,7,0.0,0.0
+r30,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2C2 C2C1 C1C0 C0_0,straight straight right straight right straight straight,2,7,0.0,0.0
+r31,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2C2 C2_0,straight straight right straight left,2,5,0.0,0.0
+r32,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2B1 B1C1 C1_1,straight straight right right left straight,3,6,0.0,0.0
+r33,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2B1 B1B0 B0C0 C0_1,straight straight right right straight left straight,3,7,0.0,0.0
+r34,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2B1 B1B0 B0_0,straight straight right right straight straight,2,6,0.0,0.0
+r35,-A0_0,-A0_0 A0A1 A1A2 A2B2 B2_0,straight straight right left,2,4,0.0,0.0
+r36,-A0_0,-A0_0 A0A1 A1A2 A2_0,straight straight straight,0,3,0.0,0.0
+r37,-B0_0,-B0_0 B0A0 A0_1,left straight,1,2,0.0,0.0
+r38,-B0_0,-B0_0 B0A0 A0_0,left left,2,2,0.25,0.3333333333333333
+r39,-B0_0,-B0_0 B0A0 A0A1 A1_1,left right left,3,3,0.125,0.16666666666666666
+r40,-B0_0,-B0_0 B0A0 A0A1 A1B1 B1C1 C1_1,left right right straight straight,3,5,0.0,0.0
+r41,-B0_0,-B0_0 B0A0 A0A1 A1A2 A2_1,left right straight left,3,4,0.0,0.0
+r42,-B0_0,-B0_0 B0A0 A0A1 A1A2 A2B2 B2C2 C2_1,left right straight right straight straight,3,6,0.0,0.0
+r43,-B0_0,-B0_0 B0A0 A0A1 A1A2 A2_0,left right straight straight,2,4,0.0,0.0
+r44,-B0_0,-B0_0 B0C0 C0_1,right straight,1,2,0.0,0.0
+r45,-B0_0,-B0_0 B0C0 C0_0,right right,2,2,0.25,0.3333333333333333
+r46,-B0_0,-B0_0 B0C0 C0C1 C1B1 B1A1 A1_1,right left left straight straight,3,5,0.0,0.0
+r47,-B0_0,-B0_0 B0C0 C0C1 C1_1,right left right,3,3,0.125,0.16666666666666666
+r48,-B0_0,-B0_0 B0C0 C0C1 C1C2 C2B2 B2A2 A2_1,right left straight left straight straight,3,6,0.0,0.0
+r49,-B0_0,-B0_0 B0C0 C0C1 C1C2 C2_1,right left straight right,3,4,0.0,0.0
+r50,-B0_0,-B0_0 B0C0 C0C1 C1C2 C2_0,right left straight straight,2,4,0.0,0.0
+r51,-B0_0,-B0_0 B0B1 B1A1 A1_1,straight left straight,1,3,0.0,0.0
+r52,-B0_0,-B0_0 B0B1 B1A1 A1A0 A0_1,straight left left right,3,4,0.0,0.0
+r53,-B0_0,-B0_0 B0B1 B1A1 A1A0 A0_0,straight left left straight,2,4,0.0,0.0
+r54,-B0_0,-B0_0 B0B1 B1A1 A1A2 A2_1,straight left right left,3,4,0.0,0.0
+r55,-B0_0,-B0_0 B0B1 B1A1 A1A2 A2B2 B2C2 C2_1,straight left right right straight straight,3,6,0.0,0.0
+r56,-B0_0,-B0_0 B0B1 B1A1 A1A2 A2_0,straight left right straight,2,4,0.0,0.0
+r57,-B0_0,-B0_0 B0B1 B1C1 C1_1,straight right straight,1,3,0.0,0.0
+r58,-B0_0,-B0_0 B0B1 B1C1 C1C0 C0_1,straight right right left,3,4,0.0,0.0
+r59,-B0_0,-B0_0 B0B1 B1C1 C1C0 C0_0,straight right right straight,2,4,0.0,0.0
+r60,-B0_0,-B0_0 B0B1 B1C1 C1C2 C2B2 B2A2 A2_1,straight right left left straight straight,3,6,0.0,0.0
+r61,-B0_0,-B0_0 B0B1 B1C1 C1C2 C2_1,straight right left right,3,4,0.0,0.0
+r62,-B0_0,-B0_0 B0B1 B1C1 C1C2 C2_0,straight right left straight,2,4,0.0,0.0
+r63,-B0_0,-B0_0 B0B1 B1B2 B2A2 A2_1,straight straight left straight,1,4,0.0,0.0
+r64,-B0_0,-B0_0 B0B1 B1B2 B2A2 A2A1 A1_1,straight straight left left right,3,5,0.0,0.0
+r65,-B0_0,-B0_0 B0B1 B1B2 B2A2 A2A1 A1A0 A0_1,straight straight left left straight right,3,6,0.0,0.0
+r66,-B0_0,-B0_0 B0B1 B1B2 B2A2 A2A1 A1A0 A0_0,straight straight left left straight straight,2,6,0.0,0.0
+r67,-B0_0,-B0_0 B0B1 B1B2 B2A2 A2_0,straight straight left right,2,4,0.0,0.0
+r68,-B0_0,-B0_0 B0B1 B1B2 B2C2 C2_1,straight straight right straight,1,4,0.0,0.0
+r69,-B0_0,-B0_0 B0B1 B1B2 B2C2 C2C1 C1_1,straight straight right right left,3,5,0.0,0.0
+r70,-B0_0,-B0_0 B0B1 B1B2 B2C2 C2C1 C1C0 C0_1,straight straight right right straight left,3,6,0.0,0.0
+r71,-B0_0,-B0_0 B0B1 B1B2 B2C2 C2C1 C1C0 C0_0,straight straight right right straight straight,2,6,0.0,0.0
+r72,-B0_0,-B0_0 B0B1 B1B2 B2C2 C2_0,straight straight right left,2,4,0.0,0.0
+r73,-B0_0,-B0_0 B0B1 B1B2 B2_0,straight straight straight,0,3,0.0,0.0
+r74,-C0_0,-C0_0 C0B0 B0A0 A0_1,left straight straight,1,3,0.0,0.0
+r75,-C0_0,-C0_0 C0B0 B0A0 A0_0,left straight left,2,3,0.0,0.0
+r76,-C0_0,-C0_0 C0B0 B0A0 A0A1 A1_1,left straight right left,3,4,0.0,0.0
+r77,-C0_0,-C0_0 C0B0 B0A0 A0A1 A1B1 B1C1 C1_1,left straight right right straight straight,3,6,0.0,0.0
+r78,-C0_0,-C0_0 C0B0 B0A0 A0A1 A1A2 A2_1,left straight right straight left,3,5,0.0,0.0
+r79,-C0_0,-C0_0 C0B0 B0A0 A0A1 A1A2 A2B2 B2C2 C2_1,left straight right straight right straight straight,3,7,0.0,0.0
+r80,-C0_0,-C0_0 C0B0 B0A0 A0A1 A1A2 A2_0,left straight right straight straight,2,5,0.0,0.0
+r81,-C0_0,-C0_0 C0B0 B0_0,left left,2,2,0.25,0.3333333333333333
+r82,-C0_0,-C0_0 C0B0 B0B1 B1A1 A1_1,left right left straight,3,4,0.0,0.0
+r83,-C0_0,-C0_0 C0B0 B0B1 B1C1 C1_1,left right right straight,3,4,0.0,0.0
+r84,-C0_0,-C0_0 C0B0 B0B1 B1B2 B2A2 A2_1,left right straight left straight,3,5,0.0,0.0
+r85,-C0_0,-C0_0 C0B0 B0B1 B1B2 B2C2 C2_1,left right straight right straight,3,5,0.0,0.0
+r86,-C0_0,-C0_0 C0B0 B0B1 B1B2 B2_0,left right straight straight,2,4,0.0,0.0
+r87,-C0_0,-C0_0 C0_1,right,1,1,0.5,0.6666666666666666
+r88,-C0_0,-C0_0 C0C1 C1B1 B1A1 A1_1,straight left straight straight,1,4,0.0,0.0
+r89,-C0_0,-C0_0 C0C1 C1B1 B1A1 A1A0 A0_1,straight left straight left right,3,5,0.0,0.0
+r90,-C0_0,-C0_0 C0C1 C1B1 B1A1 A1A0 A0_0,straight left straight left straight,2,5,0.0,0.0
+r91,-C0_0,-C0_0 C0C1 C1B1 B1A1 A1A2 A2_1,straight left straight right left,3,5,0.0,0.0
+r92,-C0_0,-C0_0 C0C1 C1B1 B1A1 A1A2 A2B2 B2C2 C2_1,straight left straight right right straight straight,3,7,0.0,0.0
+r93,-C0_0,-C0_0 C0C1 C1B1 B1A1 A1A2 A2_0,straight left straight right straight,2,5,0.0,0.0
+r94,-C0_0,-C0_0 C0C1 C1B1 B1B0 B0A0 A0_1,straight left left right straight,3,5,0.0,0.0
+r95,-C0_0,-C0_0 C0C1 C1B1 B1B0 B0_0,straight left left straight,2,4,0.0,0.0
+r96,-C0_0,-C0_0 C0C1 C1B1 B1B2 B2A2 A2_1,straight left right left straight,3,5,0.0,0.0
+r97,-C0_0,-C0_0 C0C1 C1B1 B1B2 B2C2 C2_1,straight left right right straight,3,5,0.0,0.0
+r98,-C0_0,-C0_0 C0C1 C1B1 B1B2 B2_0,straight left right straight,2,4,0.0,0.0
+r99,-C0_0,-C0_0 C0C1 C1_1,straight right,1,2,0.0,0.0
+r100,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2A2 A2_1,straight straight left straight straight,1,5,0.0,0.0
+r101,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2A2 A2A1 A1_1,straight straight left straight left right,3,6,0.0,0.0
+r102,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2A2 A2A1 A1A0 A0_1,straight straight left straight left straight right,3,7,0.0,0.0
+r103,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2A2 A2A1 A1A0 A0_0,straight straight left straight left straight straight,2,7,0.0,0.0
+r104,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2A2 A2_0,straight straight left straight right,2,5,0.0,0.0
+r105,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2B1 B1A1 A1_1,straight straight left left right straight,3,6,0.0,0.0
+r106,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2B1 B1B0 B0A0 A0_1,straight straight left left straight right straight,3,7,0.0,0.0
+r107,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2B1 B1B0 B0_0,straight straight left left straight straight,2,6,0.0,0.0
+r108,-C0_0,-C0_0 C0C1 C1C2 C2B2 B2_0,straight straight left right,2,4,0.0,0.0
+r109,-C0_0,-C0_0 C0C1 C1C2 C2_1,straight straight right,1,3,0.0,0.0
+r110,-C0_0,-C0_0 C0C1 C1C2 C2_0,straight straight straight,0,3,0.0,0.0
+r111,-A0_1,-A0_1 A0B0 B0C0 C0_1,straight straight straight,0,3,0.0,0.0
+r112,-A0_1,-A0_1 A0B0 B0C0 C0_0,straight straight right,1,3,0.0,0.0
+r113,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1B1 B1A1 A1_1,straight straight left left straight straight,2,6,0.0,0.0
+r114,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1B1 B1A1 A1A2 A2_0,straight straight left left straight right straight,3,7,0.0,0.0
+r115,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1B1 B1B2 B2_0,straight straight left left right straight,3,6,0.0,0.0
+r116,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1_1,straight straight left right,2,4,0.0,0.0
+r117,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1C2 C2B2 B2A2 A2_1,straight straight left straight left straight straight,2,7,0.0,0.0
+r118,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1C2 C2B2 B2A2 A2_0,straight straight left straight left straight right,3,7,0.0,0.0
+r119,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1C2 C2B2 B2_0,straight straight left straight left right,3,6,0.0,0.0
+r120,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1C2 C2_1,straight straight left straight right,2,5,0.0,0.0
+r121,-A0_1,-A0_1 A0B0 B0C0 C0C1 C1C2 C2_0,straight straight left straight straight,1,5,0.0,0.0
+r122,-A0_1,-A0_1 A0B0 B0_0,straight right,1,2,0.0,0.0
+r123,-A0_1,-A0_1 A0B0 B0B1 B1A1 A1_1,straight left left straight,2,4,0.0,0.0
+r124,-A0_1,-A0_1 A0B0 B0B1 B1A1 A1A2 A2_0,straight left left right straight,3,5,0.0,0.0
+r125,-A0_1,-A0_1 A0B0 B0B1 B1C1 C1_1,straight left right straight,2,4,0.0,0.0
+r126,-A0_1,-A0_1 A0B0 B0B1 B1C1 C1C0 C0_0,straight left right right straight,3,5,0.0,0.0
+r127,-A0_1,-A0_1 A0B0 B0B1 B1C1 C1C2 C2_0,straight left right left straight,3,5,0.0,0.0
+r128,-A0_1,-A0_1 A0B0 B0B1 B1B2 B2A2 A2_1,straight left straight left straight,2,5,0.0,0.0
+r129,-A0_1,-A0_1 A0B0 B0B1 B1B2 B2A2 A2_0,straight left straight left right,3,5,0.0,0.0
+r130,-A0_1,-A0_1 A0B0 B0B1 B1B2 B2C2 C2_1,straight left straight right straight,2,5,0.0,0.0
+r131,-A0_1,-A0_1 A0B0 B0B1 B1B2 B2C2 C2C1 C1C0 C0_0,straight left straight right right straight straight,3,7,0.0,0.0
+r132,-A0_1,-A0_1 A0B0 B0B1 B1B2 B2C2 C2_0,straight left straight right left,3,5,0.0,0.0
+r133,-A0_1,-A0_1 A0B0 B0B1 B1B2 B2_0,straight left straight straight,1,4,0.0,0.0
+r134,-A0_1,-A0_1 A0_0,right,1,1,0.5,0.6666666666666666
+r135,-A0_1,-A0_1 A0A1 A1_1,left left,2,2,0.25,0.3333333333333333
+r136,-A0_1,-A0_1 A0A1 A1B1 B1C1 C1_1,left right straight straight,2,4,0.0,0.0
+r137,-A0_1,-A0_1 A0A1 A1B1 B1C1 C1C0 C0_0,left right straight right straight,3,5,0.0,0.0
+r138,-A0_1,-A0_1 A0A1 A1B1 B1C1 C1C2 C2_0,left right straight left straight,3,5,0.0,0.0
+r139,-A0_1,-A0_1 A0A1 A1B1 B1B0 B0_0,left right right straight,3,4,0.0,0.0
+r140,-A0_1,-A0_1 A0A1 A1B1 B1B2 B2_0,left right left straight,3,4,0.0,0.0
+r141,-A0_1,-A0_1 A0A1 A1A2 A2_1,left straight left,2,3,0.0,0.0
+r142,-A0_1,-A0_1 A0A1 A1A2 A2B2 B2C2 C2_1,left straight right straight straight,2,5,0.0,0.0
+r143,-A0_1,-A0_1 A0A1 A1A2 A2B2 B2C2 C2C1 C1C0 C0_0,left straight right straight right straight straight,3,7,0.0,0.0
+r144,-A0_1,-A0_1 A0A1 A1A2 A2B2 B2C2 C2_0,left straight right straight left,3,5,0.0,0.0
+r145,-A0_1,-A0_1 A0A1 A1A2 A2B2 B2B1 B1B0 B0_0,left straight right right straight straight,3,6,0.0,0.0
+r146,-A0_1,-A0_1 A0A1 A1A2 A2B2 B2_0,left straight right left,3,4,0.0,0.0
+r147,-A0_1,-A0_1 A0A1 A1A2 A2_0,left straight straight,1,3,0.0,0.0
+r148,-A1_1,-A1_1 A1B1 B1C1 C1_1,straight straight straight,0,3,0.0,0.0
+r149,-A1_1,-A1_1 A1B1 B1C1 C1C0 C0B0 B0A0 A0_1,straight straight right right straight straight,2,6,0.0,0.0
+r150,-A1_1,-A1_1 A1B1 B1C1 C1C0 C0B0 B0A0 A0_0,straight straight right right straight left,3,6,0.0,0.0
+r151,-A1_1,-A1_1 A1B1 B1C1 C1C0 C0B0 B0_0,straight straight right right left,3,5,0.0,0.0
+r152,-A1_1,-A1_1 A1B1 B1C1 C1C0 C0_1,straight straight right left,2,4,0.0,0.0
+r153,-A1_1,-A1_1 A1B1 B1C1 C1C0 C0_0,straight straight right straight,1,4,0.0,0.0
+r154,-A1_1,-A1_1 A1B1 B1C1 C1C2 C2B2 B2A2 A2_1,straight straight left left straight straight,2,6,0.0,0.0
+r155,-A1_1,-A1_1 A1B1 B1C1 C1C2 C2B2 B2A2 A2_0,straight straight left left straight right,3,6,0.0,0.0
+r156,-A1_1,-A1_1 A1B1 B1C1 C1C2 C2B2 B2_0,straight straight left left right,3,5,0.0,0.0
+r157,-A1_1,-A1_1 A1B1 B1C1 C1C2 C2_1,straight straight left right,2,4,0.0,0.0
+r158,-A1_1,-A1_1 A1B1 B1C1 C1C2 C2_0,straight straight left straight,1,4,0.0,0.0
+r159,-A1_1,-A1_1 A1B1 B1B0 B0A0 A0_1,straight right right straight,2,4,0.0,0.0
+r160,-A1_1,-A1_1 A1B1 B1B0 B0A0 A0_0,straight right right left,3,4,0.0,0.0
+r161,-A1_1,-A1_1 A1B1 B1B0 B0C0 C0_1,straight right left straight,2,4,0.0,0.0
+r162,-A1_1,-A1_1 A1B1 B1B0 B0C0 C0_0,straight right left right,3,4,0.0,0.0
+r163,-A1_1,-A1_1 A1B1 B1B0 B0C0 C0C1 C1C2 C2_0,straight right left left straight straight,3,6,0.0,0.0
+r164,-A1_1,-A1_1 A1B1 B1B0 B0_0,straight right straight,1,3,0.0,0.0
+r165,-A1_1,-A1_1 A1B1 B1B2 B2A2 A2_1,straight left left straight,2,4,0.0,0.0
+r166,-A1_1,-A1_1 A1B1 B1B2 B2A2 A2_0,straight left left right,3,4,0.0,0.0
+r167,-A1_1,-A1_1 A1B1 B1B2 B2C2 C2_1,straight left right straight,2,4,0.0,0.0
+r168,-A1_1,-A1_1 A1B1 B1B2 B2C2 C2C1 C1C0 C0_0,straight left right right straight straight,3,6,0.0,0.0
+r169,-A1_1,-A1_1 A1B1 B1B2 B2C2 C2_0,straight left right left,3,4,0.0,0.0
+r170,-A1_1,-A1_1 A1B1 B1B2 B2_0,straight left straight,1,3,0.0,0.0
+r171,-A1_1,-A1_1 A1A0 A0_1,right right,2,2,0.25,0.3333333333333333
+r172,-A1_1,-A1_1 A1A0 A0B0 B0C0 C0_1,right left straight straight,2,4,0.0,0.0
+r173,-A1_1,-A1_1 A1A0 A0B0 B0C0 C0_0,right left straight right,3,4,0.0,0.0
+r174,-A1_1,-A1_1 A1A0 A0B0 B0C0 C0C1 C1C2 C2_0,right left straight left straight straight,3,6,0.0,0.0
+r175,-A1_1,-A1_1 A1A0 A0B0 B0_0,right left right,3,3,0.125,0.16666666666666666
+r176,-A1_1,-A1_1 A1A0 A0B0 B0B1 B1B2 B2_0,right left left straight straight,3,5,0.0,0.0
+r177,-A1_1,-A1_1 A1A0 A0_0,right straight,1,2,0.0,0.0
+r178,-A1_1,-A1_1 A1A2 A2_1,left left,2,2,0.25,0.3333333333333333
+r179,-A1_1,-A1_1 A1A2 A2B2 B2C2 C2_1,left right straight straight,2,4,0.0,0.0
+r180,-A1_1,-A1_1 A1A2 A2B2 B2C2 C2C1 C1C0 C0_0,left right straight right straight straight,3,6,0.0,0.0
+r181,-A1_1,-A1_1 A1A2 A2B2 B2C2 C2_0,left right straight left,3,4,0.0,0.0
+r182,-A1_1,-A1_1 A1A2 A2B2 B2B1 B1B0 B0_0,left right right straight straight,3,5,0.0,0.0
+r183,-A1_1,-A1_1 A1A2 A2B2 B2_0,left right left,3,3,0.125,0.16666666666666666
+r184,-A1_1,-A1_1 A1A2 A2_0,left straight,1,2,0.0,0.0
+r185,-A2_1,-A2_1 A2B2 B2C2 C2_1,straight straight straight,0,3,0.0,0.0
+r186,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1B1 B1A1 A1_1,straight straight right right straight straight,2,6,0.0,0.0
+r187,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1B1 B1A1 A1A0 A0_0,straight straight right right straight left straight,3,7,0.0,0.0
+r188,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1B1 B1B0 B0_0,straight straight right right left straight,3,6,0.0,0.0
+r189,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1_1,straight straight right left,2,4,0.0,0.0
+r190,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1C0 C0B0 B0A0 A0_1,straight straight right straight right straight straight,2,7,0.0,0.0
+r191,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1C0 C0B0 B0A0 A0_0,straight straight right straight right straight left,3,7,0.0,0.0
+r192,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1C0 C0B0 B0_0,straight straight right straight right left,3,6,0.0,0.0
+r193,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1C0 C0_1,straight straight right straight left,2,5,0.0,0.0
+r194,-A2_1,-A2_1 A2B2 B2C2 C2C1 C1C0 C0_0,straight straight right straight straight,1,5,0.0,0.0
+r195,-A2_1,-A2_1 A2B2 B2C2 C2_0,straight straight left,1,3,0.0,0.0
+r196,-A2_1,-A2_1 A2B2 B2B1 B1A1 A1_1,straight right right straight,2,4,0.0,0.0
+r197,-A2_1,-A2_1 A2B2 B2B1 B1A1 A1A0 A0_0,straight right right left straight,3,5,0.0,0.0
+r198,-A2_1,-A2_1 A2B2 B2B1 B1C1 C1_1,straight right left straight,2,4,0.0,0.0
+r199,-A2_1,-A2_1 A2B2 B2B1 B1C1 C1C0 C0_0,straight right left right straight,3,5,0.0,0.0
+r200,-A2_1,-A2_1 A2B2 B2B1 B1C1 C1C2 C2_0,straight right left left straight,3,5,0.0,0.0
+r201,-A2_1,-A2_1 A2B2 B2B1 B1B0 B0A0 A0_1,straight right straight right straight,2,5,0.0,0.0
+r202,-A2_1,-A2_1 A2B2 B2B1 B1B0 B0A0 A0_0,straight right straight right left,3,5,0.0,0.0
+r203,-A2_1,-A2_1 A2B2 B2B1 B1B0 B0C0 C0_1,straight right straight left straight,2,5,0.0,0.0
+r204,-A2_1,-A2_1 A2B2 B2B1 B1B0 B0C0 C0_0,straight right straight left right,3,5,0.0,0.0
+r205,-A2_1,-A2_1 A2B2 B2B1 B1B0 B0C0 C0C1 C1C2 C2_0,straight right straight left left straight straight,3,7,0.0,0.0
+r206,-A2_1,-A2_1 A2B2 B2B1 B1B0 B0_0,straight right straight straight,1,4,0.0,0.0
+r207,-A2_1,-A2_1 A2B2 B2_0,straight left,1,2,0.0,0.0
+r208,-A2_1,-A2_1 A2A1 A1_1,right right,2,2,0.25,0.3333333333333333
+r209,-A2_1,-A2_1 A2A1 A1B1 B1C1 C1_1,right left straight straight,2,4,0.0,0.0
+r210,-A2_1,-A2_1 A2A1 A1B1 B1C1 C1C0 C0_0,right left straight right straight,3,5,0.0,0.0
+r211,-A2_1,-A2_1 A2A1 A1B1 B1C1 C1C2 C2_0,right left straight left straight,3,5,0.0,0.0
+r212,-A2_1,-A2_1 A2A1 A1B1 B1B0 B0_0,right left right straight,3,4,0.0,0.0
+r213,-A2_1,-A2_1 A2A1 A1B1 B1B2 B2_0,right left left straight,3,4,0.0,0.0
+r214,-A2_1,-A2_1 A2A1 A1A0 A0_1,right straight right,2,3,0.0,0.0
+r215,-A2_1,-A2_1 A2A1 A1A0 A0B0 B0C0 C0_1,right straight left straight straight,2,5,0.0,0.0
+r216,-A2_1,-A2_1 A2A1 A1A0 A0B0 B0C0 C0_0,right straight left straight right,3,5,0.0,0.0
+r217,-A2_1,-A2_1 A2A1 A1A0 A0B0 B0C0 C0C1 C1C2 C2_0,right straight left straight left straight straight,3,7,0.0,0.0
+r218,-A2_1,-A2_1 A2A1 A1A0 A0B0 B0_0,right straight left right,3,4,0.0,0.0
+r219,-A2_1,-A2_1 A2A1 A1A0 A0B0 B0B1 B1B2 B2_0,right straight left left straight straight,3,6,0.0,0.0
+r220,-A2_1,-A2_1 A2A1 A1A0 A0_0,right straight straight,1,3,0.0,0.0
+r221,-A2_1,-A2_1 A2_0,left,1,1,0.5,0.6666666666666666
+r222,-A2_0,-A2_0 A2_1,right,1,1,0.5,0.6666666666666666
+r223,-A2_0,-A2_0 A2B2 B2C2 C2_1,left straight straight,1,3,0.0,0.0
+r224,-A2_0,-A2_0 A2B2 B2C2 C2C1 C1B1 B1A1 A1_1,left straight right right straight straight,3,6,0.0,0.0
+r225,-A2_0,-A2_0 A2B2 B2C2 C2C1 C1_1,left straight right left,3,4,0.0,0.0
+r226,-A2_0,-A2_0 A2B2 B2C2 C2C1 C1C0 C0B0 B0A0 A0_1,left straight right straight right straight straight,3,7,0.0,0.0
+r227,-A2_0,-A2_0 A2B2 B2C2 C2C1 C1C0 C0_1,left straight right straight left,3,5,0.0,0.0
+r228,-A2_0,-A2_0 A2B2 B2C2 C2C1 C1C0 C0_0,left straight right straight straight,2,5,0.0,0.0
+r229,-A2_0,-A2_0 A2B2 B2C2 C2_0,left straight left,2,3,0.0,0.0
+r230,-A2_0,-A2_0 A2B2 B2B1 B1A1 A1_1,left right right straight,3,4,0.0,0.0
+r231,-A2_0,-A2_0 A2B2 B2B1 B1C1 C1_1,left right left straight,3,4,0.0,0.0
+r232,-A2_0,-A2_0 A2B2 B2B1 B1B0 B0A0 A0_1,left right straight right straight,3,5,0.0,0.0
+r233,-A2_0,-A2_0 A2B2 B2B1 B1B0 B0C0 C0_1,left right straight left straight,3,5,0.0,0.0
+r234,-A2_0,-A2_0 A2B2 B2B1 B1B0 B0_0,left right straight straight,2,4,0.0,0.0
+r235,-A2_0,-A2_0 A2B2 B2_0,left left,2,2,0.25,0.3333333333333333
+r236,-A2_0,-A2_0 A2A1 A1_1,straight right,1,2,0.0,0.0
+r237,-A2_0,-A2_0 A2A1 A1B1 B1C1 C1_1,straight left straight straight,1,4,0.0,0.0
+r238,-A2_0,-A2_0 A2A1 A1B1 B1C1 C1C0 C0B0 B0A0 A0_1,straight left straight right right straight straight,3,7,0.0,0.0
+r239,-A2_0,-A2_0 A2A1 A1B1 B1C1 C1C0 C0_1,straight left straight right left,3,5,0.0,0.0
+r240,-A2_0,-A2_0 A2A1 A1B1 B1C1 C1C0 C0_0,straight left straight right straight,2,5,0.0,0.0
+r241,-A2_0,-A2_0 A2A1 A1B1 B1C1 C1C2 C2_1,straight left straight left right,3,5,0.0,0.0
+r242,-A2_0,-A2_0 A2A1 A1B1 B1C1 C1C2 C2_0,straight left straight left straight,2,5,0.0,0.0
+r243,-A2_0,-A2_0 A2A1 A1B1 B1B0 B0A0 A0_1,straight left right right straight,3,5,0.0,0.0
+r244,-A2_0,-A2_0 A2A1 A1B1 B1B0 B0C0 C0_1,straight left right left straight,3,5,0.0,0.0
+r245,-A2_0,-A2_0 A2A1 A1B1 B1B0 B0_0,straight left right straight,2,4,0.0,0.0
+r246,-A2_0,-A2_0 A2A1 A1B1 B1B2 B2C2 C2_1,straight left left right straight,3,5,0.0,0.0
+r247,-A2_0,-A2_0 A2A1 A1B1 B1B2 B2_0,straight left left straight,2,4,0.0,0.0
+r248,-A2_0,-A2_0 A2A1 A1A0 A0_1,straight straight right,1,3,0.0,0.0
+r249,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0C0 C0_1,straight straight left straight straight,1,5,0.0,0.0
+r250,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0C0 C0_0,straight straight left straight right,2,5,0.0,0.0
+r251,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0C0 C0C1 C1_1,straight straight left straight left right,3,6,0.0,0.0
+r252,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0C0 C0C1 C1C2 C2_1,straight straight left straight left straight right,3,7,0.0,0.0
+r253,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0C0 C0C1 C1C2 C2_0,straight straight left straight left straight straight,2,7,0.0,0.0
+r254,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0_0,straight straight left right,2,4,0.0,0.0
+r255,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0B1 B1C1 C1_1,straight straight left left right straight,3,6,0.0,0.0
+r256,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0B1 B1B2 B2C2 C2_1,straight straight left left straight right straight,3,7,0.0,0.0
+r257,-A2_0,-A2_0 A2A1 A1A0 A0B0 B0B1 B1B2 B2_0,straight straight left left straight straight,2,6,0.0,0.0
+r258,-A2_0,-A2_0 A2A1 A1A0 A0_0,straight straight straight,0,3,0.0,0.0
+r259,-B2_0,-B2_0 B2A2 A2_1,right straight,1,2,0.0,0.0
+r260,-B2_0,-B2_0 B2A2 A2A1 A1_1,right left right,3,3,0.125,0.16666666666666666
+r261,-B2_0,-B2_0 B2A2 A2A1 A1B1 B1C1 C1_1,right left left straight straight,3,5,0.0,0.0
+r262,-B2_0,-B2_0 B2A2 A2A1 A1A0 A0_1,right left straight right,3,4,0.0,0.0
+r263,-B2_0,-B2_0 B2A2 A2A1 A1A0 A0B0 B0C0 C0_1,right left straight left straight straight,3,6,0.0,0.0
+r264,-B2_0,-B2_0 B2A2 A2A1 A1A0 A0_0,right left straight straight,2,4,0.0,0.0
+r265,-B2_0,-B2_0 B2A2 A2_0,right right,2,2,0.25,0.3333333333333333
+r266,-B2_0,-B2_0 B2C2 C2_1,left straight,1,2,0.0,0.0
+r267,-B2_0,-B2_0 B2C2 C2C1 C1B1 B1A1 A1_1,left right right straight straight,3,5,0.0,0.0
+r268,-B2_0,-B2_0 B2C2 C2C1 C1_1,left right left,3,3,0.125,0.16666666666666666
+r269,-B2_0,-B2_0 B2C2 C2C1 C1C0 C0B0 B0A0 A0_1,left right straight right straight straight,3,6,0.0,0.0
+r270,-B2_0,-B2_0 B2C2 C2C1 C1C0 C0_1,left right straight left,3,4,0.0,0.0
+r271,-B2_0,-B2_0 B2C2 C2C1 C1C0 C0_0,left right straight straight,2,4,0.0,0.0
+r272,-B2_0,-B2_0 B2C2 C2_0,left left,2,2,0.25,0.3333333333333333
+r273,-B2_0,-B2_0 B2B1 B1A1 A1_1,straight right straight,1,3,0.0,0.0
+r274,-B2_0,-B2_0 B2B1 B1A1 A1A0 A0_1,straight right left right,3,4,0.0,0.0
+r275,-B2_0,-B2_0 B2B1 B1A1 A1A0 A0B0 B0C0 C0_1,straight right left left straight straight,3,6,0.0,0.0
+r276,-B2_0,-B2_0 B2B1 B1A1 A1A0 A0_0,straight right left straight,2,4,0.0,0.0
+r277,-B2_0,-B2_0 B2B1 B1A1 A1A2 A2_1,straight right right left,3,4,0.0,0.0
+r278,-B2_0,-B2_0 B2B1 B1A1 A1A2 A2_0,straight right right straight,2,4,0.0,0.0
+r279,-B2_0,-B2_0 B2B1 B1C1 C1_1,straight left straight,1,3,0.0,0.0
+r280,-B2_0,-B2_0 B2B1 B1C1 C1C0 C0B0 B0A0 A0_1,straight left right right straight straight,3,6,0.0,0.0
+r281,-B2_0,-B2_0 B2B1 B1C1 C1C0 C0_1,straight left right left,3,4,0.0,0.0
+r282,-B2_0,-B2_0 B2B1 B1C1 C1C0 C0_0,straight left right straight,2,4,0.0,0.0
+r283,-B2_0,-B2_0 B2B1 B1C1 C1C2 C2_1,straight left left right,3,4,0.0,0.0
+r284,-B2_0,-B2_0 B2B1 B1C1 C1C2 C2_0,straight left left straight,2,4,0.0,0.0
+r285,-B2_0,-B2_0 B2B1 B1B0 B0A0 A0_1,straight straight right straight,1,4,0.0,0.0
+r286,-B2_0,-B2_0 B2B1 B1B0 B0A0 A0_0,straight straight right left,2,4,0.0,0.0
+r287,-B2_0,-B2_0 B2B1 B1B0 B0A0 A0A1 A1_1,straight straight right right left,3,5,0.0,0.0
+r288,-B2_0,-B2_0 B2B1 B1B0 B0A0 A0A1 A1A2 A2_1,straight straight right right straight left,3,6,0.0,0.0
+r289,-B2_0,-B2_0 B2B1 B1B0 B0A0 A0A1 A1A2 A2_0,straight straight right right straight straight,2,6,0.0,0.0
+r290,-B2_0,-B2_0 B2B1 B1B0 B0C0 C0_1,straight straight left straight,1,4,0.0,0.0
+r291,-B2_0,-B2_0 B2B1 B1B0 B0C0 C0_0,straight straight left right,2,4,0.0,0.0
+r292,-B2_0,-B2_0 B2B1 B1B0 B0C0 C0C1 C1_1,straight straight left left right,3,5,0.0,0.0
+r293,-B2_0,-B2_0 B2B1 B1B0 B0C0 C0C1 C1C2 C2_1,straight straight left left straight right,3,6,0.0,0.0
+r294,-B2_0,-B2_0 B2B1 B1B0 B0C0 C0C1 C1C2 C2_0,straight straight left left straight straight,2,6,0.0,0.0
+r295,-B2_0,-B2_0 B2B1 B1B0 B0_0,straight straight straight,0,3,0.0,0.0
+r296,-C2_0,-C2_0 C2B2 B2A2 A2_1,right straight straight,1,3,0.0,0.0
+r297,-C2_0,-C2_0 C2B2 B2A2 A2A1 A1_1,right straight left right,3,4,0.0,0.0
+r298,-C2_0,-C2_0 C2B2 B2A2 A2A1 A1B1 B1C1 C1_1,right straight left left straight straight,3,6,0.0,0.0
+r299,-C2_0,-C2_0 C2B2 B2A2 A2A1 A1A0 A0_1,right straight left straight right,3,5,0.0,0.0
+r300,-C2_0,-C2_0 C2B2 B2A2 A2A1 A1A0 A0B0 B0C0 C0_1,right straight left straight left straight straight,3,7,0.0,0.0
+r301,-C2_0,-C2_0 C2B2 B2A2 A2A1 A1A0 A0_0,right straight left straight straight,2,5,0.0,0.0
+r302,-C2_0,-C2_0 C2B2 B2A2 A2_0,right straight right,2,3,0.0,0.0
+r303,-C2_0,-C2_0 C2B2 B2B1 B1A1 A1_1,right left right straight,3,4,0.0,0.0
+r304,-C2_0,-C2_0 C2B2 B2B1 B1C1 C1_1,right left left straight,3,4,0.0,0.0
+r305,-C2_0,-C2_0 C2B2 B2B1 B1B0 B0A0 A0_1,right left straight right straight,3,5,0.0,0.0
+r306,-C2_0,-C2_0 C2B2 B2B1 B1B0 B0C0 C0_1,right left straight left straight,3,5,0.0,0.0
+r307,-C2_0,-C2_0 C2B2 B2B1 B1B0 B0_0,right left straight straight,2,4,0.0,0.0
+r308,-C2_0,-C2_0 C2B2 B2_0,right right,2,2,0.25,0.3333333333333333
+r309,-C2_0,-C2_0 C2_1,left,1,1,0.5,0.6666666666666666
+r310,-C2_0,-C2_0 C2C1 C1B1 B1A1 A1_1,straight right straight straight,1,4,0.0,0.0
+r311,-C2_0,-C2_0 C2C1 C1B1 B1A1 A1A0 A0_1,straight right straight left right,3,5,0.0,0.0
+r312,-C2_0,-C2_0 C2C1 C1B1 B1A1 A1A0 A0B0 B0C0 C0_1,straight right straight left left straight straight,3,7,0.0,0.0
+r313,-C2_0,-C2_0 C2C1 C1B1 B1A1 A1A0 A0_0,straight right straight left straight,2,5,0.0,0.0
+r314,-C2_0,-C2_0 C2C1 C1B1 B1A1 A1A2 A2_1,straight right straight right left,3,5,0.0,0.0
+r315,-C2_0,-C2_0 C2C1 C1B1 B1A1 A1A2 A2_0,straight right straight right straight,2,5,0.0,0.0
+r316,-C2_0,-C2_0 C2C1 C1B1 B1B0 B0A0 A0_1,straight right left right straight,3,5,0.0,0.0
+r317,-C2_0,-C2_0 C2C1 C1B1 B1B0 B0C0 C0_1,straight right left left straight,3,5,0.0,0.0
+r318,-C2_0,-C2_0 C2C1 C1B1 B1B0 B0_0,straight right left straight,2,4,0.0,0.0
+r319,-C2_0,-C2_0 C2C1 C1B1 B1B2 B2A2 A2_1,straight right right left straight,3,5,0.0,0.0
+r320,-C2_0,-C2_0 C2C1 C1B1 B1B2 B2_0,straight right right straight,2,4,0.0,0.0
+r321,-C2_0,-C2_0 C2C1 C1_1,straight left,1,2,0.0,0.0
+r322,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0A0 A0_1,straight straight right straight straight,1,5,0.0,0.0
+r323,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0A0 A0_0,straight straight right straight left,2,5,0.0,0.0
+r324,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0A0 A0A1 A1_1,straight straight right straight right left,3,6,0.0,0.0
+r325,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0A0 A0A1 A1A2 A2_1,straight straight right straight right straight left,3,7,0.0,0.0
+r326,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0A0 A0A1 A1A2 A2_0,straight straight right straight right straight straight,2,7,0.0,0.0
+r327,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0_0,straight straight right left,2,4,0.0,0.0
+r328,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0B1 B1A1 A1_1,straight straight right right left straight,3,6,0.0,0.0
+r329,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0B1 B1B2 B2A2 A2_1,straight straight right right straight left straight,3,7,0.0,0.0
+r330,-C2_0,-C2_0 C2C1 C1C0 C0B0 B0B1 B1B2 B2_0,straight straight right right straight straight,2,6,0.0,0.0
+r331,-C2_0,-C2_0 C2C1 C1C0 C0_1,straight straight left,1,3,0.0,0.0
+r332,-C2_0,-C2_0 C2C1 C1C0 C0_0,straight straight straight,0,3,0.0,0.0
+r333,-C0_1,-C0_1 C0B0 B0A0 A0_1,straight straight straight,0,3,0.0,0.0
+r334,-C0_1,-C0_1 C0B0 B0A0 A0_0,straight straight left,1,3,0.0,0.0
+r335,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1_1,straight straight right left,2,4,0.0,0.0
+r336,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1B1 B1C1 C1_1,straight straight right right straight straight,2,6,0.0,0.0
+r337,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1B1 B1C1 C1C2 C2_0,straight straight right right straight left straight,3,7,0.0,0.0
+r338,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1B1 B1B2 B2_0,straight straight right right left straight,3,6,0.0,0.0
+r339,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1A2 A2_1,straight straight right straight left,2,5,0.0,0.0
+r340,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1A2 A2B2 B2C2 C2_1,straight straight right straight right straight straight,2,7,0.0,0.0
+r341,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1A2 A2B2 B2C2 C2_0,straight straight right straight right straight left,3,7,0.0,0.0
+r342,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1A2 A2B2 B2_0,straight straight right straight right left,3,6,0.0,0.0
+r343,-C0_1,-C0_1 C0B0 B0A0 A0A1 A1A2 A2_0,straight straight right straight straight,1,5,0.0,0.0
+r344,-C0_1,-C0_1 C0B0 B0_0,straight left,1,2,0.0,0.0
+r345,-C0_1,-C0_1 C0B0 B0B1 B1A1 A1_1,straight right left straight,2,4,0.0,0.0
+r346,-C0_1,-C0_1 C0B0 B0B1 B1A1 A1A0 A0_0,straight right left left straight,3,5,0.0,0.0
+r347,-C0_1,-C0_1 C0B0 B0B1 B1A1 A1A2 A2_0,straight right left right straight,3,5,0.0,0.0
+r348,-C0_1,-C0_1 C0B0 B0B1 B1C1 C1_1,straight right right straight,2,4,0.0,0.0
+r349,-C0_1,-C0_1 C0B0 B0B1 B1C1 C1C2 C2_0,straight right right left straight,3,5,0.0,0.0
+r350,-C0_1,-C0_1 C0B0 B0B1 B1B2 B2A2 A2_1,straight right straight left straight,2,5,0.0,0.0
+r351,-C0_1,-C0_1 C0B0 B0B1 B1B2 B2A2 A2A1 A1A0 A0_0,straight right straight left left straight straight,3,7,0.0,0.0
+r352,-C0_1,-C0_1 C0B0 B0B1 B1B2 B2A2 A2_0,straight right straight left right,3,5,0.0,0.0
+r353,-C0_1,-C0_1 C0B0 B0B1 B1B2 B2C2 C2_1,straight right straight right straight,2,5,0.0,0.0
+r354,-C0_1,-C0_1 C0B0 B0B1 B1B2 B2C2 C2_0,straight right straight right left,3,5,0.0,0.0
+r355,-C0_1,-C0_1 C0B0 B0B1 B1B2 B2_0,straight right straight straight,1,4,0.0,0.0
+r356,-C0_1,-C0_1 C0_0,left,1,1,0.5,0.6666666666666666
+r357,-C0_1,-C0_1 C0C1 C1B1 B1A1 A1_1,right left straight straight,2,4,0.0,0.0
+r358,-C0_1,-C0_1 C0C1 C1B1 B1A1 A1A0 A0_0,right left straight left straight,3,5,0.0,0.0
+r359,-C0_1,-C0_1 C0C1 C1B1 B1A1 A1A2 A2_0,right left straight right straight,3,5,0.0,0.0
+r360,-C0_1,-C0_1 C0C1 C1B1 B1B0 B0_0,right left left straight,3,4,0.0,0.0
+r361,-C0_1,-C0_1 C0C1 C1B1 B1B2 B2_0,right left right straight,3,4,0.0,0.0
+r362,-C0_1,-C0_1 C0C1 C1_1,right right,2,2,0.25,0.3333333333333333
+r363,-C0_1,-C0_1 C0C1 C1C2 C2B2 B2A2 A2_1,right straight left straight straight,2,5,0.0,0.0
+r364,-C0_1,-C0_1 C0C1 C1C2 C2B2 B2A2 A2A1 A1A0 A0_0,right straight left straight left straight straight,3,7,0.0,0.0
+r365,-C0_1,-C0_1 C0C1 C1C2 C2B2 B2A2 A2_0,right straight left straight right,3,5,0.0,0.0
+r366,-C0_1,-C0_1 C0C1 C1C2 C2B2 B2B1 B1B0 B0_0,right straight left left straight straight,3,6,0.0,0.0
+r367,-C0_1,-C0_1 C0C1 C1C2 C2B2 B2_0,right straight left right,3,4,0.0,0.0
+r368,-C0_1,-C0_1 C0C1 C1C2 C2_1,right straight right,2,3,0.0,0.0
+r369,-C0_1,-C0_1 C0C1 C1C2 C2_0,right straight straight,1,3,0.0,0.0
+r370,-C1_1,-C1_1 C1B1 B1A1 A1_1,straight straight straight,0,3,0.0,0.0
+r371,-C1_1,-C1_1 C1B1 B1A1 A1A0 A0_1,straight straight left right,2,4,0.0,0.0
+r372,-C1_1,-C1_1 C1B1 B1A1 A1A0 A0B0 B0C0 C0_1,straight straight left left straight straight,2,6,0.0,0.0
+r373,-C1_1,-C1_1 C1B1 B1A1 A1A0 A0B0 B0C0 C0_0,straight straight left left straight right,3,6,0.0,0.0
+r374,-C1_1,-C1_1 C1B1 B1A1 A1A0 A0B0 B0_0,straight straight left left right,3,5,0.0,0.0
+r375,-C1_1,-C1_1 C1B1 B1A1 A1A0 A0_0,straight straight left straight,1,4,0.0,0.0
+r376,-C1_1,-C1_1 C1B1 B1A1 A1A2 A2_1,straight straight right left,2,4,0.0,0.0
+r377,-C1_1,-C1_1 C1B1 B1A1 A1A2 A2B2 B2C2 C2_1,straight straight right right straight straight,2,6,0.0,0.0
+r378,-C1_1,-C1_1 C1B1 B1A1 A1A2 A2B2 B2C2 C2_0,straight straight right right straight left,3,6,0.0,0.0
+r379,-C1_1,-C1_1 C1B1 B1A1 A1A2 A2B2 B2_0,straight straight right right left,3,5,0.0,0.0
+r380,-C1_1,-C1_1 C1B1 B1A1 A1A2 A2_0,straight straight right straight,1,4,0.0,0.0
+r381,-C1_1,-C1_1 C1B1 B1B0 B0A0 A0_1,straight left right straight,2,4,0.0,0.0
+r382,-C1_1,-C1_1 C1B1 B1B0 B0A0 A0_0,straight left right left,3,4,0.0,0.0
+r383,-C1_1,-C1_1 C1B1 B1B0 B0A0 A0A1 A1A2 A2_0,straight left right right straight straight,3,6,0.0,0.0
+r384,-C1_1,-C1_1 C1B1 B1B0 B0C0 C0_1,straight left left straight,2,4,0.0,0.0
+r385,-C1_1,-C1_1 C1B1 B1B0 B0C0 C0_0,straight left left right,3,4,0.0,0.0
+r386,-C1_1,-C1_1 C1B1 B1B0 B0_0,straight left straight,1,3,0.0,0.0
+r387,-C1_1,-C1_1 C1B1 B1B2 B2A2 A2_1,straight right left straight,2,4,0.0,0.0
+r388,-C1_1,-C1_1 C1B1 B1B2 B2A2 A2A1 A1A0 A0_0,straight right left left straight straight,3,6,0.0,0.0
+r389,-C1_1,-C1_1 C1B1 B1B2 B2A2 A2_0,straight right left right,3,4,0.0,0.0
+r390,-C1_1,-C1_1 C1B1 B1B2 B2C2 C2_1,straight right right straight,2,4,0.0,0.0
+r391,-C1_1,-C1_1 C1B1 B1B2 B2C2 C2_0,straight right right left,3,4,0.0,0.0
+r392,-C1_1,-C1_1 C1B1 B1B2 B2_0,straight right straight,1,3,0.0,0.0
+r393,-C1_1,-C1_1 C1C0 C0B0 B0A0 A0_1,left right straight straight,2,4,0.0,0.0
+r394,-C1_1,-C1_1 C1C0 C0B0 B0A0 A0_0,left right straight left,3,4,0.0,0.0
+r395,-C1_1,-C1_1 C1C0 C0B0 B0A0 A0A1 A1A2 A2_0,left right straight right straight straight,3,6,0.0,0.0
+r396,-C1_1,-C1_1 C1C0 C0B0 B0_0,left right left,3,3,0.125,0.16666666666666666
+r397,-C1_1,-C1_1 C1C0 C0B0 B0B1 B1B2 B2_0,left right right straight straight,3,5,0.0,0.0
+r398,-C1_1,-C1_1 C1C0 C0_1,left left,2,2,0.25,0.3333333333333333
+r399,-C1_1,-C1_1 C1C0 C0_0,left straight,1,2,0.0,0.0
+r400,-C1_1,-C1_1 C1C2 C2B2 B2A2 A2_1,right left straight straight,2,4,0.0,0.0
+r401,-C1_1,-C1_1 C1C2 C2B2 B2A2 A2A1 A1A0 A0_0,right left straight left straight straight,3,6,0.0,0.0
+r402,-C1_1,-C1_1 C1C2 C2B2 B2A2 A2_0,right left straight right,3,4,0.0,0.0
+r403,-C1_1,-C1_1 C1C2 C2B2 B2B1 B1B0 B0_0,right left left straight straight,3,5,0.0,0.0
+r404,-C1_1,-C1_1 C1C2 C2B2 B2_0,right left right,3,3,0.125,0.16666666666666666
+r405,-C1_1,-C1_1 C1C2 C2_1,right right,2,2,0.25,0.3333333333333333
+r406,-C1_1,-C1_1 C1C2 C2_0,right straight,1,2,0.0,0.0
+r407,-C2_1,-C2_1 C2B2 B2A2 A2_1,straight straight straight,0,3,0.0,0.0
+r408,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1_1,straight straight left right,2,4,0.0,0.0
+r409,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1B1 B1C1 C1_1,straight straight left left straight straight,2,6,0.0,0.0
+r410,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1B1 B1C1 C1C0 C0_0,straight straight left left straight right straight,3,7,0.0,0.0
+r411,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1B1 B1B0 B0_0,straight straight left left right straight,3,6,0.0,0.0
+r412,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1A0 A0_1,straight straight left straight right,2,5,0.0,0.0
+r413,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1A0 A0B0 B0C0 C0_1,straight straight left straight left straight straight,2,7,0.0,0.0
+r414,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1A0 A0B0 B0C0 C0_0,straight straight left straight left straight right,3,7,0.0,0.0
+r415,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1A0 A0B0 B0_0,straight straight left straight left right,3,6,0.0,0.0
+r416,-C2_1,-C2_1 C2B2 B2A2 A2A1 A1A0 A0_0,straight straight left straight straight,1,5,0.0,0.0
+r417,-C2_1,-C2_1 C2B2 B2A2 A2_0,straight straight right,1,3,0.0,0.0
+r418,-C2_1,-C2_1 C2B2 B2B1 B1A1 A1_1,straight left right straight,2,4,0.0,0.0
+r419,-C2_1,-C2_1 C2B2 B2B1 B1A1 A1A0 A0_0,straight left right left straight,3,5,0.0,0.0
+r420,-C2_1,-C2_1 C2B2 B2B1 B1A1 A1A2 A2_0,straight left right right straight,3,5,0.0,0.0
+r421,-C2_1,-C2_1 C2B2 B2B1 B1C1 C1_1,straight left left straight,2,4,0.0,0.0
+r422,-C2_1,-C2_1 C2B2 B2B1 B1C1 C1C0 C0_0,straight left left right straight,3,5,0.0,0.0
+r423,-C2_1,-C2_1 C2B2 B2B1 B1B0 B0A0 A0_1,straight left straight right straight,2,5,0.0,0.0
+r424,-C2_1,-C2_1 C2B2 B2B1 B1B0 B0A0 A0_0,straight left straight right left,3,5,0.0,0.0
+r425,-C2_1,-C2_1 C2B2 B2B1 B1B0 B0A0 A0A1 A1A2 A2_0,straight left straight right right straight straight,3,7,0.0,0.0
+r426,-C2_1,-C2_1 C2B2 B2B1 B1B0 B0C0 C0_1,straight left straight left straight,2,5,0.0,0.0
+r427,-C2_1,-C2_1 C2B2 B2B1 B1B0 B0C0 C0_0,straight left straight left right,3,5,0.0,0.0
+r428,-C2_1,-C2_1 C2B2 B2B1 B1B0 B0_0,straight left straight straight,1,4,0.0,0.0
+r429,-C2_1,-C2_1 C2B2 B2_0,straight right,1,2,0.0,0.0
+r430,-C2_1,-C2_1 C2C1 C1B1 B1A1 A1_1,left right straight straight,2,4,0.0,0.0
+r431,-C2_1,-C2_1 C2C1 C1B1 B1A1 A1A0 A0_0,left right straight left straight,3,5,0.0,0.0
+r432,-C2_1,-C2_1 C2C1 C1B1 B1A1 A1A2 A2_0,left right straight right straight,3,5,0.0,0.0
+r433,-C2_1,-C2_1 C2C1 C1B1 B1B0 B0_0,left right left straight,3,4,0.0,0.0
+r434,-C2_1,-C2_1 C2C1 C1B1 B1B2 B2_0,left right right straight,3,4,0.0,0.0
+r435,-C2_1,-C2_1 C2C1 C1_1,left left,2,2,0.25,0.3333333333333333
+r436,-C2_1,-C2_1 C2C1 C1C0 C0B0 B0A0 A0_1,left straight right straight straight,2,5,0.0,0.0
+r437,-C2_1,-C2_1 C2C1 C1C0 C0B0 B0A0 A0_0,left straight right straight left,3,5,0.0,0.0
+r438,-C2_1,-C2_1 C2C1 C1C0 C0B0 B0A0 A0A1 A1A2 A2_0,left straight right straight right straight straight,3,7,0.0,0.0
+r439,-C2_1,-C2_1 C2C1 C1C0 C0B0 B0_0,left straight right left,3,4,0.0,0.0
+r440,-C2_1,-C2_1 C2C1 C1C0 C0B0 B0B1 B1B2 B2_0,left straight right right straight straight,3,6,0.0,0.0
+r441,-C2_1,-C2_1 C2C1 C1C0 C0_1,left straight left,2,3,0.0,0.0
+r442,-C2_1,-C2_1 C2C1 C1C0 C0_0,left straight straight,1,3,0.0,0.0
+r443,-C2_1,-C2_1 C2_0,right,1,1,0.5,0.6666666666666666
