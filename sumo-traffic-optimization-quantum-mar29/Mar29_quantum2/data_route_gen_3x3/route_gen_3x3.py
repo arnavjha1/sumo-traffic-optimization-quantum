@@ -112,18 +112,19 @@ for ALPHA_INDEX in ALPHA_INDICES:
             }
         )
 
-        ET.SubElement(
-            routes_root,
-            "flow",
-            {
-                "id": f"flow_{route_id}",
-                "type": "car",
-                "route": route_id,
-                "begin": "0",
-                "end": str(SIM_DURATION),
-                "vehsPerHour": f"{vehs_per_hour:.6f}",
-            },
-        )
+        if vehs_per_hour > 0:
+            ET.SubElement(
+                routes_root,
+                "flow",
+                {
+                    "id": f"flow_{route_id}",
+                    "type": "car",
+                    "route": route_id,
+                    "begin": "0",
+                    "end": str(SIM_DURATION),
+                    "vehsPerHour": f"{vehs_per_hour:.6f}",
+                },
+            )
 
     # 5. create route xml
     ET.indent(routes_root, space="    ")

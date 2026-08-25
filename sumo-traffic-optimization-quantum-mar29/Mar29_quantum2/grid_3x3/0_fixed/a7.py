@@ -1,3 +1,5 @@
+# FIXED-TIME
+
 import traci
 
 SUMO_BINARY = "sumo-gui"

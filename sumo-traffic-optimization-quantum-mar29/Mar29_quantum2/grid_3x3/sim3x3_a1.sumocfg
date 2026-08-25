@@ -1,7 +1,7 @@
 <configuration>
     <input>
         <net-file value="grid3x3_tls.net.xml"/>
-        <route-files value="routes_3x3/routes3x3_a0.rou.xml"/>
+        <route-files value="routes_3x3/routes3x3_a1.rou.xml"/>
     </input>
 
     <time>
