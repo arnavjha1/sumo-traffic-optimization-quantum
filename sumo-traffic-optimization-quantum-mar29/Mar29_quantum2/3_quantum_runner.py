@@ -10,7 +10,7 @@ from pathlib import Path
 # CONFIG
 # =============================
 
-NUM_RUNS = 1
+NUM_RUNS = 20
 QAOA_SHOTS = 512  # Change to 200/500/1000 for separate shot-sensitivity batches.
 
 BASE_DIR = Path(__file__).parent

@@ -1,0 +1,93 @@
+===== QUANTUM SIMULATION SUMMARY =====
+
+Throughput averages by file:
+[862, 877, 911, 912, 990, 1026, 913, 955, 881, 780, 721]
+
+Waiting time averages by file:
+[31.61, 30.87, 30.24, 29.93, 29.92, 29.81, 37.97, 38.39, 36.22, 36.72, 37.82]
+
+Travel time averages by file:
+[80.64, 79.64, 79.95, 83.44, 85.75, 87.37, 101.61, 95.26, 87.56, 88.08, 90.92]
+
+===== OVERALL AVERAGES =====
+
+Overall Throughput Average: 893.45
+Overall Waiting Time Average: 33.59 s
+Overall Travel Time Average: 87.29 s
+
+===== FULL OVERALL STATS =====
+
+{
+    "throughput": {
+        "mean": 893.4545454545455,
+        "median": 911,
+        "min": 721,
+        "max": 1026,
+        "standard_deviation": 87.02799967408609,
+        "variance": 7573.872727272727,
+        "standard_error": 26.239929197646873
+    },
+    "average_waiting_time": {
+        "mean": 33.59090909090909,
+        "median": 31.61,
+        "min": 29.81,
+        "max": 38.39,
+        "standard_deviation": 3.748670309711043,
+        "variance": 14.05252909090909,
+        "standard_error": 1.1302666254597182
+    },
+    "average_travel_time": {
+        "mean": 87.29272727272728,
+        "median": 87.37,
+        "min": 79.64,
+        "max": 101.61,
+        "standard_deviation": 6.754836920176668,
+        "variance": 45.62782181818182,
+        "standard_error": 2.036659962205987
+    },
+    "average_selected_energy": {
+        "mean": -80.7588409090909,
+        "median": -78.6153,
+        "min": -93.7829,
+        "max": -65.95051666666666,
+        "standard_deviation": 9.179415300507264,
+        "variance": 84.26166525918687,
+        "standard_error": 2.7676978496936413
+    },
+    "average_exact_min_energy": {
+        "mean": -80.81724090909091,
+        "median": -78.65156666666667,
+        "min": -93.82553333333334,
+        "max": -65.95348333333332,
+        "standard_deviation": 9.1943759876573,
+        "variance": 84.53654980240916,
+        "standard_error": 2.7722086665920562
+    },
+    "average_optimality_gap": {
+        "mean": 0.05840000000000001,
+        "median": 0.04263333333333333,
+        "min": 0.0,
+        "max": 0.15113333333333337,
+        "standard_deviation": 0.04887201653298134,
+        "variance": 0.002388474000000001,
+        "standard_error": 0.014735467417085897
+    },
+    "optimum_recovery_rate": {
+        "mean": 0.9939393939393939,
+        "median": 0.9933333333333333,
+        "min": 0.9883333333333333,
+        "max": 1.0,
+        "standard_deviation": 0.0038204658872917174,
+        "variance": 1.4595959595959688e-05,
+        "standard_error": 0.0011519138065908044
+    },
+    "average_energy_reduction": {
+        "mean": 0.5696878787878786,
+        "median": 0.5468666666666666,
+        "min": 0.3204999999999998,
+        "max": 0.8811333333333331,
+        "standard_deviation": 0.1639781762394871,
+        "variance": 0.026888842282828295,
+        "standard_error": 0.049441280399377244
+    }
+}
