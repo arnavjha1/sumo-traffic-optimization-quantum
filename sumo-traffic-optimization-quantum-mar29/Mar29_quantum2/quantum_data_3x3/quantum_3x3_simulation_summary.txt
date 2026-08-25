@@ -1,0 +1,117 @@
+===== QUANTUM SIMULATION SUMMARY =====
+
+Throughput averages by file:
+[1702.7, 1429.4, 1382.3, 1238.9, 1172.9, 1138.85, 1079.7, 979.9, 897.95, 847.65, 1014.55]
+
+Waiting time averages by file:
+[33.439, 43.317, 43.299, 42.535000000000004, 42.5175, 42.365, 42.7435, 43.746, 45.198, 45.7325, 40.513]
+
+Travel time averages by file:
+[85.283, 156.6265, 156.057, 154.6515, 161.712, 170.508, 183.1465, 197.496, 212.931, 221.01500000000001, 134.6335]
+
+Vehicles inserted averages by file:
+[1966.55, 1799.25, 1822.35, 1728.05, 1650.25, 1591.65, 1451.45, 1323.3, 1220.15, 1156.4, 1292.6]
+
+Vehicles remaining averages by file:
+[263.85, 369.85, 440.05, 489.15, 477.35, 452.8, 371.75, 343.4, 322.2, 308.75, 278.05]
+
+===== OVERALL AVERAGES =====
+
+Overall Throughput Average: 1171.35
+Overall Waiting Time Average: 42.31 s
+Overall Travel Time Average: 166.73 s
+
+===== FULL OVERALL STATS =====
+
+{
+    "throughput": {
+        "mean": 1171.3454545454545,
+        "median": 1138.85,
+        "min": 847.65,
+        "max": 1702.7,
+        "standard_deviation": 254.60017621217926,
+        "variance": 64821.249727272734,
+        "standard_error": 76.76484145946972
+    },
+    "average_waiting_time": {
+        "mean": 42.30959090909091,
+        "median": 42.7435,
+        "min": 33.439,
+        "max": 45.7325,
+        "standard_deviation": 3.260625598088363,
+        "variance": 10.631679290909092,
+        "standard_error": 0.983115608244297
+    },
+    "average_travel_time": {
+        "mean": 166.7327272727273,
+        "median": 161.712,
+        "min": 85.283,
+        "max": 221.01500000000001,
+        "standard_deviation": 37.89799243387679,
+        "variance": 1436.2578305181821,
+        "standard_error": 11.426674655536102
+    },
+    "vehicles_inserted": {
+        "mean": 1545.6363636363637,
+        "median": 1591.65,
+        "min": 1156.4,
+        "max": 1966.55,
+        "standard_deviation": 272.7953180416675,
+        "variance": 74417.28554545454,
+        "standard_error": 82.25088313726182
+    },
+    "vehicles_remaining": {
+        "mean": 374.2909090909091,
+        "median": 369.85,
+        "min": 263.85,
+        "max": 489.15,
+        "standard_deviation": 79.84405368648882,
+        "variance": 6375.072909090909,
+        "standard_error": 24.07388798355239
+    },
+    "average_selected_energy": {
+        "mean": -186.09077734848483,
+        "median": -187.32569999999998,
+        "min": -211.60871083333333,
+        "max": -150.22592416666666,
+        "standard_deviation": 20.303625566098365,
+        "variance": 412.2372111283231,
+        "standard_error": 6.121773444237776
+    },
+    "average_exact_min_energy": {
+        "mean": -209.0682128030303,
+        "median": -211.55274333333332,
+        "min": -237.30511583333333,
+        "max": -163.10133416666667,
+        "standard_deviation": 24.084337836166142,
+        "variance": 580.0553290065841,
+        "standard_error": 7.26170108424756
+    },
+    "average_optimality_gap": {
+        "mean": 22.977435454545454,
+        "median": 24.051198333333335,
+        "min": 12.87541,
+        "max": 28.294236666666666,
+        "standard_deviation": 4.338628275162624,
+        "variance": 18.823695310040605,
+        "standard_error": 1.3081456448673863
+    },
+    "optimum_recovery_rate": {
+        "mean": 0.4275151515151515,
+        "median": 0.4141666666666667,
+        "min": 0.39666666666666667,
+        "max": 0.52325,
+        "standard_deviation": 0.03456328370985721,
+        "variance": 0.0011946205808080806,
+        "standard_error": 0.01042122214438176
+    },
+    "average_energy_reduction": {
+        "mean": -13.431503333333334,
+        "median": -13.519343333333333,
+        "min": -14.397003333333334,
+        "max": -10.363949999999999,
+        "standard_deviation": 1.1264498575194355,
+        "variance": 1.2688892815055566,
+        "standard_error": 0.33963741114011525
+    }
+}
