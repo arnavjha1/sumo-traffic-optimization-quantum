@@ -2,8 +2,8 @@
 
 Source: C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\4_quantum.py
 Runs planned: 20
-Runs attempted: 8
-Runs successful: 8
+Runs attempted: 9
+Runs successful: 9
 Runs failed: 0
 
 ===== HOURLY TRAFFIC MEAN +/- SAMPLE SD =====
@@ -37,7 +37,7 @@ Hour 23: TT=136.01 +/- 0.00 s, WT=50.19 +/- 0.00 s, n=1511.00 +/- 0.00
 
 {
     "average_travel_time": {
-        "count": 8,
+        "count": 9,
         "mean": 101.94,
         "median": 101.94,
         "min": 101.94,
@@ -47,7 +47,7 @@ Hour 23: TT=136.01 +/- 0.00 s, WT=50.19 +/- 0.00 s, n=1511.00 +/- 0.00
         "standard_error": 0.0
     },
     "average_waiting_time": {
-        "count": 8,
+        "count": 9,
         "mean": 33.4,
         "median": 33.4,
         "min": 33.4,
@@ -57,9 +57,9 @@ Hour 23: TT=136.01 +/- 0.00 s, WT=50.19 +/- 0.00 s, n=1511.00 +/- 0.00
         "standard_error": 0.0
     },
     "completed_vehicles": {
-        "count": 8,
+        "count": 9,
         "mean": 50049,
-        "median": 50049.0,
+        "median": 50049,
         "min": 50049,
         "max": 50049,
         "standard_deviation": 0.0,
