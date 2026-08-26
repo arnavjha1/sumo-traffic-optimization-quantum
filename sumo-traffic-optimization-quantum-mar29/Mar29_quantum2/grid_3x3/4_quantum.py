@@ -68,13 +68,13 @@ for tls in TLS_ORDER:
 # DATA STRUCTURES
 # -----------------------
 depart_time = {}
+depart_hour = {}
 last_waiting_time = {}
 
-travel_times = []
-waiting_times = []
+travel_times_by_hour = defaultdict(list)
+waiting_times_by_hour = defaultdict(list)
 
-total_departed = 0
-total_arrived = 0
+completed_vehicles_by_hour = defaultdict(int)
 
 NUM_TLS = 9
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -105,8 +105,6 @@ for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
 
 def simStep(num_times = 1):
-    global total_departed, total_arrived
-
     for _ in range(num_times):
         traci.simulationStep()
         t = traci.simulation.getTime()
@@ -114,13 +112,16 @@ def simStep(num_times = 1):
         # ====================================================
         # Vehicles that just departed
         for veh in traci.simulation.getDepartedIDList():
-            depart_time[veh] = t
-            last_waiting_time[veh] = 0.0
-            total_departed += 1
+            if (t % 3600) >= WARMUP_TIME:
+                depart_time[veh] = t
+                depart_hour[veh] = int(t // 3600)
+                last_waiting_time[veh] = 0.0
 
         # Update waiting times
+        active_measured = set(depart_time.keys())
         for veh in traci.vehicle.getIDList():
-            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+            if veh in active_measured:
+                last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
 
         # Vehicles that just arrived
         for veh in traci.simulation.getArrivedIDList():
@@ -128,12 +129,14 @@ def simStep(num_times = 1):
                 travel_time = t - depart_time[veh]
                 waiting_time = last_waiting_time.get(veh, 0.0)
 
-                travel_times.append(travel_time)
-                waiting_times.append(waiting_time)
+                hour = depart_hour[veh]
 
-                total_arrived += 1
+                travel_times_by_hour[hour].append(travel_time)
+                waiting_times_by_hour[hour].append(waiting_time)
+                completed_vehicles_by_hour[hour] += 1
 
                 depart_time.pop(veh, None)
+                depart_hour.pop(veh, None)
                 last_waiting_time.pop(veh, None)
 
         # ====================================================
@@ -725,7 +728,6 @@ avg_waiting_time = (
 )
 
 print("\n===== PERFORMANCE METRICS =====")
-print(f"Alpha: {ALPHA_INDEX / 10:.1f}")
 print(f"Average Travel Time: {avg_travel_time:.2f} s")
 print(f"Average Waiting Time: {avg_waiting_time:.2f} s")
 print(f"Throughput: {total_arrived}")
