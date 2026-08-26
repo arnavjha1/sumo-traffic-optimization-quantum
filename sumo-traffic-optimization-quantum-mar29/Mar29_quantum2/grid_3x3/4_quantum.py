@@ -607,6 +607,32 @@ while traci.simulation.getTime() < END_TIME:
     current_hour = int(current_time // 3600)
     local_time = current_time % 3600
 
+    
+    if current_hour != current_calibration_hour:
+        current_calibration_hour = current_hour
+        parameter_counts.clear()
+        parameter_energy_sum.clear()
+
+        print(
+            f"\n===== HOUR {current_hour:02d} START ====="
+        )
+
+        print(
+            f"Warmup: t={current_hour * 3600} "
+            f"to {current_hour * 3600 + WARMUP_TIME - 1}"
+        )
+
+        print(
+            f"Calibration: "
+            f"t={current_hour * 3600 + WARMUP_TIME} "
+            f"to "
+            f"{current_hour * 3600 + WARMUP_TIME + CALIBRATION_DURATION - 1}"
+        )
+
+    hour_start = current_hour * 3600
+    calibration_start = hour_start + WARMUP_TIME
+    calibration_end = calibration_start + CALIBRATION_DURATION
+
     if current_time == 1:
         print("\n===== 3x3 QAOA CHECK =====")
         print("TLS order:", TLS_ORDER)
@@ -682,7 +708,8 @@ while traci.simulation.getTime() < END_TIME:
             neighbor_indices,
             coupling_strength=2,
             shots=QAOA_SHOTS,
-            return_metadata=True
+            return_metadata=True,
+            debug=True
         )
 
         param_key = (
@@ -756,31 +783,6 @@ while traci.simulation.getTime() < END_TIME:
         )
 
     assert len(bitstring) == 9
-
-    if current_hour != current_calibration_hour:
-        current_calibration_hour = current_hour
-        parameter_counts.clear()
-        parameter_energy_sum.clear()
-
-        print(
-            f"\n===== HOUR {current_hour:02d} START ====="
-        )
-
-        print(
-            f"Warmup: t={current_hour * 3600} "
-            f"to {current_hour * 3600 + WARMUP_TIME - 1}"
-        )
-
-        print(
-            f"Calibration: "
-            f"t={current_hour * 3600 + WARMUP_TIME} "
-            f"to "
-            f"{current_hour * 3600 + WARMUP_TIME + CALIBRATION_DURATION - 1}"
-        )
-
-    hour_start = current_hour * 3600
-    calibration_start = hour_start + WARMUP_TIME
-    calibration_end = calibration_start + CALIBRATION_DURATION
 
     # Benchmark the selected QAOA state against all possible global states.
     selected_energy = calculate_ising_energy(
