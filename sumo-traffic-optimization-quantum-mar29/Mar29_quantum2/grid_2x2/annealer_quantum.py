@@ -14,7 +14,8 @@ def quantum_decision(
     p=1,
     shots=512,
     fixed_params=None,
-    return_metadata=False
+    return_metadata=False,
+    debug=False
 ):
 
     n = len(biases)
@@ -272,16 +273,17 @@ def quantum_decision(
     # Debug information
     # ---------------------------------------------------
 
-    print(
-        "BEST QAOA:",
-        f"expected_energy={best_expected_energy:.2f}",
-        f"best_sample_energy={best_energy:.2f}",
-        f"gamma={best_gamma:.3f}",
-        f"beta={best_beta:.3f}",
-        f"p={best_p}",
-        f"shots={shots}",
-        f"state={best_bitstring}"
-    )
+    if debug:
+        print(
+            "BEST QAOA:",
+            f"expected_energy={best_expected_energy:.2f}",
+            f"best_sample_energy={best_energy:.2f}",
+            f"gamma={best_gamma:.3f}",
+            f"beta={best_beta:.3f}",
+            f"p={best_p}",
+            f"shots={shots}",
+            f"state={best_bitstring}"
+        )
 
     if return_metadata:
         return best_bitstring, best_gamma, best_beta, best_p, best_expected_energy

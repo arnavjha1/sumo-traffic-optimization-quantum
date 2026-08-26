@@ -9,7 +9,7 @@ from annealer_quantum import quantum_decision
 
 SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
-END_TIME = 4550
+END_TIME = 86400
 
 WARMUP_TIME = 900
 RANDOM_DEPART_OFFSET = 60
@@ -403,6 +403,15 @@ energy_gaps = []
 energy_reductions = []
 energy_optimum_hits = 0
 
+# Hourly reviewer energy metrics
+energy_selected_by_hour = defaultdict(list)
+energy_exact_by_hour = defaultdict(list)
+energy_gaps_by_hour = defaultdict(list)
+energy_reductions_by_hour = defaultdict(list)
+
+energy_optimum_hits_by_hour = defaultdict(int)
+energy_decisions_by_hour = defaultdict(int)
+
 def calculate_ising_energy(bitstring, biases, prev_state, neighbors, coupling_strength=2):
     # This exactly mirrors the Ising energy used in annealer_quantum.py.
     spins = [1 if bit == "1" else -1 for bit in bitstring]
@@ -683,7 +692,8 @@ while traci.simulation.getTime() < END_TIME:
             neighbor_indices,
             coupling_strength=2,
             shots=QAOA_SHOTS,
-            return_metadata=True
+            return_metadata=True,
+            debug=True
         )
 
         param_key = (
@@ -784,6 +794,19 @@ else:
     if abs(gap) <= 1e-9:
         energy_optimum_hits += 1
 
+    if local_time >= WARMUP_TIME:
+        energy_selected_by_hour[current_hour].append(selected_energy)
+        energy_exact_by_hour[current_hour].append(exact_min_energy)
+        energy_gaps_by_hour[current_hour].append(gap)
+        energy_reductions_by_hour[current_hour].append(
+            previous_energy - selected_energy
+        )
+
+        energy_decisions_by_hour[current_hour] += 1
+
+        if abs(gap) <= 1e-9:
+            energy_optimum_hits_by_hour[current_hour] += 1
+
     print(traci.simulation.getTime())
 
     # Update x_i with quantum decisions
@@ -866,3 +889,121 @@ if all_travel_times:
         f"Measured completed vehicles: "
         f"{len(all_travel_times)}"
     )
+
+print("\n===== HOURLY QAOA PARAMETERS =====")
+
+for hour in range(24):
+
+    params = hourly_qaoa_parameters.get(hour)
+
+    if params is None:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"No completed calibration"
+        )
+
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"gamma={params['gamma']:.6f}, "
+            f"beta={params['beta']:.6f}, "
+            f"p={params['p']}, "
+            f"wins={params['wins']}/"
+            f"{params['calibration_decisions']}"
+        )
+
+
+hourly_energy_summary = {}
+
+print("\n===== HOURLY ENERGY BENCHMARK =====")
+
+for hour in range(24):
+
+    selected_values = energy_selected_by_hour.get(
+        hour, []
+    )
+
+    exact_values = energy_exact_by_hour.get(
+        hour, []
+    )
+
+    gap_values = energy_gaps_by_hour.get(
+        hour, []
+    )
+
+    reduction_values = energy_reductions_by_hour.get(
+        hour, []
+    )
+
+    num_decisions = energy_decisions_by_hour.get(
+        hour, 0
+    )
+
+    optimal_hits = energy_optimum_hits_by_hour.get(
+        hour, 0
+    )
+
+    if num_decisions > 0:
+        summary = {
+            "num_decisions": num_decisions,
+            "optimal_hits": optimal_hits,
+            "optimum_recovery_rate":
+                optimal_hits / num_decisions,
+
+            "average_selected_energy":
+                sum(selected_values)
+                / len(selected_values),
+
+            "average_exact_min_energy":
+                sum(exact_values)
+                / len(exact_values),
+
+            "average_optimality_gap":
+                sum(gap_values)
+                / len(gap_values),
+
+            "maximum_optimality_gap":
+                max(gap_values),
+
+            "average_energy_reduction":
+                sum(reduction_values)
+                / len(reduction_values)
+        }
+
+    else:
+        summary = {
+            "num_decisions": 0,
+            "optimal_hits": 0,
+            "optimum_recovery_rate": None,
+            "average_selected_energy": None,
+            "average_exact_min_energy": None,
+            "average_optimality_gap": None,
+            "maximum_optimality_gap": None,
+            "average_energy_reduction": None
+        }
+
+    if num_decisions > 0:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"decisions={num_decisions}, "
+            f"hits={optimal_hits}, "
+            f"recovery="
+            f"{summary['optimum_recovery_rate']:.4f}, "
+            f"avg_gap="
+            f"{summary['average_optimality_gap']:.4f}, "
+            f"max_gap="
+            f"{summary['maximum_optimality_gap']:.4f}"
+        )
+
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"No measured energy decisions"
+        )
+
+    print("HOURLY_QAOA_PARAMS_JSON: " + json.dumps(hourly_qaoa_parameters))
+    print("HOURLY_ENERGY_JSON: " + json.dumps(hourly_energy_summary))

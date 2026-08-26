@@ -1,93 +1,93 @@
 ===== QUANTUM SIMULATION SUMMARY =====
 
 Throughput averages by file:
-[862, 877, 911, 912, 990, 1026, 913, 955, 881, 780, 721]
+[866.5, 878.4, 908.2, 925.85, 989.5, 1024.85, 905.6, 942.35, 880.8, 779.2, 719.4]
 
 Waiting time averages by file:
-[31.61, 30.87, 30.24, 29.93, 29.92, 29.81, 37.97, 38.39, 36.22, 36.72, 37.82]
+[31.096, 31.0685, 30.6025, 30.2875, 30.0625, 29.928, 38.0115, 38.6625, 36.239, 36.746, 38.032000000000004]
 
 Travel time averages by file:
-[80.64, 79.64, 79.95, 83.44, 85.75, 87.37, 101.61, 95.26, 87.56, 88.08, 90.92]
+[79.936, 80.272, 80.481, 82.74, 85.662, 87.5895, 101.824, 96.3935, 87.5985, 88.166, 91.368]
 
 ===== OVERALL AVERAGES =====
 
-Overall Throughput Average: 893.45
-Overall Waiting Time Average: 33.59 s
-Overall Travel Time Average: 87.29 s
+Overall Throughput Average: 892.79
+Overall Waiting Time Average: 33.70 s
+Overall Travel Time Average: 87.46 s
 
 ===== FULL OVERALL STATS =====
 
 {
     "throughput": {
-        "mean": 893.4545454545455,
-        "median": 911,
-        "min": 721,
-        "max": 1026,
-        "standard_deviation": 87.02799967408609,
-        "variance": 7573.872727272727,
-        "standard_error": 26.239929197646873
+        "mean": 892.7863636363636,
+        "median": 905.6,
+        "min": 719.4,
+        "max": 1024.85,
+        "standard_deviation": 86.4593346345815,
+        "variance": 7475.216545454544,
+        "standard_error": 26.068470236971475
     },
     "average_waiting_time": {
-        "mean": 33.59090909090909,
-        "median": 31.61,
-        "min": 29.81,
-        "max": 38.39,
-        "standard_deviation": 3.748670309711043,
-        "variance": 14.05252909090909,
-        "standard_error": 1.1302666254597182
+        "mean": 33.703272727272726,
+        "median": 31.096,
+        "min": 29.928,
+        "max": 38.6625,
+        "standard_deviation": 3.743138291351499,
+        "variance": 14.01108426818182,
+        "standard_error": 1.1285986591659032
     },
     "average_travel_time": {
-        "mean": 87.29272727272728,
-        "median": 87.37,
-        "min": 79.64,
-        "max": 101.61,
-        "standard_deviation": 6.754836920176668,
-        "variance": 45.62782181818182,
-        "standard_error": 2.036659962205987
+        "mean": 87.45731818181818,
+        "median": 87.5895,
+        "min": 79.936,
+        "max": 101.824,
+        "standard_deviation": 6.960131152761157,
+        "variance": 48.443425663636354,
+        "standard_error": 2.0985585023065965
     },
     "average_selected_energy": {
-        "mean": -80.7588409090909,
-        "median": -78.6153,
-        "min": -93.7829,
-        "max": -65.95051666666666,
-        "standard_deviation": 9.179415300507264,
-        "variance": 84.26166525918687,
-        "standard_error": 2.7676978496936413
+        "mean": -80.73323886363636,
+        "median": -78.68978666666666,
+        "min": -93.01787916666666,
+        "max": -66.18438,
+        "standard_deviation": 8.879633963217819,
+        "variance": 78.84789932073137,
+        "standard_error": 2.6773103756081804
     },
     "average_exact_min_energy": {
-        "mean": -80.81724090909091,
-        "median": -78.65156666666667,
-        "min": -93.82553333333334,
-        "max": -65.95348333333332,
-        "standard_deviation": 9.1943759876573,
-        "variance": 84.53654980240916,
-        "standard_error": 2.7722086665920562
+        "mean": -80.80204113636364,
+        "median": -78.74739166666667,
+        "min": -93.09387916666667,
+        "max": -66.24019,
+        "standard_deviation": 8.889697120488073,
+        "variance": 79.02671489401394,
+        "standard_error": 2.6803445316874326
     },
     "average_optimality_gap": {
-        "mean": 0.05840000000000001,
-        "median": 0.04263333333333333,
-        "min": 0.0,
-        "max": 0.15113333333333337,
-        "standard_deviation": 0.04887201653298134,
-        "variance": 0.002388474000000001,
-        "standard_error": 0.014735467417085897
+        "mean": 0.06880227272727273,
+        "median": 0.07354333333333334,
+        "min": 0.025266666666666673,
+        "max": 0.09619166666666665,
+        "standard_deviation": 0.019458042328626645,
+        "variance": 0.0003786154112626262,
+        "standard_error": 0.0058668205053552585
     },
     "optimum_recovery_rate": {
-        "mean": 0.9939393939393939,
-        "median": 0.9933333333333333,
-        "min": 0.9883333333333333,
-        "max": 1.0,
-        "standard_deviation": 0.0038204658872917174,
-        "variance": 1.4595959595959688e-05,
-        "standard_error": 0.0011519138065908044
+        "mean": 0.9929772727272728,
+        "median": 0.9919166666666667,
+        "min": 0.9898333333333333,
+        "max": 0.998,
+        "standard_deviation": 0.0027254181404702026,
+        "variance": 7.4279040404040575e-06,
+        "standard_error": 0.000821744488069799
     },
     "average_energy_reduction": {
-        "mean": 0.5696878787878786,
-        "median": 0.5468666666666666,
-        "min": 0.3204999999999998,
-        "max": 0.8811333333333331,
-        "standard_deviation": 0.1639781762394871,
-        "variance": 0.026888842282828295,
-        "standard_error": 0.049441280399377244
+        "mean": 0.5605948484848483,
+        "median": 0.549715,
+        "min": 0.3601383333333331,
+        "max": 0.8316016666666665,
+        "standard_deviation": 0.13707180633897806,
+        "variance": 0.018788680093030308,
+        "standard_error": 0.041328704632968095
     }
 }
