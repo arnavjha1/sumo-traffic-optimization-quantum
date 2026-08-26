@@ -11,6 +11,9 @@ SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
 END_TIME = 86400
 
+WARMUP_TIME = 900
+RANDOM_DEPART_OFFSET = 60
+
 # -----------------------
 # FIXED OUTPUT ORDER
 # -----------------------
@@ -35,7 +38,13 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+sumo_cmd = [
+    SUMO_BINARY,
+    "-c", SUMO_CONFIG,
+    "--random-depart-offset", str(RANDOM_DEPART_OFFSET),
+]
+
+traci.start(sumo_cmd)
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
