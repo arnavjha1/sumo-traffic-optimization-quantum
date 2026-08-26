@@ -11,7 +11,8 @@ def quantum_decision(
     prev_state,
     neighbors,
     coupling_strength=2,
-    p=1
+    p=1,
+    shots=512
 ):
 
     n = len(biases)
@@ -53,9 +54,8 @@ def quantum_decision(
 
     p_values = [1, 2]
 
-    # Keep shots fixed during parameter optimization.
-    # Test shot sensitivity separately.
-    shots = 512
+    # shots is supplied by the caller so shot sensitivity can be tested
+    # without changing the QAOA algorithm itself.
 
     # ---------------------------------------------------
     # Best QAOA parameterization
