@@ -1,0 +1,164 @@
+===== 3x3 SEATTLE QAOA SUMMARY =====
+
+Source: C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_3x3\4_quantum.py
+Runs planned: 20
+Runs attempted: 3
+Runs successful: 3
+Runs failed: 0
+
+===== HOURLY TRAFFIC MEAN +/- SAMPLE SD =====
+
+Hour 00: TT=72.43 +/- 9.47 s, WT=26.56 +/- 7.33 s, n=963.00 +/- 0.00
+Hour 01: TT=65.54 +/- 8.82 s, WT=22.83 +/- 7.65 s, n=572.00 +/- 0.00
+Hour 02: TT=74.67 +/- 11.72 s, WT=28.13 +/- 8.06 s, n=440.00 +/- 0.00
+Hour 03: TT=69.81 +/- 9.39 s, WT=26.12 +/- 6.95 s, n=344.00 +/- 0.00
+Hour 04: TT=63.16 +/- 0.43 s, WT=20.76 +/- 0.24 s, n=496.00 +/- 0.00
+Hour 05: TT=76.49 +/- 0.71 s, WT=29.95 +/- 0.51 s, n=1363.00 +/- 0.00
+Hour 06: TT=68.55 +/- 3.44 s, WT=22.75 +/- 3.67 s, n=3123.00 +/- 0.00
+Hour 07: TT=72.76 +/- 0.55 s, WT=22.35 +/- 0.96 s, n=5219.67 +/- 25.48
+Hour 08: TT=82.41 +/- 1.07 s, WT=25.43 +/- 0.33 s, n=5992.00 +/- 26.63
+Hour 09: TT=76.44 +/- 1.18 s, WT=22.90 +/- 0.30 s, n=5352.00 +/- 5.57
+Hour 10: TT=71.69 +/- 0.32 s, WT=21.21 +/- 0.22 s, n=4990.00 +/- 5.20
+Hour 11: TT=82.24 +/- 7.34 s, WT=25.15 +/- 2.62 s, n=5547.00 +/- 197.07
+Hour 12: TT=77.84 +/- 0.72 s, WT=23.48 +/- 0.19 s, n=5717.33 +/- 34.15
+Hour 13: TT=83.72 +/- 0.90 s, WT=25.66 +/- 0.34 s, n=5967.00 +/- 46.36
+Hour 14: TT=95.78 +/- 1.70 s, WT=29.57 +/- 0.34 s, n=6388.67 +/- 46.76
+Hour 15: TT=117.53 +/- 3.15 s, WT=36.16 +/- 0.57 s, n=6817.67 +/- 49.08
+Hour 16: TT=129.09 +/- 0.71 s, WT=38.81 +/- 0.12 s, n=6832.67 +/- 15.14
+Hour 17: TT=128.21 +/- 0.71 s, WT=38.85 +/- 0.37 s, n=6835.67 +/- 80.11
+Hour 18: TT=132.13 +/- 2.42 s, WT=38.67 +/- 0.76 s, n=6678.67 +/- 24.54
+Hour 19: TT=101.90 +/- 3.39 s, WT=31.01 +/- 0.84 s, n=5600.00 +/- 45.90
+Hour 20: TT=67.59 +/- 2.09 s, WT=20.71 +/- 3.00 s, n=3605.00 +/- 0.00
+Hour 21: TT=69.08 +/- 3.57 s, WT=23.10 +/- 4.25 s, n=3130.00 +/- 0.00
+Hour 22: TT=70.50 +/- 6.69 s, WT=24.61 +/- 6.39 s, n=2249.00 +/- 0.00
+Hour 23: TT=72.28 +/- 9.47 s, WT=26.29 +/- 7.74 s, n=1350.00 +/- 1.00
+
+===== OVERALL TRAFFIC STATISTICS =====
+
+{
+    "average_travel_time": {
+        "count": 3,
+        "mean": 93.08666666666667,
+        "median": 92.8,
+        "min": 92.65,
+        "max": 93.81,
+        "standard_deviation": 0.6308988297130795,
+        "variance": 0.3980333333333333,
+        "standard_error": 0.36424960916626636
+    },
+    "average_waiting_time": {
+        "count": 3,
+        "mean": 28.696666666666665,
+        "median": 28.65,
+        "min": 28.11,
+        "max": 29.33,
+        "standard_deviation": 0.6113373318662395,
+        "variance": 0.37373333333333264,
+        "standard_error": 0.35295577311864096
+    },
+    "completed_vehicles": {
+        "count": 3,
+        "mean": 95573.33333333333,
+        "median": 95542,
+        "min": 95364,
+        "max": 95814,
+        "standard_deviation": 226.63038925380977,
+        "variance": 51361.333333333336,
+        "standard_error": 130.84511624223674
+    }
+}
+
+===== OVERALL ENERGY STATISTICS =====
+
+{
+    "shots": {
+        "count": 3,
+        "mean": 512,
+        "median": 512,
+        "min": 512,
+        "max": 512,
+        "standard_deviation": 0.0,
+        "variance": 0,
+        "standard_error": 0.0
+    },
+    "num_decisions": {
+        "count": 3,
+        "mean": 64800,
+        "median": 64800,
+        "min": 64800,
+        "max": 64800,
+        "standard_deviation": 0.0,
+        "variance": 0,
+        "standard_error": 0.0
+    },
+    "optimal_hits": {
+        "count": 3,
+        "mean": 40640.333333333336,
+        "median": 41167,
+        "min": 37712,
+        "max": 43042,
+        "standard_deviation": 2703.7489405145097,
+        "variance": 7310258.333333333,
+        "standard_error": 1561.0101786272178
+    },
+    "optimum_recovery_rate": {
+        "count": 3,
+        "mean": 0.6271656378600823,
+        "median": 0.6352932098765433,
+        "min": 0.5819753086419753,
+        "max": 0.6642283950617284,
+        "standard_deviation": 0.04172452068695229,
+        "variance": 0.0017409356265559097,
+        "standard_error": 0.024089663250420015
+    },
+    "average_selected_energy": {
+        "count": 3,
+        "mean": -121.94419686213992,
+        "median": -122.17383179012346,
+        "min": -122.51354444444443,
+        "max": -121.14521435185185,
+        "standard_deviation": 0.7124822528920385,
+        "variance": 0.5076309606861147,
+        "standard_error": 0.4113518205000495
+    },
+    "average_exact_min_energy": {
+        "count": 3,
+        "mean": -131.59238780864197,
+        "median": -131.54079691358027,
+        "min": -132.94478672839506,
+        "max": -130.2915797839506,
+        "standard_deviation": 1.3273556372924447,
+        "variance": 1.761872987852032,
+        "standard_error": 0.7663491345011603
+    },
+    "average_optimality_gap": {
+        "count": 3,
+        "mean": 9.648190946502057,
+        "median": 9.36696512345679,
+        "min": 9.146365432098765,
+        "max": 10.431242283950617,
+        "standard_deviation": 0.6870539307556558,
+        "variance": 0.47204310376679737,
+        "standard_error": 0.3966707718695684
+    },
+    "maximum_optimality_gap": {
+        "count": 3,
+        "mean": 248.63333333333333,
+        "median": 240.14000000000001,
+        "min": 210.61999999999995,
+        "max": 295.14,
+        "standard_deviation": 42.895339296167535,
+        "variance": 1840.0101333333346,
+        "standard_error": 24.76563568962266
+    },
+    "average_energy_reduction": {
+        "count": 3,
+        "mean": -8.350512860082306,
+        "median": -8.11168888888889,
+        "min": -9.29711450617284,
+        "max": -7.642735185185186,
+        "standard_deviation": 0.8526549133971707,
+        "variance": 0.7270204013403367,
+        "standard_error": 0.49228054377571356
+    }
+}

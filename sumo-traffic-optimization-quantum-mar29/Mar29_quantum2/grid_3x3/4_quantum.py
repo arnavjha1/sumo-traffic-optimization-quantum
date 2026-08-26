@@ -835,8 +835,6 @@ while traci.simulation.getTime() < END_TIME:
         if abs(gap) <= 1e-9:
             energy_optimum_hits_by_hour[current_hour] += 1
 
-    print(traci.simulation.getTime())
-
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
         x_i[idx].append(1 if bitstring[idx] == '1' else -1)
