@@ -744,60 +744,80 @@ while traci.simulation.getTime() < END_TIME:
             print(
                 "===== FIXED-PARAMETER QAOA BEGINS =====\n"
             )
-        
-else:
-    if current_time == calibration_end:
-        print(
-            f"Hour {current_hour:02d} fixed QAOA begins: "
-            f"gamma={fixed_params[0]:.6f}, "
-            f"beta={fixed_params[1]:.6f}, "
-            f"p={fixed_params[2]}"
+            
+    else:
+        if current_time == calibration_end:
+            print(
+                f"Hour {current_hour:02d} fixed QAOA begins: "
+                f"gamma={fixed_params[0]:.6f}, "
+                f"beta={fixed_params[1]:.6f}, "
+                f"p={fixed_params[2]}"
+            )
+
+        bitstring = quantum_decision(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2,
+            shots=QAOA_SHOTS,
+            fixed_params=fixed_params
         )
 
-    bitstring = quantum_decision(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2,
-        shots=QAOA_SHOTS,
-        fixed_params=fixed_params
-    )
-
-    # Benchmark the selected QAOA state against all 16 possible global states.
-    selected_energy = calculate_ising_energy(
-        bitstring,
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-    exact_min_energy, exact_states = exact_global_minimum(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-    previous_bitstring = "".join(str(state) for state in prev_state)
-    previous_energy = calculate_ising_energy(
-        previous_bitstring,
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-
-    gap = selected_energy - exact_min_energy
-    energy_selected.append(selected_energy)
-    energy_exact.append(exact_min_energy)
-    energy_gaps.append(gap)
-    energy_reductions.append(previous_energy - selected_energy)
-    if abs(gap) <= 1e-9:
-        energy_optimum_hits += 1
+    assert len(bitstring) == 4
 
     if local_time >= WARMUP_TIME:
-        energy_selected_by_hour[current_hour].append(selected_energy)
-        energy_exact_by_hour[current_hour].append(exact_min_energy)
-        energy_gaps_by_hour[current_hour].append(gap)
+
+        selected_energy = calculate_ising_energy(
+            bitstring,
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        exact_min_energy, exact_states = exact_global_minimum(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        previous_bitstring = "".join(
+            str(state) for state in prev_state
+        )
+
+        previous_energy = calculate_ising_energy(
+            previous_bitstring,
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        gap = selected_energy - exact_min_energy
+
+        energy_selected.append(selected_energy)
+        energy_exact.append(exact_min_energy)
+        energy_gaps.append(gap)
+        energy_reductions.append(
+            previous_energy - selected_energy
+        )
+
+        if abs(gap) <= 1e-9:
+            energy_optimum_hits += 1
+
+        energy_selected_by_hour[current_hour].append(
+            selected_energy
+        )
+
+        energy_exact_by_hour[current_hour].append(
+            exact_min_energy
+        )
+
+        energy_gaps_by_hour[current_hour].append(
+            gap
+        )
+
         energy_reductions_by_hour[current_hour].append(
             previous_energy - selected_energy
         )
@@ -807,11 +827,11 @@ else:
         if abs(gap) <= 1e-9:
             energy_optimum_hits_by_hour[current_hour] += 1
 
-    print(traci.simulation.getTime())
-
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
-        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
+        x_i[idx].append(
+            1 if bitstring[idx] == '1' else -1
+        )
 
     # ====================================================
 
@@ -1010,3 +1030,58 @@ for hour in range(24):
 
 print("HOURLY_QAOA_PARAMS_JSON: " + json.dumps(hourly_qaoa_parameters))
 print("HOURLY_ENERGY_JSON: "      + json.dumps(hourly_energy_summary) )
+
+if energy_selected:
+
+    energy_summary = {
+        "shots": QAOA_SHOTS,
+        "num_decisions": len(energy_selected),
+        "optimal_hits": energy_optimum_hits,
+        "optimum_recovery_rate":
+            energy_optimum_hits / len(energy_selected),
+
+        "average_selected_energy":
+            sum(energy_selected) / len(energy_selected),
+
+        "average_exact_min_energy":
+            sum(energy_exact) / len(energy_exact),
+
+        "average_optimality_gap":
+            sum(energy_gaps) / len(energy_gaps),
+
+        "maximum_optimality_gap":
+            max(energy_gaps),
+
+        "average_energy_reduction":
+            sum(energy_reductions) / len(energy_reductions)
+    }
+
+else:
+
+    energy_summary = {
+        "shots": QAOA_SHOTS,
+        "num_decisions": 0,
+        "optimal_hits": 0,
+        "optimum_recovery_rate": None,
+        "average_selected_energy": None,
+        "average_exact_min_energy": None,
+        "average_optimality_gap": None,
+        "maximum_optimality_gap": None,
+        "average_energy_reduction": None
+    }
+
+
+print(
+    "HOURLY_QAOA_PARAMS_JSON: "
+    + json.dumps(hourly_qaoa_parameters)
+)
+
+print(
+    "HOURLY_ENERGY_JSON: "
+    + json.dumps(hourly_energy_summary)
+)
+
+print(
+    "ENERGY_JSON: "
+    + json.dumps(energy_summary)
+)
