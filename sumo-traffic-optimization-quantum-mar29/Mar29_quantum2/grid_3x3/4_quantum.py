@@ -905,6 +905,31 @@ if all_travel_times:
         f"{len(all_travel_times)}"
     )
 
+print("\n===== HOURLY QAOA PARAMETERS =====")
+
+for hour in range(24):
+
+    params = hourly_qaoa_parameters.get(hour)
+
+    if params is None:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"No completed calibration"
+        )
+
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"gamma={params['gamma']:.6f}, "
+            f"beta={params['beta']:.6f}, "
+            f"p={params['p']}, "
+            f"wins={params['wins']}/"
+            f"{params['calibration_decisions']}"
+        )
+
+print("HOURLY_QAOA_PARAMS_JSON: " + json.dumps(hourly_qaoa_parameters))
 
 # -----------------------
 # ENERGY BENCHMARK RESULTS
