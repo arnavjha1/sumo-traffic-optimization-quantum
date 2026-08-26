@@ -57,12 +57,13 @@ for tls in TLS_ORDER:
 # DATA STRUCTURES
 # -----------------------
 depart_time = {}
-route_of = {}
+depart_hour = {}
 last_waiting_time = {}
 
-travel_times = defaultdict(list)
-waiting_times = defaultdict(list)
-throughput = defaultdict(int)
+travel_times_by_hour = defaultdict(list)
+waiting_times_by_hour = defaultdict(list)
+
+completed_vehicles_by_hour = defaultdict(int)
 
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -94,27 +95,33 @@ def simStep(num_times = 1):
         # ====================================================
         # Vehicles that just departed
         for veh in traci.simulation.getDepartedIDList():
-            depart_time[veh] = t
-            route_of[veh] = traci.vehicle.getRouteID(veh)
-            last_waiting_time[veh] = 0.0
+            if t >= WARMUP_TIME:
+                depart_time[veh] = t
+                depart_hour[veh] = int(t // 3600)
+                last_waiting_time[veh] = 0.0
 
         # Update waiting times
+        active_measured = set(depart_time.keys())
         for veh in traci.vehicle.getIDList():
-            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+            if veh in active_measured:
+                last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
 
         # Vehicles that just arrived
         for veh in traci.simulation.getArrivedIDList():
+
             if veh in depart_time:
-                route = route_of[veh]
+
                 travel_time = t - depart_time[veh]
                 waiting_time = last_waiting_time.get(veh, 0.0)
 
-                travel_times[route].append(travel_time)
-                waiting_times[route].append(waiting_time)
-                throughput[route] += 1
+                hour = depart_hour[veh]
+
+                travel_times_by_hour[hour].append(travel_time)
+                waiting_times_by_hour[hour].append(waiting_time)
+                completed_vehicles_by_hour[hour] += 1
 
                 depart_time.pop(veh, None)
-                route_of.pop(veh, None)
+                depart_hour.pop(veh, None)
                 last_waiting_time.pop(veh, None)
 
         # ====================================================
