@@ -12,7 +12,9 @@ def quantum_decision(
     neighbors,
     coupling_strength=2,
     p=1,
-    shots=512
+    shots=512,
+    fixed_params=None,
+    return_metadata=False
 ):
 
     n = len(biases)
@@ -40,19 +42,16 @@ def quantum_decision(
     # QAOA HYPERPARAMETER SEARCH
     # ---------------------------------------------------
 
-    gamma_values = np.linspace(
-        0,
-        np.pi,
-        10
-    )
+    if fixed_params is None:
+        gamma_values = np.linspace(0, np.pi, 10)
+        beta_values = np.linspace(0, np.pi / 2, 10)
+        p_values = [1, 2]
 
-    beta_values = np.linspace(
-        0,
-        np.pi / 2,
-        10
-    )
-
-    p_values = [1, 2]
+    else:
+        fixed_gamma, fixed_beta, fixed_p = fixed_params
+        gamma_values = [fixed_gamma]
+        beta_values = [fixed_beta]
+        p_values = [fixed_p]
 
     # shots is supplied by the caller so shot sensitivity can be tested
     # without changing the QAOA algorithm itself.
@@ -284,4 +283,7 @@ def quantum_decision(
         f"state={best_bitstring}"
     )
 
-    return best_bitstring
+    if return_metadata:
+        return best_bitstring, best_gamma, best_beta, best_p, best_expected_energy
+    else:
+        return best_bitstring
