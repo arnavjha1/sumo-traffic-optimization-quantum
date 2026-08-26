@@ -95,7 +95,7 @@ def simStep(num_times = 1):
         # ====================================================
         # Vehicles that just departed
         for veh in traci.simulation.getDepartedIDList():
-            if t >= WARMUP_TIME:
+            if (t % 3600) >= WARMUP_TIME:
                 depart_time[veh] = t
                 depart_hour[veh] = int(t // 3600)
                 last_waiting_time[veh] = 0.0
@@ -629,107 +629,74 @@ traci.close()
 # -----------------------
 # RESULTS
 # -----------------------
-print("\n===== PERFORMANCE METRICS =====")
 
-def compute_avg(route_list, data_dict):
-    values = []
-    for r in route_list:
-        values.extend(data_dict.get(r, []))
-    return sum(values) / len(values) if len(values) > 0 else None
+print("\n===== 2x2 QAOA SEATTLE PERFORMANCE METRICS =====")
+print(f"Simulation duration: {END_TIME} s")
+print(f"Warm-up excluded: first {WARMUP_TIME} s")
+print(f"Random departure offset: 0-{RANDOM_DEPART_OFFSET} s")
 
-def compute_throughput(route_list):
-    return sum(throughput.get(r, 0) for r in route_list)
+print("\nHourly Average Travel Time / Waiting Time:")
 
-ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+all_travel_times = []
+all_waiting_times = []
 
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
+for hour in range(24):
 
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
+    tt_values = travel_times_by_hour.get(hour, [])
+    wt_values = waiting_times_by_hour.get(hour, [])
 
-# Travel time
-print("\nQUANTUM")
-print("\nAverage Travel Time:")
-avg_two = compute_avg(TWO_TURNS, travel_times)
-avg_one = compute_avg(ONE_TURN, travel_times)
-avg_none = compute_avg(NO_TURNS, travel_times)
-avg_all = compute_avg(ALL_ROUTES, travel_times)
+    if tt_values:
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+        avg_tt = sum(tt_values) / len(tt_values)
+        avg_wt = sum(wt_values) / len(wt_values)
 
-# Waiting time
-print("\nAverage Waiting Time:")
-avg_two = compute_avg(TWO_TURNS, waiting_times)
-avg_one = compute_avg(ONE_TURN, waiting_times)
-avg_none = compute_avg(NO_TURNS, waiting_times)
-avg_all = compute_avg(ALL_ROUTES, waiting_times)
+        all_travel_times.extend(tt_values)
+        all_waiting_times.extend(wt_values)
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+        if hour == 0:
+            measurement_window = (
+                f"{WARMUP_TIME}-3600 s"
+            )
+        else:
+            measurement_window = "full hour"
 
-# Throughput
-print("\nThroughput:")
-thr_two = compute_throughput(TWO_TURNS)
-thr_one = compute_throughput(ONE_TURN)
-thr_none = compute_throughput(NO_TURNS)
-thr_all = compute_throughput(ALL_ROUTES)
+        print(
+            f"Hour {hour:02d}: "
+            f"TT={avg_tt:.2f} s, "
+            f"WT={avg_wt:.2f} s, "
+            f"n={len(tt_values)}, "
+            f"window={measurement_window}"
+        )
 
-print(f"  Two Turns: {thr_two}")
-print(f"  One Turn:  {thr_one}")
-print(f"  No Turns:  {thr_none}")
-print(f"  Overall:   {thr_all}")
+    else:
 
-# -----------------------
-# ENERGY BENCHMARK RESULTS
-# -----------------------
-if energy_selected:
-    energy_summary = {
-        "shots": QAOA_SHOTS,
-        "num_decisions": len(energy_selected),
-        "optimal_hits": energy_optimum_hits,
-        "optimum_recovery_rate": energy_optimum_hits / len(energy_selected),
-        "average_selected_energy": sum(energy_selected) / len(energy_selected),
-        "average_exact_min_energy": sum(energy_exact) / len(energy_exact),
-        "average_optimality_gap": sum(energy_gaps) / len(energy_gaps),
-        "maximum_optimality_gap": max(energy_gaps),
-        "average_energy_reduction": sum(energy_reductions) / len(energy_reductions)
-    }
-else:
-    energy_summary = {
-        "shots": QAOA_SHOTS,
-        "num_decisions": 0,
-        "optimal_hits": 0,
-        "optimum_recovery_rate": 0.0,
-        "average_selected_energy": None,
-        "average_exact_min_energy": None,
-        "average_optimality_gap": None,
-        "maximum_optimality_gap": None,
-        "average_energy_reduction": None
-    }
+        print(
+            f"Hour {hour:02d}: "
+            f"TT=N/A, WT=N/A, n=0"
+        )
 
-print("\n===== ENERGY BENCHMARK =====")
-print(f"QAOA Shots: {energy_summary['shots']}")
-print(f"Energy Decisions: {energy_summary['num_decisions']}")
-print(f"Optimal Hits: {energy_summary['optimal_hits']}")
-print(f"Optimum Recovery Rate: {energy_summary['optimum_recovery_rate']:.6f}")
-if energy_summary["average_selected_energy"] is not None:
-    print(f"Average Selected Energy: {energy_summary['average_selected_energy']:.6f}")
-    print(f"Average Exact Minimum Energy: {energy_summary['average_exact_min_energy']:.6f}")
-    print(f"Average Optimality Gap: {energy_summary['average_optimality_gap']:.6f}")
-    print(f"Maximum Optimality Gap: {energy_summary['maximum_optimality_gap']:.6f}")
-    print(f"Average Energy Reduction: {energy_summary['average_energy_reduction']:.6f}")
-print("ENERGY_JSON: " + json.dumps(energy_summary))
+if all_travel_times:
+
+    overall_tt = (
+        sum(all_travel_times)
+        / len(all_travel_times)
+    )
+
+    overall_wt = (
+        sum(all_waiting_times)
+        / len(all_waiting_times)
+    )
+
+    print("\nPost-warm-up Overall:")
+    print(
+        f"Average Travel Time: "
+        f"{overall_tt:.2f} s"
+    )
+    print(
+        f"Average Waiting Time: "
+        f"{overall_wt:.2f} s"
+    )
+    print(
+        f"Measured completed vehicles: "
+        f"{len(all_travel_times)}"
+    )
