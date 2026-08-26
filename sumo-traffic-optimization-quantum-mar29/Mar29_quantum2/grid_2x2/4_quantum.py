@@ -4,14 +4,14 @@ import traci
 import json
 import os
 from itertools import product
-from collections import defaultdict
+from collections import defaultdict, Counter
 from annealer_quantum import quantum_decision
 
 SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
 END_TIME = 86400
 
-WARMUP_TIME = 900
+WARMUP_TIME = 1200
 RANDOM_DEPART_OFFSET = 60
 
 # -----------------------
@@ -72,6 +72,17 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 # Reviewer analysis settings. Defaults preserve the current QAOA behavior.
 ENERGY_LAMBDA = 10
 QAOA_SHOTS = int(os.environ.get("QAOA_SHOTS", "512"))
+
+# Seattle hourly QAOA calibration settings
+CALIBRATION_DURATION = 25
+
+parameter_counts = Counter()
+parameter_energy_sum = defaultdict(float)
+
+fixed_params = None
+current_calibration_hour = None
+
+hourly_qaoa_parameters = {}
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
@@ -577,13 +588,127 @@ while traci.simulation.getTime() < END_TIME:
 
         neighbor_indices.append(curr_neighbors)
 
-    bitstring = quantum_decision(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2,
-        shots=QAOA_SHOTS
-    )
+    current_time = int(traci.simulation.getTime())
+    current_hour = int(current_time // 3600)
+    local_time = current_time % 3600
+
+    if current_hour != current_calibration_hour:
+        current_calibration_hour = current_hour
+        parameter_counts.clear()
+        parameter_energy_sum.clear()
+        print(f"\n===== HOUR {current_hour:02d} WARMUP BEGINS =====")
+
+    hour_start = current_hour * 3600
+
+    calibration_start = hour_start + WARMUP_TIME
+    calibration_end = calibration_start + CALIBRATION_DURATION
+
+    if local_time < WARMUP_TIME:
+        if fixed_params is None:
+            (   bitstring,
+                best_gamma, best_beta, best_p,
+                best_expected_energy
+            ) = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                return_metadata=True
+            )
+
+            fixed_params = round(float(best_gamma), 12), round(float(best_beta), 12), int(best_p)
+
+            print("\n===== INITIAL WARMUP QAOA PARAMETERS =====")
+            print(f"Gamma: {fixed_params[0]:.6f}")
+            print(f"Beta:  {fixed_params[1]:.6f}")
+            print(f"p:     {fixed_params[2]}")
+            print("==========================================\n")
+
+        else:
+            bitstring = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                fixed_params=fixed_params
+            )
+
+    elif calibration_start <= current_time < calibration_end:
+        (
+            bitstring,
+            best_gamma,
+            best_beta,
+            best_p,
+            best_expected_energy
+        ) = quantum_decision(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2,
+            shots=QAOA_SHOTS,
+            return_metadata=True
+        )
+
+        param_key = (
+            round(float(best_gamma), 12),
+            round(float(best_beta), 12),
+            int(best_p)
+        )
+
+        parameter_counts[param_key] += 1
+        parameter_energy_sum[param_key] += best_expected_energy
+
+        if current_time == calibration_end - 1:
+            max_wins = max(parameter_counts.values())
+
+            candidates = [
+                params
+                for params, count in parameter_counts.items()
+                if count == max_wins
+            ]
+
+            fixed_params = min(
+                candidates,
+                key=lambda params:
+                    parameter_energy_sum[params]
+                    / parameter_counts[params]
+            )
+
+            hourly_qaoa_parameters[current_hour] = {
+                "gamma": fixed_params[0],
+                "beta": fixed_params[1],
+                "p": fixed_params[2],
+                "wins": parameter_counts[fixed_params],
+                "calibration_decisions": CALIBRATION_DURATION
+            }
+
+            print(
+                f"\n===== QAOA CALIBRATION COMPLETE: "
+                f"HOUR {current_hour:02d} ====="
+            )
+            print(f"Fixed gamma: {fixed_params[0]:.6f}")
+            print(f"Fixed beta:  {fixed_params[1]:.6f}")
+            print(f"Fixed p:     {fixed_params[2]}")
+            print(
+                f"Wins:        "
+                f"{parameter_counts[fixed_params]}"
+                f"/{CALIBRATION_DURATION}"
+            )
+            print(
+                "===== FIXED-PARAMETER QAOA BEGINS =====\n"
+            )
+        
+        else:
+            bitstring = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                fixed_params=fixed_params
+            )
 
     # Benchmark the selected QAOA state against all 16 possible global states.
     selected_energy = calculate_ising_energy(
@@ -632,7 +757,7 @@ traci.close()
 
 print("\n===== 2x2 QAOA SEATTLE PERFORMANCE METRICS =====")
 print(f"Simulation duration: {END_TIME} s")
-print(f"Warm-up excluded: first {WARMUP_TIME} s")
+print(f"Warm-up excluded: first {WARMUP_TIME} s of every hour")
 print(f"Random departure offset: 0-{RANDOM_DEPART_OFFSET} s")
 
 print("\nHourly Average Travel Time / Waiting Time:")
@@ -653,12 +778,10 @@ for hour in range(24):
         all_travel_times.extend(tt_values)
         all_waiting_times.extend(wt_values)
 
-        if hour == 0:
-            measurement_window = (
-                f"{WARMUP_TIME}-3600 s"
-            )
-        else:
-            measurement_window = "full hour"
+        measurement_window = (
+            f"{WARMUP_TIME}-3600 s "
+            f"({(3600 - WARMUP_TIME) // 60} min)"
+        )
 
         print(
             f"Hour {hour:02d}: "
