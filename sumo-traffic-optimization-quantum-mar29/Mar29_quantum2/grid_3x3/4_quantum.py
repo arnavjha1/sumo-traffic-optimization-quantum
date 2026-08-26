@@ -84,13 +84,16 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 ENERGY_LAMBDA = 10
 QAOA_SHOTS = int(os.environ.get("QAOA_SHOTS", "512"))
 
-# QAOA hyperparameter calibration settings
-CALIBRATION_END = 50
+# Seattle hourly QAOA calibration settings
+CALIBRATION_DURATION = 25
 
 parameter_counts = Counter()
 parameter_energy_sum = defaultdict(float)
 
 fixed_params = None
+current_calibration_hour = None
+
+hourly_qaoa_parameters = {}
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
@@ -393,7 +396,10 @@ def compute_discharging_pressure():
                 pressure_value
             )
 
-x_i = [[] for _ in range(NUM_TLS)]
+x_i = [
+    [-1] if tls in TLS_REG else [1]
+    for tls in TLS_ORDER
+]
 
 # -----------------------
 # ENERGY BENCHMARKING
@@ -598,6 +604,8 @@ while traci.simulation.getTime() < END_TIME:
     assert len(neighbor_indices) == 9
 
     current_time = int(traci.simulation.getTime())
+    current_hour = int(current_time // 3600)
+    local_time = current_time % 3600
 
     if current_time == 1:
         print("\n===== 3x3 QAOA CHECK =====")
@@ -607,7 +615,60 @@ while traci.simulation.getTime() < END_TIME:
         print("Neighbor indices:", neighbor_indices)
         print("==========================\n")
 
-    if current_time <= CALIBRATION_END:
+    if local_time < WARMUP_TIME:
+        if fixed_params is None:
+            (
+                bitstring,
+                best_gamma,
+                best_beta,
+                best_p,
+                best_expected_energy
+            ) = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                return_metadata=True
+            )
+
+            fixed_params = (
+                round(float(best_gamma), 12),
+                round(float(best_beta), 12),
+                int(best_p)
+            )
+
+            print("\n===== INITIAL WARMUP QAOA PARAMETERS =====")
+            print(f"Gamma: {fixed_params[0]:.6f}")
+            print(f"Beta:  {fixed_params[1]:.6f}")
+            print(f"p:     {fixed_params[2]}")
+            print("==========================================\n")
+        else:
+            if local_time == 0:
+                print(
+                    f"Hour {current_hour:02d} warmup using previous fixed params: "
+                    f"gamma={fixed_params[0]:.6f}, "
+                    f"beta={fixed_params[1]:.6f}, "
+                    f"p={fixed_params[2]}"
+                )
+
+            bitstring = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                fixed_params=fixed_params
+            )
+    
+    elif calibration_start <= current_time < calibration_end:
+
+        if current_time == calibration_start:
+
+            print(
+                f"\n===== HOUR {current_hour:02d} "
+                f"QAOA CALIBRATION START ====="
+            )
 
         (
             bitstring,
@@ -633,9 +694,7 @@ while traci.simulation.getTime() < END_TIME:
         parameter_counts[param_key] += 1
         parameter_energy_sum[param_key] += best_expected_energy
 
-        # Make the classical loop a fixed loop parameter selection
-        if current_time == CALIBRATION_END:
-
+        if current_time == calibration_end - 1:
             max_wins = max(parameter_counts.values())
 
             candidates = [
@@ -651,14 +710,41 @@ while traci.simulation.getTime() < END_TIME:
                     / parameter_counts[params]
             )
 
-            print("\n===== QAOA CALIBRATION COMPLETE =====")
+            hourly_qaoa_parameters[current_hour] = {
+                "gamma": fixed_params[0],
+                "beta": fixed_params[1],
+                "p": fixed_params[2],
+                "wins": parameter_counts[fixed_params],
+                "calibration_decisions": CALIBRATION_DURATION
+            }
+
+            print(
+                f"\n===== QAOA CALIBRATION COMPLETE: "
+                f"HOUR {current_hour:02d} ====="
+            )
+
             print(f"Fixed gamma: {fixed_params[0]:.6f}")
             print(f"Fixed beta:  {fixed_params[1]:.6f}")
             print(f"Fixed p:     {fixed_params[2]}")
-            print(f"Wins:        {parameter_counts[fixed_params]}/{CALIBRATION_END}")
-            print("===== FIXED-PARAMETER QAOA BEGINS =====\n")
+
+            print(
+                f"Wins:        "
+                f"{parameter_counts[fixed_params]}"
+                f"/{CALIBRATION_DURATION}"
+            )
+
+            print(
+                "===== FIXED-PARAMETER QAOA BEGINS =====\n"
+            )
 
     else:
+        if current_time == calibration_end:
+            print(
+                f"Hour {current_hour:02d} fixed QAOA begins: "
+                f"gamma={fixed_params[0]:.6f}, "
+                f"beta={fixed_params[1]:.6f}, "
+                f"p={fixed_params[2]}"
+            )
 
         bitstring = quantum_decision(
             bias_list,
@@ -670,6 +756,31 @@ while traci.simulation.getTime() < END_TIME:
         )
 
     assert len(bitstring) == 9
+
+    if current_hour != current_calibration_hour:
+        current_calibration_hour = current_hour
+        parameter_counts.clear()
+        parameter_energy_sum.clear()
+
+        print(
+            f"\n===== HOUR {current_hour:02d} START ====="
+        )
+
+        print(
+            f"Warmup: t={current_hour * 3600} "
+            f"to {current_hour * 3600 + WARMUP_TIME - 1}"
+        )
+
+        print(
+            f"Calibration: "
+            f"t={current_hour * 3600 + WARMUP_TIME} "
+            f"to "
+            f"{current_hour * 3600 + WARMUP_TIME + CALIBRATION_DURATION - 1}"
+        )
+
+    hour_start = current_hour * 3600
+    calibration_start = hour_start + WARMUP_TIME
+    calibration_end = calibration_start + CALIBRATION_DURATION
 
     # Benchmark the selected QAOA state against all possible global states.
     selected_energy = calculate_ising_energy(
@@ -715,27 +826,83 @@ traci.close()
 # -----------------------
 # RESULTS
 # -----------------------
-avg_travel_time = (
-    sum(travel_times) / len(travel_times)
-    if travel_times
-    else 0.0
-)
 
-avg_waiting_time = (
-    sum(waiting_times) / len(waiting_times)
-    if waiting_times
-    else 0.0
-)
-
-print("\n===== PERFORMANCE METRICS =====")
-print(f"Average Travel Time: {avg_travel_time:.2f} s")
-print(f"Average Waiting Time: {avg_waiting_time:.2f} s")
-print(f"Throughput: {total_arrived}")
-print(f"Vehicles inserted: {total_departed}")
+print("\n===== 3x3 QAOA SEATTLE PERFORMANCE METRICS =====")
+print(f"Simulation duration: {END_TIME} s")
 print(
-    f"Vehicles still in network at t={END_TIME}: "
-    f"{total_departed - total_arrived}"
+    f"Warm-up excluded: first {WARMUP_TIME} s of every hour"
 )
+print(
+    f"Random departure offset: 0-{RANDOM_DEPART_OFFSET} s"
+)
+
+print("\nHourly Average Travel Time / Waiting Time:")
+
+all_travel_times = []
+all_waiting_times = []
+
+for hour in range(24):
+
+    tt_values = travel_times_by_hour.get(hour, [])
+    wt_values = waiting_times_by_hour.get(hour, [])
+
+    if tt_values:
+
+        avg_tt = sum(tt_values) / len(tt_values)
+        avg_wt = sum(wt_values) / len(wt_values)
+
+        all_travel_times.extend(tt_values)
+        all_waiting_times.extend(wt_values)
+
+        measurement_window = (
+            f"{WARMUP_TIME}-3600 s "
+            f"({(3600 - WARMUP_TIME) // 60} min)"
+        )
+
+        print(
+            f"Hour {hour:02d}: "
+            f"TT={avg_tt:.2f} s, "
+            f"WT={avg_wt:.2f} s, "
+            f"n={len(tt_values)}, "
+            f"window={measurement_window}"
+        )
+
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"TT=N/A, WT=N/A, n=0"
+        )
+
+if all_travel_times:
+
+    overall_tt = (
+        sum(all_travel_times)
+        / len(all_travel_times)
+    )
+
+    overall_wt = (
+        sum(all_waiting_times)
+        / len(all_waiting_times)
+    )
+
+    print("\nPost-warm-up Overall:")
+
+    print(
+        f"Average Travel Time: "
+        f"{overall_tt:.2f} s"
+    )
+
+    print(
+        f"Average Waiting Time: "
+        f"{overall_wt:.2f} s"
+    )
+
+    print(
+        f"Measured completed vehicles: "
+        f"{len(all_travel_times)}"
+    )
+
 
 # -----------------------
 # ENERGY BENCHMARK RESULTS

@@ -984,6 +984,9 @@ for hour in range(24):
             "average_energy_reduction": None
         }
 
+    
+    hourly_energy_summary[hour] = summary
+
     if num_decisions > 0:
 
         print(
@@ -1005,5 +1008,5 @@ for hour in range(24):
             f"No measured energy decisions"
         )
 
-    print("HOURLY_QAOA_PARAMS_JSON: " + json.dumps(hourly_qaoa_parameters))
-    print("HOURLY_ENERGY_JSON: " + json.dumps(hourly_energy_summary))
+print("HOURLY_QAOA_PARAMS_JSON: " + json.dumps(hourly_qaoa_parameters))
+print("HOURLY_ENERGY_JSON: "      + json.dumps(hourly_energy_summary) )
