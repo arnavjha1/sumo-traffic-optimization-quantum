@@ -1,0 +1,19 @@
+===== 2x2 SEATTLE QAOA SIMULATION SUMMARY =====
+
+Source: C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\4_quantum.py
+Runs planned: 20
+Runs attempted: 3
+Runs successful: 0
+Runs failed: 3
+
+===== HOURLY TRAFFIC MEAN +/- SAMPLE SD =====
+
+
+===== OVERALL POST-WARM-UP STATISTICS =====
+
+{}
+
+===== OVERALL ENERGY STATISTICS =====
+
+{}
+

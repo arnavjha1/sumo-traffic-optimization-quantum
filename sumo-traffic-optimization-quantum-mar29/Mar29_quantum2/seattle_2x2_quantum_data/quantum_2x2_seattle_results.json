@@ -1,0 +1,34 @@
+{
+    "source_file": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\4_quantum.py",
+    "num_runs_planned": 20,
+    "num_runs_attempted": 3,
+    "num_runs_successful": 0,
+    "num_runs_failed": 3,
+    "runs": [
+        {
+            "run": 1,
+            "error": "Simulation failed",
+            "return_code": 1,
+            "raw_output": "",
+            "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\4_quantum.py\", line 47, in <module>\n    traci.start(sumo_cmd)\n    ~~~~~~~~~~~^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n"
+        },
+        {
+            "run": 2,
+            "error": "Simulation failed",
+            "return_code": 1,
+            "raw_output": "",
+            "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\4_quantum.py\", line 47, in <module>\n    traci.start(sumo_cmd)\n    ~~~~~~~~~~~^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n"
+        },
+        {
+            "run": 3,
+            "error": "Simulation failed",
+            "return_code": 1,
+            "raw_output": "",
+            "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\4_quantum.py\", line 47, in <module>\n    traci.start(sumo_cmd)\n    ~~~~~~~~~~~^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n"
+        }
+    ],
+    "hourly_traffic_summary": [],
+    "overall_traffic_statistics": {},
+    "hourly_energy_summary": [],
+    "overall_energy_statistics": {}
+}

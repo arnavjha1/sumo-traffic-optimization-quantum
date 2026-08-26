@@ -7,7 +7,7 @@ from itertools import product
 from collections import defaultdict, Counter
 from annealer_quantum import quantum_decision
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
 END_TIME = 86400
 
