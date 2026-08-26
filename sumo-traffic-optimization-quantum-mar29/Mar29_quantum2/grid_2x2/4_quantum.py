@@ -7,11 +7,11 @@ from itertools import product
 from collections import defaultdict, Counter
 from annealer_quantum import quantum_decision
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "sim2x2_data.sumocfg"
-END_TIME = 86400
+END_TIME = 4550
 
-WARMUP_TIME = 1200
+WARMUP_TIME = 900
 RANDOM_DEPART_OFFSET = 60
 
 # -----------------------
@@ -389,7 +389,10 @@ def compute_discharging_pressure():
                 pressure_value
             )
 
-x_i = [[] for _ in range(NUM_TLS)]
+x_i = [
+    [-1] if tls in TLS_REG else [1]
+    for tls in TLS_ORDER
+]
 
 # -----------------------
 # ENERGY BENCHMARKING
@@ -598,10 +601,28 @@ while traci.simulation.getTime() < END_TIME:
         parameter_energy_sum.clear()
         print(f"\n===== HOUR {current_hour:02d} WARMUP BEGINS =====")
 
+        print(
+            f"\n===== HOUR {current_hour:02d} START ====="
+        )
+        print(
+            f"Warmup: t={current_hour * 3600} "
+            f"to {current_hour * 3600 + WARMUP_TIME - 1}"
+        )
+        print(
+            f"Calibration: "
+            f"t={current_hour * 3600 + WARMUP_TIME} "
+            f"to "
+            f"{current_hour * 3600 + WARMUP_TIME + CALIBRATION_DURATION - 1}"
+        )
+
     hour_start = current_hour * 3600
 
     calibration_start = hour_start + WARMUP_TIME
     calibration_end = calibration_start + CALIBRATION_DURATION
+
+    assert len(bias_list) == 4
+    assert len(prev_state) == 4
+    assert len(neighbor_indices) == 4
 
     if local_time < WARMUP_TIME:
         if fixed_params is None:
@@ -626,6 +647,14 @@ while traci.simulation.getTime() < END_TIME:
             print("==========================================\n")
 
         else:
+            if local_time == 0:
+                print(
+                    f"Hour {current_hour:02d} warmup using previous fixed params: "
+                    f"gamma={fixed_params[0]:.6f}, "
+                    f"beta={fixed_params[1]:.6f}, "
+                    f"p={fixed_params[2]}"
+                )
+
             bitstring = quantum_decision(
                 bias_list,
                 prev_state,
@@ -636,6 +665,12 @@ while traci.simulation.getTime() < END_TIME:
             )
 
     elif calibration_start <= current_time < calibration_end:
+        if current_time == calibration_start:
+            print(
+                f"\n===== HOUR {current_hour:02d} "
+                f"QAOA CALIBRATION START ====="
+            )
+
         (
             bitstring,
             best_gamma,
@@ -700,15 +735,23 @@ while traci.simulation.getTime() < END_TIME:
                 "===== FIXED-PARAMETER QAOA BEGINS =====\n"
             )
         
-        else:
-            bitstring = quantum_decision(
-                bias_list,
-                prev_state,
-                neighbor_indices,
-                coupling_strength=2,
-                shots=QAOA_SHOTS,
-                fixed_params=fixed_params
-            )
+else:
+    if current_time == calibration_end:
+        print(
+            f"Hour {current_hour:02d} fixed QAOA begins: "
+            f"gamma={fixed_params[0]:.6f}, "
+            f"beta={fixed_params[1]:.6f}, "
+            f"p={fixed_params[2]}"
+        )
+
+    bitstring = quantum_decision(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2,
+        shots=QAOA_SHOTS,
+        fixed_params=fixed_params
+    )
 
     # Benchmark the selected QAOA state against all 16 possible global states.
     selected_energy = calculate_ising_energy(
