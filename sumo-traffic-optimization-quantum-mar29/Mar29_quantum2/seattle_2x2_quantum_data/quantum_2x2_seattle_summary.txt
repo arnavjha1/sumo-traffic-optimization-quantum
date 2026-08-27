@@ -2,166 +2,166 @@
 
 Source: C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\4_quantum.py
 Runs planned: 20
-Runs attempted: 9
-Runs successful: 9
+Runs attempted: 20
+Runs successful: 20
 Runs failed: 0
 
 ===== HOURLY TRAFFIC MEAN +/- SAMPLE SD =====
 
-Hour 00: TT=49.77 +/- 0.00 s, WT=21.04 +/- 0.00 s, n=669.00 +/- 0.00
-Hour 01: TT=49.72 +/- 0.00 s, WT=21.08 +/- 0.00 s, n=438.00 +/- 0.00
-Hour 02: TT=47.88 +/- 0.00 s, WT=20.22 +/- 0.00 s, n=324.00 +/- 0.00
-Hour 03: TT=46.56 +/- 0.00 s, WT=18.96 +/- 0.00 s, n=240.00 +/- 0.00
-Hour 04: TT=46.03 +/- 0.00 s, WT=18.46 +/- 0.00 s, n=368.00 +/- 0.00
-Hour 05: TT=53.93 +/- 0.00 s, WT=24.20 +/- 0.00 s, n=955.00 +/- 0.00
-Hour 06: TT=67.71 +/- 0.00 s, WT=32.89 +/- 0.00 s, n=2142.00 +/- 0.00
-Hour 07: TT=106.06 +/- 0.00 s, WT=33.95 +/- 0.00 s, n=2720.00 +/- 0.00
-Hour 08: TT=103.84 +/- 0.00 s, WT=32.13 +/- 0.00 s, n=2864.00 +/- 0.00
-Hour 09: TT=104.23 +/- 0.00 s, WT=33.94 +/- 0.00 s, n=2731.00 +/- 0.00
-Hour 10: TT=105.72 +/- 0.00 s, WT=34.86 +/- 0.00 s, n=2698.00 +/- 0.00
-Hour 11: TT=104.24 +/- 0.00 s, WT=34.10 +/- 0.00 s, n=2758.00 +/- 0.00
-Hour 12: TT=106.30 +/- 0.00 s, WT=32.87 +/- 0.00 s, n=2809.00 +/- 0.00
-Hour 13: TT=105.66 +/- 0.00 s, WT=32.68 +/- 0.00 s, n=2835.00 +/- 0.00
-Hour 14: TT=103.83 +/- 0.00 s, WT=31.66 +/- 0.00 s, n=2882.00 +/- 0.00
-Hour 15: TT=104.45 +/- 0.00 s, WT=30.89 +/- 0.00 s, n=3034.00 +/- 0.00
-Hour 16: TT=103.29 +/- 0.00 s, WT=28.83 +/- 0.00 s, n=3079.00 +/- 0.00
-Hour 17: TT=102.87 +/- 0.00 s, WT=28.65 +/- 0.00 s, n=3123.00 +/- 0.00
-Hour 18: TT=104.06 +/- 0.00 s, WT=31.94 +/- 0.00 s, n=2908.00 +/- 0.00
-Hour 19: TT=104.59 +/- 0.00 s, WT=35.65 +/- 0.00 s, n=2592.00 +/- 0.00
-Hour 20: TT=108.96 +/- 0.00 s, WT=38.61 +/- 0.00 s, n=2313.00 +/- 0.00
-Hour 21: TT=113.97 +/- 0.00 s, WT=40.78 +/- 0.00 s, n=2183.00 +/- 0.00
-Hour 22: TT=122.71 +/- 0.00 s, WT=44.95 +/- 0.00 s, n=1873.00 +/- 0.00
-Hour 23: TT=136.01 +/- 0.00 s, WT=50.19 +/- 0.00 s, n=1511.00 +/- 0.00
+Hour 00: TT=53.00 +/- 2.94 s, WT=22.50 +/- 2.51 s, n=669.00 +/- 0.00
+Hour 01: TT=52.99 +/- 3.11 s, WT=22.76 +/- 2.66 s, n=438.00 +/- 0.00
+Hour 02: TT=51.45 +/- 3.17 s, WT=21.94 +/- 2.78 s, n=324.00 +/- 0.00
+Hour 03: TT=52.42 +/- 3.53 s, WT=22.64 +/- 2.88 s, n=240.00 +/- 0.00
+Hour 04: TT=52.35 +/- 3.04 s, WT=22.63 +/- 2.48 s, n=368.00 +/- 0.00
+Hour 05: TT=53.79 +/- 3.42 s, WT=22.87 +/- 3.08 s, n=955.00 +/- 0.00
+Hour 06: TT=47.62 +/- 0.79 s, WT=16.36 +/- 0.91 s, n=2142.00 +/- 0.00
+Hour 07: TT=47.91 +/- 0.19 s, WT=14.90 +/- 0.20 s, n=3527.00 +/- 0.00
+Hour 08: TT=49.56 +/- 0.28 s, WT=15.68 +/- 0.24 s, n=3934.05 +/- 0.22
+Hour 09: TT=48.06 +/- 0.22 s, WT=14.95 +/- 0.29 s, n=3537.00 +/- 0.00
+Hour 10: TT=47.59 +/- 0.26 s, WT=14.84 +/- 0.30 s, n=3348.00 +/- 0.00
+Hour 11: TT=48.00 +/- 0.39 s, WT=14.89 +/- 0.38 s, n=3557.00 +/- 0.00
+Hour 12: TT=48.57 +/- 0.24 s, WT=15.02 +/- 0.29 s, n=3780.00 +/- 0.00
+Hour 13: TT=48.89 +/- 0.28 s, WT=15.22 +/- 0.25 s, n=3859.25 +/- 0.72
+Hour 14: TT=49.66 +/- 0.34 s, WT=15.55 +/- 0.29 s, n=4071.70 +/- 0.73
+Hour 15: TT=52.86 +/- 0.57 s, WT=17.36 +/- 0.40 s, n=4469.05 +/- 1.05
+Hour 16: TT=68.46 +/- 4.25 s, WT=26.64 +/- 2.49 s, n=4730.15 +/- 41.08
+Hour 17: TT=80.29 +/- 1.91 s, WT=33.20 +/- 1.14 s, n=4642.75 +/- 44.60
+Hour 18: TT=65.56 +/- 4.46 s, WT=24.94 +/- 2.61 s, n=4367.20 +/- 62.26
+Hour 19: TT=47.10 +/- 0.33 s, WT=14.79 +/- 0.41 s, n=3058.00 +/- 0.00
+Hour 20: TT=46.94 +/- 0.56 s, WT=15.25 +/- 0.68 s, n=2473.90 +/- 0.31
+Hour 21: TT=47.87 +/- 0.88 s, WT=16.57 +/- 1.04 s, n=2142.00 +/- 0.00
+Hour 22: TT=50.32 +/- 1.53 s, WT=19.44 +/- 1.56 s, n=1572.00 +/- 0.00
+Hour 23: TT=52.48 +/- 2.87 s, WT=21.82 +/- 2.65 s, n=953.15 +/- 2.41
 
 ===== OVERALL POST-WARM-UP STATISTICS =====
 
 {
     "average_travel_time": {
-        "count": 9,
-        "mean": 101.94,
-        "median": 101.94,
-        "min": 101.94,
-        "max": 101.94,
-        "standard_deviation": 0.0,
-        "variance": 0.0,
-        "standard_error": 0.0
+        "count": 20,
+        "mean": 53.9915,
+        "median": 53.84,
+        "min": 53.02,
+        "max": 55.32,
+        "standard_deviation": 0.668165398685086,
+        "variance": 0.4464449999999998,
+        "standard_error": 0.14940632516731006
     },
     "average_waiting_time": {
-        "count": 9,
-        "mean": 33.4,
-        "median": 33.4,
-        "min": 33.4,
-        "max": 33.4,
-        "standard_deviation": 0.0,
-        "variance": 0.0,
-        "standard_error": 0.0
+        "count": 20,
+        "mean": 18.809,
+        "median": 18.71,
+        "min": 18.19,
+        "max": 19.66,
+        "standard_deviation": 0.4032747528866511,
+        "variance": 0.16263052631578953,
+        "standard_error": 0.09017497610639813
     },
     "completed_vehicles": {
-        "count": 9,
-        "mean": 50049,
-        "median": 50049,
-        "min": 50049,
-        "max": 50049,
-        "standard_deviation": 0.0,
-        "variance": 0,
-        "standard_error": 0.0
+        "count": 20,
+        "mean": 63158.2,
+        "median": 63160.0,
+        "min": 63103,
+        "max": 63207,
+        "standard_deviation": 32.289154118437516,
+        "variance": 1042.5894736842106,
+        "standard_error": 7.220074354479357
     }
 }
 
 ===== OVERALL ENERGY STATISTICS =====
 
 {
-    "runs_with_energy_data": 0,
+    "runs_with_energy_data": 20,
     "statistics": {
         "shots": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": 512,
+            "median": 512.0,
+            "min": 512,
+            "max": 512,
+            "standard_deviation": 0.0,
+            "variance": 0,
+            "standard_error": 0.0
         },
         "num_decisions": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": 64800,
+            "median": 64800.0,
+            "min": 64800,
+            "max": 64800,
+            "standard_deviation": 0.0,
+            "variance": 0,
+            "standard_error": 0.0
         },
         "optimal_hits": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": 61716.85,
+            "median": 61661.5,
+            "min": 60904,
+            "max": 62425,
+            "standard_deviation": 473.8606585107172,
+            "variance": 224543.92368421052,
+            "standard_error": 105.95846442927778
         },
         "optimum_recovery_rate": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": 0.9524205246913581,
+            "median": 0.9515663580246914,
+            "min": 0.9398765432098766,
+            "max": 0.9633487654320988,
+            "standard_deviation": 0.007312664483190082,
+            "variance": 5.347506184370966e-05,
+            "standard_error": 0.001635161488106139
         },
         "average_selected_energy": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": -50.84482099537037,
+            "median": -50.92024992283951,
+            "min": -51.358638734567904,
+            "max": -50.29717592592593,
+            "standard_deviation": 0.3028388983365474,
+            "variance": 0.0917113983456937,
+            "standard_error": 0.0677168362911668
         },
         "average_exact_min_energy": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": -51.52215613425926,
+            "median": -51.60127932098766,
+            "min": -51.943435648148146,
+            "max": -50.991655864197526,
+            "standard_deviation": 0.2909366764154045,
+            "variance": 0.08464414968364177,
+            "standard_error": 0.06505541856127042
         },
         "average_optimality_gap": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": 0.677335138888889,
+            "median": 0.6825408950617284,
+            "min": 0.4985336419753087,
+            "max": 0.8624160493827161,
+            "standard_deviation": 0.11688177759909661,
+            "variance": 0.013661349934724685,
+            "standard_error": 0.026135560004259217
         },
         "maximum_optimality_gap": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": 76.475,
+            "median": 72.0,
+            "min": 62.3,
+            "max": 119.16,
+            "standard_deviation": 16.56721159398889,
+            "variance": 274.4724999999999,
+            "standard_error": 3.7045411321781803
         },
         "average_energy_reduction": {
-            "count": 0,
-            "mean": null,
-            "median": null,
-            "min": null,
-            "max": null,
-            "standard_deviation": null,
-            "variance": null,
-            "standard_error": null
+            "count": 20,
+            "mean": -0.4509542746913582,
+            "median": -0.45933688271604955,
+            "min": -0.6400577160493829,
+            "max": -0.27726481481481496,
+            "standard_deviation": 0.11783760311298161,
+            "variance": 0.013885700707412574,
+            "standard_error": 0.02634928908662677
         }
     }
 }

@@ -1,0 +1,168 @@
+===== 2x2 SEATTLE QAOA SIMULATION SUMMARY =====
+
+Source: C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\4_quantum.py
+Runs planned: 20
+Runs attempted: 10
+Runs successful: 10
+Runs failed: 0
+
+===== HOURLY TRAFFIC MEAN +/- SAMPLE SD =====
+
+Hour 00: TT=49.77 +/- 0.00 s, WT=21.04 +/- 0.00 s, n=669.00 +/- 0.00
+Hour 01: TT=49.72 +/- 0.00 s, WT=21.08 +/- 0.00 s, n=438.00 +/- 0.00
+Hour 02: TT=47.88 +/- 0.00 s, WT=20.22 +/- 0.00 s, n=324.00 +/- 0.00
+Hour 03: TT=46.56 +/- 0.00 s, WT=18.96 +/- 0.00 s, n=240.00 +/- 0.00
+Hour 04: TT=46.03 +/- 0.00 s, WT=18.46 +/- 0.00 s, n=368.00 +/- 0.00
+Hour 05: TT=53.93 +/- 0.00 s, WT=24.20 +/- 0.00 s, n=955.00 +/- 0.00
+Hour 06: TT=67.71 +/- 0.00 s, WT=32.89 +/- 0.00 s, n=2142.00 +/- 0.00
+Hour 07: TT=106.06 +/- 0.00 s, WT=33.95 +/- 0.00 s, n=2720.00 +/- 0.00
+Hour 08: TT=103.84 +/- 0.00 s, WT=32.13 +/- 0.00 s, n=2864.00 +/- 0.00
+Hour 09: TT=104.23 +/- 0.00 s, WT=33.94 +/- 0.00 s, n=2731.00 +/- 0.00
+Hour 10: TT=105.72 +/- 0.00 s, WT=34.86 +/- 0.00 s, n=2698.00 +/- 0.00
+Hour 11: TT=104.24 +/- 0.00 s, WT=34.10 +/- 0.00 s, n=2758.00 +/- 0.00
+Hour 12: TT=106.30 +/- 0.00 s, WT=32.87 +/- 0.00 s, n=2809.00 +/- 0.00
+Hour 13: TT=105.66 +/- 0.00 s, WT=32.68 +/- 0.00 s, n=2835.00 +/- 0.00
+Hour 14: TT=103.83 +/- 0.00 s, WT=31.66 +/- 0.00 s, n=2882.00 +/- 0.00
+Hour 15: TT=104.45 +/- 0.00 s, WT=30.89 +/- 0.00 s, n=3034.00 +/- 0.00
+Hour 16: TT=103.29 +/- 0.00 s, WT=28.83 +/- 0.00 s, n=3079.00 +/- 0.00
+Hour 17: TT=102.87 +/- 0.00 s, WT=28.65 +/- 0.00 s, n=3123.00 +/- 0.00
+Hour 18: TT=104.06 +/- 0.00 s, WT=31.94 +/- 0.00 s, n=2908.00 +/- 0.00
+Hour 19: TT=104.59 +/- 0.00 s, WT=35.65 +/- 0.00 s, n=2592.00 +/- 0.00
+Hour 20: TT=108.96 +/- 0.00 s, WT=38.61 +/- 0.00 s, n=2313.00 +/- 0.00
+Hour 21: TT=113.97 +/- 0.00 s, WT=40.78 +/- 0.00 s, n=2183.00 +/- 0.00
+Hour 22: TT=122.71 +/- 0.00 s, WT=44.95 +/- 0.00 s, n=1873.00 +/- 0.00
+Hour 23: TT=136.01 +/- 0.00 s, WT=50.19 +/- 0.00 s, n=1511.00 +/- 0.00
+
+===== OVERALL POST-WARM-UP STATISTICS =====
+
+{
+    "average_travel_time": {
+        "count": 10,
+        "mean": 101.94,
+        "median": 101.94,
+        "min": 101.94,
+        "max": 101.94,
+        "standard_deviation": 0.0,
+        "variance": 0.0,
+        "standard_error": 0.0
+    },
+    "average_waiting_time": {
+        "count": 10,
+        "mean": 33.4,
+        "median": 33.4,
+        "min": 33.4,
+        "max": 33.4,
+        "standard_deviation": 0.0,
+        "variance": 0.0,
+        "standard_error": 0.0
+    },
+    "completed_vehicles": {
+        "count": 10,
+        "mean": 50049,
+        "median": 50049.0,
+        "min": 50049,
+        "max": 50049,
+        "standard_deviation": 0.0,
+        "variance": 0,
+        "standard_error": 0.0
+    }
+}
+
+===== OVERALL ENERGY STATISTICS =====
+
+{
+    "runs_with_energy_data": 0,
+    "statistics": {
+        "shots": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "num_decisions": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "optimal_hits": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "optimum_recovery_rate": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "average_selected_energy": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "average_exact_min_energy": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "average_optimality_gap": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "maximum_optimality_gap": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        },
+        "average_energy_reduction": {
+            "count": 0,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "max": null,
+            "standard_deviation": null,
+            "variance": null,
+            "standard_error": null
+        }
+    }
+}
+
