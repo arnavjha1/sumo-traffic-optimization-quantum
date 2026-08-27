@@ -13,7 +13,7 @@ from pathlib import Path
 # ============================================================
 
 NUM_RUNS = 10
-RUN_TIMEOUT_SECONDS = 21600  # 6 hours per full 24-hour simulation
+RUN_TIMEOUT_SECONDS = 43600  # 12 hours per full 24-hour simulation
 
 BASE_DIR = Path(__file__).resolve().parent
 SIMULATION_DIR = BASE_DIR / "grid_3x3"
