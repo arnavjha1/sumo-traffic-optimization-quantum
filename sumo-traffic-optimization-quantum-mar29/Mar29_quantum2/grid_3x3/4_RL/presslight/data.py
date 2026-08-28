@@ -12,6 +12,7 @@ Mirrors the already-run official 3x3 QAOA Seattle framing:
 
 import traci
 from collections import defaultdict
+from agent import PressLightAgent
 
 SUMO_BINARY = "sumo"
 SUMO_CONFIG = "grid_3x3/sim3x3_data.sumocfg"

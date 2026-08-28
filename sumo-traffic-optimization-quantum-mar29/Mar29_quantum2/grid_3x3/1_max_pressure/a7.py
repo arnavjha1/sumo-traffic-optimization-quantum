@@ -106,6 +106,7 @@ def simStep(num_times=1):
                 last_waiting_time.pop(veh, None)
 
     return traci.simulation.getTime()
+
 # =============================
 # MAX PRESSURE SPECIFIC CODE
 # =============================
