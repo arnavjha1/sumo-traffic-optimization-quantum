@@ -119,68 +119,16 @@ def sim_step():
 
     return int(t)
 
-CYCLE_LENGTH = 120
-sim_module = [0] * NUM_TLS
 
 def controller_step(current_time):
+    """
+    Replace ONLY this function and the controller-specific setup section
+    with logic from the corresponding working 3x3 controller.
 
-    # REGULAR INTERSECTIONS
-    for tls in TLS_REG:
-        tls_index = TLS_ORDER.index(tls)
-        m = sim_module[tls_index]
-
-        if 0 <= m < ((CYCLE_LENGTH / 2) - 5):
-            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            sim_module[tls_index] += 1
-
-        elif ((CYCLE_LENGTH / 2) - 5) <= m < ((CYCLE_LENGTH / 2) - 1):
-            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
-            sim_module[tls_index] += 1
-
-        elif ((CYCLE_LENGTH / 2) - 1) <= m < (CYCLE_LENGTH / 2):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] += 1
-
-        elif (CYCLE_LENGTH / 2) <= m < (CYCLE_LENGTH - 5):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            sim_module[tls_index] += 1
-
-        elif (CYCLE_LENGTH - 5) <= m < (CYCLE_LENGTH - 1):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
-            sim_module[tls_index] += 1
-
-        elif (CYCLE_LENGTH - 1) <= m < CYCLE_LENGTH:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] = 0
-
-    # INVERTED INTERSECTIONS
-    for tls in TLS_INVERT:
-        tls_index = TLS_ORDER.index(tls)
-        m = sim_module[tls_index]
-
-        if 0 <= m < ((CYCLE_LENGTH / 2) - 5):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
-            sim_module[tls_index] += 1
-
-        elif ((CYCLE_LENGTH / 2) - 5) <= m < ((CYCLE_LENGTH / 2) - 1):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrryyyrrryyy")
-            sim_module[tls_index] += 1
-
-        elif ((CYCLE_LENGTH / 2) - 1) <= m < (CYCLE_LENGTH / 2):
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] += 1
-
-        elif (CYCLE_LENGTH / 2) <= m < (CYCLE_LENGTH - 5):
-            traci.trafficlight.setRedYellowGreenState(tls, "GGgrrrGGgrrr")
-            sim_module[tls_index] += 1
-
-        elif (CYCLE_LENGTH - 5) <= m < (CYCLE_LENGTH - 1):
-            traci.trafficlight.setRedYellowGreenState(tls, "yyyrrryyyrrr")
-            sim_module[tls_index] += 1
-
-        elif (CYCLE_LENGTH - 1) <= m < CYCLE_LENGTH:
-            traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
-            sim_module[tls_index] = 0
+    Do not call traci.simulationStep() here.
+    Control continues during warm-up; only metric collection is excluded.
+    """
+    pass
 
 
 try:
