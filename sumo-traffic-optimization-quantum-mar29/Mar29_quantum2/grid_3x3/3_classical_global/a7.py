@@ -1,7 +1,10 @@
-# CLASSICAL LOCAL
+# CLASSICAL GLOBAL
 
 import traci
 import sys
+import json
+from itertools import product
+from annealer_classical import quantum_decision
 
 # -----------------------
 # SIMULATION SETTINGS
@@ -183,13 +186,13 @@ def simStep(num_times=1):
     return traci.simulation.getTime()
 
 # =============================
-# CLASSICAL LOCAL SPECIFIC CODE
+# CLASSICAL GLOBAL SPECIFIC CODE
 # =============================
 
 PHASE_NS = "GGgrrrGGgrrr"
 PHASE_EW = "rrrGGgrrrGGg"
 
-MIN_CHANGE_TIME = 16
+MIN_CHANGE_TIME = 12
 
 HALF_CYCLE = CYCLE_LENGTH // 2
 GREEN_END_1 = HALF_CYCLE - 5
@@ -433,48 +436,55 @@ def compute_discharging_pressure():
 # ENERGY-BASED PHASE OPTIMIZATION
 # ==========================================================
 
-LAMBDA_SWITCHING_PENALTY = 20   # tune between 15–30
-coupling_bias = 2             # tune between 0-10
+ENERGY_LAMBDA = 10
+bias_i_tls = [[] for _ in range(NUM_TLS)]
 
 x_i = [[] for _ in range(NUM_TLS)]
 
-def optimize_x_i(tls_index, bias_i):
+energy_selected = []
+energy_exact = []
+energy_gaps = []
+energy_reductions = []
+energy_optimum_hits = 0
 
-    # First timestep initialization
-    if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
-            x_i[tls_index].append(-1)
-        return
+def calculate_ising_energy(bitstring, biases, prev_state, neighbors, coupling_strength=2):
+    # Same Ising objective used by the QAOA controller.
+    spins = [1 if bit == "1" else -1 for bit in bitstring]
+    prev_spins = [2 * state - 1 for state in prev_state]
 
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
+    energy = 0.0
 
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
+    for i in range(NUM_TLS):
+        energy += -biases[i] * spins[i]
+        energy += -ENERGY_LAMBDA * prev_spins[i] * spins[i]
 
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
+        for j in neighbors[i]:
+            if i < j:
+                energy += -coupling_strength * spins[i] * spins[j]
 
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
+    return energy
 
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
+def exact_global_minimum(biases, prev_state, neighbors, coupling_strength=2):
+    best_energy = float("inf")
+    best_states = []
 
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
-    else:
-        x_i[tls_index].append(current_x)
+    for state_tuple in product("01", repeat=NUM_TLS):
+        state = "".join(state_tuple)
+        energy = calculate_ising_energy(
+            state,
+            biases,
+            prev_state,
+            neighbors,
+            coupling_strength
+        )
+
+        if energy < best_energy - 1e-12:
+            best_energy = energy
+            best_states = [state]
+        elif abs(energy - best_energy) <= 1e-12:
+            best_states.append(state)
+
+    return best_energy, best_states
 
 
 # -----------------------
@@ -482,7 +492,7 @@ def optimize_x_i(tls_index, bias_i):
 # -----------------------
 sim_module = [0] * NUM_TLS
 
-print("\n===== 3x3 MAX-PRESSURE SATURATED TEST =====")
+print("\n===== 3x3 CLASSICAL GLOBAL SATURATED TEST =====")
 print(f"Alpha case: a{ALPHA_INDEX} ({ALPHA_INDEX / 10:.1f})")
 print(f"Route file: {ROUTE_FILE}")
 print(f"Simulation duration: {END_TIME} s")
@@ -493,21 +503,178 @@ while traci.simulation.getTime() < END_TIME:
     compute_pressure()
     compute_discharging_pressure()
 
+    # ====================================================
+    # CALCULATE ALL 9 BIASES
+    # ====================================================
+
+    for tls in TLS_ORDER:
+
+        tls_index = TLS_ORDER.index(tls)
+
+        current_state = (
+            traci.trafficlight
+            .getRedYellowGreenState(tls)
+        )
+
+        if current_state == PHASE_NS:
+
+            bias_i = (
+                discharging_pressure[tls_index][0][-1]
+                + discharging_pressure[tls_index][2][-1]
+            ) - (
+                pressure[tls_index][1][-1]
+                + pressure[tls_index][3][-1]
+            )
+
+        elif current_state == PHASE_EW:
+
+            bias_i = (
+                pressure[tls_index][0][-1]
+                + pressure[tls_index][2][-1]
+            ) - (
+                discharging_pressure[tls_index][1][-1]
+                + discharging_pressure[tls_index][3][-1]
+            )
+
+        else:
+
+            bias_i = (
+                pressure[tls_index][0][-1]
+                + pressure[tls_index][2][-1]
+            ) - (
+                pressure[tls_index][1][-1]
+                + pressure[tls_index][3][-1]
+            )
+
+        bias_i_tls[tls_index].append(bias_i)
+    
+    # ====================================================
+    # CLASSICAL GLOBAL OPTIMIZATION
+    # ====================================================
+
+    bias_list = [
+        bias_i_tls[i][-1]
+        for i in range(NUM_TLS)
+    ]
+
+    # -----------------------------------------
+    # Previous global traffic-light state
+    # -----------------------------------------
+    prev_state = []
+
+    for i in range(NUM_TLS):
+
+        # First timestep
+        if len(x_i[i]) == 0:
+
+            if TLS_ORDER[i] in TLS_REG:
+                prev_state.append(1)
+            else:
+                prev_state.append(0)
+
+        else:
+
+            # Convert {-1, +1} -> {0, 1}
+            prev_state.append(
+                1 if x_i[i][-1] == 1
+                else 0
+            )
+
+    # -----------------------------------------
+    # Convert TLS neighbor names -> indices
+    # -----------------------------------------
+    neighbor_indices = []
+
+    for i in range(NUM_TLS):
+
+        curr_neighbors = []
+
+        for neighbor_tls in TLS_NEIGHBORS[i][1:]:
+
+            curr_neighbors.append(
+                TLS_ORDER.index(neighbor_tls)
+            )
+
+        neighbor_indices.append(
+            curr_neighbors
+        )
+
+    # -----------------------------------------
+    # Solve global Ising problem
+    # -----------------------------------------
+    bitstring = quantum_decision(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    selected_energy = calculate_ising_energy(
+        bitstring,
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    exact_min_energy, exact_states = (
+        exact_global_minimum(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+    )
+
+    previous_bitstring = "".join(
+        str(state)
+        for state in prev_state
+    )
+
+    previous_energy = calculate_ising_energy(
+        previous_bitstring,
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2
+    )
+
+    gap = (
+        selected_energy
+        - exact_min_energy
+    )
+
+    energy_selected.append(
+        selected_energy
+    )
+
+    energy_exact.append(
+        exact_min_energy
+    )
+
+    energy_gaps.append(
+        gap
+    )
+
+    energy_reductions.append(
+        previous_energy
+        - selected_energy
+    )
+
+    if abs(gap) <= 1e-9:
+        energy_optimum_hits += 1
+
+    for idx in range(NUM_TLS):
+        x_i[idx].append(
+            1 if bitstring[idx] == "1"
+            else -1
+        )
+
     for tls in TLS_REG:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-
-        if(current_state == "GGgrrrGGgrrr"):
-            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        elif(current_state == "rrrGGgrrrGGg"):
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
-        else:
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        
-        optimize_x_i(tIndex.index(tls), bias_i)
-
-
         tls_index = TLS_ORDER.index(tls)
+
         if (sim_module[tls_index] >= 0 and sim_module[tls_index] < GREEN_END_1):
             traci.trafficlight.setRedYellowGreenState(tls, PHASE_NS)
             if (sim_module[tls_index] >= MIN_CHANGE_TIME and x_i[tls_index][-1] == -1):
@@ -541,18 +708,8 @@ while traci.simulation.getTime() < END_TIME:
     for tls in TLS_INVERT:
         current_state = traci.trafficlight.getRedYellowGreenState(tls)
         t = traci.simulation.getTime()
-
-        if(current_state == "GGgrrrGGgrrr"):
-            bias_i = (discharging_pressure[tIndex.index(tls)][0][-1] + discharging_pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        elif(current_state == "rrrGGgrrrGGg"):
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (discharging_pressure[tIndex.index(tls)][1][-1] + discharging_pressure[tIndex.index(tls)][3][-1])
-        else:
-            bias_i = (pressure[tIndex.index(tls)][0][-1] + pressure[tIndex.index(tls)][2][-1]) - (pressure[tIndex.index(tls)][1][-1] + pressure[tIndex.index(tls)][3][-1])
-        
-        optimize_x_i(tIndex.index(tls), bias_i)
-
-
         tls_index = TLS_ORDER.index(tls)
+
         if (sim_module[tls_index] >= 0 and sim_module[tls_index] < GREEN_END_1):
             traci.trafficlight.setRedYellowGreenState(tls, PHASE_EW)
             if (sim_module[tls_index] >= MIN_CHANGE_TIME and x_i[tls_index][-1] == 1):
@@ -582,7 +739,6 @@ while traci.simulation.getTime() < END_TIME:
         elif (sim_module[tls_index] >= YELLOW_END_2 and sim_module[tls_index] < CYCLE_LENGTH):
             traci.trafficlight.setRedYellowGreenState(tls, "rrrrrrrrrrrr")
             sim_module[tls_index] = 0
-
 
     current_time = int(traci.simulation.getTime())
 
@@ -620,4 +776,109 @@ print(f"Vehicles inserted: {total_departed}")
 print(
     f"Vehicles still in network at t={END_TIME}: "
     f"{total_departed - total_arrived}"
+)
+
+if energy_selected:
+
+    energy_summary = {
+
+        "num_decisions":
+            len(energy_selected),
+
+        "optimal_hits":
+            energy_optimum_hits,
+
+        "optimum_recovery_rate":
+            energy_optimum_hits
+            / len(energy_selected),
+
+        "average_selected_energy":
+            sum(energy_selected)
+            / len(energy_selected),
+
+        "average_exact_min_energy":
+            sum(energy_exact)
+            / len(energy_exact),
+
+        "average_optimality_gap":
+            sum(energy_gaps)
+            / len(energy_gaps),
+
+        "maximum_optimality_gap":
+            max(energy_gaps),
+
+        "average_energy_reduction":
+            sum(energy_reductions)
+            / len(energy_reductions)
+    }
+
+else:
+
+    energy_summary = {
+
+        "num_decisions": 0,
+        "optimal_hits": 0,
+        "optimum_recovery_rate": 0.0,
+        "average_selected_energy": None,
+        "average_exact_min_energy": None,
+        "average_optimality_gap": None,
+        "maximum_optimality_gap": None,
+        "average_energy_reduction": None
+    }
+
+
+print("\n===== ENERGY BENCHMARK =====")
+
+print(
+    f"Energy Decisions: "
+    f"{energy_summary['num_decisions']}"
+)
+
+print(
+    f"Optimal Hits: "
+    f"{energy_summary['optimal_hits']}"
+)
+
+print(
+    f"Optimum Recovery Rate: "
+    f"{energy_summary['optimum_recovery_rate']:.6f}"
+)
+
+if (
+    energy_summary[
+        "average_selected_energy"
+    ]
+    is not None
+):
+
+    print(
+        f"Average Selected Energy: "
+        f"{energy_summary['average_selected_energy']:.6f}"
+    )
+
+    print(
+        f"Average Exact Minimum Energy: "
+        f"{energy_summary['average_exact_min_energy']:.6f}"
+    )
+
+    print(
+        f"Average Optimality Gap: "
+        f"{energy_summary['average_optimality_gap']:.6f}"
+    )
+
+    print(
+        f"Maximum Optimality Gap: "
+        f"{energy_summary['maximum_optimality_gap']:.6f}"
+    )
+
+    print(
+        f"Average Energy Reduction: "
+        f"{energy_summary['average_energy_reduction']:.6f}"
+    )
+
+print(
+    "ENERGY_JSON: "
+    + json.dumps(
+        energy_summary
+    )
 )
