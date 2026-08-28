@@ -12,7 +12,7 @@ Mirrors the already-run official 3x3 QAOA Seattle framing:
 
 import traci
 from collections import defaultdict
-from agent import PressLightAgent
+from agent import MPLightAgent
 
 SUMO_BINARY = "sumo"
 SUMO_CONFIG = "grid_3x3/sim3x3_data.sumocfg"
@@ -62,12 +62,13 @@ for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, PHASE_EW)
 
 # -----------------------
-# LOAD FROZEN PRESSLIGHT MODEL
+# LOAD FROZEN MPLIGHT MODEL
 # -----------------------
 
-MODEL_PATH = "presslight_model_v1.pt"
+MODEL_PATH = "MPLight_model_v1.pt"
+DECISION_INTERVAL = 10
 
-agent = PressLightAgent()
+agent = MPLightAgent()
 agent.load(MODEL_PATH)
 agent.set_evaluation_mode()
 
@@ -114,61 +115,57 @@ def get_lane_queue(lane_id):
         for veh in traci.lane.getLastStepVehicleIDs(lane_id)
         if traci.vehicle.getSpeed(veh) < 0.1
     )
-
-def get_presslight_state(tls):
+def get_movement_pressures(tls):
     """
-    PressLight observation:
-        [NS upstream queue,
-         NS downstream queue,
-         EW upstream queue,
-         EW downstream queue,
-         current phase]
-
-    Phase:
-        0 = NS
-        1 = EW
+    MPLight observation component:
+    one pressure value for each controlled movement.
     """
 
     controlled_links = (
         traci.trafficlight.getControlledLinks(tls)
     )
 
-    ns_upstream = 0
-    ns_downstream = 0
-    ew_upstream = 0
-    ew_downstream = 0
+    movement_pressures = []
 
-    for signal_index, link_group in enumerate(controlled_links):
+    for link_group in controlled_links:
 
-        for link in link_group:
+        if not link_group:
+            movement_pressures.append(0)
+            continue
 
-            incoming_lane = link[0]
-            outgoing_lane = link[1]
+        link = link_group[0]
 
-            upstream_queue = get_lane_queue(
-                incoming_lane
-            )
+        incoming_lane = link[0]
+        outgoing_lane = link[1]
 
-            downstream_queue = get_lane_queue(
-                outgoing_lane
-            )
+        incoming_queue = get_lane_queue(
+            incoming_lane
+        )
 
-            if (
-                signal_index < len(PHASE_NS)
-                and PHASE_NS[signal_index] in ("G", "g")
-            ):
-                ns_upstream += upstream_queue
-                ns_downstream += downstream_queue
+        outgoing_queue = get_lane_queue(
+            outgoing_lane
+        )
 
-            if (
-                signal_index < len(PHASE_EW)
-                and PHASE_EW[signal_index] in ("G", "g")
-            ):
-                ew_upstream += upstream_queue
-                ew_downstream += downstream_queue
+        movement_pressures.append(
+            incoming_queue - outgoing_queue
+        )
+
+    return movement_pressures
+
+def get_MPLight_state(tls):
+    """
+    12 movement pressures + current phase.
+
+    Phase:
+        0 = NS
+        1 = EW
+    """
+
+    movement_pressures = get_movement_pressures(tls)
 
     current_state = (
-        traci.trafficlight.getRedYellowGreenState(tls)
+        traci.trafficlight
+        .getRedYellowGreenState(tls)
     )
 
     if current_state == PHASE_NS:
@@ -185,23 +182,27 @@ def get_presslight_state(tls):
 
         current_phase = last_green_phase[tls]
 
-    return [
-        ns_upstream,
-        ns_downstream,
-        ew_upstream,
-        ew_downstream,
-        current_phase,
-    ]
+    state = movement_pressures + [current_phase]
 
-def presslight_decision(tls):
-    state = get_presslight_state(tls)
+    if len(state) != 13:
+        raise ValueError(
+            f"{tls}: expected MPLight state length 13, got {len(state)} "
+            f"({len(movement_pressures)} movement pressures)"
+        )
+
+    return state
+
+def mplight_decision(tls):
+
+    state = get_MPLight_state(tls)
+
     action = agent.select_action(state)
 
-    # PressLight:
-    # 0 = NS
-    # 1 = EW
+    # MPLight:
+    # action 0 = NS
+    # action 1 = EW
     #
-    # Signal wrapper:
+    # wrapper:
     # +1 = NS
     # -1 = EW
 
@@ -252,12 +253,32 @@ def sim_step():
 def controller_step(current_time):
 
     # --------------------------------------------------------
-    # 1. Compute Max-Pressure decision for every TLS
+    # 1. MPLight desired phase update
     # --------------------------------------------------------
     for tls in TLS_ORDER:
+
         tls_index = TLS_ORDER.index(tls)
-        decision = presslight_decision(tls)
-        x_i[tls_index].append(decision)
+
+        # Initialize desired phase from current signal state
+        if len(x_i[tls_index]) == 0:
+
+            current_state = (
+                traci.trafficlight
+                .getRedYellowGreenState(tls)
+            )
+
+            if current_state == PHASE_EW:
+                x_i[tls_index].append(-1)
+
+            else:
+                x_i[tls_index].append(1)
+
+        # New MPLight decision every 10 seconds
+        elif current_time % DECISION_INTERVAL == 0:
+
+            decision = mplight_decision(tls)
+
+            x_i[tls_index].append(decision)
 
     # --------------------------------------------------------
     # 2. Apply signal logic: regular intersections
