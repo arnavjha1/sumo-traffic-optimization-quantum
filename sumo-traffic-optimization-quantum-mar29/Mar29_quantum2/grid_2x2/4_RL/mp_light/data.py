@@ -13,7 +13,7 @@ RANDOM_DEPART_OFFSET = 60
 HOUR_SECONDS = 3600
 NUM_HOURS = 24
 # MPLight evaluation model. Relative paths are resolved from the terminal working directory.
-MODEL_PATH = "MPLight_model.pt"
+MODEL_PATH = "MPLight_model_v1.pt"
 DECISION_INTERVAL = 10
 
 PHASE_NS = "GGgrrrGGgrrr"

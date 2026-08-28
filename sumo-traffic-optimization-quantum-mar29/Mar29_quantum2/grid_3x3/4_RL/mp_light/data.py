@@ -14,7 +14,7 @@ import traci
 from collections import defaultdict
 from agent import MPLightAgent
 
-SUMO_BINARY = "sumo"
+SUMO_BINARY = "sumo-gui"
 SUMO_CONFIG = "grid_3x3/sim3x3_data.sumocfg"
 
 END_TIME = 86400
