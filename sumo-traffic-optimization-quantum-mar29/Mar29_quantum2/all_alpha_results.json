@@ -1,0 +1,597 @@
+{
+  "runner_version": "1.0",
+  "mode": "saturated",
+  "created_at": "2026-08-28T05:19:03-07:00",
+  "last_updated_at": "2026-08-28T05:28:47-07:00",
+  "base_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+  "planned_runs_full_suite": 176,
+  "planned_runs_description": "2 grids x 9 controllers x 11 alpha values",
+  "controllers": [
+    {
+      "name": "fixed",
+      "subfolder": "0_fixed"
+    },
+    {
+      "name": "classical_local",
+      "subfolder": "1_classical"
+    },
+    {
+      "name": "classical_global",
+      "subfolder": "2_classical_global"
+    },
+    {
+      "name": "colight",
+      "subfolder": "4_RL/co_light"
+    },
+    {
+      "name": "mplight",
+      "subfolder": "4_RL/mp_light"
+    },
+    {
+      "name": "presslight",
+      "subfolder": "4_RL/press_light"
+    },
+    {
+      "name": "max_pressure",
+      "subfolder": "4_RL/max_pressure"
+    },
+    {
+      "name": "scoot",
+      "subfolder": "5_SCOOT"
+    }
+  ],
+  "grids": {
+    "2x2": {
+      "folder": "grid_2x2",
+      "config_prefix": "sim2x2"
+    },
+    "3x3": {
+      "folder": "grid_3x3",
+      "config_prefix": "sim3x3"
+    }
+  },
+  "runs": [
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:28:33-07:00",
+      "alpha_index": 0,
+      "alpha": 0.0,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\sim2x2_a0.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\sim2x2_a0.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_nno51s3x.py",
+        "0"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+      "timeout_seconds": 21600,
+      "return_code": 0,
+      "stdout": "\n===== PERFORMANCE METRICS =====\n\nAverage Queue Length per TLS per Side/Lane:\n\n  A0:\n    Side 0: Right=2.3 Straight=2.6 Left=2.1 \n    Side 1: Right=0.6 Straight=2.3 Left=1.2 \n    Side 2: Right=4.4 Straight=0.0 Left=1.7 \n    Side 3: Right=3.6 Straight=4.2 Left=5.4 \n\n  A1:\n    Side 0: Right=3.8 Straight=3.7 Left=4.9 \n    Side 1: Right=2.1 Straight=2.2 Left=1.9 \n    Side 2: Right=0.5 Straight=2.3 Left=0.8 \n    Side 3: Right=4.5 Straight=0.2 Left=1.1 \n\n  B0:\n    Side 0: Right=1.2 Straight=2.6 Left=1.2 \n    Side 1: Right=4.5 Straight=0.2 Left=1.0 \n    Side 2: Right=3.5 Straight=3.5 Left=5.0 \n    Side 3: Right=2.0 Straight=2.2 Left=2.2 \n\n  B1:\n    Side 0: Right=3.7 Straight=3.6 Left=4.7 \n    Side 1: Right=2.2 Straight=2.5 Left=2.3 \n    Side 2: Right=0.8 Straight=1.8 Left=1.0 \n    Side 3: Right=4.6 Straight=0.0 Left=1.5 \n\nFIXED\n\nAverage Travel Time:\n  Two Turns: 106.91 s\n  One Turn:  83.71 s\n  No Turns:  51.62 s\n  Overall:   105.73 s\n\nAverage Waiting Time:\n  Two Turns: 44.55 s\n  One Turn:  37.79 s\n  No Turns:  23.50 s\n  Overall:   44.16 s\n\nThroughput:\n  Two Turns: 812\n  One Turn:  24\n  No Turns:  8\n  Overall:   844\n",
+      "stderr": "",
+      "parsed": {
+        "tagged_json": {},
+        "traffic": {
+          "average_travel_time": 105.73,
+          "average_waiting_time": 44.16,
+          "throughput": 844,
+          "vehicles_inserted": null,
+          "vehicles_still_in_network": null
+        }
+      },
+      "parse_warnings": [],
+      "status": "success",
+      "finished_at": "2026-08-28T05:28:47-07:00",
+      "duration_seconds": 14.204
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:23:12-07:00",
+      "alpha_index": 1,
+      "alpha": 0.1,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a1.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a1.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_o09cl_1w.py",
+        "1"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_o09cl_1w.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:23:14-07:00",
+      "duration_seconds": 1.097
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:23:14-07:00",
+      "alpha_index": 2,
+      "alpha": 0.2,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a2.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a2.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_2vocat3w.py",
+        "2"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_2vocat3w.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:23:15-07:00",
+      "duration_seconds": 1.104
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:23:15-07:00",
+      "alpha_index": 3,
+      "alpha": 0.3,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a3.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a3.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_p2bq1wcf.py",
+        "3"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_p2bq1wcf.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:23:16-07:00",
+      "duration_seconds": 1.093
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:23:16-07:00",
+      "alpha_index": 4,
+      "alpha": 0.4,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a4.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a4.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_lb1bg1q0.py",
+        "4"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_lb1bg1q0.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:23:17-07:00",
+      "duration_seconds": 1.107
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:19:09-07:00",
+      "alpha_index": 5,
+      "alpha": 0.5,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a5.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a5.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_vqxkfa5r.py",
+        "5"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_vqxkfa5r.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:10-07:00",
+      "duration_seconds": 1.137
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:19:10-07:00",
+      "alpha_index": 6,
+      "alpha": 0.6,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a6.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a6.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_58svc0mu.py",
+        "6"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_58svc0mu.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:12-07:00",
+      "duration_seconds": 1.247
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:19:12-07:00",
+      "alpha_index": 7,
+      "alpha": 0.7,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a7.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a7.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_518zahhn.py",
+        "7"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_518zahhn.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:13-07:00",
+      "duration_seconds": 1.032
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:19:13-07:00",
+      "alpha_index": 8,
+      "alpha": 0.8,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a8.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a8.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_k_5oxpiw.py",
+        "8"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_k_5oxpiw.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:14-07:00",
+      "duration_seconds": 1.03
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:19:14-07:00",
+      "alpha_index": 9,
+      "alpha": 0.9,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a9.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a9.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_ck4suabp.py",
+        "9"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_ck4suabp.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:15-07:00",
+      "duration_seconds": 1.082
+    },
+    {
+      "grid": "2x2",
+      "controller": "fixed",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\0_fixed\\a7.py",
+      "started_at": "2026-08-28T05:19:15-07:00",
+      "alpha_index": 10,
+      "alpha": 1.0,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a10.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a10.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_1zkjhnvo.py",
+        "10"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\0_fixed\\.__runner_1zkjhnvo.py\", line 35, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:16-07:00",
+      "duration_seconds": 1.124
+    },
+    {
+      "grid": "2x2",
+      "controller": "classical_local",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\1_classical\\a7.py",
+      "started_at": "2026-08-28T05:19:16-07:00",
+      "alpha_index": 0,
+      "alpha": 0.0,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a0.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a0.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_eiby0sun.py",
+        "0"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_eiby0sun.py\", line 37, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:17-07:00",
+      "duration_seconds": 1.102
+    },
+    {
+      "grid": "2x2",
+      "controller": "classical_local",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\1_classical\\a7.py",
+      "started_at": "2026-08-28T05:19:17-07:00",
+      "alpha_index": 1,
+      "alpha": 0.1,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a1.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a1.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_arqejj03.py",
+        "1"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_arqejj03.py\", line 37, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:18-07:00",
+      "duration_seconds": 1.17
+    },
+    {
+      "grid": "2x2",
+      "controller": "classical_local",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\1_classical\\a7.py",
+      "started_at": "2026-08-28T05:19:18-07:00",
+      "alpha_index": 2,
+      "alpha": 0.2,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a2.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a2.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_n7qdnwdz.py",
+        "2"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_n7qdnwdz.py\", line 37, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:19-07:00",
+      "duration_seconds": 1.06
+    },
+    {
+      "grid": "2x2",
+      "controller": "classical_local",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\1_classical\\a7.py",
+      "started_at": "2026-08-28T05:19:19-07:00",
+      "alpha_index": 3,
+      "alpha": 0.3,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a3.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a3.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_lz6ksn26.py",
+        "3"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_lz6ksn26.py\", line 37, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:20-07:00",
+      "duration_seconds": 1.052
+    },
+    {
+      "grid": "2x2",
+      "controller": "classical_local",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\1_classical\\a7.py",
+      "started_at": "2026-08-28T05:19:20-07:00",
+      "alpha_index": 4,
+      "alpha": 0.4,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a4.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a4.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_q81peflh.py",
+        "4"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_q81peflh.py\", line 37, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:22-07:00",
+      "duration_seconds": 1.134
+    },
+    {
+      "grid": "2x2",
+      "controller": "classical_local",
+      "mode": "saturated",
+      "source_script": "grid_2x2\\1_classical\\a7.py",
+      "started_at": "2026-08-28T05:19:22-07:00",
+      "alpha_index": 5,
+      "alpha": 0.5,
+      "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a5.sumocfg",
+      "temporary_config_used": false,
+      "launch_rewrites": [
+        "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\sim2x2_a5.sumocfg",
+        "SUMO_BINARY -> sumo (headless batch mode)"
+      ],
+      "command": [
+        "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_7mtw799p.py",
+        "5"
+      ],
+      "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2",
+      "timeout_seconds": 21600,
+      "return_code": 1,
+      "stdout": "",
+      "stderr": "Error: File 'C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\grid_2x2/grid2x2_tls.net.xml' is not accessible (No such file or directory).\nQuitting (on error).\nTraceback (most recent call last):\n  File \"C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\1_classical\\.__runner_7mtw799p.py\", line 37, in <module>\n    traci.start([SUMO_BINARY, \"-c\", SUMO_CONFIG])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 147, in start\n    result = init(sumoPort, numRetries, \"localhost\", label, sumoProcess, doSwitch, traceFile, traceGetters)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\main.py\", line 119, in init\n    return con.getVersion()\n           ~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 383, in getVersion\n    result = self._sendCmd(command, None, None)\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 232, in _sendCmd\n    return self._sendExact()\n           ~~~~~~~~~~~~~~~^^\n  File \"C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\traci\\connection.py\", line 137, in _sendExact\n    raise FatalTraCIError(\"Connection closed by SUMO.\")\ntraci.exceptions.FatalTraCIError: Connection closed by SUMO.\n",
+      "status": "failed",
+      "error": "Simulation returned exit code 1",
+      "finished_at": "2026-08-28T05:19:23-07:00",
+      "duration_seconds": 1.129
+    }
+  ],
+  "graph_data": {
+    "2x2": {
+      "fixed": [
+        {
+          "alpha_index": 0,
+          "alpha": 0.0,
+          "average_travel_time": 105.73,
+          "average_waiting_time": 44.16,
+          "throughput": 844,
+          "vehicles_inserted": null,
+          "vehicles_still_in_network": null
+        }
+      ],
+      "classical_local": [],
+      "classical_global": [],
+      "colight": [],
+      "mplight": [],
+      "presslight": [],
+      "max_pressure": [],
+      "scoot": []
+    },
+    "3x3": {
+      "fixed": [],
+      "classical_local": [],
+      "classical_global": [],
+      "colight": [],
+      "mplight": [],
+      "presslight": [],
+      "max_pressure": [],
+      "scoot": []
+    }
+  },
+  "summary": {
+    "records_in_file": 17,
+    "successful": 1,
+    "failed": 16,
+    "timed_out": 0,
+    "with_parse_warnings": 0
+  }
+}
