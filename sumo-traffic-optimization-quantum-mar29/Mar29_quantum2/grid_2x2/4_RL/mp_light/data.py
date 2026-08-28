@@ -1,14 +1,19 @@
+# MP LIGHT
+
 import traci
 from collections import defaultdict
 from agent import MPLightAgent
 
-SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
-END_TIME = 600
+SUMO_BINARY = "sumo"
+SUMO_CONFIG = "sim2x2_data.sumocfg"
+END_TIME = 86400
+WARMUP_TIME = 900
+RANDOM_DEPART_OFFSET = 60
 
-MODEL_PATH = "MPLight_model_v1.pt"
-
-# MPLight evaluation model. Relative paths are resolved from the terminal\n# working directory, just like SUMO_CONFIG above.\nMODEL_PATH = "MPLight_model.pt"
+HOUR_SECONDS = 3600
+NUM_HOURS = 24
+# MPLight evaluation model. Relative paths are resolved from the terminal working directory.
+MODEL_PATH = "MPLight_model.pt"
 DECISION_INTERVAL = 10
 
 PHASE_NS = "GGgrrrGGgrrr"
@@ -38,7 +43,13 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+sumo_cmd = [
+    SUMO_BINARY,
+    "-c", SUMO_CONFIG,
+    "--random-depart-offset", str(RANDOM_DEPART_OFFSET),
+]
+
+traci.start(sumo_cmd)
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -55,15 +66,16 @@ agent.load(MODEL_PATH)
 agent.set_evaluation_mode()
 
 # -----------------------
-# DATA STRUCTURES
+# CANONICAL SEATTLE METRICS
 # -----------------------
 depart_time = {}
-route_of = {}
+depart_hour = {}
 last_waiting_time = {}
 
-travel_times = defaultdict(list)
-waiting_times = defaultdict(list)
-throughput = defaultdict(int)
+travel_times_by_hour = defaultdict(list)
+waiting_times_by_hour = defaultdict(list)
+completed_vehicles_by_hour = defaultdict(int)
+measured_departures_by_hour = defaultdict(int)
 
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -89,35 +101,48 @@ last_green_phase = {
     for tls in TLS_ORDER
 }
 
-def simStep(num_times = 1):
+def simStep(num_times=1):
+    """
+    Advance SUMO and collect the canonical Seattle measurement window.
+    Controller-specific queue/state collection continues below every step.
+    """
     for _ in range(num_times):
         traci.simulationStep()
         t = traci.simulation.getTime()
 
-        # ====================================================
-        # Vehicles that just departed
+        local_time = int(t % HOUR_SECONDS)
+
+        # Track only vehicles departing after the first 900 s of each hour.
         for veh in traci.simulation.getDepartedIDList():
-            depart_time[veh] = t
-            route_of[veh] = traci.vehicle.getRouteID(veh)
-            last_waiting_time[veh] = 0.0
+            if local_time >= WARMUP_TIME:
+                hour = int(t // HOUR_SECONDS)
 
-        # Update waiting times
+                if 0 <= hour < NUM_HOURS:
+                    depart_time[veh] = t
+                    depart_hour[veh] = hour
+                    last_waiting_time[veh] = 0.0
+                    measured_departures_by_hour[hour] += 1
+
+        # Update accumulated waiting time for measured active vehicles.
         for veh in traci.vehicle.getIDList():
-            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+            if veh in depart_time:
+                last_waiting_time[veh] = (
+                    traci.vehicle.getAccumulatedWaitingTime(veh)
+                )
 
-        # Vehicles that just arrived
+        # Attribute completed vehicles to their departure hour.
         for veh in traci.simulation.getArrivedIDList():
             if veh in depart_time:
-                route = route_of[veh]
                 travel_time = t - depart_time[veh]
                 waiting_time = last_waiting_time.get(veh, 0.0)
+                hour = depart_hour[veh]
 
-                travel_times[route].append(travel_time)
-                waiting_times[route].append(waiting_time)
-                throughput[route] += 1
+                travel_times_by_hour[hour].append(travel_time)
+                waiting_times_by_hour[hour].append(waiting_time)
+                completed_vehicles_by_hour[hour] += 1
 
                 depart_time.pop(veh, None)
-                route_of.pop(veh, None)
+                depart_hour.pop(veh, None)
                 last_waiting_time.pop(veh, None)
 
         # ====================================================
@@ -583,71 +608,81 @@ while traci.simulation.getTime() < END_TIME:
     
     # ====================================================
 
+
+    current_time = int(traci.simulation.getTime())
+    if current_time % HOUR_SECONDS == 0:
+        print(
+            f"t={current_time:5d} s | "
+            f"hour={min(current_time // HOUR_SECONDS, 24):02d} | "
+            f"measured_departed={sum(measured_departures_by_hour.values())} | "
+            f"measured_completed={sum(completed_vehicles_by_hour.values())} | "
+            f"active={traci.vehicle.getIDCount()}"
+        )
+
 traci.close()
 
 # -----------------------
-# RESULTS
+# CANONICAL SEATTLE RESULTS
 # -----------------------
-print("\n===== PERFORMANCE METRICS =====")
+print("\n===== 2x2 MPLIGHT SEATTLE PERFORMANCE METRICS =====")
+print(f"Simulation duration: {END_TIME} s")
+print(f"Warm-up excluded: first {WARMUP_TIME} s of every hour")
+print(f"Random departure offset: 0-{RANDOM_DEPART_OFFSET} s")
 
-def compute_avg(route_list, data_dict):
-    values = []
-    for r in route_list:
-        values.extend(data_dict.get(r, []))
-    return sum(values) / len(values) if len(values) > 0 else None
+print("\nHourly Average Travel Time / Waiting Time:")
 
-def compute_throughput(route_list):
-    return sum(throughput.get(r, 0) for r in route_list)
+all_travel_times = []
+all_waiting_times = []
 
-ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+for hour in range(NUM_HOURS):
+    tt_values = travel_times_by_hour.get(hour, [])
+    wt_values = waiting_times_by_hour.get(hour, [])
 
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
+    measured_departures = measured_departures_by_hour.get(hour, 0)
+    completed = completed_vehicles_by_hour.get(hour, 0)
+    unfinished = measured_departures - completed
 
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
+    if tt_values:
+        avg_tt = sum(tt_values) / len(tt_values)
+        avg_wt = sum(wt_values) / len(wt_values)
 
-# Travel time
-print("\nMPLIGHT")
-print("\nAverage Travel Time:")
-avg_two = compute_avg(TWO_TURNS, travel_times)
-avg_one = compute_avg(ONE_TURN, travel_times)
-avg_none = compute_avg(NO_TURNS, travel_times)
-avg_all = compute_avg(ALL_ROUTES, travel_times)
+        all_travel_times.extend(tt_values)
+        all_waiting_times.extend(wt_values)
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+        measurement_window = (
+            f"{WARMUP_TIME}-3600 s "
+            f"({(HOUR_SECONDS - WARMUP_TIME) // 60} min)"
+        )
 
-# Waiting time
-print("\nAverage Waiting Time:")
-avg_two = compute_avg(TWO_TURNS, waiting_times)
-avg_one = compute_avg(ONE_TURN, waiting_times)
-avg_none = compute_avg(NO_TURNS, waiting_times)
-avg_all = compute_avg(ALL_ROUTES, waiting_times)
+        print(
+            f"Hour {hour:02d}: "
+            f"TT={avg_tt:.2f} s, "
+            f"WT={avg_wt:.2f} s, "
+            f"n={len(tt_values)}, "
+            f"departed={measured_departures}, "
+            f"unfinished={unfinished}, "
+            f"window={measurement_window}"
+        )
+    else:
+        print(
+            f"Hour {hour:02d}: "
+            f"TT=N/A, WT=N/A, n=0, "
+            f"departed={measured_departures}, "
+            f"unfinished={unfinished}"
+        )
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+if all_travel_times:
+    overall_tt = sum(all_travel_times) / len(all_travel_times)
+    overall_wt = sum(all_waiting_times) / len(all_waiting_times)
+    total_completed = len(all_travel_times)
+    total_measured_departures = sum(measured_departures_by_hour.values())
 
-# Throughput
-print("\nThroughput:")
-thr_two = compute_throughput(TWO_TURNS)
-thr_one = compute_throughput(ONE_TURN)
-thr_none = compute_throughput(NO_TURNS)
-thr_all = compute_throughput(ALL_ROUTES)
-
-print(f"  Two Turns: {thr_two}")
-print(f"  One Turn:  {thr_one}")
-print(f"  No Turns:  {thr_none}")
-print(f"  Overall:   {thr_all}")
+    print("\nPost-warm-up Overall:")
+    print(f"Average Travel Time: {overall_tt:.2f} s")
+    print(f"Average Waiting Time: {overall_wt:.2f} s")
+    print(f"Measured completed vehicles: {total_completed}")
+    print(f"Measured departures: {total_measured_departures}")
+    print(
+        f"Measured unfinished at t={END_TIME}: "
+        f"{total_measured_departures - total_completed}"
+    )

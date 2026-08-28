@@ -1,8 +1,13 @@
+# MAX PRESSURE
+
 import traci
 from collections import defaultdict
 
 SUMO_BINARY = "sumo"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
+
+import sys
+ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
+SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
 END_TIME = 600
 
 # -----------------------

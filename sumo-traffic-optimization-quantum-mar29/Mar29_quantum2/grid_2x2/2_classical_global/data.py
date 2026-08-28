@@ -7,12 +7,13 @@ from collections import defaultdict
 from annealer_classical import quantum_decision
 
 SUMO_BINARY = "sumo"
+SUMO_CONFIG = "sim2x2_data.sumocfg"
+END_TIME = 86400
+WARMUP_TIME = 900
+RANDOM_DEPART_OFFSET = 60
 
-import sys
-ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
-SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
-END_TIME = 600
-
+HOUR_SECONDS = 3600
+NUM_HOURS = 24
 # -----------------------
 # FIXED OUTPUT ORDER
 # -----------------------
@@ -37,7 +38,13 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+sumo_cmd = [
+    SUMO_BINARY,
+    "-c", SUMO_CONFIG,
+    "--random-depart-offset", str(RANDOM_DEPART_OFFSET),
+]
+
+traci.start(sumo_cmd)
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -47,15 +54,16 @@ for tls in TLS_ORDER:
     traci.trafficlight.setPhaseDuration(tls, 999999)
 
 # -----------------------
-# DATA STRUCTURES
+# CANONICAL SEATTLE METRICS
 # -----------------------
 depart_time = {}
-route_of = {}
+depart_hour = {}
 last_waiting_time = {}
 
-travel_times = defaultdict(list)
-waiting_times = defaultdict(list)
-throughput = defaultdict(int)
+travel_times_by_hour = defaultdict(list)
+waiting_times_by_hour = defaultdict(list)
+completed_vehicles_by_hour = defaultdict(int)
+measured_departures_by_hour = defaultdict(int)
 
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -78,35 +86,48 @@ for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
     tIndex.append(tls)
 
-def simStep(num_times = 1):
+def simStep(num_times=1):
+    """
+    Advance SUMO and collect the canonical Seattle measurement window.
+    Controller-specific queue/state collection continues below every step.
+    """
     for _ in range(num_times):
         traci.simulationStep()
         t = traci.simulation.getTime()
 
-        # ====================================================
-        # Vehicles that just departed
+        local_time = int(t % HOUR_SECONDS)
+
+        # Track only vehicles departing after the first 900 s of each hour.
         for veh in traci.simulation.getDepartedIDList():
-            depart_time[veh] = t
-            route_of[veh] = traci.vehicle.getRouteID(veh)
-            last_waiting_time[veh] = 0.0
+            if local_time >= WARMUP_TIME:
+                hour = int(t // HOUR_SECONDS)
 
-        # Update waiting times
+                if 0 <= hour < NUM_HOURS:
+                    depart_time[veh] = t
+                    depart_hour[veh] = hour
+                    last_waiting_time[veh] = 0.0
+                    measured_departures_by_hour[hour] += 1
+
+        # Update accumulated waiting time for measured active vehicles.
         for veh in traci.vehicle.getIDList():
-            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+            if veh in depart_time:
+                last_waiting_time[veh] = (
+                    traci.vehicle.getAccumulatedWaitingTime(veh)
+                )
 
-        # Vehicles that just arrived
+        # Attribute completed vehicles to their departure hour.
         for veh in traci.simulation.getArrivedIDList():
             if veh in depart_time:
-                route = route_of[veh]
                 travel_time = t - depart_time[veh]
                 waiting_time = last_waiting_time.get(veh, 0.0)
+                hour = depart_hour[veh]
 
-                travel_times[route].append(travel_time)
-                waiting_times[route].append(waiting_time)
-                throughput[route] += 1
+                travel_times_by_hour[hour].append(travel_time)
+                waiting_times_by_hour[hour].append(waiting_time)
+                completed_vehicles_by_hour[hour] += 1
 
                 depart_time.pop(veh, None)
-                route_of.pop(veh, None)
+                depart_hour.pop(veh, None)
                 last_waiting_time.pop(veh, None)
 
         # ====================================================
@@ -179,6 +200,14 @@ energy_exact = []
 energy_gaps = []
 energy_reductions = []
 energy_optimum_hits = 0
+
+# Hourly post-warm-up energy metrics, aligned with the Seattle QAOA analysis window.
+energy_selected_by_hour = defaultdict(list)
+energy_exact_by_hour = defaultdict(list)
+energy_gaps_by_hour = defaultdict(list)
+energy_reductions_by_hour = defaultdict(list)
+energy_optimum_hits_by_hour = defaultdict(int)
+energy_decisions_by_hour = defaultdict(int)
 
 def calculate_ising_energy(bitstring, biases, prev_state, neighbors, coupling_strength=2):
     # Same Ising objective used by the QAOA controller.
@@ -373,116 +402,198 @@ while traci.simulation.getTime() < END_TIME:
         coupling_strength=2
     )
 
-    # Evaluate the classical global choice under the same Ising objective as QAOA.
-    selected_energy = calculate_ising_energy(
-        bitstring,
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-    exact_min_energy, exact_states = exact_global_minimum(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-    previous_bitstring = "".join(str(state) for state in prev_state)
-    previous_energy = calculate_ising_energy(
-        previous_bitstring,
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
+    current_time = int(traci.simulation.getTime())
+    current_hour = int(current_time // HOUR_SECONDS)
+    local_time = int(current_time % HOUR_SECONDS)
 
-    gap = selected_energy - exact_min_energy
-    energy_selected.append(selected_energy)
-    energy_exact.append(exact_min_energy)
-    energy_gaps.append(gap)
-    energy_reductions.append(previous_energy - selected_energy)
-    if abs(gap) <= 1e-9:
-        energy_optimum_hits += 1
+    # The controller still chooses a global state every second.
+    # Energy benchmark statistics are recorded only in the measured
+    # post-warm-up window, matching the Seattle QAOA reporting window.
+    if local_time >= WARMUP_TIME and 0 <= current_hour < NUM_HOURS:
+        selected_energy = calculate_ising_energy(
+            bitstring,
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
 
-    print(traci.simulation.getTime())
+        exact_min_energy, exact_states = exact_global_minimum(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        previous_bitstring = "".join(
+            str(state) for state in prev_state
+        )
+
+        previous_energy = calculate_ising_energy(
+            previous_bitstring,
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        gap = selected_energy - exact_min_energy
+        reduction = previous_energy - selected_energy
+
+        energy_selected.append(selected_energy)
+        energy_exact.append(exact_min_energy)
+        energy_gaps.append(gap)
+        energy_reductions.append(reduction)
+
+        energy_selected_by_hour[current_hour].append(selected_energy)
+        energy_exact_by_hour[current_hour].append(exact_min_energy)
+        energy_gaps_by_hour[current_hour].append(gap)
+        energy_reductions_by_hour[current_hour].append(reduction)
+        energy_decisions_by_hour[current_hour] += 1
+
+        if abs(gap) <= 1e-9:
+            energy_optimum_hits += 1
+            energy_optimum_hits_by_hour[current_hour] += 1
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
         x_i[idx].append(1 if bitstring[idx] == '1' else -1)
     # ====================================================
 
+
+    current_time = int(traci.simulation.getTime())
+    if current_time % HOUR_SECONDS == 0:
+        print(
+            f"t={current_time:5d} s | "
+            f"hour={min(current_time // HOUR_SECONDS, 24):02d} | "
+            f"measured_departed={sum(measured_departures_by_hour.values())} | "
+            f"measured_completed={sum(completed_vehicles_by_hour.values())} | "
+            f"active={traci.vehicle.getIDCount()}"
+        )
+
 traci.close()
 
 # -----------------------
-# RESULTS
+# CANONICAL SEATTLE RESULTS
 # -----------------------
-print("\n===== PERFORMANCE METRICS =====")
+print("\n===== 2x2 CLASSICAL GLOBAL SEATTLE PERFORMANCE METRICS =====")
+print(f"Simulation duration: {END_TIME} s")
+print(f"Warm-up excluded: first {WARMUP_TIME} s of every hour")
+print(f"Random departure offset: 0-{RANDOM_DEPART_OFFSET} s")
 
-def compute_avg(route_list, data_dict):
-    values = []
-    for r in route_list:
-        values.extend(data_dict.get(r, []))
-    return sum(values) / len(values) if len(values) > 0 else None
+print("\nHourly Average Travel Time / Waiting Time:")
 
-def compute_throughput(route_list):
-    return sum(throughput.get(r, 0) for r in route_list)
+all_travel_times = []
+all_waiting_times = []
 
-ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+for hour in range(NUM_HOURS):
+    tt_values = travel_times_by_hour.get(hour, [])
+    wt_values = waiting_times_by_hour.get(hour, [])
 
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
+    measured_departures = measured_departures_by_hour.get(hour, 0)
+    completed = completed_vehicles_by_hour.get(hour, 0)
+    unfinished = measured_departures - completed
 
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
+    if tt_values:
+        avg_tt = sum(tt_values) / len(tt_values)
+        avg_wt = sum(wt_values) / len(wt_values)
 
-# Travel time
-print("\nQUANTUM")
-print("\nAverage Travel Time:")
-avg_two = compute_avg(TWO_TURNS, travel_times)
-avg_one = compute_avg(ONE_TURN, travel_times)
-avg_none = compute_avg(NO_TURNS, travel_times)
-avg_all = compute_avg(ALL_ROUTES, travel_times)
+        all_travel_times.extend(tt_values)
+        all_waiting_times.extend(wt_values)
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+        measurement_window = (
+            f"{WARMUP_TIME}-3600 s "
+            f"({(HOUR_SECONDS - WARMUP_TIME) // 60} min)"
+        )
 
-# Waiting time
-print("\nAverage Waiting Time:")
-avg_two = compute_avg(TWO_TURNS, waiting_times)
-avg_one = compute_avg(ONE_TURN, waiting_times)
-avg_none = compute_avg(NO_TURNS, waiting_times)
-avg_all = compute_avg(ALL_ROUTES, waiting_times)
+        print(
+            f"Hour {hour:02d}: "
+            f"TT={avg_tt:.2f} s, "
+            f"WT={avg_wt:.2f} s, "
+            f"n={len(tt_values)}, "
+            f"departed={measured_departures}, "
+            f"unfinished={unfinished}, "
+            f"window={measurement_window}"
+        )
+    else:
+        print(
+            f"Hour {hour:02d}: "
+            f"TT=N/A, WT=N/A, n=0, "
+            f"departed={measured_departures}, "
+            f"unfinished={unfinished}"
+        )
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+if all_travel_times:
+    overall_tt = sum(all_travel_times) / len(all_travel_times)
+    overall_wt = sum(all_waiting_times) / len(all_waiting_times)
+    total_completed = len(all_travel_times)
+    total_measured_departures = sum(measured_departures_by_hour.values())
 
-# Throughput
-print("\nThroughput:")
-thr_two = compute_throughput(TWO_TURNS)
-thr_one = compute_throughput(ONE_TURN)
-thr_none = compute_throughput(NO_TURNS)
-thr_all = compute_throughput(ALL_ROUTES)
-
-print(f"  Two Turns: {thr_two}")
-print(f"  One Turn:  {thr_one}")
-print(f"  No Turns:  {thr_none}")
-print(f"  Overall:   {thr_all}")
+    print("\nPost-warm-up Overall:")
+    print(f"Average Travel Time: {overall_tt:.2f} s")
+    print(f"Average Waiting Time: {overall_wt:.2f} s")
+    print(f"Measured completed vehicles: {total_completed}")
+    print(f"Measured departures: {total_measured_departures}")
+    print(
+        f"Measured unfinished at t={END_TIME}: "
+        f"{total_measured_departures - total_completed}"
+    )
 
 # -----------------------
-# ENERGY BENCHMARK RESULTS
+# HOURLY ENERGY BENCHMARK
 # -----------------------
+hourly_energy_summary = {}
+
+print("\n===== HOURLY CLASSICAL GLOBAL ENERGY BENCHMARK =====")
+
+for hour in range(NUM_HOURS):
+    selected_values = energy_selected_by_hour.get(hour, [])
+    exact_values = energy_exact_by_hour.get(hour, [])
+    gap_values = energy_gaps_by_hour.get(hour, [])
+    reduction_values = energy_reductions_by_hour.get(hour, [])
+
+    num_decisions = energy_decisions_by_hour.get(hour, 0)
+    optimal_hits = energy_optimum_hits_by_hour.get(hour, 0)
+
+    if num_decisions > 0:
+        summary = {
+            "num_decisions": num_decisions,
+            "optimal_hits": optimal_hits,
+            "optimum_recovery_rate": optimal_hits / num_decisions,
+            "average_selected_energy": sum(selected_values) / len(selected_values),
+            "average_exact_min_energy": sum(exact_values) / len(exact_values),
+            "average_optimality_gap": sum(gap_values) / len(gap_values),
+            "maximum_optimality_gap": max(gap_values),
+            "average_energy_reduction": sum(reduction_values) / len(reduction_values),
+        }
+    else:
+        summary = {
+            "num_decisions": 0,
+            "optimal_hits": 0,
+            "optimum_recovery_rate": None,
+            "average_selected_energy": None,
+            "average_exact_min_energy": None,
+            "average_optimality_gap": None,
+            "maximum_optimality_gap": None,
+            "average_energy_reduction": None,
+        }
+
+    hourly_energy_summary[hour] = summary
+
+    if num_decisions > 0:
+        print(
+            f"Hour {hour:02d}: "
+            f"decisions={num_decisions}, "
+            f"hits={optimal_hits}, "
+            f"recovery={summary['optimum_recovery_rate']:.4f}, "
+            f"avg_gap={summary['average_optimality_gap']:.4f}, "
+            f"max_gap={summary['maximum_optimality_gap']:.4f}"
+        )
+    else:
+        print(f"Hour {hour:02d}: No measured energy decisions")
+
+print("HOURLY_ENERGY_JSON: " + json.dumps(hourly_energy_summary))
+
 if energy_selected:
     energy_summary = {
         "num_decisions": len(energy_selected),
@@ -492,7 +603,7 @@ if energy_selected:
         "average_exact_min_energy": sum(energy_exact) / len(energy_exact),
         "average_optimality_gap": sum(energy_gaps) / len(energy_gaps),
         "maximum_optimality_gap": max(energy_gaps),
-        "average_energy_reduction": sum(energy_reductions) / len(energy_reductions)
+        "average_energy_reduction": sum(energy_reductions) / len(energy_reductions),
     }
 else:
     energy_summary = {
@@ -503,17 +614,19 @@ else:
         "average_exact_min_energy": None,
         "average_optimality_gap": None,
         "maximum_optimality_gap": None,
-        "average_energy_reduction": None
+        "average_energy_reduction": None,
     }
 
-print("\n===== ENERGY BENCHMARK =====")
+print("\n===== CLASSICAL GLOBAL ENERGY BENCHMARK =====")
 print(f"Energy Decisions: {energy_summary['num_decisions']}")
 print(f"Optimal Hits: {energy_summary['optimal_hits']}")
 print(f"Optimum Recovery Rate: {energy_summary['optimum_recovery_rate']:.6f}")
+
 if energy_summary["average_selected_energy"] is not None:
     print(f"Average Selected Energy: {energy_summary['average_selected_energy']:.6f}")
     print(f"Average Exact Minimum Energy: {energy_summary['average_exact_min_energy']:.6f}")
     print(f"Average Optimality Gap: {energy_summary['average_optimality_gap']:.6f}")
     print(f"Maximum Optimality Gap: {energy_summary['maximum_optimality_gap']:.6f}")
     print(f"Average Energy Reduction: {energy_summary['average_energy_reduction']:.6f}")
+
 print("ENERGY_JSON: " + json.dumps(energy_summary))

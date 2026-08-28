@@ -1,18 +1,34 @@
+"""
+Canonical 2x2 Seattle QAOA evaluation.
+
+This file preserves the established 2x2 QAOA Seattle calibration/control
+behavior while using the same 24-hour measurement framing as the 3x3
+Seattle QAOA experiment:
+- 86,400 s simulation
+- first 900 s of every hour excluded from measured traffic metrics
+- 0-60 s random departure offset
+- completed vehicles attributed to departure hour
+- no post-24h drain
+"""
+
 # QAOA GLOBAL
 
 import traci
 import json
 import os
 from itertools import product
-from collections import defaultdict
+from collections import defaultdict, Counter
 from annealer_quantum import quantum_decision
 
 SUMO_BINARY = "sumo"
+SUMO_CONFIG = "sim2x2_data.sumocfg"
+END_TIME = 86400
 
-import sys
-ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
-SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
-END_TIME = 600
+WARMUP_TIME = 900
+RANDOM_DEPART_OFFSET = 60
+
+HOUR_SECONDS = 3600
+NUM_HOURS = 24
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -38,7 +54,13 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+sumo_cmd = [
+    SUMO_BINARY,
+    "-c", SUMO_CONFIG,
+    "--random-depart-offset", str(RANDOM_DEPART_OFFSET),
+]
+
+traci.start(sumo_cmd)
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -51,12 +73,13 @@ for tls in TLS_ORDER:
 # DATA STRUCTURES
 # -----------------------
 depart_time = {}
-route_of = {}
+depart_hour = {}
 last_waiting_time = {}
 
-travel_times = defaultdict(list)
-waiting_times = defaultdict(list)
-throughput = defaultdict(int)
+travel_times_by_hour = defaultdict(list)
+waiting_times_by_hour = defaultdict(list)
+
+completed_vehicles_by_hour = defaultdict(int)
 
 NUM_TLS = 4
 NUM_SIDES = 4       # Each TLS has 4 incoming sides
@@ -65,6 +88,17 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 # Reviewer analysis settings. Defaults preserve the current QAOA behavior.
 ENERGY_LAMBDA = 10
 QAOA_SHOTS = int(os.environ.get("QAOA_SHOTS", "512"))
+
+# Seattle hourly QAOA calibration settings
+CALIBRATION_DURATION = 25
+
+parameter_counts = Counter()
+parameter_energy_sum = defaultdict(float)
+
+fixed_params = None
+current_calibration_hour = None
+
+hourly_qaoa_parameters = {}
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
@@ -88,27 +122,33 @@ def simStep(num_times = 1):
         # ====================================================
         # Vehicles that just departed
         for veh in traci.simulation.getDepartedIDList():
-            depart_time[veh] = t
-            route_of[veh] = traci.vehicle.getRouteID(veh)
-            last_waiting_time[veh] = 0.0
+            if (t % 3600) >= WARMUP_TIME:
+                depart_time[veh] = t
+                depart_hour[veh] = int(t // 3600)
+                last_waiting_time[veh] = 0.0
 
         # Update waiting times
+        active_measured = set(depart_time.keys())
         for veh in traci.vehicle.getIDList():
-            last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
+            if veh in active_measured:
+                last_waiting_time[veh] = traci.vehicle.getAccumulatedWaitingTime(veh)
 
         # Vehicles that just arrived
         for veh in traci.simulation.getArrivedIDList():
+
             if veh in depart_time:
-                route = route_of[veh]
+
                 travel_time = t - depart_time[veh]
                 waiting_time = last_waiting_time.get(veh, 0.0)
 
-                travel_times[route].append(travel_time)
-                waiting_times[route].append(waiting_time)
-                throughput[route] += 1
+                hour = depart_hour[veh]
+
+                travel_times_by_hour[hour].append(travel_time)
+                waiting_times_by_hour[hour].append(waiting_time)
+                completed_vehicles_by_hour[hour] += 1
 
                 depart_time.pop(veh, None)
-                route_of.pop(veh, None)
+                depart_hour.pop(veh, None)
                 last_waiting_time.pop(veh, None)
 
         # ====================================================
@@ -365,7 +405,10 @@ def compute_discharging_pressure():
                 pressure_value
             )
 
-x_i = [[] for _ in range(NUM_TLS)]
+x_i = [
+    [-1] if tls in TLS_REG else [1]
+    for tls in TLS_ORDER
+]
 
 # -----------------------
 # ENERGY BENCHMARKING
@@ -375,6 +418,15 @@ energy_exact = []
 energy_gaps = []
 energy_reductions = []
 energy_optimum_hits = 0
+
+# Hourly reviewer energy metrics
+energy_selected_by_hour = defaultdict(list)
+energy_exact_by_hour = defaultdict(list)
+energy_gaps_by_hour = defaultdict(list)
+energy_reductions_by_hour = defaultdict(list)
+
+energy_optimum_hits_by_hour = defaultdict(int)
+energy_decisions_by_hour = defaultdict(int)
 
 def calculate_ising_energy(bitstring, biases, prev_state, neighbors, coupling_strength=2):
     # This exactly mirrors the Ising energy used in annealer_quantum.py.
@@ -564,50 +616,238 @@ while traci.simulation.getTime() < END_TIME:
 
         neighbor_indices.append(curr_neighbors)
 
-    bitstring = quantum_decision(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2,
-        shots=QAOA_SHOTS
-    )
+    current_time = int(traci.simulation.getTime())
+    current_hour = int(current_time // 3600)
+    local_time = current_time % 3600
 
-    # Benchmark the selected QAOA state against all 16 possible global states.
-    selected_energy = calculate_ising_energy(
-        bitstring,
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-    exact_min_energy, exact_states = exact_global_minimum(
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
-    previous_bitstring = "".join(str(state) for state in prev_state)
-    previous_energy = calculate_ising_energy(
-        previous_bitstring,
-        bias_list,
-        prev_state,
-        neighbor_indices,
-        coupling_strength=2
-    )
+    if current_hour != current_calibration_hour:
+        current_calibration_hour = current_hour
+        parameter_counts.clear()
+        parameter_energy_sum.clear()
+        print(f"\n===== HOUR {current_hour:02d} WARMUP BEGINS =====")
 
-    gap = selected_energy - exact_min_energy
-    energy_selected.append(selected_energy)
-    energy_exact.append(exact_min_energy)
-    energy_gaps.append(gap)
-    energy_reductions.append(previous_energy - selected_energy)
-    if abs(gap) <= 1e-9:
-        energy_optimum_hits += 1
+        print(
+            f"\n===== HOUR {current_hour:02d} START ====="
+        )
+        print(
+            f"Warmup: t={current_hour * 3600} "
+            f"to {current_hour * 3600 + WARMUP_TIME - 1}"
+        )
+        print(
+            f"Calibration: "
+            f"t={current_hour * 3600 + WARMUP_TIME} "
+            f"to "
+            f"{current_hour * 3600 + WARMUP_TIME + CALIBRATION_DURATION - 1}"
+        )
 
-    print(traci.simulation.getTime())
+    hour_start = current_hour * 3600
+
+    calibration_start = hour_start + WARMUP_TIME
+    calibration_end = calibration_start + CALIBRATION_DURATION
+
+    assert len(bias_list) == 4
+    assert len(prev_state) == 4
+    assert len(neighbor_indices) == 4
+
+    if local_time < WARMUP_TIME:
+        if fixed_params is None:
+            (   bitstring,
+                best_gamma, best_beta, best_p,
+                best_expected_energy
+            ) = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                return_metadata=True
+            )
+
+            fixed_params = round(float(best_gamma), 12), round(float(best_beta), 12), int(best_p)
+
+            print("\n===== INITIAL WARMUP QAOA PARAMETERS =====")
+            print(f"Gamma: {fixed_params[0]:.6f}")
+            print(f"Beta:  {fixed_params[1]:.6f}")
+            print(f"p:     {fixed_params[2]}")
+            print("==========================================\n")
+
+        else:
+            if local_time == 0:
+                print(
+                    f"Hour {current_hour:02d} warmup using previous fixed params: "
+                    f"gamma={fixed_params[0]:.6f}, "
+                    f"beta={fixed_params[1]:.6f}, "
+                    f"p={fixed_params[2]}"
+                )
+
+            bitstring = quantum_decision(
+                bias_list,
+                prev_state,
+                neighbor_indices,
+                coupling_strength=2,
+                shots=QAOA_SHOTS,
+                fixed_params=fixed_params
+            )
+
+    elif calibration_start <= current_time < calibration_end:
+        if current_time == calibration_start:
+            print(
+                f"\n===== HOUR {current_hour:02d} "
+                f"QAOA CALIBRATION START ====="
+            )
+
+        (
+            bitstring,
+            best_gamma,
+            best_beta,
+            best_p,
+            best_expected_energy
+        ) = quantum_decision(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2,
+            shots=QAOA_SHOTS,
+            return_metadata=True,
+            debug=True
+        )
+
+        param_key = (
+            round(float(best_gamma), 12),
+            round(float(best_beta), 12),
+            int(best_p)
+        )
+
+        parameter_counts[param_key] += 1
+        parameter_energy_sum[param_key] += best_expected_energy
+
+        if current_time == calibration_end - 1:
+            max_wins = max(parameter_counts.values())
+
+            candidates = [
+                params
+                for params, count in parameter_counts.items()
+                if count == max_wins
+            ]
+
+            fixed_params = min(
+                candidates,
+                key=lambda params:
+                    parameter_energy_sum[params]
+                    / parameter_counts[params]
+            )
+
+            hourly_qaoa_parameters[current_hour] = {
+                "gamma": fixed_params[0],
+                "beta": fixed_params[1],
+                "p": fixed_params[2],
+                "wins": parameter_counts[fixed_params],
+                "calibration_decisions": CALIBRATION_DURATION
+            }
+
+            print(
+                f"\n===== QAOA CALIBRATION COMPLETE: "
+                f"HOUR {current_hour:02d} ====="
+            )
+            print(f"Fixed gamma: {fixed_params[0]:.6f}")
+            print(f"Fixed beta:  {fixed_params[1]:.6f}")
+            print(f"Fixed p:     {fixed_params[2]}")
+            print(
+                f"Wins:        "
+                f"{parameter_counts[fixed_params]}"
+                f"/{CALIBRATION_DURATION}"
+            )
+            print(
+                "===== FIXED-PARAMETER QAOA BEGINS =====\n"
+            )
+            
+    else:
+        if current_time == calibration_end:
+            print(
+                f"Hour {current_hour:02d} fixed QAOA begins: "
+                f"gamma={fixed_params[0]:.6f}, "
+                f"beta={fixed_params[1]:.6f}, "
+                f"p={fixed_params[2]}"
+            )
+
+        bitstring = quantum_decision(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2,
+            shots=QAOA_SHOTS,
+            fixed_params=fixed_params
+        )
+
+        assert len(bitstring) == 4
+
+    if local_time >= WARMUP_TIME:
+
+        selected_energy = calculate_ising_energy(
+            bitstring,
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        exact_min_energy, exact_states = exact_global_minimum(
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        previous_bitstring = "".join(
+            str(state) for state in prev_state
+        )
+
+        previous_energy = calculate_ising_energy(
+            previous_bitstring,
+            bias_list,
+            prev_state,
+            neighbor_indices,
+            coupling_strength=2
+        )
+
+        gap = selected_energy - exact_min_energy
+
+        energy_selected.append(selected_energy)
+        energy_exact.append(exact_min_energy)
+        energy_gaps.append(gap)
+        energy_reductions.append(
+            previous_energy - selected_energy
+        )
+
+        if abs(gap) <= 1e-9:
+            energy_optimum_hits += 1
+
+        energy_selected_by_hour[current_hour].append(
+            selected_energy
+        )
+
+        energy_exact_by_hour[current_hour].append(
+            exact_min_energy
+        )
+
+        energy_gaps_by_hour[current_hour].append(
+            gap
+        )
+
+        energy_reductions_by_hour[current_hour].append(
+            previous_energy - selected_energy
+        )
+
+        energy_decisions_by_hour[current_hour] += 1
+
+        if abs(gap) <= 1e-9:
+            energy_optimum_hits_by_hour[current_hour] += 1
 
     # Update x_i with quantum decisions
     for idx, tls in enumerate(TLS_ORDER):
-        x_i[idx].append(1 if bitstring[idx] == '1' else -1)
+        x_i[idx].append(
+            1 if bitstring[idx] == '1' else -1
+        )
 
     # ====================================================
 
@@ -616,69 +856,196 @@ traci.close()
 # -----------------------
 # RESULTS
 # -----------------------
-print("\n===== PERFORMANCE METRICS =====")
 
-def compute_avg(route_list, data_dict):
-    values = []
-    for r in route_list:
-        values.extend(data_dict.get(r, []))
-    return sum(values) / len(values) if len(values) > 0 else None
+print("\n===== 2x2 QAOA SEATTLE PERFORMANCE METRICS =====")
+print(f"Simulation duration: {END_TIME} s")
+print(f"Warm-up excluded: first {WARMUP_TIME} s of every hour")
+print(f"Random departure offset: 0-{RANDOM_DEPART_OFFSET} s")
 
-def compute_throughput(route_list):
-    return sum(throughput.get(r, 0) for r in route_list)
+print("\nHourly Average Travel Time / Waiting Time:")
 
-ALL_ROUTES = TWO_TURNS + ONE_TURN + NO_TURNS
+all_travel_times = []
+all_waiting_times = []
 
-# Queue lengths
-print("\nAverage Queue Length per TLS per Side/Lane:")
-LANE_LABELS = ["Right", "Straight", "Left"]
+for hour in range(24):
 
-for tls_index, tls in enumerate(TLS_ORDER):
-    print(f"\n  {tls}:")
-    for side_index in range(NUM_SIDES):
-        print(f"    Side {side_index}: ", end="")
-        for lane_index in range(NUM_LANES):
-            data = queue_lengths[tls_index][side_index][lane_index]
-            avg = sum(data) / len(data) if data else 0
-            print(f"{LANE_LABELS[lane_index]}={avg:.1f} ", end="")
-        print()
+    tt_values = travel_times_by_hour.get(hour, [])
+    wt_values = waiting_times_by_hour.get(hour, [])
 
-# Travel time
-print("\nQUANTUM")
-print("\nAverage Travel Time:")
-avg_two = compute_avg(TWO_TURNS, travel_times)
-avg_one = compute_avg(ONE_TURN, travel_times)
-avg_none = compute_avg(NO_TURNS, travel_times)
-avg_all = compute_avg(ALL_ROUTES, travel_times)
+    if tt_values:
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+        avg_tt = sum(tt_values) / len(tt_values)
+        avg_wt = sum(wt_values) / len(wt_values)
 
-# Waiting time
-print("\nAverage Waiting Time:")
-avg_two = compute_avg(TWO_TURNS, waiting_times)
-avg_one = compute_avg(ONE_TURN, waiting_times)
-avg_none = compute_avg(NO_TURNS, waiting_times)
-avg_all = compute_avg(ALL_ROUTES, waiting_times)
+        all_travel_times.extend(tt_values)
+        all_waiting_times.extend(wt_values)
 
-print(f"  Two Turns: {avg_two:.2f} s" if avg_two else "  Two Turns: N/A")
-print(f"  One Turn:  {avg_one:.2f} s" if avg_one else "  One Turn: N/A")
-print(f"  No Turns:  {avg_none:.2f} s" if avg_none else "  No Turns: N/A")
-print(f"  Overall:   {avg_all:.2f} s" if avg_all else "  Overall: N/A")
+        measurement_window = (
+            f"{WARMUP_TIME}-3600 s "
+            f"({(3600 - WARMUP_TIME) // 60} min)"
+        )
 
-# Throughput
-print("\nThroughput:")
-thr_two = compute_throughput(TWO_TURNS)
-thr_one = compute_throughput(ONE_TURN)
-thr_none = compute_throughput(NO_TURNS)
-thr_all = compute_throughput(ALL_ROUTES)
+        print(
+            f"Hour {hour:02d}: "
+            f"TT={avg_tt:.2f} s, "
+            f"WT={avg_wt:.2f} s, "
+            f"n={len(tt_values)}, "
+            f"window={measurement_window}"
+        )
 
-print(f"  Two Turns: {thr_two}")
-print(f"  One Turn:  {thr_one}")
-print(f"  No Turns:  {thr_none}")
-print(f"  Overall:   {thr_all}")
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"TT=N/A, WT=N/A, n=0"
+        )
+
+if all_travel_times:
+
+    overall_tt = (
+        sum(all_travel_times)
+        / len(all_travel_times)
+    )
+
+    overall_wt = (
+        sum(all_waiting_times)
+        / len(all_waiting_times)
+    )
+
+    print("\nPost-warm-up Overall:")
+    print(
+        f"Average Travel Time: "
+        f"{overall_tt:.2f} s"
+    )
+    print(
+        f"Average Waiting Time: "
+        f"{overall_wt:.2f} s"
+    )
+    print(
+        f"Measured completed vehicles: "
+        f"{len(all_travel_times)}"
+    )
+
+print("\n===== HOURLY QAOA PARAMETERS =====")
+
+for hour in range(24):
+
+    params = hourly_qaoa_parameters.get(hour)
+
+    if params is None:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"No completed calibration"
+        )
+
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"gamma={params['gamma']:.6f}, "
+            f"beta={params['beta']:.6f}, "
+            f"p={params['p']}, "
+            f"wins={params['wins']}/"
+            f"{params['calibration_decisions']}"
+        )
+
+
+hourly_energy_summary = {}
+
+print("\n===== HOURLY ENERGY BENCHMARK =====")
+
+for hour in range(24):
+
+    selected_values = energy_selected_by_hour.get(
+        hour, []
+    )
+
+    exact_values = energy_exact_by_hour.get(
+        hour, []
+    )
+
+    gap_values = energy_gaps_by_hour.get(
+        hour, []
+    )
+
+    reduction_values = energy_reductions_by_hour.get(
+        hour, []
+    )
+
+    num_decisions = energy_decisions_by_hour.get(
+        hour, 0
+    )
+
+    optimal_hits = energy_optimum_hits_by_hour.get(
+        hour, 0
+    )
+
+    if num_decisions > 0:
+        summary = {
+            "num_decisions": num_decisions,
+            "optimal_hits": optimal_hits,
+            "optimum_recovery_rate":
+                optimal_hits / num_decisions,
+
+            "average_selected_energy":
+                sum(selected_values)
+                / len(selected_values),
+
+            "average_exact_min_energy":
+                sum(exact_values)
+                / len(exact_values),
+
+            "average_optimality_gap":
+                sum(gap_values)
+                / len(gap_values),
+
+            "maximum_optimality_gap":
+                max(gap_values),
+
+            "average_energy_reduction":
+                sum(reduction_values)
+                / len(reduction_values)
+        }
+
+    else:
+        summary = {
+            "num_decisions": 0,
+            "optimal_hits": 0,
+            "optimum_recovery_rate": None,
+            "average_selected_energy": None,
+            "average_exact_min_energy": None,
+            "average_optimality_gap": None,
+            "maximum_optimality_gap": None,
+            "average_energy_reduction": None
+        }
+
+    
+    hourly_energy_summary[hour] = summary
+
+    if num_decisions > 0:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"decisions={num_decisions}, "
+            f"hits={optimal_hits}, "
+            f"recovery="
+            f"{summary['optimum_recovery_rate']:.4f}, "
+            f"avg_gap="
+            f"{summary['average_optimality_gap']:.4f}, "
+            f"max_gap="
+            f"{summary['maximum_optimality_gap']:.4f}"
+        )
+
+    else:
+
+        print(
+            f"Hour {hour:02d}: "
+            f"No measured energy decisions"
+        )
+
+print("HOURLY_QAOA_PARAMS_JSON: " + json.dumps(hourly_qaoa_parameters))
+print("HOURLY_ENERGY_JSON: "      + json.dumps(hourly_energy_summary) )
 
 # -----------------------
 # ENERGY BENCHMARK RESULTS
@@ -713,10 +1080,12 @@ print(f"QAOA Shots: {energy_summary['shots']}")
 print(f"Energy Decisions: {energy_summary['num_decisions']}")
 print(f"Optimal Hits: {energy_summary['optimal_hits']}")
 print(f"Optimum Recovery Rate: {energy_summary['optimum_recovery_rate']:.6f}")
+
 if energy_summary["average_selected_energy"] is not None:
     print(f"Average Selected Energy: {energy_summary['average_selected_energy']:.6f}")
     print(f"Average Exact Minimum Energy: {energy_summary['average_exact_min_energy']:.6f}")
     print(f"Average Optimality Gap: {energy_summary['average_optimality_gap']:.6f}")
     print(f"Maximum Optimality Gap: {energy_summary['maximum_optimality_gap']:.6f}")
     print(f"Average Energy Reduction: {energy_summary['average_energy_reduction']:.6f}")
+
 print("ENERGY_JSON: " + json.dumps(energy_summary))

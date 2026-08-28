@@ -1,7 +1,8 @@
-# CLASSICAL LOCAL
+# MP LIGHT
 
 import traci
 from collections import defaultdict
+from agent import MPLightAgent
 
 SUMO_BINARY = "sumo-gui"
 
@@ -9,6 +10,14 @@ import sys
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
 END_TIME = 600
+
+MODEL_PATH = "MPLight_model_v1.pt"
+
+# MPLight evaluation model. Relative paths are resolved from the terminal\n# working directory, just like SUMO_CONFIG above.\nMODEL_PATH = "MPLight_model.pt"
+DECISION_INTERVAL = 10
+
+PHASE_NS = "GGgrrrGGgrrr"
+PHASE_EW = "rrrGGgrrrGGg"
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -44,6 +53,13 @@ for tls in TLS_ORDER:
     traci.trafficlight.setPhaseDuration(tls, 999999)
 
 # -----------------------
+# LOAD FROZEN MPLIGHT MODEL
+# -----------------------
+agent = MPLightAgent()
+agent.load(MODEL_PATH)
+agent.set_evaluation_mode()
+
+# -----------------------
 # DATA STRUCTURES
 # -----------------------
 depart_time = {}
@@ -70,6 +86,13 @@ for tls in TLS_REG:
 for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
     tIndex.append(tls)
+
+# 0 = NS, 1 = EW. Used only for the MPLight observation during
+# yellow/all-red transition states.
+last_green_phase = {
+    tls: (0 if tls in TLS_REG else 1)
+    for tls in TLS_ORDER
+}
 
 def simStep(num_times = 1):
     for _ in range(num_times):
@@ -159,6 +182,57 @@ def get_lane_queue(lane_id):
         for veh in traci.lane.getLastStepVehicleIDs(lane_id)
         if traci.vehicle.getSpeed(veh) < 0.1
     )
+
+
+def get_movement_pressures(tls):
+    """
+    MPLight observation component:
+    one pressure value for each controlled movement.
+    """
+
+    controlled_links = traci.trafficlight.getControlledLinks(tls)
+    movement_pressures = []
+
+    for link_group in controlled_links:
+        link = link_group[0]
+
+        incoming_lane = link[0]
+        outgoing_lane = link[1]
+
+        incoming_queue = get_lane_queue(incoming_lane)
+        outgoing_queue = get_lane_queue(outgoing_lane)
+
+        movement_pressures.append(
+            incoming_queue - outgoing_queue
+        )
+
+    return movement_pressures
+
+
+def get_MPLight_state(tls):
+    """
+    12 movement pressures + current phase.
+    Phase encoding:
+        0 = NS
+        1 = EW
+    """
+
+    movement_pressures = get_movement_pressures(tls)
+    current_state = traci.trafficlight.getRedYellowGreenState(tls)
+
+    if current_state == PHASE_NS:
+        current_phase = 0
+        last_green_phase[tls] = 0
+
+    elif current_state == PHASE_EW:
+        current_phase = 1
+        last_green_phase[tls] = 1
+
+    else:
+        # During yellow/all-red, retain the most recent true green phase.
+        current_phase = last_green_phase[tls]
+
+    return movement_pressures + [current_phase]
 
 
 def get_downstream_queue_for_side(tls, side_index):
@@ -366,42 +440,49 @@ coupling_bias = 2             # tune between 0-10
 x_i = [[] for _ in range(NUM_TLS)]
 
 def optimize_x_i(tls_index, bias_i):
+    """
+    Retains the original classical wrapper's optimize_x_i() call shape,
+    but replaces the energy-based decision with the frozen MPLight model.
 
-    # First timestep initialization
+    MPLight action mapping:
+        action 0 -> NS  -> x_i = +1
+        action 1 -> EW  -> x_i = -1
+
+    The original sim_module code below remains responsible for minimum
+    green time, phase transitions, yellow, all-red, and forced cycling.
+    """
+
+    # bias_i is intentionally retained in the function signature so the
+    # original classical control loop does not need to be restructured.
+    _ = bias_i
+
+    tls = tIndex[tls_index]
+    current_time = int(traci.simulation.getTime())
+
+    # Preserve a valid initial desired phase before the first 10-second
+    # MPLight decision epoch.
     if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
+        current_state = traci.trafficlight.getRedYellowGreenState(tls)
+
+        if current_state == PHASE_EW:
             x_i[tls_index].append(-1)
+        else:
+            x_i[tls_index].append(1)
+
         return
 
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
+    # The frozen model only chooses a new desired phase every 10 seconds.
+    # Between decision epochs, the original sim_module logic keeps using
+    # the most recently selected x_i value.
+    if current_time % DECISION_INTERVAL != 0:
+        return
 
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
+    state = get_MPLight_state(tls)
+    action = agent.select_action(state)
 
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
+    desired_x = 1 if action == 0 else -1
+    x_i[tls_index].append(desired_x)
 
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
-
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
-
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
-    else:
-        x_i[tls_index].append(current_x)
 
 # -----------------------
 # SIMULATION LOOP
@@ -540,7 +621,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nCLASSICAL")
+print("\nMPLIGHT")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)

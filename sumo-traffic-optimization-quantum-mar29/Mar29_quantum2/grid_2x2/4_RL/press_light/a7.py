@@ -1,14 +1,20 @@
-# CLASSICAL LOCAL
+# PRESS LIGHT
 
 import traci
 from collections import defaultdict
+from agent import PressLightAgent
 
-SUMO_BINARY = "sumo-gui"
+SUMO_BINARY = "sumo"
 
 import sys
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
 END_TIME = 600
+
+MODEL_PATH = "presslight_model_v1.pt"
+
+PHASE_NS = "GGgrrrGGgrrr"
+PHASE_EW = "rrrGGgrrrGGg"
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -44,6 +50,13 @@ for tls in TLS_ORDER:
     traci.trafficlight.setPhaseDuration(tls, 999999)
 
 # -----------------------
+# LOAD FROZEN PRESSLIGHT MODEL
+# -----------------------
+agent = PressLightAgent()
+agent.load(MODEL_PATH)
+agent.set_evaluation_mode()
+
+# -----------------------
 # DATA STRUCTURES
 # -----------------------
 depart_time = {}
@@ -70,6 +83,13 @@ for tls in TLS_REG:
 for tls in TLS_INVERT:
     traci.trafficlight.setRedYellowGreenState(tls, "rrrGGgrrrGGg")
     tIndex.append(tls)
+
+# 0 = NS, 1 = EW. This mirrors the phase encoding used when PressLight
+# was trained and is used during yellow/all-red transition states.
+last_green_phase = {
+    tls: (0 if tls in TLS_REG else 1)
+    for tls in TLS_ORDER
+}
 
 def simStep(num_times = 1):
     for _ in range(num_times):
@@ -159,6 +179,73 @@ def get_lane_queue(lane_id):
         for veh in traci.lane.getLastStepVehicleIDs(lane_id)
         if traci.vehicle.getSpeed(veh) < 0.1
     )
+
+
+def get_presslight_state(tls):
+    """
+    Recreates the 5-value PressLight observation used during training:
+
+        [NS upstream queue,
+         NS downstream queue,
+         EW upstream queue,
+         EW downstream queue,
+         current phase]
+
+    Phase encoding:
+        0 = NS
+        1 = EW
+    """
+
+    controlled_links = traci.trafficlight.getControlledLinks(tls)
+
+    ns_upstream = 0
+    ns_downstream = 0
+    ew_upstream = 0
+    ew_downstream = 0
+
+    for signal_index, link_group in enumerate(controlled_links):
+        for link in link_group:
+            incoming_lane = link[0]
+            outgoing_lane = link[1]
+
+            upstream_queue = get_lane_queue(incoming_lane)
+            downstream_queue = get_lane_queue(outgoing_lane)
+
+            if (
+                signal_index < len(PHASE_NS)
+                and PHASE_NS[signal_index] in ("G", "g")
+            ):
+                ns_upstream += upstream_queue
+                ns_downstream += downstream_queue
+
+            if (
+                signal_index < len(PHASE_EW)
+                and PHASE_EW[signal_index] in ("G", "g")
+            ):
+                ew_upstream += upstream_queue
+                ew_downstream += downstream_queue
+
+    current_state = traci.trafficlight.getRedYellowGreenState(tls)
+
+    if current_state == PHASE_NS:
+        current_phase = 0
+        last_green_phase[tls] = 0
+
+    elif current_state == PHASE_EW:
+        current_phase = 1
+        last_green_phase[tls] = 1
+
+    else:
+        # Yellow/all-red are transition states, not separate RL actions.
+        current_phase = last_green_phase[tls]
+
+    return [
+        ns_upstream,
+        ns_downstream,
+        ew_upstream,
+        ew_downstream,
+        current_phase,
+    ]
 
 
 def get_downstream_queue_for_side(tls, side_index):
@@ -366,42 +453,33 @@ coupling_bias = 2             # tune between 0-10
 x_i = [[] for _ in range(NUM_TLS)]
 
 def optimize_x_i(tls_index, bias_i):
+    """
+    Retains the original classical wrapper's optimize_x_i() call shape,
+    but replaces the energy-based decision with the frozen PressLight model.
 
-    # First timestep initialization
+    PressLight action mapping:
+        action 0 -> NS -> x_i = +1
+        action 1 -> EW -> x_i = -1
+
+    The original sim_module logic below remains responsible for minimum
+    green time, phase transitions, yellow/all-red, and forced cycling.
+    """
+
+    # Retained only so the surrounding classical loop does not need to change.
+    _ = bias_i
+
+    tls = tIndex[tls_index]
+
+    state = get_presslight_state(tls)
+    action = agent.select_action(state)
+
+    desired_x = 1 if action == 0 else -1
+
     if len(x_i[tls_index]) == 0:
-        if bias_i >= 0:
-            x_i[tls_index].append(1)
-        else:
-            x_i[tls_index].append(-1)
-        return
-
-    current_x = x_i[tls_index][-1]
-    delta = bias_i
-
-    # Energy if we keep current phase
-    energy_stay = -delta * current_x
-
-    # Energy if we keep current phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_stay -= coupling_bias * (x_i[neighbor_index][-1] * current_x)
-
-    # Energy if we switch phase
-    energy_switch = -delta * (-current_x) + LAMBDA_SWITCHING_PENALTY
-
-    # Energy if we switch phase: Coupling with neighbors
-    if len(x_i[NUM_TLS - 1]) > 0:
-        for neighbor_tls in TLS_NEIGHBORS[tls_index][1:]:
-            neighbor_index = tIndex.index(neighbor_tls)
-            if len(x_i[neighbor_index]) > 0:
-                energy_switch -= coupling_bias * (x_i[neighbor_index][-1] * (-current_x))
-
-    if energy_switch < energy_stay:
-        x_i[tls_index].append(-current_x)
+        x_i[tls_index].append(desired_x)
     else:
-        x_i[tls_index].append(current_x)
+        x_i[tls_index].append(desired_x)
+
 
 # -----------------------
 # SIMULATION LOOP
@@ -540,7 +618,7 @@ for tls_index, tls in enumerate(TLS_ORDER):
         print()
 
 # Travel time
-print("\nCLASSICAL")
+print("\nPRESSLIGHT")
 print("\nAverage Travel Time:")
 avg_two = compute_avg(TWO_TURNS, travel_times)
 avg_one = compute_avg(ONE_TURN, travel_times)

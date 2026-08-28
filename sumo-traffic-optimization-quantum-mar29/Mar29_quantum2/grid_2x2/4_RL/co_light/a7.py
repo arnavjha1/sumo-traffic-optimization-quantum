@@ -1,11 +1,14 @@
-# CURRENT CODE
+# CO LIGHT
 import traci
 import torch
 from collections import defaultdict
 from agent import CoLightAgent
 
 SUMO_BINARY = "sumo-gui"
-SUMO_CONFIG = "sim2x2_a7.sumocfg"
+
+import sys
+ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
+SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
 MODEL_PATH = "CoLight_model_v1.pt"
 END_TIME = 600
 
