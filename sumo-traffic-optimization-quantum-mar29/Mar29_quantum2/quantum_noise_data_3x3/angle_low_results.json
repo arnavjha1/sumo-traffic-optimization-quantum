@@ -1,0 +1,165 @@
+{
+    "experiment": {
+        "network": "3x3",
+        "alpha_index": 7,
+        "alpha": 0.7,
+        "noise_type": "angle",
+        "level_name": "low",
+        "noise_level": 0.025,
+        "num_runs_attempted": 1,
+        "num_runs_target": 1,
+        "num_runs_successful": 1,
+        "qaoa_shots": 512,
+        "seeds": [
+            1001
+        ],
+        "source_file": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_3x3\\3_quantum\\a7_noise.py"
+    },
+    "runs": [
+        {
+            "run": 1,
+            "seed": 1001,
+            "noise_type": "angle",
+            "level_name": "low",
+            "noise_level": 0.025,
+            "throughput": 36,
+            "average_waiting_time": 13.64,
+            "average_travel_time": 57.83,
+            "vehicles_inserted": 410,
+            "vehicles_remaining": 374,
+            "shots": 512,
+            "num_decisions": 100,
+            "optimal_hits": 64,
+            "optimum_recovery_rate": 0.64,
+            "average_selected_energy": -141.1966,
+            "average_exact_min_energy": -152.9606,
+            "average_optimality_gap": 11.764000000000001,
+            "maximum_optimality_gap": 110.0,
+            "average_energy_reduction": -9.491800000000001,
+            "raw_output": "\n===== 3x3 QAOA CHECK =====\nTLS order: ['A0', 'A1', 'A2', 'B0', 'B1', 'B2', 'C0', 'C1', 'C2']\nBias count: 9\nPrevious state: [1, 0, 1, 1, 0, 0, 0, 0, 0]\nNeighbor indices: [[1, 3], [0, 2, 4], [1, 5], [0, 4, 6], [1, 3, 5, 7], [2, 4, 8], [3, 7], [4, 6, 8], [5, 7]]\n==========================\n\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-35.68 best_sample_energy=-99.64 gamma=1.396 beta=0.873 p=1 shots=512 state=101100000\n1.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-62.03 best_sample_energy=-97.82 gamma=2.443 beta=0.698 p=1 shots=512 state=101100000\n2.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-40.79 best_sample_energy=-102.23 gamma=2.443 beta=0.873 p=1 shots=512 state=101100000\n3.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-32.82 best_sample_energy=-100.29 gamma=0.698 beta=1.222 p=2 shots=512 state=101100000\n4.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-43.50 best_sample_energy=-104.17 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n5.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-21.76 best_sample_energy=-100.29 gamma=0.698 beta=1.222 p=2 shots=512 state=101100000\n6.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-43.20 best_sample_energy=-105.58 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n7.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-29.66 best_sample_energy=-106.11 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n8.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-34.93 best_sample_energy=-106.17 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n9.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-31.43 best_sample_energy=-109.52 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n10.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-48.08 best_sample_energy=-112.52 gamma=2.443 beta=0.873 p=1 shots=512 state=101100000\n11.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-44.80 best_sample_energy=-113.52 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n12.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-40.74 best_sample_energy=-114.93 gamma=0.698 beta=1.222 p=2 shots=512 state=101100000\n13.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-24.92 best_sample_energy=-119.46 gamma=3.142 beta=0.873 p=2 shots=512 state=101100000\n14.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-47.77 best_sample_energy=-121.81 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n15.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-32.77 best_sample_energy=-124.75 gamma=0.698 beta=0.873 p=1 shots=512 state=101100000\n16.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-28.92 best_sample_energy=-125.22 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n17.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-46.95 best_sample_energy=-128.63 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000\n18.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-40.54 best_sample_energy=-131.04 gamma=2.443 beta=0.524 p=2 shots=512 state=101100000\n19.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-46.50 best_sample_energy=-98.93 gamma=2.443 beta=0.524 p=2 shots=512 state=101100000\n20.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-34.98 best_sample_energy=-90.70 gamma=2.443 beta=0.524 p=2 shots=512 state=001100000\n21.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-52.28 best_sample_energy=-111.58 gamma=2.443 beta=0.698 p=1 shots=512 state=001100000\n22.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-46.48 best_sample_energy=-103.76 gamma=2.443 beta=0.873 p=1 shots=512 state=001100000\n23.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-20.91 best_sample_energy=-99.64 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n24.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-60.42 best_sample_energy=-100.55 gamma=0.698 beta=0.873 p=1 shots=512 state=000100000\n25.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-31.99 best_sample_energy=-114.91 gamma=0.698 beta=0.698 p=1 shots=512 state=000000000\n26.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-35.94 best_sample_energy=-119.92 gamma=0.698 beta=0.873 p=1 shots=512 state=000001001\n27.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-39.93 best_sample_energy=-159.42 gamma=3.142 beta=0.873 p=1 shots=512 state=000001001\n28.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-27.57 best_sample_energy=-135.59 gamma=2.443 beta=0.873 p=1 shots=512 state=000000001\n29.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-60.14 best_sample_energy=-152.12 gamma=0.698 beta=1.047 p=2 shots=512 state=000000001\n30.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-42.84 best_sample_energy=-156.59 gamma=0.698 beta=0.873 p=2 shots=512 state=000000001\n31.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-69.40 best_sample_energy=-160.83 gamma=3.142 beta=0.698 p=1 shots=512 state=000001101\n32.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-46.15 best_sample_energy=-208.89 gamma=1.745 beta=0.698 p=1 shots=512 state=000001101\n33.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-79.89 best_sample_energy=-213.77 gamma=1.396 beta=0.873 p=1 shots=512 state=000001101\n34.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-30.35 best_sample_energy=-210.48 gamma=1.745 beta=0.698 p=1 shots=512 state=000001101\n35.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-47.29 best_sample_energy=-189.45 gamma=0.698 beta=0.698 p=1 shots=512 state=000001111\n36.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-22.59 best_sample_energy=-179.07 gamma=0.698 beta=1.222 p=2 shots=512 state=000011111\n37.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-18.10 best_sample_energy=-135.84 gamma=1.745 beta=1.222 p=2 shots=512 state=000001111\n38.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-34.98 best_sample_energy=-146.01 gamma=3.142 beta=0.698 p=1 shots=512 state=000001101\n39.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-56.76 best_sample_energy=-135.69 gamma=0.698 beta=0.698 p=1 shots=512 state=000001101\n40.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-37.90 best_sample_energy=-126.34 gamma=0.698 beta=0.698 p=1 shots=512 state=000001101\n41.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-37.57 best_sample_energy=-129.66 gamma=1.745 beta=0.873 p=1 shots=512 state=000001101\n42.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-36.88 best_sample_energy=-115.78 gamma=0.698 beta=1.222 p=2 shots=512 state=000001001\n43.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-32.27 best_sample_energy=-134.90 gamma=3.142 beta=1.047 p=2 shots=512 state=000001001\n44.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-25.58 best_sample_energy=-131.63 gamma=3.142 beta=0.524 p=2 shots=512 state=001001001\n45.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-32.92 best_sample_energy=-132.95 gamma=2.443 beta=0.698 p=1 shots=512 state=001000001\n46.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-46.42 best_sample_energy=-152.07 gamma=3.142 beta=0.524 p=2 shots=512 state=001000001\n47.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-44.61 best_sample_energy=-162.86 gamma=3.142 beta=0.524 p=2 shots=512 state=001000001\n48.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-64.82 best_sample_energy=-162.92 gamma=3.142 beta=0.524 p=2 shots=512 state=001000001\n49.0\nNOISE SETTINGS: type=none, level=0.0\nBEST QAOA: expected_energy=-60.12 best_sample_energy=-166.24 gamma=3.142 beta=0.524 p=2 shots=512 state=001000001\n\n===== QAOA CALIBRATION COMPLETE =====\nFixed gamma: 3.141593\nFixed beta:  0.523599\nFixed p:     2\nWins:        15/50\n===== FIXED-PARAMETER QAOA BEGINS =====\n\n50.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=3.97 best_sample_energy=-125.29 gamma=3.142 beta=0.524 p=2 shots=512 state=001101001\n51.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=42.60 best_sample_energy=-161.17 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001\n52.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=1.96 best_sample_energy=-177.72 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n53.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-61.51 best_sample_energy=-196.48 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n54.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-25.73 best_sample_energy=-205.51 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n55.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-23.33 best_sample_energy=-187.60 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n56.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=64.68 best_sample_energy=-85.58 gamma=3.142 beta=0.524 p=2 shots=512 state=011100010\n57.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=0.58 best_sample_energy=-120.94 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000\n58.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=3.26 best_sample_energy=-144.47 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000\n59.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-45.83 best_sample_energy=-138.56 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000\n60.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=32.32 best_sample_energy=-83.14 gamma=3.142 beta=0.524 p=2 shots=512 state=011000000\n61.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-35.60 best_sample_energy=-104.90 gamma=3.142 beta=0.524 p=2 shots=512 state=011001001\n62.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-34.91 best_sample_energy=-132.70 gamma=3.142 beta=0.524 p=2 shots=512 state=010001001\n63.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=24.15 best_sample_energy=-101.57 gamma=3.142 beta=0.524 p=2 shots=512 state=110000001\n64.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-23.83 best_sample_energy=-102.14 gamma=3.142 beta=0.524 p=2 shots=512 state=110001111\n65.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-28.65 best_sample_energy=-163.14 gamma=3.142 beta=0.524 p=2 shots=512 state=100001111\n66.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-64.01 best_sample_energy=-187.96 gamma=3.142 beta=0.524 p=2 shots=512 state=100001111\n67.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=65.27 best_sample_energy=-97.02 gamma=3.142 beta=0.524 p=2 shots=512 state=010011101\n68.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=5.92 best_sample_energy=-191.07 gamma=3.142 beta=0.524 p=2 shots=512 state=000011101\n69.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=110.10 best_sample_energy=-108.04 gamma=3.142 beta=0.524 p=2 shots=512 state=001111101\n70.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=12.80 best_sample_energy=-131.52 gamma=3.142 beta=0.524 p=2 shots=512 state=011011101\n71.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=26.54 best_sample_energy=-132.76 gamma=3.142 beta=0.524 p=2 shots=512 state=111011101\n72.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-65.55 best_sample_energy=-164.27 gamma=3.142 beta=0.524 p=2 shots=512 state=000011101\n73.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-26.16 best_sample_energy=-172.50 gamma=3.142 beta=0.524 p=2 shots=512 state=001011001\n74.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-18.39 best_sample_energy=-207.88 gamma=3.142 beta=0.524 p=2 shots=512 state=001011101\n75.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-40.73 best_sample_energy=-194.41 gamma=3.142 beta=0.524 p=2 shots=512 state=001011001\n76.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-1.44 best_sample_energy=-161.26 gamma=3.142 beta=0.524 p=2 shots=512 state=001111001\n77.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=32.30 best_sample_energy=-136.41 gamma=3.142 beta=0.524 p=2 shots=512 state=001010001\n78.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-52.27 best_sample_energy=-168.74 gamma=3.142 beta=0.524 p=2 shots=512 state=001010001\n79.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=8.01 best_sample_energy=-162.89 gamma=3.142 beta=0.524 p=2 shots=512 state=001010001\n80.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-4.19 best_sample_energy=-145.95 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001\n81.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-5.27 best_sample_energy=-193.77 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001\n82.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=29.32 best_sample_energy=-181.19 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001\n83.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-17.56 best_sample_energy=-177.08 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001\n84.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-10.02 best_sample_energy=-174.38 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n85.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=29.21 best_sample_energy=-89.99 gamma=3.142 beta=0.524 p=2 shots=512 state=001100110\n86.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-55.12 best_sample_energy=-164.04 gamma=3.142 beta=0.524 p=2 shots=512 state=001100010\n87.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=50.32 best_sample_energy=-143.21 gamma=3.142 beta=0.524 p=2 shots=512 state=001000000\n88.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-33.81 best_sample_energy=-169.94 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000\n89.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-40.41 best_sample_energy=-173.20 gamma=3.142 beta=0.524 p=2 shots=512 state=011100000\n90.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=21.69 best_sample_energy=-188.73 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000\n91.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-13.18 best_sample_energy=-175.29 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000\n92.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-20.16 best_sample_energy=-143.35 gamma=3.142 beta=0.524 p=2 shots=512 state=100100000\n93.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-21.86 best_sample_energy=-137.75 gamma=3.142 beta=0.524 p=2 shots=512 state=100100010\n94.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-35.60 best_sample_energy=-119.49 gamma=3.142 beta=0.524 p=2 shots=512 state=100100010\n95.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=3.50 best_sample_energy=-131.67 gamma=3.142 beta=0.524 p=2 shots=512 state=100100000\n96.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-24.81 best_sample_energy=-128.87 gamma=3.142 beta=0.524 p=2 shots=512 state=110100000\n97.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-2.16 best_sample_energy=-155.99 gamma=3.142 beta=0.524 p=2 shots=512 state=110000000\n98.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-10.83 best_sample_energy=-147.11 gamma=3.142 beta=0.524 p=2 shots=512 state=110001000\n99.0\nNOISE SETTINGS: type=angle, level=0.025\nBEST QAOA: expected_energy=-29.44 best_sample_energy=-168.23 gamma=3.142 beta=0.524 p=2 shots=512 state=110001000\n100.0\n\n===== PERFORMANCE METRICS =====\nAlpha: 0.7\nAverage Travel Time: 57.83 s\nAverage Waiting Time: 13.64 s\nThroughput: 36\nVehicles inserted: 410\nVehicles still in network at t=100: 374\n\n===== ENERGY BENCHMARK =====\nQAOA Shots: 512\nEnergy Decisions: 100\nOptimal Hits: 64\nOptimum Recovery Rate: 0.640000\nAverage Selected Energy: -141.196600\nAverage Exact Minimum Energy: -152.960600\nAverage Optimality Gap: 11.764000\nMaximum Optimality Gap: 110.000000\nAverage Energy Reduction: -9.491800\nENERGY_JSON: {\"shots\": 512, \"num_decisions\": 100, \"optimal_hits\": 64, \"optimum_recovery_rate\": 0.64, \"average_selected_energy\": -141.1966, \"average_exact_min_energy\": -152.9606, \"average_optimality_gap\": 11.764000000000001, \"maximum_optimality_gap\": 110.0, \"average_energy_reduction\": -9.491800000000001}\n"
+        }
+    ],
+    "statistics": {
+        "throughput": {
+            "mean": 36,
+            "median": 36,
+            "min": 36,
+            "max": 36,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 36,
+            "ci95_high": 36
+        },
+        "average_waiting_time": {
+            "mean": 13.64,
+            "median": 13.64,
+            "min": 13.64,
+            "max": 13.64,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 13.64,
+            "ci95_high": 13.64
+        },
+        "average_travel_time": {
+            "mean": 57.83,
+            "median": 57.83,
+            "min": 57.83,
+            "max": 57.83,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 57.83,
+            "ci95_high": 57.83
+        },
+        "vehicles_inserted": {
+            "mean": 410,
+            "median": 410,
+            "min": 410,
+            "max": 410,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 410,
+            "ci95_high": 410
+        },
+        "vehicles_remaining": {
+            "mean": 374,
+            "median": 374,
+            "min": 374,
+            "max": 374,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 374,
+            "ci95_high": 374
+        },
+        "average_selected_energy": {
+            "mean": -141.1966,
+            "median": -141.1966,
+            "min": -141.1966,
+            "max": -141.1966,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": -141.1966,
+            "ci95_high": -141.1966
+        },
+        "average_exact_min_energy": {
+            "mean": -152.9606,
+            "median": -152.9606,
+            "min": -152.9606,
+            "max": -152.9606,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": -152.9606,
+            "ci95_high": -152.9606
+        },
+        "average_optimality_gap": {
+            "mean": 11.764000000000001,
+            "median": 11.764000000000001,
+            "min": 11.764000000000001,
+            "max": 11.764000000000001,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 11.764000000000001,
+            "ci95_high": 11.764000000000001
+        },
+        "maximum_optimality_gap": {
+            "mean": 110.0,
+            "median": 110.0,
+            "min": 110.0,
+            "max": 110.0,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 110.0,
+            "ci95_high": 110.0
+        },
+        "optimum_recovery_rate": {
+            "mean": 0.64,
+            "median": 0.64,
+            "min": 0.64,
+            "max": 0.64,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": 0.64,
+            "ci95_high": 0.64
+        },
+        "average_energy_reduction": {
+            "mean": -9.491800000000001,
+            "median": -9.491800000000001,
+            "min": -9.491800000000001,
+            "max": -9.491800000000001,
+            "standard_deviation": 0,
+            "variance": 0,
+            "standard_error": 0,
+            "ci95_low": -9.491800000000001,
+            "ci95_high": -9.491800000000001
+        }
+    }
+}

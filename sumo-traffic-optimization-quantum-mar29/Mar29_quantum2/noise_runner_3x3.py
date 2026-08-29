@@ -13,7 +13,7 @@ from pathlib import Path
 # CONFIG
 # =============================
 
-NUM_RUNS = 1
+NUM_RUNS = 10
 QAOA_SHOTS = 512
 ALPHA_INDEX = 7
 
