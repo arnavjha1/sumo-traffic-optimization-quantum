@@ -5,7 +5,7 @@ import json
 import os
 from itertools import product
 from collections import defaultdict, Counter
-from annealer_noise import quantum_decision
+from annealer_noise import quantum_decision, set_noise_seed
 
 SUMO_BINARY = "sumo"
 
@@ -89,6 +89,9 @@ QAOA_SHOTS = int(os.environ.get("QAOA_SHOTS", "512"))
 
 NOISE_TYPE = sys.argv[2].lower() if len(sys.argv) > 2 else "none"
 NOISE_LEVEL = float(sys.argv[3]) if len(sys.argv) > 3 else 0.0
+NOISE_SEED = int(sys.argv[4]) if len(sys.argv) > 4 else 1001
+
+set_noise_seed(NOISE_SEED)
 
 # QAOA hyperparameter calibration settings
 CALIBRATION_END = 50

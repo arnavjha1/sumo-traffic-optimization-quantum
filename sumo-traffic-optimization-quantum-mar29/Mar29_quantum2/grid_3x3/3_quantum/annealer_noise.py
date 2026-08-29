@@ -8,6 +8,12 @@ import numpy as np
 LAMBDA = 10
 sampler = StatevectorSampler()
 
+noise_rng = np.random.default_rng()
+
+def set_noise_seed(seed):
+    global noise_rng
+    noise_rng = np.random.default_rng(seed)
+
 def build_depolarizing_noise_model(noise_level):
     """
     Build a synthetic depolarizing noise model.
@@ -225,8 +231,8 @@ def quantum_decision(
 
                 # Optional QAOA angle uncertainty
                 if noise_type == "angle" and noise_level > 0:
-                    gamma_eff = gamma + np.random.normal(0.0, noise_level)
-                    beta_eff = beta + np.random.normal(0.0, noise_level)
+                    gamma_eff = gamma + noise_rng.normal(0.0, noise_level)
+                    beta_eff = beta + noise_rng.normal(0.0, noise_level)
                 else:
                     gamma_eff = gamma
                     beta_eff = beta
