@@ -5,13 +5,13 @@ import json
 import os
 from itertools import product
 from collections import defaultdict, Counter
-from annealer import quantum_decision
+from annealer_noise import quantum_decision
 
 SUMO_BINARY = "sumo"
 
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
-END_TIME = 600
+END_TIME = 100
 
 ROUTE_FILE = f"grid_3x3/routes_3x3/routes3x3_a{ALPHA_INDEX}.rou.xml"
 
@@ -86,6 +86,9 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 # Reviewer analysis settings. Defaults preserve the current QAOA behavior.
 ENERGY_LAMBDA = 10
 QAOA_SHOTS = int(os.environ.get("QAOA_SHOTS", "512"))
+
+NOISE_TYPE = sys.argv[2].lower() if len(sys.argv) > 2 else "none"
+NOISE_LEVEL = float(sys.argv[3]) if len(sys.argv) > 3 else 0.0
 
 # QAOA hyperparameter calibration settings
 CALIBRATION_END = 50
@@ -621,6 +624,8 @@ while traci.simulation.getTime() < END_TIME:
             neighbor_indices,
             coupling_strength=2,
             shots=QAOA_SHOTS,
+            noise_type="none",     # no noise while calibrating the hyperparameters
+            noise_level=0.0,
             return_metadata=True
         )
 
@@ -666,7 +671,9 @@ while traci.simulation.getTime() < END_TIME:
             neighbor_indices,
             coupling_strength=2,
             shots=QAOA_SHOTS,
-            fixed_params=fixed_params
+            fixed_params=fixed_params,
+            noise_type=NOISE_TYPE,
+            noise_level=NOISE_LEVEL
         )
 
     assert len(bitstring) == 9
