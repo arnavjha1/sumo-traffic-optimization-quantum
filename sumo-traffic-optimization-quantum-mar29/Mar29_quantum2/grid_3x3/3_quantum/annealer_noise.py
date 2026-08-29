@@ -1,10 +1,69 @@
-from qiskit import QuantumCircuit
+from qiskit import QuantumCircuit, transpile
 from qiskit.primitives import StatevectorSampler
+from qiskit_aer import AerSimulator
+from qiskit_aer.noise import NoiseModel, depolarizing_error
+from collections import Counter
 import numpy as np
 
 LAMBDA = 10
 sampler = StatevectorSampler()
 
+def build_depolarizing_noise_model(noise_level):
+    """
+    Build a synthetic depolarizing noise model.
+
+    noise_level is the depolarizing error probability
+    applied to each modeled gate.
+    """
+    noise_model = NoiseModel()
+
+    # Single-qubit depolarizing error
+    single_qubit_error = depolarizing_error(
+        noise_level,
+        1
+    )
+
+    # Two-qubit depolarizing error
+    two_qubit_error = depolarizing_error(
+        noise_level,
+        2
+    )
+
+    noise_model.add_all_qubit_quantum_error(
+        single_qubit_error,
+        ["h", "rz", "rx"]
+    )
+
+    noise_model.add_all_qubit_quantum_error(
+        two_qubit_error,
+        ["cx"]
+    )
+
+    return noise_model
+
+def apply_readout_noise(counts, noise_level):
+    """
+    Apply symmetric independent measurement error.
+
+    Each measured qubit has probability noise_level of
+    being reported as the opposite classical bit.
+    """
+
+    noisy_counts = Counter()
+    for measured_bitstring, frequency in counts.items():
+        for _ in range(frequency):
+            noisy_bits = list(measured_bitstring)
+            for i in range(len(noisy_bits)):
+                if np.random.random() < noise_level:
+                    noisy_bits[i] = (
+                        "1"
+                        if noisy_bits[i] == "0"
+                        else "0"
+                    )
+            noisy_bitstring = "".join(noisy_bits)
+            noisy_counts[noisy_bitstring] += 1
+
+    return dict(noisy_counts)
 
 def quantum_decision(
     biases,
@@ -25,6 +84,22 @@ def quantum_decision(
         f"NOISE SETTINGS: type={noise_type}, "
         f"level={noise_level}"
     )
+
+    # ---------------------------------------------------
+    # Optional depolarizing-noise simulator
+    # ---------------------------------------------------
+
+    depolarizing_simulator = None
+    if noise_type == "depolarizing" and noise_level > 0:
+        print(f"DEPOLARIZING AER ACTIVE: p={noise_level}")
+
+        noise_model = build_depolarizing_noise_model(
+            noise_level
+        )
+
+        depolarizing_simulator = AerSimulator(
+            noise_model=noise_model
+        )
 
     # ---------------------------------------------------
     # Convert previous binary state into Ising spin state
@@ -209,14 +284,7 @@ def quantum_decision(
                             2 * beta_eff,
                             i
                         )
-                        
 
-                if noise_type == "angle" and noise_level > 0:
-                    print(
-                        f"ANGLE NOISE: "
-                        f"gamma={gamma:.4f}->{gamma_eff:.4f}, "
-                        f"beta={beta:.4f}->{beta_eff:.4f}"
-                    )
 
                 # -----------------------------------
                 # Measurement
@@ -224,17 +292,53 @@ def quantum_decision(
 
                 qc.measure_all()
 
-                result = sampler.run(
-                    [qc],
-                    shots=shots
-                ).result()
+                # -----------------------------------
+                # Execute quantum circuit
+                # -----------------------------------
 
-                counts = (
-                    result[0]
-                    .data
-                    .meas
-                    .get_counts()
-                )
+                if noise_type == "depolarizing" and noise_level > 0:
+
+                    # Compile the circuit for Aer while preserving
+                    # the gate family used by this QAOA implementation.
+                    compiled_qc = transpile(
+                        qc,
+                        depolarizing_simulator,
+                        optimization_level=0
+                    )
+
+                    result = depolarizing_simulator.run(
+                        compiled_qc,
+                        shots=shots
+                    ).result()
+
+                    counts = result.get_counts(
+                        compiled_qc
+                    )
+
+                else:
+
+                    # Preserve the original ideal StatevectorSampler
+                    # execution for none / angle / readout experiments.
+                    result = sampler.run(
+                        [qc],
+                        shots=shots
+                    ).result()
+
+                    counts = (
+                        result[0]
+                        .data
+                        .meas
+                        .get_counts()
+                    )
+
+                # -----------------------------------
+                # Optional readout / measurement noise
+                # -----------------------------------
+                if noise_type == "readout" and noise_level > 0:
+                    counts = apply_readout_noise(
+                        counts,
+                        noise_level
+                    )
 
                 # -----------------------------------
                 # EXPECTED ENERGY
