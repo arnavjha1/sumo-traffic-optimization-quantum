@@ -1,1 +1,1 @@
-angle low run 1/1 seed=1001
+readout high run 1/10 seed=1001

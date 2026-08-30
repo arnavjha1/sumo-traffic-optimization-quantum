@@ -3,149 +3,149 @@
 Noise type: angle
 Level: low
 Noise value: 0.025
-Runs attempted: 1/1
-Runs successful: 1/1
+Runs attempted: 10/10
+Runs successful: 10/10
 
 throughput:
 {
-    "mean": 36,
-    "median": 36,
-    "min": 36,
-    "max": 36,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 36,
-    "ci95_high": 36
+    "mean": 973.2,
+    "median": 978.0,
+    "min": 925,
+    "max": 1027,
+    "standard_deviation": 34.70446657132191,
+    "variance": 1204.4,
+    "standard_error": 10.974515934655157,
+    "ci95_low": 948.3739219568083,
+    "ci95_high": 998.0260780431918
 }
 
 average_waiting_time:
 {
-    "mean": 13.64,
-    "median": 13.64,
-    "min": 13.64,
-    "max": 13.64,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 13.64,
-    "ci95_high": 13.64
+    "mean": 44.234,
+    "median": 43.945,
+    "min": 43.35,
+    "max": 45.34,
+    "standard_deviation": 0.6918766749452774,
+    "variance": 0.47869333333333297,
+    "standard_error": 0.218790615277103,
+    "ci95_low": 43.739061278116594,
+    "ci95_high": 44.72893872188341
 }
 
 average_travel_time:
 {
-    "mean": 57.83,
-    "median": 57.83,
-    "min": 57.83,
-    "max": 57.83,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 57.83,
-    "ci95_high": 57.83
+    "mean": 200.351,
+    "median": 200.23,
+    "min": 192.52,
+    "max": 209.78,
+    "standard_deviation": 5.696816752460192,
+    "variance": 32.45372111111109,
+    "standard_error": 1.801491635037784,
+    "ci95_low": 196.27574308735782,
+    "ci95_high": 204.42625691264217
 }
 
 vehicles_inserted:
 {
-    "mean": 410,
-    "median": 410,
-    "min": 410,
-    "max": 410,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 410,
-    "ci95_high": 410
+    "mean": 1304.6,
+    "median": 1314.5,
+    "min": 1247,
+    "max": 1354,
+    "standard_deviation": 29.908007103263984,
+    "variance": 894.4888888888889,
+    "standard_error": 9.457742272280889,
+    "ci95_low": 1283.2051021145637,
+    "ci95_high": 1325.994897885436
 }
 
 vehicles_remaining:
 {
-    "mean": 374,
-    "median": 374,
-    "min": 374,
-    "max": 374,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 374,
-    "ci95_high": 374
+    "mean": 331.4,
+    "median": 330.5,
+    "min": 306,
+    "max": 348,
+    "standard_deviation": 13.251415018781957,
+    "variance": 175.6,
+    "standard_error": 4.190465367951393,
+    "ci95_low": 321.9205094346312,
+    "ci95_high": 340.87949056536877
 }
 
 average_selected_energy:
 {
-    "mean": -141.1966,
-    "median": -141.1966,
-    "min": -141.1966,
-    "max": -141.1966,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": -141.1966,
-    "ci95_high": -141.1966
+    "mean": -177.310335,
+    "median": -177.59164166666665,
+    "min": -182.41921666666667,
+    "max": -171.61503333333334,
+    "standard_deviation": 2.9696809092674044,
+    "variance": 8.819004702867277,
+    "standard_error": 0.9390955597204832,
+    "ci95_low": -179.43471659409062,
+    "ci95_high": -175.1859534059094
 }
 
 average_exact_min_energy:
 {
-    "mean": -152.9606,
-    "median": -152.9606,
-    "min": -152.9606,
-    "max": -152.9606,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": -152.9606,
-    "ci95_high": -152.9606
+    "mean": -206.86267166666667,
+    "median": -207.33634999999998,
+    "min": -210.74765,
+    "max": -202.2865,
+    "standard_deviation": 2.7349193963797993,
+    "variance": 7.479784104694446,
+    "standard_error": 0.8648574509533028,
+    "ci95_low": -208.81911500334283,
+    "ci95_high": -204.9062283299905
 }
 
 average_optimality_gap:
 {
-    "mean": 11.764000000000001,
-    "median": 11.764000000000001,
-    "min": 11.764000000000001,
-    "max": 11.764000000000001,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 11.764000000000001,
-    "ci95_high": 11.764000000000001
+    "mean": 29.55233666666667,
+    "median": 29.448383333333332,
+    "min": 28.328433333333336,
+    "max": 31.62176666666667,
+    "standard_deviation": 1.0521327455151206,
+    "variance": 1.1069833141851855,
+    "standard_error": 0.3327135876674088,
+    "ci95_low": 28.799686295329728,
+    "ci95_high": 30.30498703800361
 }
 
 maximum_optimality_gap:
 {
-    "mean": 110.0,
-    "median": 110.0,
-    "min": 110.0,
-    "max": 110.0,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 110.0,
-    "ci95_high": 110.0
+    "mean": 200.49200000000002,
+    "median": 189.36,
+    "min": 167.22,
+    "max": 242.70000000000002,
+    "standard_deviation": 26.424152588115298,
+    "variance": 698.2358400000005,
+    "standard_error": 8.356050741827746,
+    "ci95_low": 181.5893013220192,
+    "ci95_high": 219.39469867798084
 }
 
 optimum_recovery_rate:
 {
-    "mean": 0.64,
-    "median": 0.64,
-    "min": 0.64,
-    "max": 0.64,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": 0.64,
-    "ci95_high": 0.64
+    "mean": 0.3486666666666667,
+    "median": 0.3516666666666667,
+    "min": 0.31833333333333336,
+    "max": 0.39666666666666667,
+    "standard_deviation": 0.025371316554402605,
+    "variance": 0.0006437037037037037,
+    "standard_error": 0.008023114754904753,
+    "ci95_low": 0.3305171214620556,
+    "ci95_high": 0.3668162118712778
 }
 
 average_energy_reduction:
 {
-    "mean": -9.491800000000001,
-    "median": -9.491800000000001,
-    "min": -9.491800000000001,
-    "max": -9.491800000000001,
-    "standard_deviation": 0,
-    "variance": 0,
-    "standard_error": 0,
-    "ci95_low": -9.491800000000001,
-    "ci95_high": -9.491800000000001
+    "mean": -19.53743,
+    "median": -19.21565,
+    "min": -21.1404,
+    "max": -18.428866666666668,
+    "standard_deviation": 0.8547510827395566,
+    "variance": 0.7305994134444442,
+    "standard_error": 0.27029602539520337,
+    "ci95_low": -20.148882045919937,
+    "ci95_high": -18.925977954080064
 }
 

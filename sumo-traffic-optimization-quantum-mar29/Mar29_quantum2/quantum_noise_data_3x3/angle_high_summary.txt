@@ -1,0 +1,151 @@
+===== 3x3 QAOA NOISE SENSITIVITY SUMMARY =====
+
+Noise type: angle
+Level: high
+Noise value: 0.1
+Runs attempted: 1/10
+Runs successful: 1/10
+
+throughput:
+{
+    "mean": 987,
+    "median": 987,
+    "min": 987,
+    "max": 987,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 987,
+    "ci95_high": 987
+}
+
+average_waiting_time:
+{
+    "mean": 43.69,
+    "median": 43.69,
+    "min": 43.69,
+    "max": 43.69,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 43.69,
+    "ci95_high": 43.69
+}
+
+average_travel_time:
+{
+    "mean": 196.81,
+    "median": 196.81,
+    "min": 196.81,
+    "max": 196.81,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 196.81,
+    "ci95_high": 196.81
+}
+
+vehicles_inserted:
+{
+    "mean": 1321,
+    "median": 1321,
+    "min": 1321,
+    "max": 1321,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 1321,
+    "ci95_high": 1321
+}
+
+vehicles_remaining:
+{
+    "mean": 334,
+    "median": 334,
+    "min": 334,
+    "max": 334,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 334,
+    "ci95_high": 334
+}
+
+average_selected_energy:
+{
+    "mean": -188.22639999999998,
+    "median": -188.22639999999998,
+    "min": -188.22639999999998,
+    "max": -188.22639999999998,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": -188.22639999999998,
+    "ci95_high": -188.22639999999998
+}
+
+average_exact_min_energy:
+{
+    "mean": -210.8184,
+    "median": -210.8184,
+    "min": -210.8184,
+    "max": -210.8184,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": -210.8184,
+    "ci95_high": -210.8184
+}
+
+average_optimality_gap:
+{
+    "mean": 22.592,
+    "median": 22.592,
+    "min": 22.592,
+    "max": 22.592,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 22.592,
+    "ci95_high": 22.592
+}
+
+maximum_optimality_gap:
+{
+    "mean": 183.57999999999998,
+    "median": 183.57999999999998,
+    "min": 183.57999999999998,
+    "max": 183.57999999999998,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 183.57999999999998,
+    "ci95_high": 183.57999999999998
+}
+
+optimum_recovery_rate:
+{
+    "mean": 0.40166666666666667,
+    "median": 0.40166666666666667,
+    "min": 0.40166666666666667,
+    "max": 0.40166666666666667,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": 0.40166666666666667,
+    "ci95_high": 0.40166666666666667
+}
+
+average_energy_reduction:
+{
+    "mean": -15.617733333333332,
+    "median": -15.617733333333332,
+    "min": -15.617733333333332,
+    "max": -15.617733333333332,
+    "standard_deviation": 0,
+    "variance": 0,
+    "standard_error": 0,
+    "ci95_low": -15.617733333333332,
+    "ci95_high": -15.617733333333332
+}
+
