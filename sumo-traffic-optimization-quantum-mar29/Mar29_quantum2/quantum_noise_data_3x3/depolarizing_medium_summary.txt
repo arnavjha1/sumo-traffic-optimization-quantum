@@ -3,149 +3,149 @@
 Noise type: depolarizing
 Level: medium
 Noise value: 0.01
-Runs attempted: 8/10
-Runs successful: 8/10
+Runs attempted: 10/10
+Runs successful: 10/10
 
 throughput:
 {
-    "mean": 984.375,
-    "median": 1003.5,
+    "mean": 978.5,
+    "median": 990.5,
     "min": 888,
     "max": 1033,
-    "standard_deviation": 52.65504317184225,
-    "variance": 2772.5535714285716,
-    "standard_error": 18.616369045240035,
-    "ci95_low": 947.8869166713296,
-    "ci95_high": 1020.8630833286704
+    "standard_deviation": 48.72428096499276,
+    "variance": 2374.0555555555557,
+    "standard_error": 15.407970520336399,
+    "ci95_low": 943.6447516316274,
+    "ci95_high": 1013.3552483683726
 }
 
 average_waiting_time:
 {
-    "mean": 43.77,
+    "mean": 43.802,
     "median": 43.724999999999994,
     "min": 43.01,
     "max": 44.56,
-    "standard_deviation": 0.5669467095138425,
-    "variance": 0.3214285714285733,
-    "standard_error": 0.20044593143431888,
-    "ci95_low": 43.37712597438874,
-    "ci95_high": 44.162874025611266
+    "standard_deviation": 0.545502826146056,
+    "variance": 0.2975733333333343,
+    "standard_error": 0.17250314006803882,
+    "ci95_low": 43.4117708141731,
+    "ci95_high": 44.192229185826896
 }
 
 average_travel_time:
 {
-    "mean": 196.14375,
+    "mean": 197.464,
     "median": 198.44,
     "min": 186.35,
-    "max": 203.4,
-    "standard_deviation": 5.8907577429151115,
-    "variance": 34.70102678571434,
-    "standard_error": 2.082697373171218,
-    "ci95_low": 192.06166314858442,
-    "ci95_high": 200.2258368514156
+    "max": 208.08,
+    "standard_deviation": 6.407929462782817,
+    "variance": 41.06156000000008,
+    "standard_error": 2.0263652188092864,
+    "ci95_low": 192.88004373571403,
+    "ci95_high": 202.04795626428597
 }
 
 vehicles_inserted:
 {
-    "mean": 1323.375,
-    "median": 1348.0,
+    "mean": 1314.9,
+    "median": 1332.5,
     "min": 1239,
     "max": 1355,
-    "standard_deviation": 44.32973043003984,
-    "variance": 1965.125,
-    "standard_error": 15.672926497626408,
-    "ci95_low": 1292.6560640646521,
-    "ci95_high": 1354.0939359353479
+    "standard_deviation": 43.19323506702821,
+    "variance": 1865.6555555555556,
+    "standard_error": 13.658900232286475,
+    "ci95_low": 1284.0014232272315,
+    "ci95_high": 1345.7985767727687
 }
 
 vehicles_remaining:
 {
-    "mean": 339,
-    "median": 334.5,
-    "min": 322,
+    "mean": 336.4,
+    "median": 334.0,
+    "min": 318,
     "max": 363,
-    "standard_deviation": 14.842025275740312,
-    "variance": 220.28571428571428,
-    "standard_error": 5.247448359509056,
-    "ci95_low": 328.71500121536224,
-    "ci95_high": 349.28499878463776
+    "standard_deviation": 14.683323874382122,
+    "variance": 215.6,
+    "standard_error": 4.64327470649756,
+    "ci95_low": 325.8961836197736,
+    "ci95_high": 346.9038163802264
 }
 
 average_selected_energy:
 {
-    "mean": -194.17727291666665,
-    "median": -193.25685833333333,
+    "mean": -193.741995,
+    "median": -193.193975,
     "min": -201.81698333333333,
     "max": -186.98615,
-    "standard_deviation": 4.64400132493809,
-    "variance": 21.566748306026735,
-    "standard_error": 1.6419024143515173,
-    "ci95_low": -197.39540164879563,
-    "ci95_high": -190.95914418453768
+    "standard_deviation": 4.21739294712209,
+    "variance": 17.786403270435155,
+    "standard_error": 1.3336567500835868,
+    "ci95_low": -196.75893595279885,
+    "ci95_high": -190.72505404720116
 }
 
 average_exact_min_energy:
 {
-    "mean": -210.01505625,
+    "mean": -209.80605166666666,
     "median": -209.16825833333334,
     "min": -217.72334999999998,
     "max": -205.31844999999998,
-    "standard_deviation": 4.280911612241066,
-    "variance": 18.326204231820405,
-    "standard_error": 1.513530815337947,
-    "ci95_low": -212.98157664806237,
-    "ci95_high": -207.0485358519376
+    "standard_deviation": 3.963979060124033,
+    "variance": 15.71312998910181,
+    "standard_error": 1.2535202427205479,
+    "ci95_low": -212.64171125837865,
+    "ci95_high": -206.97039207495467
 }
 
 average_optimality_gap:
 {
-    "mean": 15.837783333333334,
+    "mean": 16.064056666666666,
     "median": 15.922066666666666,
     "min": 13.271366666666667,
-    "max": 18.3323,
-    "standard_deviation": 1.5630638255865124,
-    "variance": 2.443168522857143,
-    "standard_error": 0.5526265152498049,
-    "ci95_low": 14.754635363443716,
-    "ci95_high": 16.92093130322295
+    "max": 20.230433333333334,
+    "standard_deviation": 2.1192792924762225,
+    "variance": 4.491344719518518,
+    "standard_error": 0.6701749562255007,
+    "ci95_low": 14.548015698216457,
+    "ci95_high": 17.580097635116875
 }
 
 maximum_optimality_gap:
 {
-    "mean": 141.29,
+    "mean": 144.524,
     "median": 137.42000000000004,
-    "min": 116.45999999999998,
-    "max": 190.89999999999998,
-    "standard_deviation": 22.65034089935828,
-    "variance": 513.0379428571425,
-    "standard_error": 8.008104823061622,
-    "ci95_low": 125.59411454679922,
-    "ci95_high": 156.98588545320078
+    "min": 115.78000000000006,
+    "max": 199.14000000000004,
+    "standard_deviation": 28.836821831355362,
+    "variance": 831.5622933333333,
+    "standard_error": 9.119003746755087,
+    "ci95_low": 123.89538184125175,
+    "ci95_high": 165.15261815874825
 }
 
 optimum_recovery_rate:
 {
-    "mean": 0.4872916666666667,
-    "median": 0.49916666666666665,
-    "min": 0.44166666666666665,
+    "mean": 0.48133333333333334,
+    "median": 0.49083333333333334,
+    "min": 0.4266666666666667,
     "max": 0.515,
-    "standard_deviation": 0.0300784358234816,
-    "variance": 0.0009047123015873013,
-    "standard_error": 0.010634332969134108,
-    "ci95_low": 0.4664483740471638,
-    "ci95_high": 0.5081349592861695
+    "standard_deviation": 0.032752344181488986,
+    "variance": 0.0010727160493827154,
+    "standard_error": 0.010357200632326842,
+    "ci95_low": 0.45790371942251074,
+    "ci95_high": 0.5047629472441559
 }
 
 average_energy_reduction:
 {
-    "mean": -9.4368125,
+    "mean": -9.700736666666668,
     "median": -9.399550000000001,
-    "min": -10.493366666666667,
+    "min": -12.8923,
     "max": -7.693066666666667,
-    "standard_deviation": 0.9179377287966829,
-    "variance": 0.8426096739484125,
-    "standard_error": 0.3245399963695562,
-    "ci95_low": -10.07291089288433,
-    "ci95_high": -8.80071410711567
+    "standard_deviation": 1.4066650546287058,
+    "variance": 1.97870657591358,
+    "standard_error": 0.4448265477591889,
+    "ci95_low": -10.70700415546595,
+    "ci95_high": -8.694469177867385
 }
 
