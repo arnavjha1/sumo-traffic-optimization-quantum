@@ -1,0 +1,23 @@
+===== 3x3 QAOA NOISE SENSITIVITY — ALL LEVELS =====
+
+Noise type: angle
+Runs per level: 10
+
+--- LOW (noise=0.025) ---
+Successful runs: 10/10
+Travel Time mean: 200.3510 s (95% CI 196.2757, 204.4263)
+Waiting Time mean: 44.2340 s (95% CI 43.7391, 44.7289)
+Throughput mean: 973.2000 (95% CI 948.3739, 998.0261)
+
+--- MEDIUM (noise=0.05) ---
+Successful runs: 10/10
+Travel Time mean: 197.5590 s (95% CI 192.6857, 202.4323)
+Waiting Time mean: 43.8510 s (95% CI 43.2274, 44.4746)
+Throughput mean: 975.3000 (95% CI 933.6055, 1016.9945)
+
+--- HIGH (noise=0.1) ---
+Successful runs: 10/10
+Travel Time mean: 195.0520 s (95% CI 187.9557, 202.1483)
+Waiting Time mean: 43.7580 s (95% CI 43.0591, 44.4569)
+Throughput mean: 950.3000 (95% CI 885.2860, 1015.3140)
+
