@@ -1,1 +1,1 @@
-readout high run 10/10 seed=1010
+depolarizing high run 10/10 seed=1010
