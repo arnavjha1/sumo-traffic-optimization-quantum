@@ -1,8 +1,8 @@
 ===== 3x3 QAOA HYPERPARAMETER SENSITIVITY SUMMARY =====
 
-Hyperparameter: shots
+Hyperparameter: p
 Condition: value2
-Test value: 512
+Test value: 2
 Runs attempted: 10/10
 Runs successful: 10/10
 

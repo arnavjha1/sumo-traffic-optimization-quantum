@@ -1,0 +1,157 @@
+===== 3x3 QAOA HYPERPARAMETER SENSITIVITY SUMMARY =====
+
+Hyperparameter: p
+Condition: value3
+Test value: 3
+Runs attempted: 10/10
+Runs successful: 10/10
+
+Baseline configuration:
+  gamma = 3.141592653589793
+  beta = 0.5235987755982988
+  p = 2
+  shots = 512
+
+throughput:
+{
+    "mean": 969.4,
+    "median": 957.0,
+    "min": 922,
+    "max": 1021,
+    "standard_deviation": 34.596724315075456,
+    "variance": 1196.9333333333334,
+    "standard_error": 10.940444841656728,
+    "ci95_low": 944.6509961183323,
+    "ci95_high": 994.1490038816677
+}
+
+average_waiting_time:
+{
+    "mean": 43.647,
+    "median": 43.760000000000005,
+    "min": 42.84,
+    "max": 44.18,
+    "standard_deviation": 0.4636821229151608,
+    "variance": 0.21500111111111028,
+    "standard_error": 0.14662916187140615,
+    "ci95_low": 43.315301815068466,
+    "ci95_high": 43.97869818493153
+}
+
+average_travel_time:
+{
+    "mean": 193.949,
+    "median": 194.305,
+    "min": 180.57,
+    "max": 201.59,
+    "standard_deviation": 5.905693016065092,
+    "variance": 34.877210000000005,
+    "standard_error": 1.8675441092515057,
+    "ci95_low": 189.72432202044794,
+    "ci95_high": 198.17367797955208
+}
+
+vehicles_inserted:
+{
+    "mean": 1316.8,
+    "median": 1315.0,
+    "min": 1294,
+    "max": 1344,
+    "standard_deviation": 13.222875800840166,
+    "variance": 174.84444444444443,
+    "standard_error": 4.1814404748177925,
+    "ci95_low": 1307.3409251598075,
+    "ci95_high": 1326.2590748401924
+}
+
+vehicles_remaining:
+{
+    "mean": 347.4,
+    "median": 348.5,
+    "min": 303,
+    "max": 389,
+    "standard_deviation": 27.669477768834017,
+    "variance": 765.6,
+    "standard_error": 8.749857141690942,
+    "ci95_low": 327.60644941792384,
+    "ci95_high": 367.1935505820761
+}
+
+average_selected_energy:
+{
+    "mean": -197.12684166666668,
+    "median": -197.95339166666668,
+    "min": -204.24181666666667,
+    "max": -188.6889666666667,
+    "standard_deviation": 5.187897940585283,
+    "variance": 26.91428504192902,
+    "standard_error": 1.6405573760746381,
+    "ci95_low": -200.83804001885557,
+    "ci95_high": -193.4156433144778
+}
+
+average_exact_min_energy:
+{
+    "mean": -213.789725,
+    "median": -213.50004166666668,
+    "min": -220.34348333333332,
+    "max": -206.91136666666665,
+    "standard_deviation": 4.505982599060955,
+    "variance": 20.30387918304012,
+    "standard_error": 1.424916811011791,
+    "ci95_low": -217.01311053844802,
+    "ci95_high": -210.566339461552
+}
+
+average_optimality_gap:
+{
+    "mean": 16.662883333333333,
+    "median": 16.6785,
+    "min": 12.4256,
+    "max": 18.601233333333333,
+    "standard_deviation": 1.936236980971462,
+    "variance": 3.7490136464814814,
+    "standard_error": 0.6122918949717921,
+    "ci95_low": 15.277782937079628,
+    "ci95_high": 18.04798372958704
+}
+
+maximum_optimality_gap:
+{
+    "mean": 126.852,
+    "median": 133.73000000000002,
+    "min": 97.52000000000001,
+    "max": 147.05999999999997,
+    "standard_deviation": 16.82520384555398,
+    "variance": 283.08748444444444,
+    "standard_error": 5.320596624857445,
+    "ci95_low": 114.81597510090236,
+    "ci95_high": 138.88802489909764
+}
+
+optimum_recovery_rate:
+{
+    "mean": 0.4435,
+    "median": 0.4325,
+    "min": 0.3883333333333333,
+    "max": 0.5816666666666667,
+    "standard_deviation": 0.05866019535015647,
+    "variance": 0.0034410185185185186,
+    "standard_error": 0.018549982529691283,
+    "ci95_low": 0.40153702717058115,
+    "ci95_high": 0.48546297282941886
+}
+
+average_energy_reduction:
+{
+    "mean": -11.802249999999999,
+    "median": -12.332816666666666,
+    "min": -13.486366666666667,
+    "max": -7.544233333333332,
+    "standard_deviation": 1.8263368703534264,
+    "variance": 3.335506364012348,
+    "standard_error": 0.5775384285060474,
+    "ci95_low": -13.108732598813955,
+    "ci95_high": -10.495767401186043
+}
+
