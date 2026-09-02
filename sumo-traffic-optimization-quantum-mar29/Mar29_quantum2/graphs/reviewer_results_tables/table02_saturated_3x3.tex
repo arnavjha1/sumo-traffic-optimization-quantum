@@ -1,0 +1,42 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Saturated-traffic performance of all nine controllers on the $3\times3$ network at representative turning probabilities. QAOA entries report mean [percentile-bootstrap 95\% CI] across 20 independent runs; other controllers are single deterministic runs. Bold denotes the best observed value within each $\alpha$ block and metric.}
+\label{tab:saturated-3x3-all-controller-summary}
+\begin{tabular}{rlrrr}
+\toprule
+$\alpha$ & Controller & TT (s) & WT (s) & Throughput \\
+\midrule
+0.5 & Fixed-Time & 182.94 & 53.56 & 822 \\
+0.5 & Classical Local & 151.43 & 41.91 & 1156 \\
+0.5 & Classical Global & 157.20 & 40.75 & 1017 \\
+0.5 & Max-Pressure & 164.17 & 44.51 & 1144 \\
+0.5 & SCOOT & 195.86 & 54.87 & 819 \\
+0.5 & PressLight & 152.05 & 43.19 & 841 \\
+0.5 & MPLight & \textbf{149.56} & \textbf{40.17} & 1026 \\
+0.5 & CoLight & 157.45 & 42.81 & \textbf{1202} \\
+0.5 & QAOA & 170.51 [167.08, 174.12] & 42.37 [41.93, 42.81] & 1139 [1123, 1155] \\
+\addlinespace
+0.7 & Fixed-Time & 227.21 & 56.07 & 750 \\
+0.7 & Classical Local & \textbf{182.23} & 44.21 & 944 \\
+0.7 & Classical Global & 196.47 & \textbf{43.54} & 940 \\
+0.7 & Max-Pressure & 200.24 & 47.16 & 925 \\
+0.7 & SCOOT & 227.22 & 55.92 & 664 \\
+0.7 & PressLight & 210.47 & 48.70 & 784 \\
+0.7 & MPLight & 191.92 & 45.59 & 946 \\
+0.7 & CoLight & 185.92 & 44.50 & 978 \\
+0.7 & QAOA & 197.50 [194.87, 199.88] & 43.75 [43.40, 44.05] & \textbf{980 [967, 994]} \\
+\addlinespace
+1.0 & Fixed-Time & 196.64 & 57.80 & 627 \\
+1.0 & Classical Local & 130.33 & 41.92 & 1072 \\
+1.0 & Classical Global & 135.48 & 40.51 & 1008 \\
+1.0 & Max-Pressure & \textbf{127.31} & 40.46 & \textbf{1096} \\
+1.0 & SCOOT & 200.68 & 58.16 & 620 \\
+1.0 & PressLight & 136.39 & 43.72 & 1031 \\
+1.0 & MPLight & 132.84 & \textbf{39.09} & 1051 \\
+1.0 & CoLight & 128.91 & 39.23 & 1011 \\
+1.0 & QAOA & 134.63 [133.52, 135.77] & 40.51 [40.19, 40.83] & 1015 [1010, 1019] \\
+\bottomrule
+\end{tabular}
+\end{table*}

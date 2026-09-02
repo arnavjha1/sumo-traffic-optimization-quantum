@@ -1,0 +1,42 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Saturated-traffic performance of all nine controllers on the $2\times2$ network at representative turning probabilities. QAOA entries report mean [percentile-bootstrap 95\% CI] across 20 independent runs; other controllers are single deterministic runs. Bold denotes the best observed value within each $\alpha$ block and metric.}
+\label{tab:saturated-2x2-all-controller-summary}
+\begin{tabular}{rlrrr}
+\toprule
+$\alpha$ & Controller & TT (s) & WT (s) & Throughput \\
+\midrule
+0.5 & Fixed-Time & 102.91 & 44.20 & 887 \\
+0.5 & Classical Local & 99.41 & 32.65 & 889 \\
+0.5 & Classical Global & \textbf{87.49} & 30.61 & 1028 \\
+0.5 & Max-Pressure & 89.31 & 30.85 & \textbf{1043} \\
+0.5 & SCOOT & 105.36 & 44.54 & 863 \\
+0.5 & PressLight & 103.03 & 36.34 & 768 \\
+0.5 & MPLight & 99.18 & 34.40 & 807 \\
+0.5 & CoLight & 91.03 & 30.82 & 930 \\
+0.5 & QAOA & 87.59 [87.37, 88.03] & \textbf{29.93 [29.81, 30.17]} & 1025 [1023, 1026] \\
+\addlinespace
+0.7 & Fixed-Time & 104.29 & 46.47 & 826 \\
+0.7 & Classical Local & 97.47 & 39.29 & 941 \\
+0.7 & Classical Global & 97.37 & 39.01 & 928 \\
+0.7 & Max-Pressure & 96.96 & 39.11 & 906 \\
+0.7 & SCOOT & 108.00 & 46.84 & 810 \\
+0.7 & PressLight & 94.97 & 39.28 & 922 \\
+0.7 & MPLight & 96.73 & 39.45 & 958 \\
+0.7 & CoLight & \textbf{89.54} & \textbf{36.85} & \textbf{961} \\
+0.7 & QAOA & 96.39 [95.70, 97.16] & 38.66 [38.49, 38.87] & 942 [934, 950] \\
+\addlinespace
+1.0 & Fixed-Time & \textbf{72.53} & 39.54 & \textbf{939} \\
+1.0 & Classical Local & 86.80 & 37.07 & 758 \\
+1.0 & Classical Global & 91.88 & 38.59 & 711 \\
+1.0 & Max-Pressure & 91.67 & 38.76 & 707 \\
+1.0 & SCOOT & 72.97 & 39.95 & 929 \\
+1.0 & PressLight & 89.44 & 37.76 & 752 \\
+1.0 & MPLight & 88.42 & 36.80 & 756 \\
+1.0 & CoLight & 86.90 & \textbf{35.32} & 733 \\
+1.0 & QAOA & 91.37 [91.03, 91.82] & 38.03 [37.87, 38.24] & 719 [718, 721] \\
+\bottomrule
+\end{tabular}
+\end{table*}

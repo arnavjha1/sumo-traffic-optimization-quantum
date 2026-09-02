@@ -1,0 +1,26 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Compact benchmark ranking across the representative saturated condition and the Seattle $3\times3$ case study. QAOA values are means across 20 independent runs; other values are single deterministic runs. Within each column, the best value is bold and the second-best is underlined. TT and WT are cost metrics; TP/completed vehicles are benefit metrics.}
+\label{tab:overall-controller-benchmark-ranking}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+& \multicolumn{3}{c}{$2\times2$, $\alpha=0.7$} & \multicolumn{3}{c}{$3\times3$, $\alpha=0.7$} & \multicolumn{3}{c}{Seattle $3\times3$ full day} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Controller & TT & WT & TP & TT & WT & TP & TT & WT & Completed \\
+\midrule
+Fixed-Time & 104.29 & 46.47 & 826 & 227.21 & 56.07 & 750 & 193.46 & 54.04 & 85529 \\
+Classical Local & 97.47 & 39.29 & 941 & \textbf{182.23} & 44.21 & 944 & 95.47 & 31.68 & 96617 \\
+Classical Global & 97.37 & 39.01 & 928 & 196.47 & \textbf{43.54} & 940 & 94.45 & 30.18 & 95627 \\
+Max-Pressure & 96.96 & 39.11 & 906 & 200.24 & 47.16 & 925 & 93.66 & 29.24 & 96645 \\
+SCOOT & 108.00 & 46.84 & 810 & 227.22 & 55.92 & 664 & 140.77 & 46.28 & \textbf{97809} \\
+PressLight & \underline{94.97} & 39.28 & 922 & 210.47 & 48.70 & 784 & 110.56 & 37.85 & \underline{97261} \\
+MPLight & 96.73 & 39.45 & \underline{958} & 191.92 & 45.59 & 946 & 95.02 & 30.65 & 96316 \\
+CoLight & \textbf{89.54} & \textbf{36.85} & \textbf{961} & \underline{185.92} & 44.50 & \underline{978} & \textbf{90.76} & \textbf{27.88} & 95761 \\
+QAOA & 96.39 & \underline{38.66} & 942 & 197.50 & \underline{43.75} & \textbf{980} & \underline{92.96} & \underline{28.39} & 95594 \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

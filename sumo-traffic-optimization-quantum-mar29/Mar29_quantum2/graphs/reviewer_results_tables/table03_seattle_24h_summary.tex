@@ -1,0 +1,32 @@
+\begin{table*}[htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Full-day Seattle performance for all nine controllers on both networks. QAOA entries report mean $\pm$ standard deviation across 20 independent runs; other controllers are single deterministic runs. Completed vehicles is retained as the Seattle throughput measure. Bold denotes the best observed value within each network and metric.}
+\label{tab:seattle-24h-all-controller-summary}
+\begin{tabular}{llrrr}
+\toprule
+Grid & Controller & Full-day TT (s) & Full-day WT (s) & Completed Vehicles \\
+\midrule
+2x2 & Fixed-Time & 77.00 & 34.40 & 63111 \\
+2x2 & Classical Local & 54.68 & 20.15 & 63143 \\
+2x2 & Classical Global & 55.67 & 20.19 & 63185 \\
+2x2 & Max-Pressure & 52.62 & \textbf{16.58} & 63197 \\
+2x2 & SCOOT & 67.01 & 28.54 & 63068 \\
+2x2 & PressLight & 63.07 & 26.83 & \textbf{63233} \\
+2x2 & MPLight & 54.09 & 19.39 & 63148 \\
+2x2 & CoLight & \textbf{52.16} & 17.34 & 63139 \\
+2x2 & QAOA & 53.99 $\pm$ 0.67 & 18.81 $\pm$ 0.40 & 63158 $\pm$ 32 \\
+\addlinespace
+3x3 & Fixed-Time & 193.46 & 54.04 & 85529 \\
+3x3 & Classical Local & 95.47 & 31.68 & 96617 \\
+3x3 & Classical Global & 94.45 & 30.18 & 95627 \\
+3x3 & Max-Pressure & 93.66 & 29.24 & 96645 \\
+3x3 & SCOOT & 140.77 & 46.28 & \textbf{97809} \\
+3x3 & PressLight & 110.56 & 37.85 & 97261 \\
+3x3 & MPLight & 95.02 & 30.65 & 96316 \\
+3x3 & CoLight & \textbf{90.76} & \textbf{27.88} & 95761 \\
+3x3 & QAOA & 92.96 $\pm$ 0.71 & 28.39 $\pm$ 0.40 & 95594 $\pm$ 179 \\
+\bottomrule
+\end{tabular}
+\end{table*}

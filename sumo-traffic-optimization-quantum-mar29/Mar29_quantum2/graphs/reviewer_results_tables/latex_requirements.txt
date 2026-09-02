@@ -1,0 +1,3 @@
+Required packages: booktabs, graphicx.
+Recommended preamble: \usepackage{booktabs} and \usepackage{graphicx}.
+All files are table environments and can be inserted directly into the manuscript.

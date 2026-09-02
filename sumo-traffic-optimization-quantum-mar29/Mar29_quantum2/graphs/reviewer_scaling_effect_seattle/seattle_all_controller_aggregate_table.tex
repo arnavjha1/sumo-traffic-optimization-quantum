@@ -1,0 +1,24 @@
+\begin{table*}[htbp]
+\centering
+\caption{Full-day Seattle aggregate performance for all nine controllers on the $2\times2$ and $3\times3$ networks. Travel and waiting time are cost metrics; completed vehicles is a benefit metric. QAOA entries report mean $\pm$ standard deviation across 20 independent runs, whereas the other entries are single deterministic runs. Bold denotes the best observed value within each network and metric.}
+\label{tab:seattle-all-controller-aggregate}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{3}{c}{$2\times2$ network} & \multicolumn{3}{c}{$3\times3$ network} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Controller & Travel Time (s) & Waiting Time (s) & Completed Vehicles & Travel Time (s) & Waiting Time (s) & Completed Vehicles \\
+\midrule
+Fixed-Time & 77.00 & 34.40 & 63111 & 193.46 & 54.04 & 85529 \\
+Classical Local & 54.68 & 20.15 & 63143 & 95.47 & 31.68 & 96617 \\
+Classical Global & 55.67 & 20.19 & 63185 & 94.45 & 30.18 & 95627 \\
+QAOA & 53.99 $\pm$ 0.67 & 18.81 $\pm$ 0.40 & 63158 $\pm$ 32 & 92.96 $\pm$ 0.71 & 28.39 $\pm$ 0.40 & 95594 $\pm$ 179 \\
+CoLight & \textbf{52.16} & 17.34 & 63139 & \textbf{90.76} & \textbf{27.88} & 95761 \\
+MPLight & 54.09 & 19.39 & 63148 & 95.02 & 30.65 & 96316 \\
+PressLight & 63.07 & 26.83 & \textbf{63233} & 110.56 & 37.85 & 97261 \\
+Max-Pressure & 52.62 & \textbf{16.58} & 63197 & 93.66 & 29.24 & 96645 \\
+SCOOT & 67.01 & 28.54 & 63068 & 140.77 & 46.28 & \textbf{97809} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
