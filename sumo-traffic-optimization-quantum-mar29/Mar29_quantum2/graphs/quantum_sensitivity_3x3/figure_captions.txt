@@ -1,7 +1,11 @@
-Figure A. QAOA hyperparameter sensitivity of traffic performance on the 3x3 grid at alpha=0.7. Points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs. Dashed vertical lines mark the baseline configuration.
+figureA_hyperparameter_sensitivity_traffic_3x3.png / .pdf
+Caption: QAOA hyperparameter sensitivity of traffic performance on the 3x3 grid at alpha=0.7. Points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs. Dashed vertical lines mark the baseline configuration.
 
-Figure B. QAOA hyperparameter sensitivity of solution quality on the 3x3 grid at alpha=0.7. Points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs. Dashed vertical lines mark the baseline configuration.
+figureB_hyperparameter_sensitivity_quality_3x3.png / .pdf
+Caption: QAOA hyperparameter sensitivity of solution quality on the 3x3 grid at alpha=0.7. Points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs. Dashed vertical lines mark the baseline configuration.
 
-Figure C. QAOA synthetic-noise sensitivity of traffic performance on the 3x3 grid at alpha=0.7. Noisy points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs, not individual QAOA decision epochs. The ideal/no-noise reference uses 20 independent runs.
+figureC_noise_sensitivity_traffic_3x3.png / .pdf
+Caption: QAOA synthetic-noise sensitivity of traffic performance on the 3x3 grid at alpha=0.7. Noisy points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs, not individual QAOA decision epochs. The ideal/no-noise reference uses 20 independent runs.
 
-Figure D. QAOA synthetic-noise sensitivity of solution quality on the 3x3 grid at alpha=0.7. Noisy points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs, not individual QAOA decision epochs. The ideal/no-noise reference uses 20 independent runs.
+figureD_noise_sensitivity_quality_3x3.png / .pdf
+Caption: QAOA synthetic-noise sensitivity of solution quality on the 3x3 grid at alpha=0.7. Noisy points indicate means across 10 independent simulation runs per condition; error bars denote 95% confidence intervals across runs, not individual QAOA decision epochs. The ideal/no-noise reference uses 20 independent runs.

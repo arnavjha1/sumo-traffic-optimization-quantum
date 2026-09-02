@@ -297,18 +297,8 @@ def plot_hyperparameter_figure(
 
     if len(sample_sizes) != 1:
         raise ValueError(f"Hyperparameter conditions have inconsistent sample sizes: {sorted(sample_sizes)}")
-    n = next(iter(sample_sizes))
     fig.suptitle(title, fontsize=14, y=0.985)
-    fig.text(
-        0.5,
-        0.012,
-        f"Points are means across n={n} independent simulation runs per condition; error bars show 95% "
-        "confidence intervals across runs. Dashed lines mark the baseline configuration.",
-        ha="center",
-        va="bottom",
-        fontsize=8.7,
-    )
-    fig.subplots_adjust(left=0.075, right=0.99, top=0.88, bottom=0.15, wspace=0.18, hspace=0.32)
+    fig.subplots_adjust(left=0.075, right=0.99, top=0.88, bottom=0.10, wspace=0.18, hspace=0.32)
     return save_figure(fig, output_dir, stem, formats, dpi)
 
 
@@ -378,19 +368,7 @@ def plot_noise_figure(
         )
     fig.legend(handles=legend_handles, loc="upper center", bbox_to_anchor=(0.5, 0.925), ncol=len(legend_handles), frameon=False, fontsize=8.7)
     fig.suptitle(title, fontsize=14, y=0.985)
-    if ideal_n is None:
-        caption = (
-            f"Points are means across n={noisy_n} independent simulation runs per condition; error bars show "
-            "95% confidence intervals across runs, not across individual QAOA decision epochs."
-        )
-    else:
-        caption = (
-            f"Noisy conditions are means across n={noisy_n} independent simulation runs per condition; the "
-            f"ideal/no-noise reference uses n={ideal_n} independent runs. Error bars show 95% confidence "
-            "intervals across runs, not across individual QAOA decision epochs."
-        )
-    fig.text(0.5, 0.012, caption, ha="center", va="bottom", fontsize=8.7)
-    fig.subplots_adjust(left=0.08, right=0.99, top=0.84, bottom=0.16, wspace=0.18, hspace=0.34)
+    fig.subplots_adjust(left=0.08, right=0.99, top=0.84, bottom=0.11, wspace=0.18, hspace=0.34)
     return save_figure(fig, output_dir, stem, formats, dpi), noisy_n, ideal_n
 
 
@@ -399,16 +377,20 @@ def write_captions(output_dir: Path, hyper_n: int, noise_n: int, ideal_n: int | 
     if ideal_n is not None:
         ideal_clause = f" The ideal/no-noise reference uses {ideal_n} independent runs."
     text = (
-        "Figure A. QAOA hyperparameter sensitivity of traffic performance on the 3x3 grid at alpha=0.7. "
+        "figureA_hyperparameter_sensitivity_traffic_3x3.png / .pdf\n"
+        "Caption: QAOA hyperparameter sensitivity of traffic performance on the 3x3 grid at alpha=0.7. "
         f"Points indicate means across {hyper_n} independent simulation runs per condition; error bars denote "
         "95% confidence intervals across runs. Dashed vertical lines mark the baseline configuration.\n\n"
-        "Figure B. QAOA hyperparameter sensitivity of solution quality on the 3x3 grid at alpha=0.7. "
+        "figureB_hyperparameter_sensitivity_quality_3x3.png / .pdf\n"
+        "Caption: QAOA hyperparameter sensitivity of solution quality on the 3x3 grid at alpha=0.7. "
         f"Points indicate means across {hyper_n} independent simulation runs per condition; error bars denote "
         "95% confidence intervals across runs. Dashed vertical lines mark the baseline configuration.\n\n"
-        "Figure C. QAOA synthetic-noise sensitivity of traffic performance on the 3x3 grid at alpha=0.7. "
+        "figureC_noise_sensitivity_traffic_3x3.png / .pdf\n"
+        "Caption: QAOA synthetic-noise sensitivity of traffic performance on the 3x3 grid at alpha=0.7. "
         f"Noisy points indicate means across {noise_n} independent simulation runs per condition; error bars "
         f"denote 95% confidence intervals across runs, not individual QAOA decision epochs.{ideal_clause}\n\n"
-        "Figure D. QAOA synthetic-noise sensitivity of solution quality on the 3x3 grid at alpha=0.7. "
+        "figureD_noise_sensitivity_quality_3x3.png / .pdf\n"
+        "Caption: QAOA synthetic-noise sensitivity of solution quality on the 3x3 grid at alpha=0.7. "
         f"Noisy points indicate means across {noise_n} independent simulation runs per condition; error bars "
         f"denote 95% confidence intervals across runs, not individual QAOA decision epochs.{ideal_clause}\n"
     )

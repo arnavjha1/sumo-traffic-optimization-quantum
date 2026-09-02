@@ -1,5 +1,8 @@
-Figure 1. Direct controller scalability from the 2x2 to the 3x3 network at alpha=0.7. Each panel reports the observed value for average travel time, average waiting time, or throughput. QAOA values are means across 20 independent runs; all other values are from the saved deterministic controller runs.
+figure_scalability_2x2_to_3x3_alpha07.png / .pdf
+Caption: Direct controller scalability from the 2x2 to the 3x3 network at alpha=0.7. Each panel reports the observed value for average travel time, average waiting time, or throughput. QAOA values are means across 20 independent runs; all other values are from the saved deterministic controller runs.
 
-Figure 2. QAOA improvement relative to the exact Classical Global controller for travel time, waiting time, and throughput. Positive values favor QAOA. Points denote mean percentage improvement and horizontal bars denote percentile-bootstrap 95% confidence intervals from 10,000 resamples of the 20 independent QAOA runs. Annotations report one-sample Hedges' g relative to the deterministic Classical Global benchmark. Seattle PM peak covers 4-6 PM (hours 16-17).
+figure_qaoa_vs_classical_global_bootstrap_effect.png / .pdf
+Caption: QAOA improvement relative to the exact Classical Global controller for travel time, waiting time, and throughput. Positive values favor QAOA. Points denote mean percentage improvement and horizontal bars denote percentile-bootstrap 95% confidence intervals from 10,000 resamples of the 20 independent QAOA runs. Annotations report one-sample Hedges' g relative to the deterministic Classical Global benchmark. Seattle PM peak covers 4-6 PM (hours 16-17).
 
-Figure 3. Full-day Seattle aggregate performance for all nine controllers on the 2x2 and 3x3 networks. QAOA bars report means with one-standard-deviation error bars across 20 independent runs; the other controllers are single deterministic runs.
+figure_seattle_all_controller_aggregate.png / .pdf
+Caption: Full-day Seattle aggregate performance for all nine controllers on the 2x2 and 3x3 networks. QAOA bars report means with one-standard-deviation error bars across 20 independent runs; the other controllers are single deterministic runs.

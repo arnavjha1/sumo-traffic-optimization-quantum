@@ -219,7 +219,6 @@ def draw_mean_ci(ax: Any, x: Sequence[float], summaries: Sequence[tuple[float, f
 def figure7_energy_comparison(
     records: Sequence[RunRecord], output_dir: Path, formats: list[str], dpi: int
 ) -> list[Path]:
-    decisions = common_decision_count(records)
     fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.8))
     for ax, network in zip(axes, NETWORKS):
         exact = [mean_ci(values(select(records, network, alpha), "average_exact_min_energy")) for alpha in ALPHAS]
@@ -257,15 +256,7 @@ def figure7_energy_comparison(
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.91), ncol=3, frameon=False, fontsize=8.6)
     fig.suptitle("Exact Classical Global Minimum vs QAOA-Selected Energy", fontsize=14, y=0.985)
-    fig.text(
-        0.5,
-        0.015,
-        "Points show means across 20 independent runs per condition; error bars are 95% CIs across runs. "
-        f"Each run value averages {decisions} recorded one-second QAOA controller evaluations.",
-        ha="center",
-        fontsize=8.6,
-    )
-    fig.subplots_adjust(left=0.085, right=0.99, top=0.79, bottom=0.17, wspace=0.2)
+    fig.subplots_adjust(left=0.085, right=0.99, top=0.79, bottom=0.11, wspace=0.2)
     return save_figure(fig, output_dir, "figure7_exact_vs_qaoa_energy", formats, dpi)
 
 
@@ -314,7 +305,6 @@ def violin_with_summary(
 def figure8_gap_distribution(
     records: Sequence[RunRecord], output_dir: Path, formats: list[str], dpi: int
 ) -> list[Path]:
-    decisions = common_decision_count(records)
     fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.8))
     for ax, network in zip(axes, NETWORKS):
         distributions = [values(select(records, network, alpha), "average_optimality_gap") for alpha in ALPHAS]
@@ -325,15 +315,7 @@ def figure8_gap_distribution(
         alpha_ticks(ax)
         style_axis(ax)
     fig.suptitle("QAOA Optimality-Gap Distributions", fontsize=14, y=0.985)
-    fig.text(
-        0.5,
-        0.015,
-        "Each violin is the distribution of run-level mean optimality gaps across 20 independent QAOA-controlled "
-        f"simulations; dots are medians and bars are IQRs. Each run mean uses {decisions} recorded controller evaluations.",
-        ha="center",
-        fontsize=8.5,
-    )
-    fig.subplots_adjust(left=0.09, right=0.99, top=0.88, bottom=0.17, wspace=0.21)
+    fig.subplots_adjust(left=0.09, right=0.99, top=0.88, bottom=0.11, wspace=0.21)
     return save_figure(fig, output_dir, "figure8_optimality_gap_distribution", formats, dpi)
 
 
@@ -382,16 +364,7 @@ def figure9_recovery_probability(
         alpha_ticks(ax)
         style_axis(ax)
     fig.suptitle("QAOA Optimum-Recovery Probability", fontsize=14, y=0.985)
-    fig.text(
-        0.5,
-        0.015,
-        f"Points are means across 20 independent runs per condition; error bars are percentile 95% CIs from "
-        f"{resamples:,} run-cluster bootstrap resamples (seed={seed}). Recovery = "
-        r"$\mathbf{1}[|E_{\rm QAOA}-E_{\min}|\leq10^{-9}]$.",
-        ha="center",
-        fontsize=8.5,
-    )
-    fig.subplots_adjust(left=0.085, right=0.99, top=0.88, bottom=0.17, wspace=0.18)
+    fig.subplots_adjust(left=0.085, right=0.99, top=0.88, bottom=0.11, wspace=0.18)
     return save_figure(fig, output_dir, "figure9_optimum_recovery_probability", formats, dpi), rows
 
 
@@ -488,15 +461,7 @@ def figure10_energy_traffic_relationship(
                 }
             )
     fig.suptitle("Within-Condition Energy–Traffic Relationship", fontsize=14, y=0.99)
-    fig.text(
-        0.5,
-        0.012,
-        "Both axes are centered within each α condition; the displayed within-α Pearson correlations therefore "
-        "describe run-to-run association after removing the 11 α-condition means.",
-        ha="center",
-        fontsize=8.5,
-    )
-    fig.subplots_adjust(left=0.105, right=0.99, top=0.92, bottom=0.12, wspace=0.29, hspace=0.34)
+    fig.subplots_adjust(left=0.105, right=0.99, top=0.92, bottom=0.08, wspace=0.29, hspace=0.34)
     return save_figure(fig, output_dir, "figure10_energy_traffic_relationship", formats, dpi), rows
 
 
@@ -533,15 +498,7 @@ def figure11_traffic_distributions(
             alpha_ticks(ax)
             style_axis(ax)
     fig.suptitle("QAOA Traffic-Performance Distributions Across Repeated Runs", fontsize=14, y=0.99)
-    fig.text(
-        0.5,
-        0.012,
-        "Violins show 20 independent QAOA-controlled simulation runs per α condition; jittered points are individual "
-        "runs, white dots are medians, and bars are IQRs.",
-        ha="center",
-        fontsize=8.5,
-    )
-    fig.subplots_adjust(left=0.105, right=0.99, top=0.92, bottom=0.12, wspace=0.26, hspace=0.34)
+    fig.subplots_adjust(left=0.105, right=0.99, top=0.92, bottom=0.08, wspace=0.26, hspace=0.34)
     return save_figure(fig, output_dir, "figure11_qaoa_traffic_distributions", formats, dpi)
 
 
@@ -580,30 +537,35 @@ def write_run_level_csv(path: Path, records: Sequence[RunRecord]) -> Path:
 
 def write_captions(path: Path, resamples: int, seed: int, decisions: int) -> Path:
     text = (
-        "Figure 7. Exact classical global minimum and QAOA-selected energy across traffic-demand conditions "
+        "figure7_exact_vs_qaoa_energy.png / .pdf\n"
+        "Caption: Exact classical global minimum and QAOA-selected energy across traffic-demand conditions "
         "for the 2x2 and 3x3 grids. Points are means across 20 independent simulation runs per condition; "
         "error bars denote 95% confidence intervals across runs. Each plotted energy is the within-run mean "
         f"across {decisions} recorded QAOA controller evaluations (one per 1-s SUMO simulation step); shading "
         "denotes the difference between condition means.\n\n"
-        "Figure 8. Distribution of the QAOA optimality gap, E_QAOA - E_min, across repeated simulation runs. "
+        "figure8_optimality_gap_distribution.png / .pdf\n"
+        "Caption: Distribution of the QAOA optimality gap, E_QAOA - E_min, across repeated simulation runs. "
         "Each violin represents the distribution of run-level mean optimality gaps across 20 independent "
         "QAOA-controlled simulations per alpha condition; white points show medians and vertical bars show "
         f"interquartile ranges. Each run-level mean summarizes {decisions} recorded controller evaluations. "
         "Because evaluation-level energy pairs were not persisted, the violins describe repeated-run variation, "
         "not the distribution of individual controller-evaluation gaps.\n\n"
-        "Figure 9. QAOA optimum-recovery probability across traffic-demand conditions for the 2x2 and 3x3 "
+        "figure9_optimum_recovery_probability.png / .pdf\n"
+        "Caption: QAOA optimum-recovery probability across traffic-demand conditions for the 2x2 and 3x3 "
         f"grids. Points show mean recovery rates across 20 independent runs per condition. Error bars are "
         f"percentile 95% confidence intervals from {resamples:,} cluster-bootstrap resamples of independent "
         f"simulation runs (seed={seed}); controller evaluations are not treated as independent replicates. "
         "Recovery is defined by energy equality with the exact optimum, "
         "1[|E_QAOA - E_min| <= 10^-9], so any minimum-energy bitstring counts as recovered.\n\n"
-        "Figure 10. Relationship between QAOA optimality gap and traffic outcomes across independent runs. "
+        "figure10_energy_traffic_relationship.png / .pdf\n"
+        "Caption: Relationship between QAOA optimality gap and traffic outcomes across independent runs. "
         "Both the run-average gap and each traffic metric were centered within alpha condition before fitting. "
         "The displayed ordinary-least-squares lines and within-alpha Pearson correlations therefore measure "
         "run-to-run association after removing the 11 alpha-condition means. Correlation does not establish "
         "that energy quality causally changes traffic performance; effect magnitude should be considered alongside "
         "statistical significance.\n\n"
-        "Figure 11. Traffic-performance distributions across repeated QAOA-controlled simulation runs. "
+        "figure11_qaoa_traffic_distributions.png / .pdf\n"
+        "Caption: Traffic-performance distributions across repeated QAOA-controlled simulation runs. "
         "Violins show 20 independent simulation runs per alpha condition for average travel time, average waiting "
         "time, and throughput; lightly jittered points show individual runs, white points show medians, and vertical "
         "bars show interquartile ranges.\n"

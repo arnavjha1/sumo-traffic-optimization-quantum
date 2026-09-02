@@ -208,8 +208,7 @@ def plot_scaling(data: dict[str, Any], alpha: float, output: Path, formats: tupl
     ]
     fig.legend(handles=handles, frameon=False, loc="upper right", bbox_to_anchor=(0.985, 0.985), ncol=2)
     fig.suptitle(rf"Controller Scalability from 2$\times$2 to 3$\times$3 at $\alpha={alpha:.1f}$", fontsize=14, y=0.985)
-    fig.text(0.5, 0.012, "Bars report observed values; QAOA bars are means across 20 independent runs.", ha="center", fontsize=8.7)
-    fig.subplots_adjust(left=0.17, right=0.99, top=0.88, bottom=0.14, wspace=0.18)
+    fig.subplots_adjust(left=0.17, right=0.99, top=0.88, bottom=0.10, wspace=0.18)
     return save_figure(fig, output, "figure_scalability_2x2_to_3x3_alpha07", formats, dpi)
 
 
@@ -308,16 +307,7 @@ def plot_effects(effect_data: dict[str, list[EffectRow]], output: Path, formats:
     handles = [Line2D([0], [0], marker="o", color=color, linestyle="none", label=group) for group, color in colors.items()]
     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, 0.925), ncol=2, frameon=False)
     fig.suptitle("QAOA Improvement Relative to Exact Classical Global Optimization", fontsize=14, y=0.985)
-    fig.text(
-        0.5,
-        0.012,
-        "Points are mean percentage improvements; bars are percentile-bootstrap 95% CIs (10,000 resamples). "
-        "Positive values favor QAOA. Labels report one-sample Hedges' g; each QAOA condition uses n=20 runs. "
-        "Seattle PM peak is 4-6 PM.",
-        ha="center",
-        fontsize=8.4,
-    )
-    fig.subplots_adjust(left=0.17, right=0.985, top=0.86, bottom=0.16, wspace=0.15)
+    fig.subplots_adjust(left=0.17, right=0.985, top=0.86, bottom=0.11, wspace=0.15)
     return save_figure(fig, output, "figure_qaoa_vs_classical_global_bootstrap_effect", formats, dpi)
 
 
@@ -364,8 +354,7 @@ def plot_seattle(data: dict[str, Any], output: Path, formats: tuple[str, ...], d
         ax.set_yticks(y, [CONTROLLER_LABELS[c] for c in CONTROLLER_ORDER])
     axes[0, 0].invert_yaxis()
     fig.suptitle("Seattle Full-Day Aggregate Controller Comparison", fontsize=14, y=0.985)
-    fig.text(0.5, 0.012, "QAOA bars show means and one standard deviation across 20 independent runs; other controllers are single deterministic runs.", ha="center", fontsize=8.5)
-    fig.subplots_adjust(left=0.17, right=0.99, top=0.92, bottom=0.10, wspace=0.18, hspace=0.29)
+    fig.subplots_adjust(left=0.17, right=0.99, top=0.92, bottom=0.07, wspace=0.18, hspace=0.29)
     return save_figure(fig, output, "figure_seattle_all_controller_aggregate", formats, dpi)
 
 
@@ -438,13 +427,16 @@ def write_effect_csv(effect_data: dict[str, list[EffectRow]], output: Path) -> P
 
 def write_captions(output: Path) -> Path:
     text = (
-        "Figure 1. Direct controller scalability from the 2x2 to the 3x3 network at alpha=0.7. "
+        "figure_scalability_2x2_to_3x3_alpha07.png / .pdf\n"
+        "Caption: Direct controller scalability from the 2x2 to the 3x3 network at alpha=0.7. "
         "Each panel reports the observed value for average travel time, average waiting time, or throughput. "
         "QAOA values are means across 20 independent runs; all other values are from the saved deterministic controller runs.\n\n"
-        "Figure 2. QAOA improvement relative to the exact Classical Global controller for travel time, waiting time, and throughput. "
+        "figure_qaoa_vs_classical_global_bootstrap_effect.png / .pdf\n"
+        "Caption: QAOA improvement relative to the exact Classical Global controller for travel time, waiting time, and throughput. "
         "Positive values favor QAOA. Points denote mean percentage improvement and horizontal bars denote percentile-bootstrap 95% confidence intervals from 10,000 resamples of the 20 independent QAOA runs. "
         "Annotations report one-sample Hedges' g relative to the deterministic Classical Global benchmark. Seattle PM peak covers 4-6 PM (hours 16-17).\n\n"
-        "Figure 3. Full-day Seattle aggregate performance for all nine controllers on the 2x2 and 3x3 networks. "
+        "figure_seattle_all_controller_aggregate.png / .pdf\n"
+        "Caption: Full-day Seattle aggregate performance for all nine controllers on the 2x2 and 3x3 networks. "
         "QAOA bars report means with one-standard-deviation error bars across 20 independent runs; the other controllers are single deterministic runs.\n"
     )
     path = output / "figure_captions.txt"
