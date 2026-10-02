@@ -1,0 +1,1626 @@
+\documentclass[12pt]{article}
+
+% Encoding
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+% Page layout: 1 inch left/right, 0.5 inch top/bottom
+\usepackage[
+    letterpaper,
+    left=1in,
+    right=1in,
+    top=0.5in,
+    bottom=0.5in
+]{geometry}
+
+% Line spacing
+\usepackage{setspace}
+\setstretch{1.15}
+
+% Times New Roman-style font
+% Use this if compiling with pdfLaTeX:
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% Paragraph formatting: no indent, blank line between paragraphs
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+% Tables, figures, math
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{bbm}
+\usepackage{tabularx}
+\newcounter{tblnum}
+
+% Float spacing
+\setlength{\textfloatsep}{6pt}
+\setlength{\floatsep}{4pt}
+\setlength{\intextsep}{6pt}
+
+% Links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
+% Unicode / formatting helpers
+\usepackage{newunicodechar}
+\usepackage{bm}
+\providecommand{\ul}[1]{#1}
+
+% Optional spacing helper
+\newcommand{\squeezeup}{\vspace{-2.5mm}}
+
+\title{QAOA-Simulated Global Pressure-Based Energy Optimization for Traffic Signal Control}
+\author{Arnav Jha \\ \small Redmond High School \\ \small \texttt{arnavjha2027@gmail.com}}
+\date{}
+
+\begin{document}
+
+%\twocolumn
+
+\maketitle
+
+\noindent\textit{Thank you for the guidance of Eleftheria Fassman from Cornell University and University of Michigan in the development of this research paper.}
+
+\textbf{\emph{Abstract} - 
+    Urban traffic signal control is often dominated by fixed cycles and local decisions that fail to account for fluctuations in demand and optimize network-wide delay. This study develops and evaluates two novel contributions: Pressure-Based Energy Optimization and a QAOA-Based Global Optimization System. The pressure-based energy optimization framework converts signal control into an Ising-style energy minimization problem, where balancing pressure alignment and neighbor coupling are rewarded and switching is penalized. QAOA extends this into a global quantum circuit: each traffic signal is encoded as a qubit representing one of two possible signal phases; Hadamard gates place the grid into a superposition; cost-Hamiltonian rotations encode pressure bias, switching history, and entangle neighboring intersections; and Mixer rotations allow the circuit to explore alternative network states before measurement. The QAOA controller samples complete grid-wide bitstrings and selects the lowest-energy configuration. 
+     }
+    
+\textbf{
+    Both optimization-based controllers provide advantage under high-demand, mixed-traffic conditions with QAOA providing additional benefit under complex scenarios requiring global coordination. In the saturated $\alpha$-sweep, QAOA achieved its strongest throughput under mixed traffic at $\alpha$=0.5 of 1023.00 vehicles.The optimization-based controllers outperformed fixed-time across much of the mid-$\alpha$ region. At $\alpha$ = 0.7, Classical and QAOA Optimization had throughputs of 946 and 925 vehicles respectively, showing that pressure-based energy optimization remains highly competitive near Seattle’s turning demand profile. In the 24-hour Seattle case study, Fixed-Time control produced a full-day average travel time of 68.55s and waiting time of 30.98s, while Classical Optimization reduced these to 52.90 s and 20.43s, and QAOA further reached 52.51s and 19.55s.
+}
+    
+\textbf{
+    Statistical analysis also provides more insight into the QAOA Optimization Controller’s advantages. Across the $\alpha$-sweep, QAOA was evaluated over 550 independent simulations, allowing its mean performance, standard deviation, min--max range, and one-sample $t$-tests to be analyzed against the deterministic Classical Optimization controller. At $\alpha=0.5$, QAOA achieved a mean throughput of 1023.00 vehicles (standard deviation of 13.50 vehicles), compared to 910 for Classical, the one-sample $t$ tests confirming this as a significant difference. At $\alpha=0.5$, QAOA also reduced average travel and waiting time from 100.28s to 87.44s and 32.99s to 29.73s respectively, showing its advantage was also a driver-delay improvement. In the 24-hour Seattle case study, QAOA maintained low full-day variability, with travel-time and waiting-time standard deviations of 0.47s and 0.28s respectively. One-sample $t$-tests further showed the statistical significance of many daytime QAOA improvements over Classical, especially for waiting time. QAOA’s variability increased during the peak hour, with standard deviations of 5.09s and 2.96s for travel and waiting time respectively, indicating that severe congestion creates a more sensitive optimization landscape with multiple competing sampled signal configurations.
+}
+
+\textbf{
+    Taken together, this paper makes two main scientific contributions. First, it introduces a Pressure-Based Energy Optimization framework that transforms adaptive signal control into an Ising-style energy minimization problem, combining pressure alignment, switching penalties, and neighbor coupling into a unified traffic-control objective. Second, it develops a QAOA-Based Global Optimization system that encodes each signal as a qubit and samples complete network-wide phase configurations instead of optimizing intersections independently.
+}
+
+\section{Introduction}
+
+Urban traffic congestion is one of the most persistent and costly challenges facing modern cities. In the US alone, drivers lose over 8.8 billion vehicle-hours annually to traffic delays, translating to roughly \$166 billion in wasted fuel \cite{schrank2019}. Beyond economic damage, inefficient traffic flow elevates greenhouse gas emissions and lowers air quality for urban residents. As global urbanization continues to intensify, with projections suggesting 68\% of the world's population will live in urban areas by 2050 \cite{un2018}, the need to develop smarter traffic management has never been greater. At the heart of this problem lies signalized intersections, the primary bottlenecks of urban road networks, where signal timing directly influences vehicle delay \cite{roess2019,varaiya2013}.
+
+Poor coordination across intersections produces three main failure modes this framework is designed to mitigate: \textbf{starvation}, where high-demand approaches receive insufficient green time; \textbf{overflow}, where queues spill back and block upstream intersections; and \textbf{congestion}, where long queues and acceleration delays reduce vehicle discharge efficiency.
+
+Traditional fixed-time signal systems operate on predetermined cycle lengths derived from historical patterns and remain widely used for their simplicity and predictability. However, they have two fundamental limitations: (1) they cannot adapt to real-time fluctuations in demand and (2) they optimize locally, meaning they do not coordinate timing across the entire network \cite{roess2019}. Adaptive traffic control systems improve upon fixed-time signals by adjusting phase timing in response to real-time traffic conditions such as queue lengths. Some systems use local vehicle detectors to modify signal timing at individual intersections, while coordinated systems such as SCOOT coordinate multiple intersections along major roadways to improve traffic flow across a larger network \cite{hunt1981}. Max-pressure control uses queues to select signal phases that minimize the imbalance between upstream and downstream vehicle queues at each intersection \cite{varaiya2013}. Reinforcement learning approaches treat signal control as a sequential decision-making problem, enabling intersections to learn signal timing strategies that reduce congestion through repeated interaction with the traffic environment \cite{genders2016,wei2018}. These adaptive methods can help substantially reduce delay relative to fixed-time control, but they share a common structural limitation: everything is \textbf{local}. In these systems, each intersection is treated largely as an independent decision unit, and while selections might be the optimal local configuration, they do not guarantee max-efficiency in the full network, which ultimately dictates the overall driver experience in travel and waiting time.
+
+Achieving efficient traffic flow at the network level remains challenging, however. Neighboring intersections are inherently coupled since vehicles outflow from one intersection to all neighboring ones. Because of this, signal timing decisions cannot be optimized at the local level without potentially sacrificing the performance of the overall network. Coordinating all intersections at the same time requires searching a solution space that grows exponentially with network size, making exact global optimization computationally intractable for large urban grids \cite{garey1979}. For the classical and QAOA pressure-based energy optimization algorithm, traffic flow can be treated similarly to fluid pressure, selecting signal phases network-wide to essentially discharge of the greatest volume of fluid, a problem that maps cleanly onto the Ising Hamiltonian framework from statistical physics. Inoue et al. formalize this approach through modeling a $50 \times 50$ intersection lattice with binary signal states and demonstrating that minimizing network-wide flow imbalance is equivalent to minimizing an Ising energy function \cite{inoue2021}. Solving this with a D-Wave 2000Q quantum annealer on a $50 \times 50$ grid, they show that global quantum optimization outperforms conventional local control, particularly when vehicles travel mostly straight. They further show, analytically, strong spatial correlations between neighboring signals under optimal control, which strongly supports the idea that network-level coordination becomes increasingly necessary as directional flow starts to dominate. Because Inoue et al.'s result is obtained via quantum annealing on a 50×50 lattice (a physical energy-minimization process operating at a scale two orders of magnitude larger than the network studied here) the specific traffic regime in which global optimization outperforms local control is not assumed to transfer directly to the single-layer, fixed-parameter QAOA circuit implemented in this study. 
+
+Despite these contributions, three important gaps remain:
+
+\begin{enumerate}
+\item The Inoue et al. model uses macroscopic lattice dynamics rather than a microscopic simulator tracking individual vehicles, queues, travel times, and waiting times and the way QAOA-based optimization performs in a realistic simulation environment such as SUMO is completely untested.
+
+\item While they examine the straight-driving parameter $\alpha$ (probability of a car traveling straight at any arbitrary signal), they do not exhaustively evaluate discrete turning regimes and traffic demand loads across the range of failure modes (starvation, overflow, and congestion) that these conditions can produce.
+
+\item Most significantly, their framework relies entirely on \textbf{synthetic} traffic demand: no prior work has evaluated quantum traffic signal control against real-world hourly demand patterns using actual urban data from cities.
+\end{enumerate}
+
+Throughout this paper, we address these gaps by evaluating whether traffic signal control can be improved through two linked optimization contributions: a Classical Pressure-Based Energy Optimization framework and a QAOA-Based Global Optimization controller. Rather than evaluating QAOA as a standalone replacement for classical control, this study tests whether global QAOA Optimization adds value beyond a strong pressure-based energy baseline, and identifies the traffic regimes where that advantage is statistically meaningful.
+
+\begin{itemize}
+\item \textbf{Research Question:} To what extent can pressure-based energy optimization and QAOA-based global optimization improve traffic network performance relative to Fixed-Time and Queue-Based control across varying turning behavior and real-world traffic demand?
+
+\item \textbf{Hypothesis:} The Classical Pressure-Based Energy Optimization controller will outperform Fixed-Time and Queue-Based control under moderate-to-high demand by using pressure alignment, switching penalties, and neighbor coupling to allocate green time more efficiently. The QAOA-Based Global Optimization controller will provide additional benefits over Classical Optimization when traffic conditions require network-wide coordination, especially under mixed turning patterns and realistic daytime demand. However, QAOA's advantage is expected to be conditional rather than universal: under sparse demand, highly directional traffic, or congestion dominated by one clear pressure imbalance, simpler deterministic controllers may remain competitive or outperform QAOA.
+
+\item \textbf{Aim:} This study aims to evaluate Fixed-Time, Queue-Based, Classical Pressure-Based Energy Optimization, and QAOA-Based Global Optimization controllers in a SUMO microsimulation of a $2 \times 2$ urban grid. Two complementary experiments are used: (1) 600-second saturated trials, where the network operates near maximum capacity while $\alpha$ is varied from 0.0 to 1.0 to test performance across turning regimes; and (2) a 24-hour Seattle case study using a real traffic demand profile derived from Seattle Open Data, including the \emph{Traffic Count Studies by Hour Bins} and \emph{Traffic Study Flow Counts} datasets. Controller performance is evaluated using throughput, average travel time, average waiting time, standard deviation across QAOA trials, and one-sample $t$-tests comparing stochastic QAOA outcomes against deterministic Classical Optimization baselines.
+\end{itemize}
+
+\section{Methodology}
+
+\subsection{System Overview}
+
+This study employs a simulation-driven experimental framework to comparatively evaluate fixed-time, queue-based, classical, and quantum traffic signal controllers. Our experimental design consists of two complementary simulation studies, each targeting a distinct dimension of controller performance.
+
+\subsubsection{Experimental Design}
+
+\textbf{Experiment 1: Saturated $\alpha$-Sweep}
+
+The first experiment uses 600-second saturated simulations to isolate the effect of vehicle turning behavior on controller performance. Vehicle inflow is held at the maximum feasible injection rate, and $\alpha$ is swept from 0.0 to 1.0 in increments of 0.1, where $\alpha$ represents the probability that a vehicle continues straight through an intersection. The remaining probability, $1 - \alpha$, is split equally between left and right turns.
+
+\textbf{Experiment 2: Seattle 24-Hour Case Study}
+
+The second experiment uses a 24-hour demand profile derived using Seattle's Traffic data in the Seattle Open Data database, scraping the Traffic Count Studies by Hour Bins and Traffic Study Flow Counts datasets \cite{seattle_hourbins,seattle_flowcounts}. Hourly vehicle volumes are derived from loop detector and traffic count records, and turning movement distributions are estimated from citywide turning movement count data collected at signalized intersections across Seattle \cite{seattle_intersections}. These datasets are processed into an hourly demand profile and a fixed $\alpha$ value reflecting citywide average straight-through probability. Since all vehicles complete their routes in this mode, travel time and waiting time are used as the primary metrics instead of throughput.
+
+\subsubsection{Dual-Experiment Rationale}
+
+Together, these two experiments test the study's central hypotheses along two distinct axes. The saturated $\alpha$-sweep experiments establish the theoretical operating conditions under which each controller performs best, identifying the turning movement distributions that favor algorithmic coordination over simpler control strategies. The Seattle 24-hour case study then evaluates whether those advantages translate to reduced driver delay under realistic urban demand patterns where the goal is minimizing travel and waiting time across a dynamically varying traffic environment. This duality connects the experimental design directly to the practical question motivating the study: which controllers are efficient in theory and which controllers actually improve outcomes for drivers in a real city.
+
+
+\begin{figure}[H]
+\centering
+\vspace{-2mm}
+\textbf{\textsc{[Figure 1 goes here]}}
+\label{fig:seattle-pipeline}
+\vspace{-3mm}
+\end{figure}
+
+\subsubsection{Simulation Pipeline}
+
+The experimental framework integrates three primary components: (1) a microscopic traffic simulator modeling individual vehicle movements, (2) a traffic state analyzer that computes real-time queue lengths and pressure metrics at each intersection, and (3) signal control using the metrics to execute optimization algorithms and issue phase change commands.
+
+The Simulation of Urban Mobility (SUMO) platform, version 1.27.0, serves as the microscopic simulator, interfaced through the Traffic Control Interface (TraCI) API for real-time state queries and signal command injection. The data pipeline connecting Seattle Open Data to the simulation environment is shown in Figure~\ref{fig:seattle-pipeline}.
+
+\begin{figure}[H]
+\centering
+\vspace{-2mm}
+\textbf{\textsc{[Figure 2 goes here]}}\\
+\label{fig:control-loop}
+\vspace{-3mm}
+\end{figure}
+
+The operational pipeline is synchronized with the simulator's time-step progression as shown in Figure~\ref{fig:control-loop} and is executed in one-second intervals following these stages:
+
+\begin{enumerate}
+\item \textbf{Vehicle Propagation:} The simulator advances all vehicles, making sure they adhere to car-following dynamics, lane-changing rules, and compliance with signal states (red, yellow, green).
+
+\item \textbf{State Observation:} For each intersection and incoming lane, the system calculates flowing vehicles and queue length through calculating the number of cars on a given lane and measuring their velocity in mph.
+
+\item \textbf{Controller Decision:} The active controller computes a phase decision using input from the State Data Collection: queue lengths and flowing vehicles. Fixed-Time, Queue-Based, and Classical Optimization controllers operate independently at each intersection while the QAOA optimization controller operates globally over the entire network. The Classical and QAOA optimization controllers use the same pressure-based energy optimization framework just with different levels of scope (local vs. global).
+
+\item \textbf{Signal Update Sequence:} If the computed optimal phase differs from the current phase and minimum green time constraints are satisfied, a phase transition sequence is initiated. If the optimal phase is the same as the current phase or minimum green time constraints have not been satisfied, the current phase is maintained.
+
+\item \textbf{Data Collection:} When a vehicle completes a trip through the $2 \times 2$ grid, the vehicle's travel time and the vehicle's waiting time (the amount of time the vehicle is traveling at a speed lower than 0.1 m/s) are logged for aggregate performance analysis. The total number of vehicles completing a trip is also logged in the saturated $\alpha$-sweeps as a measure of throughput.
+
+\end{enumerate}
+
+All four controllers observe identical traffic states and operate under identical timing constraints (minimum green duration: 12 seconds; yellow interval: 3 seconds; all-red clearance: 1 second).
+
+\subsubsection{Controller Architecture}
+
+All controllers process identical traffic state inputs but differ fundamentally in their decision logic. Fixed-time control cycles through phases on a predetermined schedule independent of any input from observed conditions. Queue-based control selects the phase with the greatest queue with a set minimum green time (higher than Classical and QAOA optimization). Both Classical and QAOA optimization evaluate a pressure-based energy function and try to minimize it. The classical model evaluates the energy function for individual intersections and minimizes the energy function at each intersection while the quantum model evaluates an energy function for the entire grid and tries to find the system configuration to minimize the energy function with a search process that explores multiple network configurations simultaneously before selecting the configuration of the entire network with the lowest energy it finds. Since the QAOA circuit execution introduces substantially higher computational latency than classical evaluation (estimated at 10-100 times more latency on practical quantum hardware), the QAOA optimization controller's deployment is justified only if it produces performance improvements exceeding this overhead.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} l p{0.38\linewidth} p{0.38\linewidth} @{}}
+\toprule
+\textbf{Aspect} & \textbf{Classical} & \textbf{Quantum} \\
+\midrule
+Objective & Local network energy minimization & Global network energy minimization \\
+Search Method & Deterministic evaluation of candidate configurations & QAOA probabilistic search across global configurations \\
+Decision Scope & Per intersection & Network-wide \\
+Solution Selection & Lowest evaluated energy state per traffic signal & Lowest sampled energy state for the network \\
+Latency & Low & High (10--100x higher) \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of Classical and Quantum controller design.}
+\label{tab:classical-vs-quantum}
+\end{table}
+
+\subsection{Simulation Environment}
+
+The experimental framework employs SUMO v1.27.0, an open-source microscopic traffic simulator widely used in transportation research for its high-fidelity vehicle dynamics and extensible control interfaces, those required for our experiment \cite{lopez2018}. SUMO models individual vehicle trajectories at sub-second resolution, capturing car-following behavior (Krauss model), lane-changing dynamics, and signal compliance. The Traffic Control Interface (TraCI) provides real-time communication between the simulator and external control algorithms, enabling the ability to make observations on the state of the traffic grid (vehicle positions, speeds, queue lengths) and signal phase changes at each one-second simulation time-step.
+
+
+
+\subsubsection{Network Topology}
+
+The simulated network comprises a $2 \times 2$ rectangular grid of urban intersections (Figure~\ref{fig:grid}). Each intersection regulates a standard four-way junction with every approach consisting of three dedicated lanes for left-turn, straight, and right turn movements (Figure~\ref{fig:lane-structure}), yielding $4 \; \text{intersections} \cdot 4 \; \text{approaches} \cdot 3 \; \text{lanes per approach} = 48$ total incoming lanes across the network.
+
+The grid's outer boundary consists of perimeter edges that serve as the network's entry and exit points and interior edges connect adjacent intersections directly.
+
+
+
+\begin{figure}[htbp]
+\centering
+\textbf{\textsc{[Figure 3 goes here]}}
+\label{fig:grid}
+\end{figure}
+
+\vspace{1.2175cm}
+
+\begin{figure}[htbp]
+\centering
+\textbf{\textsc{[Figure 4 goes here]}}
+\label{fig:lane-structure}
+\end{figure}
+
+\subsubsection{Vehicle Movement Through the Network}
+
+Vehicles enter the simulation at the perimeter entry edges and are assigned a route that determines their path through the network to a perimeter exit edge. Once injected, a vehicle traverses through one or more intersections according to its assigned route, executing straight-through, left-turn, or right-turn maneuvers at each intersection as dictated by the route's geometry. U-turns are not permitted at any intersection.
+
+Depending on the spatial separation between a vehicle's entry and exit edge, a route may pass through a single intersection or traverse multiple intersections sequentially, with the vehicle queuing at each until its assigned movement gets a green phase. Vehicles exit the simulation once they reach their designated exit edge, at which point they are removed from the network and their travel and waiting time are recorded for data analysis.
+
+\subsection{State Analysis: Queue Length \& Pressure Calculation}
+
+In order for traffic signal control to be functional, it requires data on real-time traffic conditions. This section will formalize the state observation mechanisms to translate raw simulator data (vehicle positions, speeds) into metrics such as queue lengths and pressure differentials, which can be used by controllers such as the Queue-Based, Classical Optimization, and QAOA Optimization controllers.
+
+\subsubsection{Intersection Adjacency}
+
+The traffic network is represented as an undirected adjacency graph \(G = (V,\ E)\), where each vertex \(v_{i} \in V\) corresponds to a signalized intersection and each edge \((i,j) \in E\) represents a direct roadway connection between adjacent intersections. This graph structure for the $2 \times 2$ grid (Figure~\ref{fig:grid}) accounts for the spatial relationships between intersections and allows controllers to account for interactions between neighboring traffic signals.
+
+\subsubsection{Queue Length Calculation}
+
+At each simulation time-step \emph{t}, the system queries SUMO via TraCI to retrieve instantaneous vehicle speeds for all vehicles occupying any given lane \emph{l}. A vehicle is queued for velocity \(v\ \)\textless{} 0.1\(\frac{m}{s}\). The queue length \(q_{l}(t)\) for lane \emph{l} at time \emph{t} is thus:
+
+\begin{equation}
+\label{eq:queue_length}
+    q_l(t) = \left|\, v \in l : \text{speed}(v,t) < 0.1\,\tfrac{m}{s} \,\right|
+\end{equation}
+
+
+
+Vehicles traveling above the 0.1 m/s threshold are categorized as actively moving and are tracked separately via count \(m_{l}(t)\). While moving vehicles represent active throughput rather than congestion, they are still a part of pressure calculations as they contribute to near-term demand that will either discharge through the intersection or join the queue if the signal turns red.
+
+\subsubsection{Pressure Calculation}
+
+Inspired by max-pressure control theory \cite{varaiya2013} and fluid dynamics, a pressure function is defined for each approach (one intersection has 4 approaches total) to essentially quantify the urgency of granting green time to a given approach. Pressure aggregates queue and moving vehicle counts across lanes, weighted by movement type (straight, left-turn, right-turn) to reflect differential signal dependency and capacity constraints. For approach direction $d \in \{\text{north}, \text{south}, \text{east}, \text{west}\}$ at intersection i, the pressure $P_{i,d}(t)$ is:
+
+\begin{equation}
+\label{eq:pressure}
+    P_{i,d}(t) = \beta_{\text{stopped}} \sum_{l\in L(d)} w_l q_l(t) + \beta_{\text{moving}} \sum_{l\in L(d)} w_l m_l(t)
+\end{equation}
+
+
+
+Where \(w_{l}\) is the lane weight, \(B_{stopped}\) is the stopped vehicle constant, \(B_{moving}\) is the moving vehicle constant:
+
+\[
+\beta_{\text{stopped}} = 2.0, \qquad \beta_{\text{moving}} = 1.0, \qquad w_l = \begin{cases} 1.00, & \text{left-turn lane} \\ 1.00, & \text{through lane} \\ 0.47, & \text{right-turn lane} \end{cases}
+\]
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.22\linewidth} c p{0.55\linewidth} @{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Rationale} \\
+\midrule
+Left-turn lane weight ($w_{\text{left}}$) & 1.00 &
+Left turns are harder to clear compared to through-lane movement since they can only be cleared through permissive green time, but have a lower urgency to clear, so they are weighted equally with through-lane movements. \\
+Through lane weight ($w_{\text{through}}$) & 1.00 &
+The primary movement of most cars, the highest capacity and easiest to clear, but also the highest urgency to clear since a majority of vehicles will be traveling straight. \\
+Right-turn lane weight ($w_{\text{right}}$) & 0.47 &
+Right-turn-on-red permitted; lower signal dependency reduces urgency. This is a hyperparameter tuned using a classical loop to continuously run trials with different right-turn weights, converging on 0.47 as the best-performing value. \\
+Stopped vehicle constant ($B_{\text{straight}}$) & 2.0 &
+Halted vehicles represent acute congestion and are prioritized over moving flow. Clearing existing queues takes precedence over accommodating approaching vehicles that have not yet stopped, since stopped vehicles require more time to clear due to \textbf{acceleration headway}. \\
+Moving vehicle constant ($B_{\text{moving}}$) & 1.0 &
+Moving vehicles contribute to demand but are less urgent than stopped vehicles, since moving vehicles are easier to clear. \\
+\bottomrule
+\end{tabular}
+\caption{Lane weights and pressure constants used in the pressure calculation.}
+\label{tab:pressure-constants}
+\end{table}
+\subsubsection{Discharging Pressure}
+
+Discharging pressure \(P'_{i,d}(t)\), is defined as such:
+
+\begin{equation}
+\label{eq:discharge_pressure}
+P'_{i,d}(t) = \beta'_{\text{stopped}} \sum_{l\in L(d)} w_l q_l(t) + \beta'_{\text{moving}} \sum_{l\in L(d)} w_l m_l(t)
+\end{equation}
+
+
+New constants consist of \({B'}_{\text{stopped}}\) (the stopped vehicle constant, reflecting urgency of halted traffic) and \({B'}_{\text{moving}}\) (the moving vehicle constant, reflecting near-term demand):
+
+\[
+\beta'_{\text{stopped}} = 1.0, \qquad \beta'_{\text{moving}} = 1.0, \qquad w_l = \begin{cases} 1.00, & \text{left-turn lane} \\ 1.00, & \text{through lane} \\ 0.47, & \text{right-turn lane} \end{cases}
+\]
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.24\linewidth} c p{0.58\linewidth} @{}}
+\toprule
+\textbf{New Parameter} & \textbf{Value} & \textbf{Rationale} \\
+\midrule
+Stopped vehicle constant ($B'_{\text{stopped}}$) & 1.0 &
+Halted vehicles currently being fed a green light are treated with the same weight as regular vehicles, since they have the ability to accelerate back to moving. The lower constant for stopped vehicles compared to accumulated pressure is meant to prevent \textbf{overflow}. \\
+Moving vehicle constant ($B'_{\text{moving}}$) & 1.0 &
+Moving vehicles contribute to demand in the same way as stopped vehicles, since both define how long the light needs to be kept green: stopped vehicles that are discharging increase wait and travel time, and stopping moving vehicles does the same, so they are weighted equally under discharging conditions. \\
+\bottomrule
+\end{tabular}
+\caption{Discharging-pressure constants.}
+\label{tab:discharging-constants}
+\end{table}
+
+
+Discharging pressure is used when an approach is currently receiving green time. This variant of accumulated pressure is made to prevent inefficient use of green time through prioritizing green time for approaches that are accumulating pressure due to red lights and not overflow or acceleration headway, which contribute to pressure, but urgency of needing to be cleared. Access to the discharging pressure function allows pressure-based energy optimization controllers to become significantly more efficient with allocating green time.
+
+Both $P_{i,d}$ (accumulation pressure) and $P'_{i,d}$ (discharge pressure) are provided to controllers, enabling optimization objectives that balance immediate congestion relief (high accumulation pressure) against throughput maximization (high discharge pressure). The pressure-based energy optimization controller as mentioned before leverages both accumulation and discharge pressure to construct a holistic cost function.
+
+\subsection{Data Collection and Route Generation}
+
+For the 600s saturated tests, the system arbitrarily sends in 5000 vehicles per hour (1.39 vehicles per second) to fully saturate the system since the simulation can only spawn a vehicle every second. The independent variable, $\alpha$ (probability of a given vehicle going straight at an intersection), is tweaked to test for the controller's performance across various traffic conditions. For the 24-hour Seattle case study tests, the independent variable becomes time so we cannot test a spectrum of or arbitrarily set inflow $I$ or an $\alpha$ (probability of straight), both of which are required in order to run a simulation.
+
+In order to calculate these two variables, they have to be derived from publicly available Seattle traffic datasets. This empirical grounding reduces sensitivity to ad hoc demand assumptions, supports meaningful comparison of controller performance results against realistic traffic conditions, and allows us to get a real-world idea of which controllers become advantageous at various times in the day. The overall data-processing and route-generation pipeline follows a 4-stage structure:
+
+\begin{enumerate}
+\item \textbf{Calculating} $I_{h}$ \textbf{for} $h\  \in \ \{ k\  \in \ {\mathbb{Z}}\  \mid \ 0 \leq \ k\  \leq 23\}$ \textbf{:} The \emph{Seattle Traffic Count Studies by Hour Bins} dataset is processed to yield a 24-hour demand profile and average inflow rate.
+
+\item \textbf{Calculating $\alpha$:} The \emph{Seattle Traffic Study Flow Counts} and \emph{Seattle Traffic Intersections} datasets are used to estimate $\alpha$ from observed directional corridor behavior.
+
+\item \textbf{Calculating route probabilities:} The empirical value of $\alpha$ is used to calculate departure and non-departure probabilities of vehicles, which is then used to construct route probabilities over the $2 \times 2$ grid.
+
+\item \textbf{Generating vehicle routes:} The hourly inflow rates ($I_{h}$) and route probabilities are used to produce the SUMO route file that dictates the routes that each vehicle will take throughout the simulation.
+
+\end{enumerate}
+
+Figure~\ref{fig:seattle-pipeline} illustrates the complete data processing and route generation pipeline and shows the two independent data streams (hourly count data and directional flow count data) being used in their respective stages and then being combined to produce a single SUMO .rou.xml file as output that is used to dictate the routes the vehicles will take during the simulation.
+
+\subsubsection{Dataset Sources and Preprocessing}
+
+The data scraping utilizes three Seattle traffic datasets that are maintained by the Seattle Department of Transportation and updated on a daily basis, ensuring that the estimated parameters reflect current traffic patterns rather than historical averages.
+
+The first dataset, \emph{Traffic Count Studies by Hour Bins,} contains daily traffic count observations organized into hourly bins. Each record includes a total daily vehicle count (TOTAL), per-hour subtotals (HR01\_TOTAL through HR24\_TOTAL), and contextual fields including day of week (WEEKDAY) and if the data is taken on a holiday (HOLIDAY\_YN). These fields allow us to make a direct empirical estimate of the hourly rate of traffic demand over a typical weekday.
+
+The second dataset, \emph{Traffic Study Flow Counts}, contains directional volume measurements recorded at count stations distributed throughout the Seattle street network. The relevant fields include the directional identifier (STUDY\_DIRFLOW), average weekday daily traffic (STUDY\_AWDT), average daily traffic (STUDY\_ADT), street identifiers, and projected spatial coordinates. The STUDY\_AWDT field is used as the primary volume estimate. STUDY\_ADT is substituted when weekday-specific measurements are unavailable. The coordinate fields allow each count station to be spatially matched to a nearby signalized intersection using the third dataset, \emph{Traffic Intersections Seattle}, which provides signal identifiers, text descriptions, and projected coordinates for each signal location.
+
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}XcXX@{}}
+\toprule
+\textbf{Dataset} & \textbf{Raw Records} & \textbf{Records After Filter} & \textbf{Filtering Criteria} \\
+\midrule
+Traffic Count Studies by Hour Bins & 445,410 &
+\textbf{102,306} valid hourly observations &
+Weekday observations only, non-holiday records, TOTAL $>$ 10,000 vehicles/day \\
+Traffic Study Flow Counts & 62,220 &
+\textbf{1,754} signal-level directional summaries &
+Valid coordinates; positive traffic volume; recognized direction bucket; assigned to nearest signal within 150 feet \\
+Traffic Intersections Seattle & 15,497 &
+\textbf{59} candidate intersections &
+4--8 assigned count stations; 3 or more nonzero directional buckets; 10th--90th percentile traffic volume; no ramps, bridges, trails, or dead ends \\
+\bottomrule
+\end{tabularx}
+\caption{Summary of dataset reduction through filtering criteria. The retained records represent high-confidence, typical traffic conditions suitable for estimating system-level demand and routing behavior.}
+\label{tab:filtering}
+\end{table}
+
+
+The size of the retained samples (102,306 hourly observations, 1,754 signal-level direction summaries over 59 intersections) supports large-sample estimation of both demand and routing behavior, reducing the influence of individual anomalies on the resulting parameters, ensuring extremely accurate estimation of the values for $I_{h}$ and $\alpha$.
+
+\subsubsection{Hourly Inflow Estimation}
+
+Hourly inflow is estimated from the \emph{Traffic Count Studies by Hour Bins} dataset. The objective is to convert observed daily traffic profiles into a normalized 24-hour demand distribution applicable to the simulation.
+
+The records are kept only if they satisfy all of the following criteria: (1) TOTAL $\geq 10,000$ vehicles, excluding low-volume and atypical count days; (2) WEEKDAY $\notin \{\text{Saturday}, \text{Sunday}\}$, restricting the sample to weekday observations; and (3) HOLIDAY\_YN $= N$, excluding holiday traffic patterns. These filters ensure that the estimated demand profile reflects ordinary weekday urban traffic. After filtering, 102,306 valid hourly observations remain from the original 445,410 records.
+
+For each valid observation \emph{i} and hour \emph{h}, the hourly traffic constant $\iota_{i,h}$ (the measure of what fraction of the total traffic in the day is present in that specific hour) is computed as:
+
+\begin{equation}
+\label{eq:traffic_constant}
+    \iota_{i,h} = \frac{\text{HR}_{i,h}}{\text{TOTAL}_i}
+\end{equation}
+
+
+The mean hourly constant for hour h across N valid observations is then computed as:
+
+\begin{equation}
+\label{eq:traffic_constant_mean}
+    \bar{\iota}_h = \frac{1}{N}\sum_{i=1}^{N} \frac{\text{HR}_{i,h}}{\text{TOTAL}_i}
+\end{equation}
+
+
+
+This yields $I_{avg} \approx 975.70$ vehicles per hour, representing the rate average across all 24 hours of the day. The normalized profile places the largest constant at hour 18 (5-6PM), consistent with typical urban afternoon-peak demand patterns:
+
+\begin{equation}
+\label{eq:I_avg}
+    I_{\text{avg}} = \frac{\sum_{i=1}^{N} \text{TOTAL}_i}{24N}
+\end{equation}
+
+
+
+For route generation, the hourly inflow for simulated hour h is reconstructed as:
+
+\begin{equation}
+\label{eq:I_h}
+    I_h = I_{\text{avg}} \cdot \bar{\iota}_h \cdot 24
+\end{equation}
+
+
+
+This produces 24 distinct vehicles-per-hour values that drive the SUMO flow rates assigned to each simulated hour.
+
+\subsubsection{$\alpha$ Estimation from Directional Flow Counts}
+
+The parameter $\alpha$ is an intersection-level continuation probability, estimating the probability that a vehicle proceeds along the dominant corridor through an intersection rather than departing onto a cross street or connecting approach, applied at every intersection a vehicle encounters in the grid. Complete route probabilities therefore emerge as products of repeated, independent movement decisions rather than from a single origin-destination assignment. This distinction is essential: $\alpha$ models local movement behavior at each intersection, and the compound probability of a complete route reflects the sequence of those decisions along the vehicle's path.
+
+\subsubsection{Spatial Assignment of Count Stations}
+
+Estimation of $\alpha$ begins with the spatial assignment of directional count stations to signalized intersections. Count stations are first filtered according to the criteria in Table~\ref{tab:filtering}, then each station is matched to the nearest intersection in the signal inventory using the projected coordinate distance. A station is only considered to measure an intersection's inflow or outflow if the nearest signal falls within 150 feet, a specific threshold selected since most traffic signals in the intersection dataset are around 300 feet apart in most highly concentrated areas (signals that are filtered as candidate intersections), so it is large enough to capture count stations located near intersection approaches, but small enough to reduce the risk of assigning a station to the wrong signal, which is not possible with 100 or 200 feet constraints.
+
+After spatial assignment and aggregation, 1,754 signal-level directional flow summaries are produced. Each summary records the total assigned flow u at a signal, along with the aggregated volume in each of the eight directional buckets.
+
+\subsubsection{Candidate Intersection Filtering}
+
+To improve the reliability of the $\alpha$ estimate, signals are further filtered prior to computing. A signal is retained as a candidate intersection only if it satisfies this criteria:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.26\linewidth} p{0.22\linewidth} p{0.44\linewidth} @{}}
+\toprule
+\textbf{Criterion} & \textbf{Threshold} & \textbf{Rationale} \\
+\midrule
+Assigned count stations & 4 to 8 &
+One station is required per approach, no more than two. \\
+
+Max station distance & $\leq 150$ feet &
+Limits spatial assignment ambiguity. \\
+
+Nonzero directional buckets & $\geq 3$ &
+Requires multi-directional flow at the intersection. \\
+
+Total assigned volume & 10th--90th percentile of signal volume &
+Excludes outlier signals that may have differing departure conditions. \\
+
+Signal description & No ramps, bridges, trails, or dead ends &
+Restricts analysis to conventional signalized intersections. \\
+\bottomrule
+\end{tabular}
+\caption{Candidate intersection filtering criteria.}
+\label{tab:candidate-filtering}
+\end{table}
+
+Through using the 1,754 signal-level summaries, 59 candidate intersections fit all of the criteria. Rather than selecting a minority of unusual observations, the filtering criteria is designed to exclude records that aren't able to be generalized to all Seattle urban traffic days (e.g. holidays, low-volume days, incomplete spatial assignments), leaving a large sample expected to provide an unbiased estimate of the underlying population averages.
+
+\subsubsection{Continuation Probability Computation}
+
+For each of the 59 candidate intersections, four opposing corridor pairs are defined: N-S, E-W, NE-SW, and NW-SE. The dominant corridor \(C_{dom}\), is defined as the corridor pair with the greatest total directional volume. The corridor continuation probability for each candidate intersection is then computed as:
+
+\begin{equation}
+\label{eq:alpha_straight}
+    \alpha_{\text{straight}} = \frac{C_{\text{dom}}}{u}
+\end{equation}
+
+Where u denotes the total assigned direction flow at the intersection. The corresponding departure probability is:
+
+\begin{equation}
+\label{eq:one_minus_alpha_straight}
+    1-\alpha_{\text{straight}} = 1-\frac{C_{\text{dom}}}{u}
+\end{equation}
+
+
+
+Since the \emph{Seattle Traffic Study Flow Counts} dataset contains directional volumes rather than complete vehicle trajectories, the corridor continuation probability can be determined. The probability that cars turn can be computed with symmetric distribution:
+
+\begin{equation}
+\label{eq:alpha_LR}
+    \alpha_{\text{left}} = \alpha_{\text{right}} = \frac{1-\alpha_{\text{straight}}}{2}
+\end{equation}
+
+
+
+Aggregating across all 59 candidate intersections, the citywide mean movement probabilities are:
+
+\[
+\alpha_{\text{straight}} = 0.7063, \quad \alpha_{\text{left}} = 0.1469, \quad \alpha_{\text{right}} = 0.1469
+\]
+
+The median value of $\alpha$ is about 0.7139. The close agreement between the mean and median values indicates that the estimate is not distorted by a small number of extreme intersections, and that dominant-corridor continuation is relatively stable across the filtered candidate set. Additionally, this value is consistent with urban arterial standards of 70\% of traffic being assumed to travel straight at each intersection. These filters prioritize intersections with sufficient directional coverage, making $\alpha$ a data-driven, accurate estimate rather than an assumed constant.
+
+\subsubsection{Route Probability Construction}
+
+Route probabilities are constructed for the $2 \times 2$ SUMO grid using the movement probabilities derived from the $\alpha$ estimation stage of the process. The grid contains 4 internal intersections connected by internal edges, with 8 outside edges representing network entry and exit points. Routes start and end at each of the eight outside starting edges.
+
+From each starting edge, all valid routes are generated up to a maximum of three intersection decisions. At each intersection, the outgoing movement is classified as straight, left, or right based on the vehicle's incoming direction. Straight movements are assigned probability \(\alpha_{\text{straight}}\), left turns are assigned \(\alpha_{\text{left}}\), and right turns are assigned \(\alpha_{\text{right}}\).
+
+A route is represented as an ordered sequence of network edges. The probability of any route r is the product of the movement probabilities at each intersection decision along that route:
+
+\begin{equation}
+\label{eq:prob_route}
+    P(r) = \prod_{j=1}^{k} P(m_j)
+\end{equation}
+
+
+
+Where \(m_{j}\) denotes the movement executed at the j-th decision point and k is the total number of intersection decisions along the route. For example, a route requiring a straight movement followed by a right turn and second straight movement to exit the grid carries the probability \(P(r) = \ \alpha_{\text{straight}} \cdot \alpha_{\text{left}} \cdot \alpha_{\text{straight}}\).
+
+After raw probabilities are computed, they are normalized independently for each starting edge \emph{s} to ensure that the complete set of route probabilities from each entry point sums to 1.0:
+
+\begin{equation}
+\label{eq:prob_norm}
+    P_{\text{norm}}(r \mid s) = \frac{P_{\text{raw}}(r)}{\sum_{r'\in s} P_{\text{raw}}(r')}
+\end{equation}
+
+
+This normalization is applied prior to conversion into SUMO flow rates and accounts for the exclusion of routes requiring more than three intersection decisions.
+
+\subsubsection{Route Coverage and the Three-Decision Limit}
+
+The three-decision limit is adopted because routes requiring four or more intersection decisions account for only about 1.84\% of the modeled probability mass in the $2 \times 2$ grid. Retaining these routes would substantially increase route-set size and simulation complexity while being less representative of traffic behavior.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} l l @{}}
+\toprule
+\textbf{Quantity} & \textbf{Value} \\
+\midrule
+Total routes generated & 72 \\
+
+Routes per starting edge & 9 \\
+
+Probability mass retained & 98.16\% \\
+
+Probability mass excluded & 1.84\% \\
+
+Excluded routes & Routes requiring 4+ intersection decisions \\
+\bottomrule
+\end{tabular}
+\caption{Route coverage under the three-decision limit.}
+\label{tab:route-coverage}
+\end{table}
+
+This reflects a deliberate modeling trade-off: the route set should be comprehensive enough to represent realistic vehicle behavior while remaining compact enough to support efficient, repeatable 24-hour SUMO simulations without excessive route-file overhead or computational burden.
+
+\subsubsection{Route Generation and SUMO Integration}
+
+The final SUMO route file is produced through the hourly inflow estimates and the normalized route probabilities combined to produce flow rates. Per simulated hour h and route r, the flow rate is computed where \(I_{h}\) is the hourly inflow and \(P_{\text{norm}}(r\ |\ s)\) is the normalized probability of route r with starting edge $s$:
+
+\begin{equation}
+\label{eq:vehs_ph}
+    \text{vehsPerHour}_{h,r} = I_h \, P_{\text{norm}}(r \mid s)
+\end{equation}
+
+
+
+The resulting route file contains 72 route definitions and 1728 hourly flow entries (72 routes x 24 hours). Each flow specifies a route, simulation time window, and vehicles-per-hour rate. Since all flow values are derived directly from the Seattle demand profile and route probability model, the complete route file can be regenerated automatically from the three underlying datasets without manual intervention.
+
+\subsection{Pressure-Based Energy Optimization Algorithm}
+
+The Classical and QAOA optimization controllers formulate signal timing as a discrete energy minimization problem, drawing inspiration from statistical physics models of binary spin systems, specifically the Ising model. This mapping enables computationally efficient optimization via local or global energy comparison while naturally encoding both single-intersection or network-wide pressure balance and multi-junction coordination.
+
+\subsubsection{Phase State Representation}
+
+Each intersection operates under one of two mutually exclusive signal phases at any given time:
+
+\begin{enumerate}
+
+\item Phase A (\textbf{North-South Green}): The north and south approaches receive a green light with permissive left turns while east and west approaches receive a red light. 
+
+\item Phase B (\textbf{East-West Green}): The opposite of Phase A, the east and west approaches receive a green light with permissive left turns while north and south approaches receive a red light.
+
+\end{enumerate}
+
+We encode the phase state as a binary variable $x_{i} \in \{+1, -1\}$, where $x_{i} = +1$ represents Phase A and $x_{i} = -1$ is Phase B. The usage of this encoding, rather than binary $\{0, 1\}$, aligns with Ising model conventions and simplifies the energy function.
+
+\subsubsection{Pressure Bias Calculation}
+
+A step of the process to determine which phase better serves current traffic demand is computing a bias \(\delta_{i}(t)\) that quantifies the directional imbalance in traffic pressure. This bias integrates both accumulation pressure from queued vehicles on red approaches and discharge pressure from vehicles clearing through green approaches.
+
+For each approach side $s \in \{N, S, E, W\}$, we define a generalized pressure $\tilde{P}_{i,s}(t) $ that adapts based on the current state of the signal:
+
+\begin{equation}
+\label{eq:generalized_press}
+    \tilde{P}_{i,s}(t) = \begin{cases} P'_{i,s}(t), & \text{if approach } s \text{ currently has green} \\ P_{i,s}(t), & \text{if approach } s \text{ currently has red} \end{cases}
+\end{equation}
+
+
+
+The reason for this dual formulation is that green approaches are evaluated by their remaining discharge capacity (vehicles that can or need to still be cleared), while red approaches are evaluated by accumulated demand (vehicles waiting). The bias is then computed as the directional pressure differential:
+
+\begin{equation}
+\label{eq:delta}
+    \delta_i(t) = \Big[\tilde{P}_{i,N}(t) + \tilde{P}_{i,S}(t)\Big] - \Big[\tilde{P}_{i,E}(t) + \tilde{P}_{i,W}(t)\Big]
+\end{equation}
+
+
+
+A large positive \(\delta_{i}\) indicates that the NS axis has greater net demand favoring Phase A. A large negative \(\delta_{i}\) indicates EW dominance favoring Phase B. \(\delta_{i}\) near zero suggests that demand is balanced and the choice of the phase is not as important.
+
+\subsubsection{Energy Function Formulation}
+
+Drawing from the Ising model of ferromagnetism \cite{lucas2014} and prior traffic-signal Ising formulations \cite{inoue2021}, we define an energy function that assigns a scalar cost to each phase configuration. Lower energy corresponds to a phase configuration better aligned with pressure, neighbor coordination, and switching constraints. For a given intersection \emph{i} in state \(x_{i}\), the energy defined as:
+
+\begin{equation}
+\label{eq:energy}
+    E_i(x_i) = -\delta_i x_i - J \sum_{j\in N(i)} x_j x_i + \Lambda \cdot \mathbf{1}[x_i \neq x_i^{\text{current}}]
+\end{equation}
+
+
+
+The energy is made up of 3 main components:
+
+\begin{enumerate}
+
+    \item \textbf{Pressure Alignment:} $-\delta_i x_i$, which rewards phase states aligned with traffic bias (a positive $\delta$ favors $x=+1$, a negative $\delta$ favors $x=-1$). Higher traffic bias leads to this term being more significant in the energy equation.
+
+
+    \item \textbf{Coupling Neighbors:} $-J \sum_{j\in N(i)} x_j x_i$, which rewards phase alignment with neighboring intersections allowing. Lower traffic bias leads to greater significance.
+
+    \item \textbf{Switching Penalty:} $\Lambda \cdot \mathbf{1}[x_i \neq x_i^{\text{current}}]$, which penalizes phase changes (yellow time needed to switch phases is a waste of green time). Lower traffic bias leads to greater significance.
+  
+\end{enumerate}
+
+The classical model optimizes energy locally through comparing energy for staying on the current phase versus switching phase:
+
+\begin{equation}
+\label{eq:energy_stay}
+    E_{\text{stay}} = -\delta_i x_i - J \sum_{j\in N(i)} x_j x_i
+\end{equation}
+
+
+
+\begin{equation}
+\label{eq:energy_switch}
+    E_{\text{switch}} = -\delta_i(-x_i) + \Lambda - J \sum_{j\in N(i)} x_j(-x_i)
+\end{equation}
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.22\linewidth} c p{0.60\linewidth} @{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Interpretation} \\
+\midrule
+Switching penalty ($\Lambda$) & 20 &
+Energy cost of a phase transition; prevents high-frequency oscillations when bias values are marginal, accounting for the inefficiency of yellow time. \\
+Neighbor coupling ($J$) & 2 &
+Interaction strength for coordination; rewards phase alignment with adjacent intersections. \\
+\bottomrule
+\end{tabular}
+\caption{Classical controller energy-function parameters.}
+\label{tab:classical-params}
+\end{table}
+
+\subsubsection{Ising Model}
+
+This energy formulation directly parallels the classical Ising Hamiltonian from statistical mechanics \cite{lucas2014}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.35\linewidth} p{0.55\linewidth} @{}}
+\toprule
+\textbf{Statistical Mechanics} & \textbf{Traffic Signal Energy Optimization} \\
+\midrule
+\textbf{Spin:} $s_i$ & Signal phase: $x_i$ \\
+
+\textbf{Magnetic field:} $h_i$ & Pressure bias: $\delta_i$ \\
+
+\textbf{Coupling:} $J_{ij}$ & Coupling strength: $J$ \\
+
+\textbf{Ground state} & Minimum energy, optimal phase \\
+\bottomrule
+\end{tabular}
+\caption{Analogy between the Ising model and the traffic-signal energy formulation.}
+\label{tab:ising-analogy}
+\end{table}
+
+This formulation links the traffic-control problem to Ising optimization methods and motivates the quantum formulation addressed in the next methodology section.
+
+\subsubsection{Decision Logic and Phase History}
+
+At each time-step $t$, the controller evaluates $E_{\text{stay}}$ and $E_{\text{switch}}$ for every intersection. If $E_{\text{stay}} > E_{\text{switch}}$, the optimal phase is $x_{i,\text{opt}} = -x_{i,\text{current}}$, otherwise $x_{i,\text{opt}} = x_{i,\text{current}}$. This decision is recorded in a per-intersection phase history array $[x_{i}(0), x_{i}(1), \ldots, x_{i}(t)]$.
+
+
+This energy comparison does not immediately switch the phase on command, instead producing a phase recommendation. The signal transition module (covered in sub-section~\ref{sec:signal} of the methodology) uses this recommendation and determines whether to execute a phase change based on timing constraints (minimum green time, yellow clearance).
+
+\subsubsection{Computational Complexity and Scalability}
+
+The Classical Optimization controller exhibits $O(N)$ time complexity for N intersections. Each intersection independently evaluates a constant-size energy comparison (2 neighbor lookups for $2 \times 2$ grid, at most 4 for larger grids). This linear scaling makes the approach somewhat practical for real-time deployment in large urban networks. From an engineering-design standpoint, this latency profile ($\sim 10$ miliseconds per decision on commodity CPUs) is the reference point against which QAOA Optimization methods must be evaluated: any QAOA-based controller will incur $10-100 \times$ higher per-timestep latency and is therefore only justified if it provides a consistent quality advantage over the Fixed-Time baseline.
+
+
+\subsection{Quantum Global Optimization}
+
+While Classical Optimization employs per-intersection energy minimization, the QAOA Optimization controller searches for a low-energy configuration of the entire network. This section describes a Quantum Approximate Optimization Algorithm heuristic that encodes candidate phase configurations within a quantum superposition and uses a parameterized circuit to bias measurement outcomes toward low-energy global configurations.
+
+The QAOA optimization controller uses a single-layer quantum approximate optimization circuit to sample candidate global phase configurations. Unlike the Classical Optimization controller, which optimizes each intersection separately, the QAOA optimization controller evaluates the \(2^{4}\) possible network signal configurations through a shared energy function.
+
+\subsubsection{Problem Encoding}
+
+For a network of N intersections, the optimization problem seeks a phase assignment vector $x = \langle x_1, x_2, \ldots , x_N \rangle$ where $x_i \in \{0,1\}$ represents the phase choice at intersection $i$: 0 for Phase A, 1 for Phase B. This yields \(2^{N}\) possible configurations, which for the $2 \times 2$ grid (N=4), yields \(2^{4}\) = 16 candidate solutions.
+
+The QAOA Optimization controller treats the entire phase assignment vector as a single optimization problem rather than locally optimizing each intersection. For this reason, interactions between neighboring intersections are evaluated directly within each candidate network configuration, unlike other controllers.
+
+\subsubsection{Ising Hamiltonian}
+
+We map the binary optimization problem to an Ising spin model by transforming$x_i \in \{0,1\}$ to $s_i = 2x_i - 1 \in \{-1, 1\}$. The total grid energy for a global phase assignment $s = \langle s_1, s_2, \ldots , s_N \rangle$ is:
+
+\begin{equation}
+\label{eq:total_energy}
+    E(s) = -\sum_i b_i s_i - \lambda \sum_i s_i^{\text{prev}} s_i - J \sum_{(i,j)\in\mathcal{E}} s_i s_j
+\end{equation}
+
+
+
+where \(b_{i}\ \) is the traffic bias at intersection $i$, ${s_{i}}^{\text{prev}}$ is the previous phase state, $\lambda$ is the switching-penalty strength ($\lambda$ = 10 for the QAOA optimization controller), $J$ is the neighbor-coupling strength ($J = 2$), and $\mathcal{E}$ is the set of adjacent intersection pairs.
+
+Every term in the QAOA-based energy optimization equation is now built for global optimization rather evaluating the state of a single intersection:
+
+\begin{enumerate}
+    \item \textbf{Traffic Bias:} $-\sum_i b_i s_i$, which favors phases aligned with current demand.
+
+
+    \item \textbf{Switching Penalty:} $-\lambda \sum_i s_i^{\text{prev}} s_i$, which discourages unnecessary phase changes since yellow time is inefficient.
+
+    \item \textbf{Coordination \& Intersection Coupling:} $-J\sum_{(i,j)\in\mathcal{E}} s_i s_j$, which couples adjacent intersections to prevent overflow and to coordinate green waves.
+\end{enumerate}
+
+The classical controller approximates the minimum energy through evaluating the energy to stay on or switch the phase separately at each intersection. The quantum controller instead evaluates $E(s)$ for candidate global configurations sampled from the circuit's measurement distribution, and selects the configuration $s^*$ that minimizes $E(s)$.
+
+\subsubsection{QAOA Circuit Architecture}
+
+The QAOA decision subroutine constructs a variational circuit with N qubits (one per intersection) implementing a single-layer QAOA structure \cite{farhi2014}, comprising four stages:
+
+\begin{enumerate}
+    \item \textbf{Initialization (Superposition)}: Hadamard gates create equal superposition over all \(2^{N}\) phase configurations:
+\begin{equation}
+    \label{eq:initialization}
+    |\psi_0\rangle = H^{\otimes N}|0\rangle^{\otimes N} = \frac{1}{\sqrt{2^N}}\sum_{x\in\{0,1\}^N}|x\rangle
+\end{equation}
+
+
+
+    \item \textbf{Cost Hamiltonian Encoding}: Single-qubit terms apply a Z-rotation per qubit representing the local bias and switching penalty:
+
+\begin{equation}
+\label{eq:cost_hamiltonian}
+    R_Z\!\left(2\gamma \cdot h_i^{\text{eff}}\right) \text{ on qubit } i, \quad h_i^{\text{eff}} = b_i + \lambda\cdot s_i^{\text{prev}}
+\end{equation}
+
+
+
+Two-qubit terms apply phase rotations encoding neighbor coupling:
+
+\begin{equation}
+\label{eq:neighbor_coupling}
+    \exp\!\left(-i\gamma J Z_i\otimes Z_j\right)
+\end{equation}
+
+
+
+    \item \textbf{Mixer Hamiltonian:} An X-rotation on each qubit enables amplitude transfer between basis states:
+
+\begin{equation}
+\label{eq:mixer_hamiltonian}
+    R_X(2\beta) \text{ on each qubit} \equiv \exp(-i\beta X_i)
+\end{equation}
+
+
+
+    \item \textbf{Measurement:} All qubits are measured, collapsing the state to a classical bitstring $x \in \{0,1\}^N$, probability:
+
+\begin{equation}
+\label{eq:qbit_measurement}
+    |\langle x|\psi\rangle|^2
+\end{equation}
+
+
+representing one candidate global phase configuration.
+\end{enumerate}
+
+
+\subsubsection{Sampling Procedure}
+
+The circuit is parameterized by two fixed angles: $\gamma =0.5$, which determines how strongly candidate configurations are differentiated according to their energy, and $\beta =0.4$, which controls how broadly the circuit explores alternative configurations. Together, these parameters balance less efficient low-energy regions of the search space against exploration of a wider range of grid configurations.
+
+Multiple measurements are required because a single circuit execution yields only one sampled configuration. Repeated sampling provides a distribution of candidate solutions from which the lowest-energy configuration is selected. At each decision time-step, the circuit is executed with 512 measurement shots with each shot collapsing the superposition to one bitstring$x \in \{0,1\}^N$, representing a complete global phase configuration. Each sampled configuration is converted to spins (\emph{s}) and evaluated using $E(s)$, and the controller selects the lowest energy configuration as the phase recommendation for the entire grid.
+
+\subsubsection{QAOA Parameter Selection}
+
+Preliminary tuning evaluates a 10x10 grid over the standard single-layer QAOA parameters $\gamma$ and $\beta$:
+\[
+\gamma \in [0,\pi], \qquad \beta \in \left[0,\frac{\pi}{2}\right]
+\]
+
+To reduce computational cost during repeated trials, the final implementation fixes  $\gamma =0.5$ and $\beta =0.4$, which produces stable low-energy configurations during tuning while preserving the same circuit structure.
+
+\subsubsection{Classical vs. Quantum Comparison}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.28\linewidth} p{0.33\linewidth} p{0.33\linewidth} @{}}
+\toprule
+\textbf{Parameter} & \textbf{Classical Controller} & \textbf{Quantum Controller} \\
+\midrule
+Switching penalty ($\Lambda$ or $\lambda$) & 20 & 10 \\
+Neighbor coupling ($J$) & 2 & 2 \\
+
+Decision scope & Per-intersection (local) & Network-wide (global) \\
+Optimization method & Deterministic greedy & Probabilistic sampling \\
+\bottomrule
+\end{tabular}
+\caption{Classical vs.\ quantum controller parameter comparison.}
+\label{tab:classical-vs-quantum-params}
+\end{table}
+
+The potential advantage of the QAOA Optimization controller arises from its ability to search for low-energy configurations of the entire network rather than locally optimizing intersections.
+
+\subsection{Signal Transition and Control Execution}
+\label{sec:signal}
+
+The optimization controllers generate phase recommendations at each time-step, but these cannot be executed instantaneously on real traffic signals due to safety constraints and standardized timing protocols that prevent a traffic signal from simply instantaneously changing to a different phase. This section describes the signal state machine that mediates between controller recommendations and physical signal commands.
+
+
+\begin{figure}[htbp]
+\centering
+\textbf{\textsc{[Figure 5 goes here]}}
+\label{fig:state-machine}
+\end{figure}
+
+
+\subsubsection{Phase Transition Sequence}
+
+Traffic signal standards \cite{fhwa2009} mandate a structured clearance sequence to prevent simultaneous conflicting movements. Yellow intervals provide advance warning to approaching vehicles while all-red intervals ensure that vehicles have time to clear the middle of the intersection before opposing movements receive a green light. Together these intervals form the change interval: yellow intervals last 3 seconds and all-red clearance intervals last 1 second, giving a change interval of 4 seconds.
+
+\subsubsection{Minimum Green Time Constraint}
+
+To prevent excessive phase oscillations, each green phase must persist for a minimum duration before a phase change can be initiated. A phase change is permitted only when:
+
+\begin{equation}
+\label{eq:phase_change}
+    (t_{\text{green}} \geq \tau_{\min}) \wedge \left(x_i^{\text{optimal}} \neq x_i^{\text{current}}\right)
+\end{equation}
+
+
+
+Where ${x_{i}}^{\text{optimal}}$ is the recommended phase from the optimization controller and ${x_{i}}^{\text{current}}$ is the active phase. If $t_{\text{green}} < \tau_{\text{min}}$, the current phase is retained regardless of the recommended phase.
+
+This mechanism improves signal stability and ensures that each approach receives sufficient time to discharge queued vehicles.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} l l @{}}
+\toprule
+\textbf{Controller} & \textbf{Minimum Green Time ($\tau_{\min}$)} \\
+\midrule
+Classical Optimization & 16 seconds \\
+QAOA Optimization & 12 seconds \\
+\bottomrule
+\end{tabular}
+\caption{Minimum green time by controller.}
+\label{tab:min-green-time}
+\end{table}
+
+
+Different values for $\tau_{\text{min}}$ are used to align with the switching behavior of each controller. Since QAOA Optimization is built off of a probabilistic distribution, it is less likely to fluctuate compared to Classical Optimization's deterministic evaluation.
+
+\subsubsection{State Machine Logic}
+
+Each intersection maintains its current signal phase and tracks how long it has been in that phase. At every simulation time-step ($\Delta t = 1$s), the controller will make a phase recommendation, which will get stored in a history array. The state machine can access the latest phase recommendation and if minimum green time has been satisfied and the recommended phase differs from the active phase, the signal begins a transition sequence consisting of a yellow interval followed by an all-red clearance interval before switching to the opposing green phase. Otherwise, the current phase is maintained.
+
+\subsection{Performance Evaluation}
+
+
+
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{SUMMARY OF EXPERIMENTAL EVALUATION MODES}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l c l l @{}}
+\toprule
+\textbf{Mode} & \textbf{Duration} & \textbf{Demand Source} & $\boldsymbol{\alpha}$ \\
+\midrule
+Saturated $\alpha$-Sweep & 600s & Synthetic Demand & $\{0.0, 0.1, \ldots, 1.0\}$ \\
+Seattle Case Study & 24h (86,400s) & Seattle Open Data Set & $\approx 0.706$ \\
+\bottomrule
+\end{tabular}
+\caption{Controller performance is assessed through vehicle-level outcome metrics collected continuously throughout each simulation trial under two experimental modes.}
+\label{tab:eval-modes}
+\end{table}
+
+
+The two modes serve complementary purposes: the saturated $\alpha$-sweep isolates the traffic uniformity conditions under which each controller performs best, while the 24-hr Seattle Case Study evaluates controller performance under a realistic time-varying traffic demand profile.
+
+\subsubsection{Primary Performance Metrics}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} p{0.30\linewidth} c p{0.48\linewidth} @{}}
+\toprule
+\textbf{Metric} & \textbf{Unit} & \textbf{Definition} \\
+\midrule
+Average Travel Time \emph{(both experiments)} & seconds &
+The average amount of time a vehicle takes to travel along its complete path. \\
+Average Waiting Time \emph{(both experiments)} & seconds &
+The average amount of cumulative duration vehicles spend stopped (speed under 0.1 m/s) due to signal control. \\
+Throughput \emph{(only saturated 600s tests)} & vehicles &
+Total count of vehicles completing trips within the 600-second period. \\
+\bottomrule
+\end{tabular}
+\caption{Primary performance metrics used for controller evaluation.}
+\label{tab:performance-metrics}
+\end{table}
+
+Travel time captures the end-to-end quality of vehicle travel. This is the primary metric for navigation systems and driver satisfaction. Waiting time isolates the delay attributable to signal control, filtering out free-flow travel time and distinguishing stopped delay from slow-moving congestion. For the 600-second $\alpha$-sweep simulations, throughput measures how many vehicles complete their trips within the 600s period. Higher throughput under identical, saturated demand is one of the most direct indicators for the efficiency of signal coordination and green time usage of the controllers under various conditions.
+
+In the 24-hour Seattle case study, the grid spends most of the day well below saturation (overnight, midday) and every injected vehicle eventually completes its route, so per-controller throughput converges to essentially the same total and is therefore not a useful comparison metric. Throughput is therefore reported only for the saturated trials; the 24-hour case study uses travel time and waiting time as its primary comparison metrics, since both remain sensitive to signal-control quality even when the grid is not saturated.
+
+\subsubsection{Data Collection Instrumentation}
+
+Metrics are computed through real-time vehicle tracking using SUMO's TraCI (Traffic Control Interface) API. At each simulation time-step, vehicle departures, arrivals, accumulated waiting times, and lane occupancies are queried through TraCI. Vehicle travel times are computed as the difference between arrival and departure timestamps. Waiting times are obtained through tracking vehicles moving slower than 0.1 m/s and having an accumulated waiting-time tracker for each vehicle. In the same loop that calculates waiting time, the queue lengths and flowing car lengths are measured through counting the vehicles traveling below or above 0.1 m/s within controlled lanes at each time-step. Throughput is recorded as the count of vehicles completing their route, aggregated per route and overall.
+
+\subsubsection{Experimental Protocol}
+
+Each controller configuration (fixed-time, queue-based, classical, and quantum) is evaluated under both experimental modes described in Table~\ref{tab:eval-modes}. In the saturated mode, the straight-through probability $\alpha$ is swept across $\{0.0, 0.1, \ldots, 0.9, 1.0\}$ in 600-second trials at injection rates that saturate the grid for the full trial duration. The Fixed-Time, Queue-Based, and Classical Optimization controllers are deterministic under identical demand conditions, so each controller-$\alpha$ configuration is evaluated using one 600-second simulation. By contrast, the QAOA optimization controller is probabilistic because its phase recommendation depends on sampled low-energy configurations. To account for this stochasticity, each $\alpha$ value is evaluated over 50 independent QAOA simulation trials, producing 550 total QAOA simulations across the 11 $\alpha$ values. For QAOA, performance metrics are aggregated using the mean, standard deviation, minimum, and maximum values. This allows the quantum controller to be evaluated not only by average performance, but also by run-to-run stability.
+
+In the 24-hour Seattle case study, $\alpha$ is fixed as its calibrated value for Seattle ($\approx 0.706$), and Fixed-Time, Queue-Based, and Classical controllers are run once over the full 86,400-second Seattle demand profile and the QAOA controller is run 50 times, which exposes it to the same time-varying demand profile (rush peaks, midday plateau, overnight quiet) that a deployed signal control would face in Seattle.
+
+\subsubsection{Comparative Analysis Framework}
+
+Performance is assessed through pairwise comparison against the fixed-time baseline and the research question is addressed through:
+
+
+
+\begin{itemize}
+    \item \textbf{Classical vs. Fixed-Time:} Evaluates the benefits of novel pressure-based energy optimization algorithms that we design throughout this experiment over traditional signal timing.
+
+    \item \textbf{Quantum vs. Classical:} Evaluates the benefit of network-wide quantum optimization beyond local classical optimization. The key comparison is global vs. local optimization.
+
+    \item \textbf{Performance over $\alpha$:} Identifies the traffic conditions under which each controller performs most effectively.
+
+\end{itemize}
+
+\section{Results}
+
+\subsection{Experimental Overview}
+
+\subsubsection{Saturated Traffic Experiments ($\alpha$-Sweep)}       
+Performance was evaluated using throughput, average travel time, and average waiting time, as defined in Methodology. Although representative $\alpha$ values and Table~\ref{tab:qaoa-alpha-summary} were discussed below to illustrate characteristic behavior, Figures~\ref{fig:throughput}--~\ref{fig:waitingtime-alpha} summarized results across the complete $\alpha$ sweep.
+
+Across all 11 $\alpha$ values, controller performance followed three distinct trends rather than changing monotonically with $\alpha$. Low turning probabilities ($\alpha$ $\approx$ 0.0-0.3) produced moderate advantages for the optimization-based controllers, intermediate values ($\alpha$ $\approx$ 0.4-0.8) produced the strongest QAOA performance, and highly directional traffic ($\alpha$$\approx$0.9-1.0) favored the Fixed-Time controller. Through analyzing the graph, representative values from these three regions illustrated the overall trend: $\alpha$ = 0.5 represented the center of the mixed-turning regime, $\alpha$ = 0.7 represented the transition toward highly directional traffic and the urban traffic standard, $\alpha$ = 1.0 represented the most uniform, directional traffic.
+
+Since the QAOA controller is inherently probabilistic, each $\alpha$ condition represented the aggregate performance of 50 independent optimization runs. The reported QAOA curves therefore corresponded to the mean of these trials, while the shaded regions indicated the $\pm$1 and $\pm$2 standard deviations and complete min-max range observed across all runs. In total, the saturated experiments included 550 total QAOA simulations, allowing the consistency of the QAOA-based optimization process to be evaluated alongside its average performance.
+
+
+\begin{figure}[htbp]
+\centering
+[Figure 6 goes here]
+\label{fig:throughput}
+\end{figure}
+
+Figure~\ref{fig:throughput} showed that throughput depended strongly on traffic composition, with optimization-based controllers such as the QAOA Optimization controller performing best under mixed traffic and Fixed-Time dominating highly directional traffic.
+
+Representative values from each region illustrated this pattern. At $\alpha$ = 0.5, the center of the mixed-traffic region, the QAOA Optimization controller achieved the highest mean throughput, completing 1023.00 vehicles with a standard deviation of 13.50 vehicles. This was also the point where QAOA Optimization displayed its widest throughput spread, ranging from 987 to 1041 completed vehicles. This indicated that mixed-turning conditions produced both the strongest average QAOA Optimization performance and the greatest run-to-run variation. 
+
+At $\alpha$ = 0.7, still within the mixed-traffic region, QAOA Optimization remained competitive with a mean throughput of 926.90 vehicles, but Classical Optimization produced slightly higher throughput in the single deterministic run, showing that QAOA Optimization’s advantage began to diminish toward the upper end of the mixed-traffic region. 
+
+By $\alpha$ = 1.0, QAOA Optimization’s throughput declined to a mean of 712.66 vehicles, while Fixed-Time control achieved the strongest high-$\alpha$ performance. This confirmed that the QAOA Optimization’s throughput advantage was concentrated in mixed-turning conditions rather than uniform, highly directional traffic.
+
+
+\begin{figure}[htbp]
+\centering
+[Figure 7 goes here]
+\label{fig:traveltime-alpha}
+\end{figure}
+
+Figure~\ref{fig:traveltime-alpha} showed that optimization-based controllers consistently reduced average travel time across most values of $\alpha$.
+
+In the QAOA trials, average travel time remained relatively low from $\alpha$ = 0.0 to $\alpha$ = 0.5, increasing from 79.83 seconds at $\alpha$ = 0.0 to 87.44 seconds at $\alpha$ = 0.5. The largest travel-time standard deviation occurred at $\alpha$ = 0.5, where the mean was 87.44 seconds and the standard deviation was 2.24 seconds. After $\alpha$ = 0.6, QAOA travel time increased sharply, reaching 95.49 seconds at $\alpha$ = 0.6 and 97.07 seconds at $\alpha$ = 0.7, before decreasing slightly at higher $\alpha$ values. This pattern suggested that QAOA’s travel-time performance was strongest before the transition into highly directional traffic, but became weaker once straight-through traffic dominated. 
+
+\begin{figure}[htbp]
+\centering
+[Figure 8 goes here]
+\label{fig:waitingtime-alpha}
+\end{figure}
+
+Figure~\ref{fig:waitingtime-alpha} demonstrated that the QAOA Optimization controller provided its greatest advantage in average waiting time, particularly throughout the intermediate $\alpha$ range.
+
+QAOA Optimization showed its clearest advantage in average waiting time. From $\alpha$ = 0.0 to $\alpha$ = 0.5, average waiting time remained near 30 seconds, reaching its lowest value at $\alpha$ = 0.5 with a mean of 29.73 seconds. Waiting-time standard deviation remained below one second at every $\alpha$ value, indicating that QAOA Optimization’s ability to reduce stopped delay was relatively stable across repeated trials. After $\alpha$ = 0.6, waiting time increased into the 37–39 second range, matching the broader decline in QAOA Optimization’s performance under highly straight-dominant traffic. This supported the interpretation that QAOA Optimization was most useful when mixed vehicle movements created stronger competition for green time. Error bands were shown only for the QAOA Optimization controller since it was the only stochastic algorithm evaluated. The remaining controllers were deterministic and therefore produced identical outputs for repeated simulations.
+
+Figures~\ref{fig:traveltime-alpha} and~\ref{fig:waitingtime-alpha} together demonstrated that the optimization-based controllers consistently reduced both travel time and waiting time relative to Fixed-Time control across most of the $\alpha$ sweep, which mirrored the throughput trends described above. The greatest separation occurred in the mixed-traffic region, where the QAOA Optimization controller produced the lowest waiting times of any controller across nearly the entire range $\alpha$ $\approx$ 0.4-0.9, which was a larger and more consistent advantage than it showed in both travel time and throughput. 
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{SUMMARY OF QAOA OPTIMIZATION ALPHA-SWEEP METRICS}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l c c c c c @{}}
+\toprule
+\textbf{Metric} & $\boldsymbol{\alpha}$ & \textbf{Mean} & \textbf{Std.\ Dev.} & \textbf{Min} & \textbf{Max} \\
+\midrule
+\multirow{3}{*}{Throughput}
+  & 0.5 & 1023.0 & 13.4983 & 987 & 1041 \\
+  & 0.7 & 926.90 & 8.32320 & 912 &  965 \\
+  & 1.0 & 712.66 & 2.47110 & 708 &  719 \\
+
+\multirow{3}{*}{Average Travel Time}
+  & 0.5 &	87.4426 & 2.2431 &	84.69 &	93.16 \\
+  & 0.7 &	97.0684	& 1.1820 &	91.52 &	98.41 \\
+  & 1.0 &	91.7290	& 0.5488 &	90.93 &	92.97 \\
+
+\multirow{3}{*}{Average Waiting Time}
+  & 0.5 &	29.7272 & 	0.8920 &	28.62 &	31.78 \\
+  & 0.7 &	39.0346 &	0.3315 &	37.44 &	39.37 \\
+  & 1.0 &	38.4798 &	0.4084 &	37.92 &	39.28 \\
+\bottomrule
+\end{tabular}
+\caption{A summary of the performance for the QAOA Optimization controller on representative values in the three distinct regions across the 550 simulations that were run.}
+\label{tab:qaoa-alpha-summary}
+\end{table}
+
+Table~\ref{tab:qaoa-alpha-summary} summarized the mean throughput, travel time, waiting time, and statistical variability of the QAOA controller across the representative examples discussed above.
+
+Overall the $\alpha$ sweep indicated that controller ranking depended strongly on traffic composition, with the QAOA Optimization controller performing best under mixed turning behavior and Fixed-Time becoming increasingly competitive under highly directional traffic.
+
+\subsubsection{Seattle 24-Hour Case Study}
+
+The controllers were next evaluated using a 24-hour demand profile derived from scraping 3 Seattle traffic count datasets and recreating an average 2x2 grid in the Seattle urban downtown. Performance was evaluated using hourly average travel time, the average time it took a car to complete a trip in the given hour, and hourly average waiting time, the average time a car spent traveling less than 0.1 m/s in the given hour.
+
+Unlike the deterministic controllers, the QAOA controller was evaluated over 50 independent 24-hour simulations. Reported QAOA values therefore represented the mean hourly performance across these runs, allowing both average behavior and run-to-run variability to be assessed.
+
+Across the full 24-hour profile, the Classical and QAOA optimization controllers consistently achieved the lowest travel times and waiting times of the four controllers, with the largest differences emerging during the afternoon peak demand period.
+
+\begin{figure}[htbp]
+\centering
+[Figure 9 goes here]
+\label{fig:seattle-traveltime}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+[Figure 10 goes here]
+\label{fig:seattle-waitingtime}
+\end{figure}
+
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{SUMMARY OF SEATTLE CASE STUDY PERFORMANCE METRICS}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} p{0.30\linewidth} c c c c @{}}
+\toprule
+\textbf{Metric} & \textbf{Fixed} & \textbf{Queue} & \textbf{Classical} & \textbf{QAOA} \\
+\midrule
+24-Hr Avg Travel Time (s) & 68.55s & 50.39s & 52.90s & 52.51s (SD: 0.47s) \\
+24-Hr Avg Waiting Time (s) & 30.98s & 18.47s & 20.43s & 19.55s (SD: 0.28s) \\
+
+18-Hr Day-Time Avg Travel Time (s): 5am--11pm & 71.74s & 52.40s & 52.24s & 51.56s (SD: 0.64s) \\
+
+18-Hr Day-Time Avg Waiting Time (s): 5am--11pm & 32.23s & 19.79s & 19.23s & 18.04s (SD: 0.37s) \\
+
+Peak 1-Hr Avg Travel Time (s) & 117.41s & 81.34s & 68.70s & 72.14s (SD: 5.09s) \\
+
+Peak 1-Hr Avg Waiting Time (s) & 47.05s & 37.84s & 28.53s & 28.89s (SD: 2.96s) \\
+\bottomrule
+\end{tabular}
+\caption{A summary of the hourly performance for the Seattle case study to help detail where each controller is advantageous.}
+\label{tab:seattle-summary}
+\end{table}
+
+
+
+Table~\ref{tab:seattle-summary} summarized the principal performance metrics for the Seattle case study, showing that the optimization-based controllers consistently achieved the lowest travel times and waiting times during periods of moderate and high demand, with their largest advantages occurring during daytime and afternoon peak traffic. 
+
+Across the 50 repeated QAOA simulations, overall performance remained consistent despite the stochastic nature of QAOA sampling. The controller produced a mean full-day travel time of 52.30 $\pm$ 0.81 s and a mean waiting time of 18.25 $\pm$ 0.47 s. Hourly variability remained small throughout most of the day, with the largest standard deviation occurring during the afternoon rush period (approximately 4-6 PM), when traffic demand and network coordination requirements were greatest.
+
+While 24-hour averages were comparable among the adaptive controllers, the optimization controllers consistently produced the greatest reductions during daytime and peak-demand periods, where network coordination became increasingly important.
+Fixed-Time control produced the highest travel times and waiting times across nearly all hours of the day. All controllers experienced increased delay during the afternoon period spanning roughly hours 15 through 18, corresponding to the highest demand levels in the Seattle-derived traffic profile. During peak rush-hour traffic around hour 16, Fixed-Time control reached 117.41s average travel time and 47.05s average waiting time. Over the same interval, the Classical optimization controller recorded 56.97s travel time and 21.04s waiting time, while the QAOA optimization controller recorded 53.28s travel time and 17.90 waiting time. The Queue-Based controller reached 69.42s travel time and 30.84s waiting time during the same hour.
+
+Outside of peak hours, the Classical and QAOA Optimization  controllers produced closely matching performance throughout most of the day, with both recording travel times and waiting times well below those of Fixed-Time Control. Queue-Based control usually remained between the optimization-based controllers and Fixed-Time control, particularly during periods of elevated demand, with its performance gap relative to the optimization-based approaches widening during rush hour peak.
+
+Overall, the 24-hour Seattle Case Study demonstrated that optimization-based controllers maintained lower travel and waiting times throughout a realistic daily demand profile. Averaging QAOA Optimization performance across 50 independent simulations further showed that these improvements were reproducible rather than the result of isolated stochastic outcomes, with variability remaining modest even during peak-demand conditions when it grew the largest.
+
+\subsection{Contribution 1: Pressure-Based Energy Optimization}
+
+The first contribution evaluated in this proposed Pressure-Based Energy Optimization framework. To isolate the effect of the energy formulation itself, the main novel contribution of the framework, this section compares the deterministic Classical Optimization controller against the two simpler deterministic baselines: Fixed-Time control and Queue-Based control. Fixed-Time control represents a non-adaptive timing strategy that is standard for urban traffic signal control, providing insight into the real-world improvements this framework will have, while Queue-Based control represents a local reactive strategy based only on visible queue length, which is the non-energy alternative to this framework which will show how much benefit the specific energy component of the optimization has. Therefore, improvements by Classical Optimization over these controllers indicate that the pressure-based energy function provides value beyond both static timing and simple queue response. QAOA Optimization is excluded from this subsection and evaluated separately in Section~\ref{sec:qaoa-contribution-results}, since its contribution is the global quantum implementation of the same energy framework rather than the pressure-based formulation itself.
+\subsubsection{Fixed Time vs. Classical Optimization}
+
+The first comparison tests whether Pressure-Based Energy Optimization improves performance relative to Fixed-Time control across the saturated $\alpha$-sweep. This comparison is important because Fixed-Time control does not observe real-time traffic conditions and therefore cannot adjust signal phases in response to changes in turning behavior and is also has become the standard for most urban traffic networks, so it is important to demonstrate the weaknesses of the current system and the benefits that Pressure-Based Energy Optimization can provide. Table~\ref{tab:fixed-vs-classical-percent-table} reports the percentage improvement of Classical Optimization relative to Fixed-Time control for throughput, average travel time, and average waiting time at each $\alpha$ value. For throughput, positive values indicate that Classical Optimization completed more vehicles than Fixed-Time control. For travel time and waiting time, positive values indicate that Classical Optimization reduced delay relative to Fixed-Time control.
+\begin{table}[H]
+\centering
+\textbf{\textsc{Performance Improvement of Classical Pressure-Based Energy Optimization over Fixed-Time Control Across Turning Regimes}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l r r r @{}}
+\toprule
+$\boldsymbol{\alpha}$ & \textbf{Throughput Improvement} & \textbf{Travel Time Reduction} & \textbf{Waiting Time Reduction} \\
+\midrule
+0.0 & 8.35\%  & 24.62\%  & 33.76\% \\
+0.1 & 11.19\% & 26.09\%  & 35.04\% \\
+0.2 & 8.21\%  & 24.45\%  & 35.78\% \\
+0.3 & 7.59\%  & 24.31\%  & 36.08\% \\
+0.4 & 9.93\%  & 21.16\%  & 35.19\% \\
+0.5 & 6.81\%  & 6.92\%   & 27.16\% \\
+0.6 & 13.83\% & 10.80\%  & 19.19\% \\
+0.7 & 19.60\% & 4.74\%   & 10.61\% \\
+0.8 & 9.46\%  & 14.18\%  & 19.19\% \\
+0.9 & -7.82\% & -2.01\%  & 7.92\% \\
+1.0 & -19.17\% & -19.46\% & 6.33\% \\
+\bottomrule
+\end{tabular}
+
+\caption{Percentage improvement of the proposed Classical Pressure-Based Energy Optimization framework relative to Fixed-Time control for throughput, average travel time, and average waiting time across the saturated $\alpha$-sweep. Positive values indicate improved performance by the proposed controller, while negative values indicate traffic regimes in which Fixed-Time control performed better.}
+\label{tab:fixed-vs-classical-percent-table}
+\end{table}
+
+Table 14 shows that Classical Optimization outperformed Fixed-Time control across most of the $\alpha$-sweep, especially in average waiting time. From $\alpha$ = 0.0 through $\alpha$ = 0.8, Classical Optimization produced consistent throughput improvements and substantial travel-time and waiting-time reductions. The waiting-time reductions were especially strong, remaining above $19\%$ for most of the $\alpha$-sweep and reaching above $35\%$ in several low-to-mid $\alpha$ regimes. This indicates that the pressure-based energy function was effective at reducing stopped delay by responding to real-time pressure imbalances rather than following a fixed cycle.
+
+The main exception occurred at $\alpha$ = 0.9 and $\alpha$ = 1.0, where Fixed-Time control produced higher throughput and lower travel time than Classical Optimization. This exception is important because highly directional traffic creates a simpler coordination problem: when most vehicles continue straight, a repeating fixed cycle can support platoon progression without requiring adaptive pressure-based switching. However, even in these high-$\alpha$ regimes, Classical Optimization still reduced waiting time relative to Fixed-Time control, suggesting that pressure-based decisions continued to improve stopped-delay fairness even when Fixed-Time control was competitive on throughput and travel time.
+
+The saturated $\alpha$-sweep shows how Classical Optimization performs under controlled turning regimes, but the same comparison must also be tested and validated under realistic time-varying demand. Table~\ref{tab:seattle-fixed-vs-classical-hourly-percent-table} evaluates Classical Optimization against Fixed-Time control in the 24-hour Seattle case study. Because the 24-hour Seattle simulation represents a full-day demand profile in which vehicles complete their trips, the relevant metrics are average travel time and average waiting time rather than throughput. Positive values again indicate that Classical Optimization reduced delay relative to Fixed-Time control.
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{Hourly Performance Improvement of Classical Pressure-Based Energy Optimization over Fixed-Time Control in the Seattle Case Study}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l r r @{}}
+\toprule
+\textbf{Hour} & \textbf{Travel Time Reduction} & \textbf{Waiting Time Reduction} \\
+\midrule
+12--1 AM & 8.67\%  & 14.86\% \\
+1--2 AM & 7.25\%  & 12.41\% \\
+2--3 AM & 6.73\%  & 11.53\% \\
+3--4 AM & 5.04\%  & 7.08\% \\
+4--5 AM & 9.40\%  & 14.94\% \\
+5--6 AM & 3.84\%  & 7.60\% \\
+6--7 AM & 13.17\% & 26.51\% \\
+7--8 AM & 22.38\% & 44.47\% \\
+8--9 AM & 23.39\% & 44.25\% \\
+9--10 AM & 21.53\% & 42.86\% \\
+10--11 AM & 21.87\% & 43.08\% \\
+11 AM--12 PM & 22.12\% & 44.21\% \\
+12--1 PM & 22.63\% & 44.07\% \\
+1--2 PM & 23.96\% & 45.23\% \\
+2--3 PM & 24.65\% & 45.04\% \\
+3--4 PM & 47.45\% & 55.61\% \\
+4--5 PM & 51.48\% & 55.28\% \\
+5--6 PM & 38.17\% & 37.10\% \\
+6--7 PM & 43.52\% & 54.48\% \\
+7--8 PM & 21.47\% & 42.66\% \\
+8--9 PM & 16.49\% & 32.78\% \\
+9--10 PM & 11.83\% & 23.58\% \\
+10--11 PM & 5.46\% & 10.53\% \\
+11 PM--12 AM & 4.52\% & 9.32\% \\
+\bottomrule
+\end{tabular}
+
+\caption{Hourly percentage reduction in average travel time and average waiting time achieved by the proposed Classical Pressure-Based Energy Optimization framework relative to Fixed-Time control in the Seattle 24-hour case study. Positive values indicate lower travel or waiting time under Classical Optimization, while negative values would indicate hours in which Fixed-Time control performed better.}
+\label{tab:seattle-fixed-vs-classical-hourly-percent-table}
+\end{table}
+
+Table~\ref{tab:seattle-fixed-vs-classical-hourly-percent-table} shows that Classical Optimization reduced both travel time and waiting time relative to Fixed-Time control during every hour of the Seattle case study. The improvements were smallest during low-demand overnight periods, where fixed cycles were less costly because fewer vehicles were present in the network. However, the advantage of Classical Optimization increased sharply during daytime and afternoon peak periods. The largest travel-time reduction occurred during the 4–5 PM interval, where Classical Optimization reduced average travel time by $51.48\%$ relative to Fixed-Time control. The largest waiting-time reduction occurred during the 3–4 PM interval, where Classical Optimization reduced average waiting time by $55.61\%$.
+
+These hourly reductions provide the strongest evidence for the first contribution: converting traffic signal control into a pressure-based energy minimization problem substantially improves delay performance over fixed timing when demand becomes dynamic and congestion pressure changes throughout the network.
+
+\subsubsection{Queue-Based vs. Classical Optimization}
+
+The second comparison evaluates Classical Optimization against Queue-Based control. This is a stricter test of the proposed framework since Queue-Based control is already adaptive: it observes queues and reacts to the most congested approach. However, Queue-Based control does not model pressure alignment, discharging pressure, neighbor coupling, or switching cost as part of a unified objective, all of which is strictly part of the novel energy optimization approach. Therefore, this comparison tests the benefits of the novel energy optimization framework and the components it adds and will also serve as a way to show the disadvantages of Pressure-Based Energy Optimization compared to just Max-Pressure systems \cite{varaiya2013}. Table 16 reports Classical Optimization’s percentage improvement over Queue-Based control across the saturated $\alpha$-sweep.
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{Performance Improvement of Classical Pressure-Based Energy Optimization over Queue-Based Control Across Turning Regimes}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l r r r @{}}
+\toprule
+$\boldsymbol{\alpha}$ & \textbf{Throughput Improvement} & \textbf{Travel Time Reduction} & \textbf{Waiting Time Reduction} \\
+\midrule
+0.0 & -4.92\% & 1.49\% & 9.39\% \\
+0.1 & -5.33\% & 2.62\% & 9.23\% \\
+0.2 & -3.75\% & 1.72\% & 10.82\% \\
+0.3 & -4.49\% & 0.77\% & 7.54\% \\
+0.4 & -2.73\% & 1.55\% & 14.43\% \\
+0.5 & 28.53\% & 3.70\% & 12.86\% \\
+0.6 & 5.51\% & 7.98\% & 9.25\% \\
+0.7 & 4.65\% & 1.31\% & 3.16\% \\
+0.8 & 2.55\% & 6.30\% & 11.49\% \\
+0.9 & -8.84\% & -6.51\% & 3.04\% \\
+1.0 & -8.07\% & -6.93\% & 4.77\% \\
+\bottomrule
+\end{tabular}
+
+\caption{Percentage improvement of the proposed Classical Pressure-Based Energy Optimization framework relative to the Queue-Based controller for throughput, average travel time, and average waiting time across the saturated $\alpha$-sweep. Positive values indicate improved performance by the proposed controller (higher throughput or lower travel and waiting times), while negative values indicate traffic regimes in which the Queue-Based controller performed better.}
+\label{tab:queue-vs-classical-percent-table}
+\end{table}
+
+Table 16 shows a more nuanced comparison than the Fixed-Time baseline. Queue-Based control sometimes achieved higher throughput than Classical Optimization, particularly at low $\alpha$ values and again at $\alpha=$ 0.9–1.0. This indicates that energy optimization can be disadvantageous when the traffic state is either direct enough or sparse enough for the largest visible queue to be a reliable decision signal. However, Classical Optimization produced its strongest throughput advantage at $\alpha$ = 0.5, improving throughput by $28.53\%$ relative to Queue-Based control. This suggests that the energy formulation is especially valuable when mixed turning behavior creates competing pressure differentials where neighboring signals must be coupled but switching must also be penalized.
+
+The waiting time metrics show a more consistent advantage for Classical Optimization. Across the entire $\alpha$-sweep, Classical Optimization reduced average waiting time relative to Queue-Based control at every $\alpha$ value, with reductions ranging from $3.04\%$ to $14.43\%$. Travel-time reductions were also positive across most $\alpha$ values, except at $\alpha$ = 0.9 and $\alpha$ = 1.0. This indicates that the pressure-based energy framework’s clearest benefit is not that it always maximizes throughput, but that it more consistently reduces stopped delay and improves the allocation of green time across competing approaches.
+
+Table~\ref{tab:seattle-queue-vs-classical-hourly-percent-table} extends the Queue-Based comparison to the Seattle 24-hour case study. This comparison is particularly important because it reveals when the proposed energy framework is less useful. Unlike Fixed-Time control, Queue-Based control can respond immediately to visible queues, which may be advantageous during very low-demand periods when only a few vehicles are present. Therefore, Table~\ref{tab:seattle-queue-vs-classical-hourly-percent-table} reports the hourly percentage reduction of Classical Optimization relative to Queue-Based control, where positive values indicate that Classical Optimization reduced delay and negative values indicate that Queue-Based control performed better.
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{Hourly Performance Improvement of Classical Pressure-Based Energy Optimization over Queue-Based Control in the Seattle Case Study}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l r r @{}}
+\toprule
+\textbf{Hour} & \textbf{Travel Time Reduction} & \textbf{Waiting Time Reduction} \\
+\midrule
+12--1 AM & -22.34\% & -64.63\% \\
+1--2 AM & -28.09\% & -77.62\% \\
+2--3 AM & -26.38\% & -73.62\% \\
+3--4 AM & -31.11\% & -86.66\% \\
+4--5 AM & -24.44\% & -69.76\% \\
+5--6 AM & -32.65\% & -89.32\% \\
+6--7 AM & -17.98\% & -45.80\% \\
+7--8 AM & -6.47\% & -5.78\% \\
+8--9 AM & -5.04\% & -1.73\% \\
+9--10 AM & -6.34\% & -5.79\% \\
+10--11 AM & -6.06\% & -6.47\% \\
+11 AM--12 PM & -5.72\% & -3.79\% \\
+12--1 PM & -6.76\% & -4.06\% \\
+1--2 PM & -2.80\% & 2.71\% \\
+2--3 PM & -3.72\% & 1.25\% \\
+3--4 PM & 3.61\% & 14.50\% \\
+4--5 PM & 17.95\% & 31.78\% \\
+5--6 PM & 15.54\% & 24.60\% \\
+6--7 PM & 18.86\% & 33.52\% \\
+7--8 PM & 12.06\% & 23.31\% \\
+8--9 PM & 6.02\% & 8.98\% \\
+9--10 PM & -0.02\% & -5.68\% \\
+10--11 PM & -8.75\% & -27.53\% \\
+11 PM--12 AM & -11.17\% & -33.50\% \\
+\bottomrule
+\end{tabular}
+
+\caption{Hourly percentage reduction in average travel time and average waiting time achieved by the proposed Classical Pressure-Based Energy Optimization framework relative to Queue-Based control in the Seattle 24-hour case study. Positive values indicate lower travel or waiting time under Classical Optimization, while negative values indicate hours in which Queue-Based control performed better.}
+\label{tab:seattle-queue-vs-classical-hourly-percent-table}
+\end{table}
+
+Table~\ref{tab:seattle-queue-vs-classical-hourly-percent-table} shows that Queue-Based control outperformed Classical Optimization during many overnight and early-morning periods. For example, from 3-4 AM, Classical Optimization had a $-31.11\%$ travel-time reduction and a $-86.66\%$ waiting-time reduction relative to Queue-Based control, meaning Queue-Based control performed substantially better during that hour. A similar pattern occurred from 5-6 AM, where Queue-Based control outperformed Classical Optimization by $32.65\%$ in travel time and $89.32\%$ in waiting time. These results suggest that under sparse traffic conditions, direct queue response can be more efficient than an energy-based controller. The specific part of the energy equation that contributes to this disadvantage will be covered in the Discussion.
+
+
+However, the pattern reversed during the higher-demand afternoon and evening periods. From 4–5 PM, Classical Optimization reduced travel time by $17.95\%$ and waiting time by $31.78\%$ relative to Queue-Based control. From 6–7 PM, Classical Optimization reduced travel time by $18.86\%$ and waiting time by $33.52\%$. These improvements indicate that as traffic volume increases and interactions between intersections become more coupled, the novel contribution of the energy optimization framework becomes extremely advantageous.
+
+This table therefore identifies an important boundary condition for Contribution 1. Pressure-Based Energy Optimization is most valuable when traffic demand is high enough for queue interactions, phase stability, and neighbor coordination to matter. During sparse overnight conditions, however, the Queue-Based controller can outperform Classical Optimization because the traffic problem becomes local and immediate rather than network-coupled. This does not weaken the proposed framework; instead, it clarifies the regime in which the framework provides the greatest benefit.
+
+\subsection{Contribution 2: Global QAOA Optimization (Classical vs. QAOA Optimization)}
+\label{sec:qaoa-contribution-results}
+
+While the Classical Pressure-Based Energy Optimization framework minimizes congestion by optimizing signal decisions using local pressure relationships and neighboring intersection coupling, it still relies on deterministic phase selection at each intersection. The second contribution of this work investigates whether a QAOA Optimization framework can extend this energy formulation from local decision making to global network-level optimization. The proposed QAOA Optimization controller encodes the complete traffic grid as a single optimization problem, where each possible signal configuration corresponds to a state within a shared energy landscape. Unlike traditional controllers that evaluate intersections independently, QAOA evaluates the energy function for the entire network to find individual network configurations that minimize total energy of the entire grid at once.
+
+To evaluate the contribution of global optimization and the QAOA circuit structure, QAOA Optimization performance was compared against the Classical Optimization controller using both saturated traffic experiments across varying turning distributions ($\alpha$) and a realistic 24-hour Seattle traffic demand profile. Since QAOA relies on probabilistic sampling of candidate solutions, each condition was evaluated over 50 independent optimization trials. Therefore, performance was evaluated not only using mean travel time, waiting time, and throughput, but also through statistical variability, confidence intervals, and significance testing to determine whether observed differences represented meaningful improvements rather than sampling fluctuations.
+
+The saturated $\alpha$-sweep evaluates how QAOA Optimization performs under different traffic movement distributions, ranging from highly directional traffic ($\alpha \approx 1.0$) to balanced mixed-movement conditions ($\alpha \approx 0.5$). Table~\ref{tab:classical-vs-qaoa-generic-percent-table} summarizes the relative performance difference between QAOA and Classical Optimization across throughput, travel time, and waiting time.
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{Performance Improvement of QAOA Global Optimization over Classical Pressure-Based Energy Optimization Across Turning Regimes}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l r r r @{}}
+\toprule
+$\boldsymbol{\alpha}$ & \textbf{Throughput Improvement} & \textbf{Travel Time Reduction} & \textbf{Waiting Time Reduction} \\
+\midrule
+0.0 & -5.84\% & -2.26\% & -4.66\% \\
+0.1 & -5.74\% & -2.48\% & -5.85\% \\
+0.2 & -2.74\% & -0.74\% & -2.00\% \\
+0.3 & -3.89\% & -1.13\% & -3.57\% \\
+0.4 & 1.81\% & -3.09\% & -8.63\% \\
+0.5 & 11.21\% & 8.81\% & 2.21\% \\
+0.6 & -1.60\% & 7.49\% & 0.33\% \\
+0.7 & -2.01\% & 1.47\% & 1.17\% \\
+0.8 & -8.96\% & -13.63\% & -11.52\% \\
+0.9 & -9.45\% & -13.36\% & -12.94\% \\
+1.0 & -10.88\% & -17.64\% & -16.64\% \\
+\bottomrule
+\end{tabular}
+
+\caption{Percentage improvement of the QAOA Global Optimization controller relative to the Classical Pressure-Based Energy Optimization controller for throughput, average travel time, and average waiting time across the saturated $\alpha$-sweep. Positive values indicate improved performance by QAOA Optimization, while negative values indicate traffic regimes in which Classical Optimization performed better.}
+\label{tab:classical-vs-qaoa-generic-percent-table}
+\end{table}
+
+The results demonstrate that QAOA Optimization does not provide a universal improvement across all traffic conditions, but instead provides advantages in scenarios where global coordination is most valuable. The largest improvement occurs at $\alpha=0.5$, where QAOA increases throughput by 11.21\%, reduces travel time by 8.81\%, and reduces waiting time by 2.21\% compared with Classical Optimization. This traffic regime represents the highest level of directional competition, where vehicles are distributed between multiple movement patterns and independent local decisions become less effective.
+
+In contrast, highly directional traffic conditions ($\alpha \geq 0.8$) favor simpler deterministic optimization strategies. At $\alpha=1.0$, Classical Optimization outperforms QAOA by 10.88\% in throughput and reduces travel time by 17.64\%.
+
+To determine whether the global optimization advantage generalizes beyond controlled saturated experiments, QAOA Optimization was additionally evaluated using a Seattle-derived 24-hour traffic profile. This experiment introduces realistic temporal variation in demand and evaluates whether QAOA can maintain improvements under changing congestion patterns.
+
+\begin{table}[H]
+\centering
+\textbf{\textsc{Hourly Performance Improvement of QAOA Global Optimization over Classical Pressure-Based Energy Optimization in the Seattle Case Study}}
+
+\vspace{0.3cm}
+
+\begin{tabular}{@{} l r r @{}}
+\toprule
+\textbf{Hour} & \textbf{Travel Time Reduction} & \textbf{Waiting Time Reduction} \\
+\midrule
+12--1 AM & -4.48\% & -6.21\% \\
+1--2 AM & -0.76\% & -0.95\% \\
+2--3 AM & 0.14\% & 1.73\% \\
+3--4 AM & 3.11\% & 7.52\% \\
+4--5 AM & -2.70\% & -3.16\% \\
+5--6 AM & 1.97\% & 4.32\% \\
+6--7 AM & 3.79\% & 9.93\% \\
+7--8 AM & 2.50\% & 7.67\% \\
+8--9 AM & 3.42\% & 10.23\% \\
+9--10 AM & 3.32\% & 9.46\% \\
+10--11 AM & 2.23\% & 7.54\% \\
+11 AM--12 PM & 2.37\% & 7.45\% \\
+12--1 PM & 3.94\% & 10.07\% \\
+1--2 PM & 1.82\% & 7.22\% \\
+2--3 PM & 3.92\% & 11.41\% \\
+3--4 PM & 3.34\% & 10.41\% \\
+4--5 PM & -4.00\% & -1.78\% \\
+5--6 PM & -5.00\% & -1.25\% \\
+6--7 PM & -13.06\% & -16.95\% \\
+7--8 PM & 1.41\% & 5.85\% \\
+8--9 PM & 3.63\% & 10.08\% \\
+9--10 PM & 5.75\% & 13.80\% \\
+10--11 PM & 5.01\% & 10.73\% \\
+11 PM--12 AM & -1.19\% & -1.31\% \\
+\bottomrule
+\end{tabular}
+
+\caption{Hourly percentage reduction in average travel time and average waiting time achieved by the QAOA Global Optimization controller relative to the Classical Pressure-Based Energy Optimization controller in the Seattle 24-hour case study. Positive values indicate lower travel or waiting time under QAOA Optimization, while negative values indicate hours in which Classical Optimization performed better.}
+\label{tab:seattle-qaoa-vs-classical-hourly-percent-table}
+\end{table}
+
+The 24-hour Seattle Case Study results further demonstrate that QAOA Optimization provides its strongest improvements during periods with moderate-to-high interaction between competing traffic movements. During midday demand conditions, QAOA Optimization consistently reduces waiting time relative to Classical Optimization, achieving improvements of 10.07\% from 12--1 PM and 11.41\% from 2--3 PM. These improvements suggest that global optimization becomes increasingly valuable when multiple signal configurations produce similar local pressure values and the optimal solution depends on coordination between intersections.
+
+However, the evening peak period reveals an important limitation. Between 6--7 PM, Classical Optimization outperforms QAOA Optimization, reducing travel time by 13.06\% and waiting time by 16.95\%. This occurs during extreme congestion where the traffic state becomes dominated by large directional queues, allowing the deterministic pressure model to respond more efficiently than probabilistic sampling.
+
+Although average performance provides insight into controller behavior, QAOA Optimization introduces stochastic sampling through repeated circuit evaluations. Therefore, statistical testing was performed to determine whether observed differences between Classical and QAOA Optimization represented significant performance changes or simply fluctuations in data caused by the probabilistic nature of QAOA Optimization.
+
+For each metric and condition, Classical's deterministic value was tested against the
+distribution of 50 QAOA trials using a one-sample $t$-test,
+$t = \dfrac{x_{\text{Classical}} - \bar{x}_{\text{QAOA}}}{s_{\text{QAOA}}/\sqrt{n}}$,
+with effect size $d = \dfrac{x_{\text{Classical}} - \bar{x}_{\text{QAOA}}}{s_{\text{QAOA}}}$.
+$p$-values were adjusted using the Benjamini--Hochberg procedure; bolded rows in
+Tables~\ref{tab:classical_vs_qaoa_alpha}--\ref{tab:classical_vs_qaoa_seattle_average_waiting_time} indicate $p_{\text{adj}} < 0.05$
+($^{*}p<0.05$, $^{**}p<0.01$, $^{***}p<0.001$).
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & $\alpha$ & Classical & QAOA Mean $\pm$ SD & $t$ & $p_{\text{adj}}$ & $d$ \\
+\midrule
+{\boldmath\bfseries Throughput (vehicles)} & {\boldmath\bfseries 0.0} & {\boldmath\bfseries 908} & {\boldmath\bfseries 861.72 $\pm$ 5.23} & {\boldmath\bfseries 62.53} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 8.84} \\
+ & {\boldmath\bfseries 0.1} & {\boldmath\bfseries 924} & {\boldmath\bfseries 877.38 $\pm$ 7.78} & {\boldmath\bfseries 42.39} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 5.99} \\
+ & {\boldmath\bfseries 0.2} & {\boldmath\bfseries 949} & {\boldmath\bfseries 903.96 $\pm$ 7.70} & {\boldmath\bfseries 41.34} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 5.85} \\
+ & {\boldmath\bfseries 0.3} & {\boldmath\bfseries 978} & {\boldmath\bfseries 929.18 $\pm$ 7.27} & {\boldmath\bfseries 47.47} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 6.71} \\
+ & {\boldmath\bfseries 0.4} & {\boldmath\bfseries 996} & {\boldmath\bfseries 987.24 $\pm$ 5.67} & {\boldmath\bfseries 10.93} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 1.55} \\
+ & {\boldmath\bfseries 0.5} & {\boldmath\bfseries 910} & {\boldmath\bfseries 1023.00 $\pm$ 13.50} & {\boldmath\bfseries -59.19} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -8.37} \\
+ & {\boldmath\bfseries 0.6} & {\boldmath\bfseries 938} & {\boldmath\bfseries 941.84 $\pm$ 11.97} & {\boldmath\bfseries -2.27} & {\boldmath\bfseries 0.028$^{*}$} & {\boldmath\bfseries -0.32} \\
+ & {\boldmath\bfseries 0.7} & {\boldmath\bfseries 946} & {\boldmath\bfseries 926.90 $\pm$ 8.32} & {\boldmath\bfseries 16.23} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 2.29} \\
+ & {\boldmath\bfseries 0.8} & {\boldmath\bfseries 926} & {\boldmath\bfseries 849.12 $\pm$ 6.52} & {\boldmath\bfseries 83.41} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 11.80} \\
+ & {\boldmath\bfseries 0.9} & {\boldmath\bfseries 825} & {\boldmath\bfseries 776.50 $\pm$ 5.03} & {\boldmath\bfseries 68.21} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 9.65} \\
+ & {\boldmath\bfseries 1.0} & {\boldmath\bfseries 763} & {\boldmath\bfseries 712.66 $\pm$ 2.47} & {\boldmath\bfseries 144.05} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 20.37} \\
+\addlinespace
+Average Travel Time (s) & 0.0 & 79.79 & 79.83 $\pm$ 0.82 & -0.36 & 0.795 & -0.05 \\
+ & {\boldmath\bfseries 0.1} & {\boldmath\bfseries 79.79} & {\boldmath\bfseries 80.40 $\pm$ 0.67} & {\boldmath\bfseries -6.39} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.90} \\
+ & {\boldmath\bfseries 0.2} & {\boldmath\bfseries 79.82} & {\boldmath\bfseries 80.28 $\pm$ 0.75} & {\boldmath\bfseries -4.31} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.61} \\
+ & 0.3 & 82.11 & 82.09 $\pm$ 0.79 & 0.20 & 0.846 & 0.03 \\
+ & {\boldmath\bfseries 0.4} & {\boldmath\bfseries 85.76} & {\boldmath\bfseries 85.31 $\pm$ 1.42} & {\boldmath\bfseries 2.23} & {\boldmath\bfseries 0.037$^{*}$} & {\boldmath\bfseries 0.32} \\
+ & {\boldmath\bfseries 0.5} & {\boldmath\bfseries 100.28} & {\boldmath\bfseries 87.44 $\pm$ 2.24} & {\boldmath\bfseries 40.47} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 5.72} \\
+ & {\boldmath\bfseries 0.6} & {\boldmath\bfseries 99.96} & {\boldmath\bfseries 95.49 $\pm$ 1.36} & {\boldmath\bfseries 23.22} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 3.28} \\
+ & {\boldmath\bfseries 0.7} & {\boldmath\bfseries 99.54} & {\boldmath\bfseries 97.07 $\pm$ 1.18} & {\boldmath\bfseries 14.79} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 2.09} \\
+ & {\boldmath\bfseries 0.8} & {\boldmath\bfseries 84.46} & {\boldmath\bfseries 92.73 $\pm$ 1.00} & {\boldmath\bfseries -58.25} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -8.24} \\
+ & {\boldmath\bfseries 0.9} & {\boldmath\bfseries 84.61} & {\boldmath\bfseries 88.90 $\pm$ 0.75} & {\boldmath\bfseries -40.38} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -5.71} \\
+ & {\boldmath\bfseries 1.0} & {\boldmath\bfseries 86.24} & {\boldmath\bfseries 91.73 $\pm$ 0.55} & {\boldmath\bfseries -70.73} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -10.00} \\
+\addlinespace
+{\boldmath\bfseries Average Waiting Time (s)} & {\boldmath\bfseries 0.0} & {\boldmath\bfseries 29.43} & {\boldmath\bfseries 30.83 $\pm$ 0.46} & {\boldmath\bfseries -21.71} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -3.07} \\
+ & {\boldmath\bfseries 0.1} & {\boldmath\bfseries 29.22} & {\boldmath\bfseries 30.99 $\pm$ 0.46} & {\boldmath\bfseries -27.12} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -3.83} \\
+ & {\boldmath\bfseries 0.2} & {\boldmath\bfseries 28.43} & {\boldmath\bfseries 30.32 $\pm$ 0.33} & {\boldmath\bfseries -41.05} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -5.81} \\
+ & {\boldmath\bfseries 0.3} & {\boldmath\bfseries 29.43} & {\boldmath\bfseries 30.27 $\pm$ 0.34} & {\boldmath\bfseries -17.69} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -2.50} \\
+ & {\boldmath\bfseries 0.4} & {\boldmath\bfseries 29.30} & {\boldmath\bfseries 29.90 $\pm$ 0.74} & {\boldmath\bfseries -5.69} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.80} \\
+ & {\boldmath\bfseries 0.5} & {\boldmath\bfseries 32.99} & {\boldmath\bfseries 29.73 $\pm$ 0.89} & {\boldmath\bfseries 25.87} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 3.66} \\
+ & {\boldmath\bfseries 0.6} & {\boldmath\bfseries 39.04} & {\boldmath\bfseries 37.68 $\pm$ 0.45} & {\boldmath\bfseries 21.12} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 2.99} \\
+ & {\boldmath\bfseries 0.7} & {\boldmath\bfseries 40.20} & {\boldmath\bfseries 39.03 $\pm$ 0.33} & {\boldmath\bfseries 24.86} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 3.52} \\
+ & {\boldmath\bfseries 0.8} & {\boldmath\bfseries 37.15} & {\boldmath\bfseries 38.38 $\pm$ 0.46} & {\boldmath\bfseries -18.86} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -2.67} \\
+ & {\boldmath\bfseries 0.9} & {\boldmath\bfseries 37.32} & {\boldmath\bfseries 37.52 $\pm$ 0.63} & {\boldmath\bfseries -2.28} & {\boldmath\bfseries 0.027$^{*}$} & {\boldmath\bfseries -0.32} \\
+ & {\boldmath\bfseries 1.0} & {\boldmath\bfseries 36.97} & {\boldmath\bfseries 38.48 $\pm$ 0.41} & {\boldmath\bfseries -26.14} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -3.70} \\
+\bottomrule
+\end{tabular}
+\caption{Classical vs.\ QAOA performance across the saturated $\alpha$-sweep ($n=50$),
+by metric. Throughput is a benefit metric (positive $\frac{t}{d}$ favor Classical); travel
+and waiting time are cost metrics (negative $\frac{t}{d}$ favor Classical).}
+\label{tab:classical_vs_qaoa_alpha}
+\end{table}
+
+
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{lrrrrr}
+\toprule
+Hour & Classical (s) & QAOA Mean $\pm$ SD & $t$ & $p_{\text{adj}}$ & $d$ \\
+\midrule
+{\boldmath\bfseries 12-1AM} & {\boldmath\bfseries 52.36} & {\boldmath\bfseries 54.70 $\pm$ 1.13} & {\boldmath\bfseries -14.68} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -2.08} \\
+{\boldmath\bfseries 1-2AM} & {\boldmath\bfseries 55.50} & {\boldmath\bfseries 55.92 $\pm$ 1.21} & {\boldmath\bfseries -2.45} & {\boldmath\bfseries 0.018$^{*}$} & {\boldmath\bfseries -0.35} \\
+2-3AM & 55.28 & 55.20 $\pm$ 1.76 & 0.30 & 0.762 & 0.04 \\
+{\boldmath\bfseries 3-4AM} & {\boldmath\bfseries 56.90} & {\boldmath\bfseries 55.13 $\pm$ 1.66} & {\boldmath\bfseries 7.52} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 1.06} \\
+{\boldmath\bfseries 4-5AM} & {\boldmath\bfseries 54.18} & {\boldmath\bfseries 55.64 $\pm$ 1.18} & {\boldmath\bfseries -8.75} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -1.24} \\
+{\boldmath\bfseries 5-6AM} & {\boldmath\bfseries 56.35} & {\boldmath\bfseries 55.24 $\pm$ 0.71} & {\boldmath\bfseries 11.13} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 1.57} \\
+{\boldmath\bfseries 6-7AM} & {\boldmath\bfseries 51.31} & {\boldmath\bfseries 49.36 $\pm$ 0.18} & {\boldmath\bfseries 74.70} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 10.56} \\
+{\boldmath\bfseries 7-8AM} & {\boldmath\bfseries 48.90} & {\boldmath\bfseries 47.68 $\pm$ 0.19} & {\boldmath\bfseries 45.91} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 6.49} \\
+{\boldmath\bfseries 8-9AM} & {\boldmath\bfseries 50.21} & {\boldmath\bfseries 48.49 $\pm$ 0.21} & {\boldmath\bfseries 56.54} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 8.00} \\
+{\boldmath\bfseries 9-10AM} & {\boldmath\bfseries 49.45} & {\boldmath\bfseries 47.81 $\pm$ 0.19} & {\boldmath\bfseries 60.34} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 8.53} \\
+{\boldmath\bfseries 10-11AM} & {\boldmath\bfseries 48.84} & {\boldmath\bfseries 47.75 $\pm$ 0.16} & {\boldmath\bfseries 47.64} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 6.74} \\
+{\boldmath\bfseries 11AM-12PM} & {\boldmath\bfseries 48.94} & {\boldmath\bfseries 47.78 $\pm$ 0.20} & {\boldmath\bfseries 41.50} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 5.87} \\
+{\boldmath\bfseries 12-1PM} & {\boldmath\bfseries 50.06} & {\boldmath\bfseries 48.09 $\pm$ 0.23} & {\boldmath\bfseries 61.48} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 8.69} \\
+{\boldmath\bfseries 1-2PM} & {\boldmath\bfseries 49.16} & {\boldmath\bfseries 48.27 $\pm$ 0.32} & {\boldmath\bfseries 19.57} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 2.77} \\
+{\boldmath\bfseries 2-3PM} & {\boldmath\bfseries 50.68} & {\boldmath\bfseries 48.70 $\pm$ 0.30} & {\boldmath\bfseries 46.74} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 6.61} \\
+{\boldmath\bfseries 3-4PM} & {\boldmath\bfseries 52.35} & {\boldmath\bfseries 50.60 $\pm$ 0.58} & {\boldmath\bfseries 21.34} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 3.02} \\
+{\boldmath\bfseries 4-5PM} & {\boldmath\bfseries 56.97} & {\boldmath\bfseries 59.25 $\pm$ 3.90} & {\boldmath\bfseries -4.13} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.58} \\
+{\boldmath\bfseries 5-6PM} & {\boldmath\bfseries 68.70} & {\boldmath\bfseries 72.14 $\pm$ 5.09} & {\boldmath\bfseries -4.77} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.68} \\
+{\boldmath\bfseries 6-7PM} & {\boldmath\bfseries 52.27} & {\boldmath\bfseries 59.10 $\pm$ 4.24} & {\boldmath\bfseries -11.39} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -1.61} \\
+{\boldmath\bfseries 7-8PM} & {\boldmath\bfseries 48.42} & {\boldmath\bfseries 47.74 $\pm$ 0.16} & {\boldmath\bfseries 29.80} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 4.21} \\
+{\boldmath\bfseries 8-9PM} & {\boldmath\bfseries 50.23} & {\boldmath\bfseries 48.41 $\pm$ 0.18} & {\boldmath\bfseries 71.29} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 10.08} \\
+{\boldmath\bfseries 9-10PM} & {\boldmath\bfseries 52.33} & {\boldmath\bfseries 49.32 $\pm$ 0.21} & {\boldmath\bfseries 99.79} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 14.11} \\
+{\boldmath\bfseries 10-11PM} & {\boldmath\bfseries 55.19} & {\boldmath\bfseries 52.42 $\pm$ 0.39} & {\boldmath\bfseries 49.69} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 7.03} \\
+{\boldmath\bfseries 11PM-12AM} & {\boldmath\bfseries 54.94} & {\boldmath\bfseries 55.59 $\pm$ 0.71} & {\boldmath\bfseries -6.48} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.92} \\
+\bottomrule
+\end{tabular}
+\caption{Classical vs.\ QAOA average travel time across all 24 Seattle hours ($n=50$).
+Travel time is a cost metric: negative $\frac{t}{d}$ favor Classical, positive favor QAOA.}
+\label{tab:classical_vs_qaoa_seattle_average_travel_time}
+\end{table}
+\begin{table}[H]
+\centering
+
+\begin{tabular}{lrrrrr}
+\toprule
+Hour & Classical (s) & QAOA Mean $\pm$ SD & $t$ & $p_{\text{adj}}$ & $d$ \\
+\midrule
+{\boldmath\bfseries 12-1AM} & {\boldmath\bfseries 22.34} & {\boldmath\bfseries 23.73 $\pm$ 0.84} & {\boldmath\bfseries -11.71} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -1.66} \\
+1-2AM & 24.21 & 24.44 $\pm$ 0.90 & -1.80 & 0.085 & -0.25 \\
+{\boldmath\bfseries 2-3AM} & {\boldmath\bfseries 24.55} & {\boldmath\bfseries 24.12 $\pm$ 1.31} & {\boldmath\bfseries 2.29} & {\boldmath\bfseries 0.030$^{*}$} & {\boldmath\bfseries 0.32} \\
+{\boldmath\bfseries 3-4AM} & {\boldmath\bfseries 25.61} & {\boldmath\bfseries 23.68 $\pm$ 1.24} & {\boldmath\bfseries 10.97} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 1.55} \\
+{\boldmath\bfseries 4-5AM} & {\boldmath\bfseries 23.58} & {\boldmath\bfseries 24.33 $\pm$ 0.90} & {\boldmath\bfseries -5.85} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.83} \\
+{\boldmath\bfseries 5-6AM} & {\boldmath\bfseries 25.16} & {\boldmath\bfseries 24.07 $\pm$ 0.54} & {\boldmath\bfseries 14.19} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 2.01} \\
+{\boldmath\bfseries 6-7AM} & {\boldmath\bfseries 20.15} & {\boldmath\bfseries 18.15 $\pm$ 0.15} & {\boldmath\bfseries 92.94} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 13.14} \\
+{\boldmath\bfseries 7-8AM} & {\boldmath\bfseries 16.46} & {\boldmath\bfseries 15.20 $\pm$ 0.14} & {\boldmath\bfseries 64.59} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 9.13} \\
+{\boldmath\bfseries 8-9AM} & {\boldmath\bfseries 17.10} & {\boldmath\bfseries 15.35 $\pm$ 0.16} & {\boldmath\bfseries 77.85} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 11.01} \\
+{\boldmath\bfseries 9-10AM} & {\boldmath\bfseries 16.81} & {\boldmath\bfseries 15.22 $\pm$ 0.15} & {\boldmath\bfseries 73.20} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 10.35} \\
+{\boldmath\bfseries 10-11AM} & {\boldmath\bfseries 16.61} & {\boldmath\bfseries 15.36 $\pm$ 0.14} & {\boldmath\bfseries 65.34} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 9.24} \\
+{\boldmath\bfseries 11AM-12PM} & {\boldmath\bfseries 16.44} & {\boldmath\bfseries 15.21 $\pm$ 0.15} & {\boldmath\bfseries 56.82} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 8.04} \\
+{\boldmath\bfseries 12-1PM} & {\boldmath\bfseries 16.92} & {\boldmath\bfseries 15.22 $\pm$ 0.17} & {\boldmath\bfseries 71.23} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 10.07} \\
+{\boldmath\bfseries 1-2PM} & {\boldmath\bfseries 16.49} & {\boldmath\bfseries 15.30 $\pm$ 0.22} & {\boldmath\bfseries 37.42} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 5.29} \\
+{\boldmath\bfseries 2-3PM} & {\boldmath\bfseries 17.41} & {\boldmath\bfseries 15.42 $\pm$ 0.22} & {\boldmath\bfseries 63.66} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 9.00} \\
+{\boldmath\bfseries 3-4PM} & {\boldmath\bfseries 18.28} & {\boldmath\bfseries 16.38 $\pm$ 0.39} & {\boldmath\bfseries 34.38} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 4.86} \\
+4-5PM & 21.04 & 21.41 $\pm$ 2.32 & -1.14 & 0.271 & -0.16 \\
+5-6PM & 28.53 & 28.89 $\pm$ 2.96 & -0.85 & 0.399 & -0.12 \\
+{\boldmath\bfseries 6-7PM} & {\boldmath\bfseries 18.29} & {\boldmath\bfseries 21.39 $\pm$ 2.46} & {\boldmath\bfseries -8.92} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -1.26} \\
+{\boldmath\bfseries 7-8PM} & {\boldmath\bfseries 16.61} & {\boldmath\bfseries 15.64 $\pm$ 0.13} & {\boldmath\bfseries 53.42} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 7.55} \\
+{\boldmath\bfseries 8-9PM} & {\boldmath\bfseries 18.74} & {\boldmath\bfseries 16.85 $\pm$ 0.15} & {\boldmath\bfseries 89.58} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 12.67} \\
+{\boldmath\bfseries 9-10PM} & {\boldmath\bfseries 21.03} & {\boldmath\bfseries 18.13 $\pm$ 0.18} & {\boldmath\bfseries 113.57} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 16.06} \\
+{\boldmath\bfseries 10-11PM} & {\boldmath\bfseries 24.04} & {\boldmath\bfseries 21.46 $\pm$ 0.35} & {\boldmath\bfseries 52.20} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries 7.38} \\
+{\boldmath\bfseries 11PM-12AM} & {\boldmath\bfseries 24.03} & {\boldmath\bfseries 24.34 $\pm$ 0.53} & {\boldmath\bfseries -4.23} & {\boldmath\bfseries $<$0.001$^{***}$} & {\boldmath\bfseries -0.60} \\
+\bottomrule
+\end{tabular}
+\caption{Classical vs.\ QAOA average waiting time across all 24 Seattle hours ($n=50$).
+Waiting time is a cost metric: negative $\frac{t}{d}$ favor Classical, positive favor QAOA.}
+\label{tab:classical_vs_qaoa_seattle_average_waiting_time}
+\end{table}
+
+The statistical analysis confirms that the observed QAOA Optimization behavior is not caused by random sampling noise alone. Across the $\alpha$-sweep, many throughput differences between Classical and QAOA Optimization were statistically significant after correction for multiple comparisons. The strongest separation occurs at $\alpha=0.5$, where QAOA Optimization achieves a statistically significant throughput improvement with a large effect size, demonstrating that global optimization provides a measurable advantage when the traffic network contains competing movement patterns.
+
+However, significance testing also highlights that QAOA Optimization's advantage is conditional. Several highly directional scenarios show statistically significant differences favoring Classical Optimization. These results reinforce that the QAOA Optimization controller should not be viewed as a replacement for all existing controllers, but rather as an optimization framework that is particularly valuable for complex traffic states where the global energy landscape contains multiple competing solutions.
+
+\begin{figure}[htbp]
+\centering
+[Figure 11 goes here]
+\label{fig:qaoa-throughput-alpha-sd}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+[Figure 12 goes here]
+\label{fig:qaoa-travel-wait-alpha-sd}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+[Figure 13 goes here]
+\label{fig:qaoa-seattle-sd}
+\end{figure}
+
+The standard deviation analysis demonstrates that the stochastic nature of QAOA Optimization produces controlled and interpretable variability rather than unstable optimization behavior. Across both the saturated $\alpha$-sweep and the Seattle case study, the highest variance consistently occurs in traffic conditions where the optimization landscape contains multiple competing low-energy signal configurations, particularly under mixed turning distributions and periods of elevated congestion. Conversely, standard deviations remain low in highly directional or low-demand traffic, indicating that QAOA Optimization converges consistently when the optimal solution is well defined. These results suggest that increased variability is not a weakness of the proposed approach, but rather a consequence of exploring a richer global solution space. Combined with the statistically significant improvements observed in these same operating regimes, the variance analysis provides evidence that QAOA Optimization reliably identifies improved network-wide signal configurations while maintaining stable performance across repeated optimization trials.
+
+Overall, these results demonstrate that the primary contribution of QAOA Optimization is not simply improving individual traffic metrics, but introducing a fundamentally different optimization perspective for adaptive signal control. Traditional adaptive controllers, including Max-Pressure approaches, rely on local observations and sequential decision making, limiting their ability to capture complex interactions between multiple intersections \cite{varaiya2013}. The proposed QAOA Optimization framework instead represents the entire traffic network as a unified energy minimization problem, allowing correlated signal configurations to be evaluated simultaneously.
+
+By combining an Ising-based traffic energy formulation with quantum approximate optimization, this work establishes a pathway toward globally coordinated traffic control systems where signal decisions are optimized across the entire network rather than independently at each intersection. The results demonstrate that this approach provides measurable benefits specifically in complex traffic regimes where local optimization becomes insufficient, representing an important step toward next-generation intelligent transportation systems based on global optimization principles.
+
+\section{Discussion}
+
+\subsection{Contribution 1: Pressure-Based Energy Optimization}
+
+\subsubsection{Benefits and Advantages of Pressure-Based Energy Optimization}
+
+The first major contribution of this paper is the Pressure-Based Energy Optimization framework, which reframes adaptive traffic signal control as an energy minimization problem rather than a Max-Pressure or direction queue-selection heuristic. This distinction is important because the proposed controller does not simply activate the approach with the largest queue or pressure. Instead, it evaluates the energy cost of signal phases using a pressure-alignment term, a switching penalty, and a neighbor-coupling term. As a result, the controller balances three competing goals at once: serving high-pressure approaches, avoiding excessive phase switching, and coordinating adjacent intersections, a framework that makes it extremely viable for complex scenarios. This is what makes the framework fundamentally different from traditional Fixed-Time control and more complex than a Queue-Based controller.
+
+The results in Table~\ref{tab:fixed-vs-classical-percent-table} show that this energy-based formulation produces strong improvements over Fixed-Time control across most of the saturated $\alpha$-sweep. From $\alpha=0.0$ through $\alpha=0.8$, Classical Pressure-Based Energy Optimization improved throughput relative to Fixed-Time control, with especially strong gains at $\alpha=0.6$ and $\alpha=0.7$, where throughput increased by 13.83\% and 19.60\%, respectively. These improvements are important because they occur near the transition between mixed and directional traffic, where signal control must simultaneously serve multiple competing movements through maintaining efficiency while still preserving flow through the network through coupling intersections together. The travel-time and waiting-time reductions in the same table further show that the improvement was not limited to vehicle completion count. Classical Optimization reduced waiting time at every $\alpha$ value relative to Fixed-Time control, indicating that the pressure-based energy function was consistently better at reducing stopped delay and allocating green time to approaches with accumulated demand. This proves that Pressure-Based Energy Optimization contribution is perfect for these complex scenarios and it excels at balancing quick responses to change in traffic with coupling traffic signals together, whereas controllers like Fixed-Time are extremely strong with coupling traffic signals but inefficient at allocating green time quickly and controllers like Queue-Based and Max-Pressure~\cite{varaiya2013} really excel at responding to quick changes in traffic but struggle with coupling traffic signals together since they operate entirely locally and do not coordinate with neighboring intersections. 
+
+The Seattle case study strengthens this interpretation because it evaluates the same controller under realistic time-varying demand. Table~\ref{tab:seattle-fixed-vs-classical-hourly-percent-table} shows that Classical Optimization produced especially large improvements during high-demand periods. For example, from 3--4 PM through 6--7 PM, Classical Optimization reduced travel time by 47.45\%, 51.48\%, 38.17\%, and 43.52\% relative to Fixed-Time control. Waiting-time reductions during the same period were similarly large, reaching 55.61\%, 55.28\%, 37.10\%, and 54.48\%. These results show that the energy framework becomes most valuable when traffic demand is high enough for queue interactions, switching stability, and neighbor coordination to matter. Under higher demand conditions, controllers that are not able to balance quick responses to change in traffic with coupling traffic signals together are harmed the most since higher demand exacerbates inefficiencies in allocation of green time. Table~\ref{tab:seattle-summary}  shows how both of the Pressure-Based Energy Optimization model controllers suffer much less from the higher demand conditions and maintain lower travel times and lower waiting times while controllers like Fixed-Time and Queue-Based controllers are not able to maintain the same level of efficiency since they cannot balance quick responses to change in traffic with coupling traffic signals together.
+
+The comparison against Queue-Based control further clarifies what the energy framework contributes beyond simple queue or pressure response. In Table~\ref{tab:queue-vs-classical-percent-table}, Classical Optimization underperforms Queue-Based control in throughput at several low-$\alpha$ values, but it substantially improves waiting time across the entire saturated $\alpha$-sweep. The most important result occurs at $\alpha=0.5$, where Classical Optimization improves throughput by 28.53\%, reduces travel time by 3.70\%, and reduces waiting time by 12.86\% relative to Queue-Based control. This mixed-turning regime is exactly where local queue or pressure maximization becomes insufficient because the controller must balance multiple competing approaches rather than simply clear the largest visible queue or the approach with the largest pressure. The Seattle Queue-Based comparison in Table~\ref{tab:seattle-queue-vs-classical-hourly-percent-table} shows the same pattern under real demand: during afternoon and evening congestion, Classical Optimization strongly outperforms Queue-Based control, including 17.95\% lower travel time and 31.78\% lower waiting time from 4--5 PM, and 18.86\% lower travel time and 33.52\% lower waiting time from 6--7 PM.
+
+Taken together, these results show that the Pressure-Based Energy Optimization framework provides a meaningful scientific contribution because it identifies a middle ground between local queue and pressure heuristics and full global optimization. It preserves the interpretability of pressure-based control while adding the structure of an Ising-style energy model. This allows signal timing to be analyzed as a system-level optimization problem, where phase decisions are shaped not only by immediate queues but also by switching costs and neighboring intersections. The improvement over Fixed-Time control in Table~\ref{tab:fixed-vs-classical-percent-table}, the high-demand Seattle gains in Table~\ref{tab:seattle-fixed-vs-classical-hourly-percent-table}, and the mixed-traffic advantage over Queue-Based control in Table~\ref{tab:queue-vs-classical-percent-table} all support the same conclusion: pressure-based energy optimization is most valuable when traffic is sufficiently complex for coordination to matter.
+
+\subsubsection{Disadvantages of Pressure-Based Energy Optimization}
+
+Although the results strongly support Pressure-Based Energy Optimization as a useful contribution, they also show that it is not universally superior. The main limitation is that the energy function can become inefficient when the traffic problem is too simple. Under highly sparse demand or highly directional demand, the extra structure of the energy model can work against the controller because the best decision may not require balancing pressure, coupling neighbors, and avoiding switching. In those cases, a simpler controller can sometimes perform better.
+
+This limitation is clearest in the Seattle comparison against Queue-Based control. Table~\ref{tab:seattle-queue-vs-classical-hourly-percent-table} shows that during the overnight low-demand period, Classical Optimization performed substantially worse than Queue-Based control. From 12--1 AM through 5--6 AM, Classical Optimization had negative travel-time reductions between -22.34\% and -32.65\%, and negative waiting-time reductions between -64.63\% and -89.32\%. This does not contradict the value of the energy framework; instead, it reveals a boundary condition. When only a small number of vehicles are present, the traffic problem is local and immediate. The best policy is often simply to serve the visible queue as quickly as possible. Queue-Based control does this directly, while the energy-based controller may delay switching because the switching penalty and neighbor-coupling terms discourage phase changes unless the pressure benefit is large enough. This reveals the fundamental place where the original energy optimization components of the energy function actually hurt the efficiency of the traffic signal control model and shows exactly where models like Max-Pressure~\cite{varaiya2013}  may prove to be beneficial, which is something that the Queue-Based controller comparison perfectly illustrates and helps to understand where the novel contribution of the energy optimization system actually can be inefficient.
+
+The same kind of boundary appears under highly directional traffic. In Table~\ref{tab:fixed-vs-classical-percent-table}, Classical Optimization performs worse than Fixed-Time control at $\alpha=0.9$ and $\alpha=1.0$ for throughput and travel time. At $\alpha=1.0$, Classical Optimization has 19.17\% lower throughput and 19.46\% worse travel time than Fixed-Time control. This suggests that when almost all vehicles travel straight, traffic becomes predictable enough that synchronized fixed cycles can support platoon progression without needing real-time optimization. In these regimes, Fixed-Time control benefits from stability: it never interrupts a coordinated progression pattern with unnecessary phase changes. The energy controller, by contrast, may still respond to local pressure fluctuations even when the best network behavior is to maintain a simple repeating pattern. In this case the problem is the complete opposite; the energy components of switching penalties and coupling traffic signals works in the favor of the Optimization controllers but the pressure differential component harms it.
+
+These limitations show that Pressure-Based Energy Optimization is not a universal replacement for simpler controllers. Instead, its value depends on coordination complexity. It is strongest when demand is high enough for intersection interactions to matter, but it can become inefficient when traffic is sparse or highly predictable. This also suggests that future versions of the controller should include adaptive parameter tuning. The switching penalty $\Lambda$ and coupling strength $J$ should not necessarily remain constant across all traffic regimes. Under low demand, the switching penalty should likely decrease so isolated vehicles can be served more quickly. Under highly directional demand, the controller may need stronger platoon-progression terms so that it does not disrupt stable vehicle streams. Therefore, the main disadvantage of the proposed framework is not that the energy model fails, but that a fixed energy function cannot perfectly represent every traffic regime, it is designed to be a balanced controller best for high-demand, mixed-traffic scenarios where traffic control is more complex.
+
+\subsection{Contribution 2: Global QAOA Optimization}
+
+\subsubsection{Benefits and Advantages of Global QAOA Optimization}
+
+The second major contribution of this paper is the QAOA Global Optimization controller, which extends the pressure-based energy framework from local energy minimization to network-wide energy minimization. The Classical Optimization controller evaluates the energy of each intersection separately, while the QAOA Optimization controller encodes the complete $2 \times 2$ grid as a single optimization problem. In the QAOA circuit, each intersection is represented as one qubit, and each measured bitstring represents a complete network-wide signal configuration. For the $2 \times 2$ grid, this means the circuit searches over $2^4=16$ possible global phase assignments rather than selecting phases independently at the four intersections. This difference is central to the scientific contribution of the paper: QAOA is not simply another adaptive controller, but a circuit-level method for searching a global traffic energy landscape.
+
+Because QAOA is stochastic while Classical Optimization is deterministic, the one-sample $t$-tests provide the strongest statistical evidence for evaluating whether QAOA's observed differences reflect consistent behavior across repeated trials rather than isolated simulation outcomes. In these tests, the Classical controller's deterministic value is treated as the reference value, while the 50 QAOA trials form the sampled distribution. The $t$ statistic therefore measures how far the QAOA mean lies from the Classical value relative to QAOA's own standard error. A large-magnitude $t$ value indicates that the QAOA distribution is far from the Classical result compared with the amount of run-to-run variation in QAOA. The adjusted $p$ value then indicates whether that difference remains statistically significant after correcting for the many comparisons across $\alpha$ values, metrics, and Seattle hours. Thus, the one-sample tests are especially important because they connect the paper's main claim about global optimization to repeated experimental evidence rather than relying only on single mean comparisons.
+
+The advantage of this design begins with the Hadamard initialization layer. By applying Hadamard gates to all signal qubits, the controller places the traffic network into a superposition over all possible phase configurations. In traffic-control terms, this means the controller does not begin from a single locally preferred signal state. Instead, it begins from a uniform representation of every possible grid-wide signal pattern. The cost Hamiltonian then biases this superposition according to the pressure-based traffic energy function, including pressure alignment, switching history, and neighboring-intersection coupling. Single-qubit $R_Z$ rotations encode the local effective pressure bias at each intersection, while two-qubit $ZZ$ coupling rotations encode the interaction between adjacent intersections. The mixer layer, implemented through $R_X$ rotations, then allows amplitude transfer between candidate configurations before measurement. Therefore, the circuit structure directly implements the central traffic-control idea of this paper: signal timing should be optimized as a coupled network state rather than as four independent intersection decisions.
+
+The results show that this global circuit-based search provides its clearest benefit when traffic contains multiple competing movement patterns. In Table~\ref{tab:classical-vs-qaoa-generic-percent-table}, QAOA Optimization achieves its strongest improvement at $\alpha=0.5$, increasing throughput by 11.21\%, reducing travel time by 8.81\%, and reducing waiting time by 2.21\% relative to Classical Optimization. This is the most important row in the saturated $\alpha$-sweep because $\alpha=0.5$ represents the most balanced mixed-turning condition. In this regime, no single movement direction dominates the network, so the best signal configuration depends on the relationship between multiple intersections and movement directions. This is exactly the condition where the QAOA circuit should be most useful: the Hadamard layer represents all possible global configurations, the cost Hamiltonian assigns lower phase to configurations aligned with the traffic energy function, and the mixer explores nearby configurations before measurement. The fact that QAOA performs best in this regime directly supports the hypothesis that global optimization becomes most valuable when local decision making is insufficient. Global configuration helps take the benefits of Pressure-Based Energy Optimization and provides another layer of balance through coordinating the entire network at once, which truly helps connect the network as a whole together and makes global configuration even more balanced that Pressure-Based Energy Optimization on its own.
+
+The statistical results reinforce this interpretation. Table~\ref{tab:classical_vs_qaoa_alpha} shows that QAOA's improvement at $\alpha=0.5$ is not a random sampling artifact. At this value, QAOA achieved a mean throughput of 1023.00 vehicles with a standard deviation of 13.50 vehicles, compared with 910 vehicles for Classical Optimization, and the difference was statistically significant after correction. The same table shows that QAOA also produced substantially lower travel time at $\alpha=0.5$, with 87.44 s compared with Classical Optimization's 100.28 s. This result is important because it demonstrates that the circuit is not merely producing occasional high-performing samples. Instead, repeated sampling from the QAOA measurement distribution consistently identifies better regions of the global energy landscape in the most coordination-heavy traffic regime.
+
+The magnitude and direction of the $t$ statistics in Table~\ref{tab:classical_vs_qaoa_alpha} provide a more detailed explanation of when QAOA contributes value. For throughput, the $t$ statistic at $\alpha=0.5$ is large and positive in the direction favoring QAOA, indicating that the QAOA throughput distribution is not only higher than the Classical value but separated from it by many standard errors. Since the adjusted $p$ value is below 0.001, the probability of observing a difference this large under the null hypothesis of no difference is extremely small after multiple-comparison correction. This makes $\alpha=0.5$ the strongest statistical evidence that QAOA's global search provides a real benefit under mixed-turning traffic. In contrast, at highly directional values such as $\alpha=0.8$, $\alpha=0.9$, and $\alpha=1.0$, the significant $t$ statistics favor Classical Optimization, showing that QAOA's disadvantage in those regimes is also statistically meaningful rather than random. This is important because the statistics do not simply support QAOA; they clarify the boundary of QAOA's usefulness.
+
+The Seattle case study shows that this circuit-level advantage also appears under realistic demand. Table~\ref{tab:seattle-qaoa-vs-classical-hourly-percent-table} shows that QAOA reduces waiting time relative to Classical Optimization across much of the daytime traffic profile. For example, QAOA reduces waiting time by 9.93\% from 6--7 AM, 10.23\% from 8--9 AM, 10.07\% from 12--1 PM, 11.41\% from 2--3 PM, 10.41\% from 3--4 PM, and 13.80\% from 9--10 PM. These improvements suggest that the QAOA circuit is especially effective at reducing starvation. Because each measured bitstring assigns phases to the whole grid simultaneously, QAOA can select configurations that distribute service across competing approaches rather than allowing one locally dominant queue to determine each intersection's behavior independently. The Seattle travel-time and waiting-time significance tables, Table~\ref{tab:classical_vs_qaoa_seattle_average_travel_time} and Table~\ref{tab:classical_vs_qaoa_seattle_average_waiting_time}, further support this conclusion by showing that many of the hourly differences between Classical Optimization and QAOA are statistically significant after correction.
+
+The Seattle one-sample $t$-tests provide a stronger interpretation of the hourly percent-improvement table because they show whether each hourly QAOA advantage is stable across the 50 repeated simulations. In Table~\ref{tab:classical_vs_qaoa_seattle_average_travel_time}, many daytime hours show statistically significant differences between QAOA and Classical Optimization, meaning the observed travel-time reductions are not simply the product of stochastic sampling. The waiting-time results in Table~\ref{tab:classical_vs_qaoa_seattle_average_waiting_time} are even more important for the paper's argument: many of the hours where QAOA reduces waiting time have very large-magnitude $t$ statistics and adjusted $p$ values below 0.001. Since waiting time is the metric most directly associated with starvation, these tests provide statistical evidence that QAOA's global bitstring selection can reduce stopped delay in realistic demand conditions.
+
+The standard deviation results are especially important because they address the main concern with a probabilistic circuit-based controller: whether its performance is reliable. Figures~\ref{fig:qaoa-throughput-alpha-sd}, \ref{fig:qaoa-travel-wait-alpha-sd}, and \ref{fig:qaoa-seattle-sd} show that QAOA variability is not random or uncontrolled. Instead, the largest variance occurs in the same regimes where the optimization problem is most complex. This pattern follows directly from the circuit design. When the cost Hamiltonian creates a sharp energy landscape with one clearly dominant low-energy configuration, repeated measurement tends to return similar high-quality bitstrings. When traffic is mixed or demand is high, however, several grid-wide signal configurations may have similar energy values. In those cases, the mixer and measurement process sample from a broader set of competitive configurations, increasing standard deviation. Thus, the variance observed in Figures~\ref{fig:qaoa-throughput-alpha-sd}, \ref{fig:qaoa-travel-wait-alpha-sd}, and \ref{fig:qaoa-seattle-sd} is not simply noise; it is evidence that the circuit is exploring a richer global solution space.
+
+The standard deviation figures and one-sample $t$-tests should be interpreted together. Standard deviation measures how much QAOA varies across repeated trials, while the $t$ statistic measures whether the QAOA mean is separated from the Classical value after accounting for that variability. Therefore, a high standard deviation does not automatically weaken the QAOA result if the mean difference is also large. This is exactly what occurs near $\alpha=0.5$: Figure~\ref{fig:qaoa-throughput-alpha-sd} shows increased throughput variability, but Table~\ref{tab:classical_vs_qaoa_alpha} shows that QAOA's throughput advantage remains statistically significant. This means that even though the mixed-turning regime creates a wider distribution of sampled QAOA outcomes, the distribution is still centered far enough above Classical Optimization to support a meaningful performance advantage. Conversely, when QAOA underperforms in highly directional regimes, the significant $t$ tests show that this underperformance is also systematic.
+
+This is the main scientific value of the QAOA Optimization contribution. The results do not simply show that QAOA sometimes outperforms Classical Optimization. More importantly, they show why, when, and where a quantum approximate global optimizer adds value. The QAOA circuit provides the greatest benefit when the traffic energy landscape contains multiple competing low-energy configurations: mixed turning patterns, competing movements, and realistic time-varying demand. The Hadamard layer enables global configuration representation, the cost Hamiltonian encodes traffic pressure and coupling into phase rotations, the mixer allows exploration across candidate signal states, and measurement selects full-network bitstrings rather than local intersection actions. This supports the broader claim that traffic signal control should not always be treated as a set of independent intersection-level decisions. Under complex traffic states, the network itself becomes the object that must be optimized.
+
+\subsubsection{Disadvantages of Global QAOA Optimization}
+
+The results also show that QAOA Optimization should not be interpreted as a universal replacement for Classical Optimization. Its advantage is conditional, and this conditionality is one of the most important findings of the paper. Table~\ref{tab:classical-vs-qaoa-generic-percent-table} shows that QAOA underperforms Classical Optimization in several traffic regimes, especially when traffic is highly directional. At $\alpha=1.0$, QAOA performs worse than Classical Optimization by 10.88\% in throughput, 17.64\% in travel time, and 16.64\% in waiting time. Similarly, at $\alpha=0.8$ and $\alpha=0.9$, QAOA is worse than Classical Optimization across all three metrics. These results show that when vehicle movement becomes predictable, the benefit of global probabilistic search decreases because the optimal signal behavior is already relatively clear.
+
+The one-sample $t$-tests are especially useful for the disadvantages of QAOA because they prevent the discussion from overstating the QAOA Optimization contribution. Table~\ref{tab:classical_vs_qaoa_alpha} shows that QAOA's underperformance at $\alpha=0.8$, $\alpha=0.9$, and $\alpha=1.0$ is statistically significant across multiple metrics. In practical terms, this means the Classical controller's advantage in highly directional traffic is not a single-trial artifact or a small numerical fluctuation. Instead, the QAOA distribution is consistently worse than the Classical value in these regimes. This supports the interpretation that when the traffic energy landscape has a clear dominant solution, deterministic local pressure response can outperform probabilistic global exploration.
+
+This limitation can also be understood through the circuit structure. The QAOA circuit is valuable when the superposition and mixer help explore several plausible low-energy configurations. However, when traffic becomes highly directional, the optimal signal pattern is less ambiguous. A deterministic pressure-based controller can respond directly to the dominant pressure axis without needing to sample from a distribution of global bitstrings. In this case, the Hadamard initialization and mixer exploration provide less benefit because the search space does not contain many meaningfully different competitive solutions. The probabilistic nature of measurement can even become a disadvantage because some sampled configurations may deviate from the obvious dominant-flow solution. Thus, under highly directional traffic, the circuit's ability to explore becomes less useful than the Classical controller's ability to exploit the strongest local pressure signal immediately. Just like how the global configuration helps boost the benefits of Pressure-Based Energy Optimization to more efficiency under high-demand, mixed-traffic scenarios, it also exacerbates all of the limitations of Pressure-Based Energy Optimization to a new level of inefficiency. Not only do the switching penalty and coupling of signals do harm to low-demand scenarios where it is best to provide a green light to wherever a car is detected, but global configuration adds another layer of disadvantage since global configuration makes it even harder for a lone car to move through the 2x2 grid since it is rarely able to get a green light within a reasonable time due to the high coordination of all the traffic signals.
+
+The Seattle results reveal a similar limitation under extreme congestion which adds nuance to the argument that QAOA Optimization is the best controller for high demand scenarios. Table~\ref{tab:seattle-qaoa-vs-classical-hourly-percent-table} shows that QAOA Optimization performs worse than Classical Optimization during the evening peak transition. From 4--5 PM, QAOA has 4.00\% worse travel time and 1.78\% worse waiting time. From 5--6 PM, it has 5.00\% worse travel time and 1.25\% worse waiting time. The largest disadvantage occurs from 6--7 PM, where QAOA performs 13.06\% worse in travel time and 16.95\% worse in waiting time. This result suggests that under certain high-congestion states, the global sampled configuration may become less effective than the deterministic local pressure response of Classical Optimization. When congestion becomes dominated by very large queues, the best decision may again become more direct: clear the largest pressure imbalance quickly rather than searching for a globally balanced configuration.
+
+The standard deviation figures help explain this limitation. Figure~\ref{fig:qaoa-seattle-sd} shows that QAOA variability increases sharply during the same evening peak period where Table~\ref{tab:seattle-qaoa-vs-classical-hourly-percent-table} shows Classical Optimization outperforming QAOA. At the circuit level, this suggests that the cost Hamiltonian is not producing a single strongly preferred global configuration during this period. Instead, the circuit is sampling among several configurations with similar energy values but different downstream traffic consequences. Since the implemented QAOA circuit uses a single layer with fixed $\gamma$ and $\beta$, it may not always sharpen the measurement distribution enough to concentrate probability on the best operational configuration under rapidly changing congestion. This does not invalidate the QAOA approach, but it shows that global optimization requires careful parameter tuning to avoid selecting configurations that are globally reasonable in energy terms but inefficient for immediate vehicle discharge. This also marks a key separation between two fundamental components of the QAOA approach: global coordination will usually benefit QAOA Optimization under high-demand scenarios; and the probabilistic nature of a quantum circuit might harm QAOA Optimization under those same high-demand scenarios. This shows that QAOA Optimization is not just a more aggressive version of the Classical Optimization controller where the benefits are strengthened and disadvantages are exacerbated and it adds a lot more nuance to the true value of the QAOA Optimization controller.
+
+The Seattle significance tables support the same conclusion during the evening peak. In Table~\ref{tab:classical_vs_qaoa_seattle_average_travel_time}, the hours where QAOA performs worse during the evening peak also show statistically significant differences, indicating that the peak-period disadvantage is not simply caused by random sampling noise. Similarly, Table~\ref{tab:classical_vs_qaoa_seattle_average_waiting_time} shows that QAOA's waiting-time disadvantage around the evening congestion period is statistically meaningful when compared with Classical Optimization. This is important because it shows that the QAOA controller's limitations are measurable and regime-specific. The controller is not unreliable in general; rather, its global sampled search becomes less effective when rapidly changing congestion creates an energy landscape where several sampled configurations have similar theoretical energy but different traffic consequences.
+
+A second disadvantage is computational practicality. The Methodology section notes that QAOA introduces substantially higher latency than Classical Optimization, potentially 10--100 times higher depending on implementation. This additional cost comes from constructing the circuit, applying the cost and mixer operators, executing repeated measurement shots, evaluating sampled bitstrings, and selecting the lowest-energy configuration. Therefore, QAOA is only practically justified in regimes where it produces clear performance benefits. The Results section identifies those regimes: mixed-turning traffic in Table~\ref{tab:classical-vs-qaoa-generic-percent-table}, daytime Seattle waiting-time reductions in Table~\ref{tab:seattle-qaoa-vs-classical-hourly-percent-table}, and statistically significant improvements in Table~\ref{tab:classical_vs_qaoa_alpha}, Table~\ref{tab:classical_vs_qaoa_seattle_average_travel_time}, and Table~\ref{tab:classical_vs_qaoa_seattle_average_waiting_time}. In sparse traffic, highly directional traffic, or extreme evening congestion, the extra computational cost may not be justified.
+
+Overall, the one-sample $t$-tests make the Discussion more rigorous because they separate three different ideas: average performance, variability, and statistical reliability. The percent-improvement tables show the magnitude and direction of controller differences. The standard deviation figures show how much QAOA varies across repeated trials. The $t$-tests then combine these ideas by asking whether the QAOA mean is sufficiently far from the Classical deterministic value relative to QAOA's own variation. The adjusted $p$ values are especially important because they account for the large number of comparisons being made. Therefore, the statistical evidence supports a conditional but strong conclusion: QAOA provides significant advantages in mixed and coordination-heavy regimes, especially for throughput at $\alpha=0.5$ and waiting-time reduction across many Seattle daytime hours, but Classical Optimization remains significantly better in several highly directional or extreme-congestion regimes.
+
+The practical implication is that QAOA Optimization should be used as part of a hybrid control architecture rather than as a single always-active controller. Queue-Based or Max-Pressure control is most appropriate under sparse demand because it clears isolated vehicles quickly. Fixed-Time control remains useful under highly directional predictable flow because it can preserve platoon progression. Classical Pressure-Based Energy Optimization is effective across many moderate and high-demand conditions because it provides fast local response with energy-based stability. QAOA Optimization should be reserved for regimes where the network requires true global coordination, especially mixed movement distributions and daytime demand periods where waiting-time reductions are strongest. The one-sample $t$-tests strengthen this interpretation because they show that QAOA's advantages and disadvantages are both statistically structured: the controller does not randomly alternate between success and failure, but instead performs significantly better or worse depending on the coordination complexity of the traffic regime. This interpretation makes the QAOA contribution stronger, not weaker: the paper does not claim that QAOA Optimization universally dominates classical traffic control, but instead identifies the specific traffic regimes where global QAOA Optimization adds value beyond local energy minimization.
+
+\section{Conclusion}
+
+This study evaluated whether traffic signal control can be improved by reframing intersection timing as a pressure-based energy minimization problem and extending that formulation into a QAOA-based global optimization system. Four controllers were compared in a microscopic SUMO simulation of a $2 \times 2$ urban traffic grid: Fixed-Time control, Queue-Based control, Classical Pressure-Based Energy Optimization, and QAOA Global Optimization. Two complementary experiments were used: a saturated 600-second $\alpha$-sweep that varied the probability of straight movement from 0.0 to 1.0, and a 24-hour Seattle-derived case study constructed from real hourly demand and directional flow data. The results showed that optimization-based controllers substantially improved performance over Fixed-Time control across most mixed-demand and high-demand conditions. Classical Pressure-Based Energy Optimization provided strong and consistent reductions in travel time and waiting time compared with Fixed-Time control, while QAOA Optimization provided a conditional advantage over Classical Optimization in regimes requiring greater network-wide coordination. QAOA's strongest result occurred at $\alpha=0.5$, where it increased throughput by 11.21\%, reduced travel time by 8.81\%, and reduced waiting time by 2.21\% relative to Classical Optimization. In the Seattle case study, QAOA also reduced waiting time across many daytime hours, but Classical Optimization remained stronger during some highly directional or extreme-congestion regimes. Overall, the results support a conditional conclusion: global QAOA optimization is most useful when traffic contains competing movements and coordinated signal decisions matter, but simpler deterministic controllers can remain preferable when traffic is sparse, highly directional, or dominated by one obvious pressure imbalance.
+
+The study makes two main contributions. The first contribution is the \textbf{Pressure-Based Energy Optimization} framework, which moves beyond Fixed-Time and Queue-Based control by converting traffic signal selection into an Ising-style energy minimization problem. Instead of selecting phases only from static timing, the largest observed queue, or the max pressure differential, the proposed energy function combines pressure alignment, switching penalties, and neighbor coupling into one objective to minimize the energy cost (or efficiency loss) at each step of the simulation. This allows the controller to account for immediate traffic pressure, avoid inefficient phase oscillations, and coordinate adjacent intersections through a shared energy structure. The second contribution is the \textbf{QAOA Global Optimization} system, which extends the same pressure-based energy model from local intersection decisions to a full network-wide QAOA Optimization search. In this circuit, each signal is encoded as a qubit, Hadamard gates initialize a superposition over all possible grid-wide phase configurations, cost-Hamiltonian rotations encode pressure bias, switching history, and neighbor coupling, and mixer rotations allow the circuit to explore alternative traffic states before measurement. Each measured bitstring therefore represents a complete network-wide signal configuration rather than an independent local action. Together, these contributions show that traffic signal control can be modeled not only as a local pressure-response problem, but as a global energy landscape that can be searched classically or through QAOA-based optimization. The repeated QAOA trials and one-sample statistical tests further showed that QAOA's advantages and disadvantages were structured, regime-dependent effects rather than random single-run outcomes.
+
+Several limitations should be acknowledged. First, the simulation network was limited to a $2 \times 2$ grid. This size was useful for isolating local versus global optimization effects and for making QAOA simulation computationally feasible, but it does not capture the full complexity of large urban networks. Second, the QAOA implementation used a single-layer circuit with fixed parameters $\gamma=0.5$ and $\beta=0.4$. While this allowed consistent comparison across many trials, it likely limited the controller's ability to adapt to different congestion regimes. Third, all experiments were conducted in simulation rather than on quantum hardware, so the reported QAOA results do not include hardware noise, gate error, queueing delay, or quantum execution latency. Fourth, the Seattle case study used real hourly demand and directional-flow data, but still mapped those data onto a simplified $2 \times 2$ grid rather than a real Seattle road network. Fifth, the pressure-based energy function used fixed switching and coupling parameters, which created boundary conditions where optimization became inefficient. During sparse overnight demand, Queue-Based control could outperform the optimization controllers because the best action was often simply to serve the isolated visible queue. Under highly directional traffic, Fixed-Time or Classical Optimization could outperform QAOA because the optimal phase pattern was already obvious and did not require probabilistic global exploration. These limitations show that the proposed framework is not a universal controller, but a coordination-focused optimization method whose value depends on traffic regime complexity.
+
+Future work should extend this framework in several directions. First, the QAOA controller should be evaluated on larger and more realistic networks, including $50 \times 50$ networks as used by Inoue et. al. \cite{inoue2021} and real-map SUMO networks with asymmetric streets, multi-lane approaches, turn pockets, and heterogeneous block lengths. Second, future studies should tune or learn the QAOA parameters $\gamma$ and $\beta$ dynamically rather than fixing them across all traffic states. Multi-layer QAOA circuits should also be tested to determine whether deeper circuits improve performance during high-variance regimes such as the evening Seattle peak. Third, the energy function should be made adaptive, allowing the switching penalty, pressure weights, and neighbor-coupling strength to change based on observed demand, queue distribution, and traffic uniformity. Fourth, hardware-aware experiments should evaluate whether QAOA's performance advantage can survive realistic quantum execution constraints, including noise, limited shots, circuit depth, and latency. Finally, future traffic control systems should explore hybrid controller selection, where Queue-Based control is used under sparse demand, Fixed-Time or Classical Optimization is used under highly directional predictable flow, and QAOA Optimization is activated only when the network exhibits high coordination complexity. In this form, the proposed framework points toward a practical next generation of adaptive signal control: not one controller for every regime, but a regime-aware system that selects the appropriate level of optimization based on the structure of traffic itself and most importantly, something that can truly push modern traffic signal control to a higher-level adaptive, efficient system.
+
+
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

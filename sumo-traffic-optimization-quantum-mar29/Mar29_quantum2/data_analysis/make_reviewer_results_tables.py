@@ -66,6 +66,14 @@ SEATTLE_KEYS = {
     "average_waiting_time": "average_waiting_time",
     "throughput": "completed_vehicles",
 }
+SEATTLE_TIME_WINDOWS = (
+    ("Full day", tuple(range(24))),
+    ("Daytime", tuple(range(5, 21))),
+    ("Night", tuple(range(21, 24)) + tuple(range(0, 5))),
+    ("AM commute", tuple(range(5, 9))),
+    ("Midday", tuple(range(9, 15))),
+    ("Evening peak", tuple(range(15, 20))),
+)
 REPRESENTATIVE_ALPHA = (0.5, 0.7, 1.0)
 BOOTSTRAP_BASE_SEED = 20260901
 
@@ -146,6 +154,19 @@ def rank_map(values: dict[str, float], benefit: bool) -> dict[str, int]:
     return {key: index + 1 for index, key in enumerate(ordered)}
 
 
+def weighted_hourly_metric(hourly: Iterable[dict[str, Any]], metric: str, hours: tuple[int, ...]) -> float:
+    """Aggregate an hourly TT/WT series using completed vehicles as weights."""
+    by_hour = {int(row["hour"]): row for row in hourly}
+    missing = [hour for hour in hours if hour not in by_hour]
+    if missing:
+        raise ValueError(f"Missing Seattle hourly observations for hours {missing}")
+    weights = np.asarray([float(by_hour[hour]["completed_vehicles"]) for hour in hours], dtype=float)
+    values = np.asarray([float(by_hour[hour][metric]) for hour in hours], dtype=float)
+    if math.isclose(float(weights.sum()), 0.0):
+        raise ValueError(f"No completed vehicles in Seattle time window {hours}")
+    return float(np.average(values, weights=weights))
+
+
 def table_environment(caption: str, label: str, columns: str, header: list[str], rows: list[str], *, resize: bool = False, scriptsize: bool = True) -> str:
     lines = [r"\begin{table*}[htbp]", r"\centering"]
     if scriptsize:
@@ -220,46 +241,95 @@ def build_seattle_table(
     qaoa_seattle: dict[str, dict[str, Any]],
     audit: list[dict[str, Any]],
 ) -> str:
-    rows: list[str] = []
-    for grid_index, grid in enumerate(("2x2", "3x3")):
-        values: dict[str, dict[str, float]] = {metric: {} for metric in METRICS}
-        display: dict[str, dict[str, str]] = {metric: {} for metric in METRICS}
+    tables: list[str] = []
+    window_labels = [name for name, _ in SEATTLE_TIME_WINDOWS]
+    for grid in ("2x2", "3x3"):
+        values: dict[str, dict[str, dict[str, float]]] = {
+            metric: {window: {} for window in window_labels}
+            for metric in ("average_travel_time", "average_waiting_time")
+        }
+        display: dict[str, dict[str, dict[str, str]]] = {
+            metric: {window: {} for window in window_labels}
+            for metric in ("average_travel_time", "average_waiting_time")
+        }
         for controller in TABLE_ORDER:
             if controller == "qaoa":
-                stats = qaoa_seattle[grid]["overall_traffic_statistics"]
-                for metric in METRICS:
-                    key = SEATTLE_KEYS[metric]
-                    mean = float(stats[key]["mean"])
-                    sd = float(stats[key]["standard_deviation"])
-                    values[metric][controller] = mean
-                    display[metric][controller] = fmt_mean_sd(mean, sd, metric)
-                    add_audit(audit, 3, grid=grid, condition="full-day", item=LABELS[controller], metric=metric, value=mean, standard_deviation=sd, n=int(stats[key]["count"]))
+                runs = qaoa_seattle[grid]["runs"]
+                for window, hours in SEATTLE_TIME_WINDOWS:
+                    for metric in ("average_travel_time", "average_waiting_time"):
+                        run_values = np.asarray([
+                            weighted_hourly_metric(run["hourly_traffic"], metric, hours)
+                            for run in runs
+                        ])
+                        mean = float(run_values.mean())
+                        sd = float(run_values.std(ddof=1))
+                        values[metric][window][controller] = mean
+                        display[metric][window][controller] = fmt_mean_sd(mean, sd, metric)
+                        add_audit(audit, 3, grid=grid, condition=window, item=LABELS[controller], metric=metric, value=mean, standard_deviation=sd, n=len(run_values))
             else:
-                overall = seattle["graph_data"][grid][controller]["overall"]
-                for metric in METRICS:
-                    value = float(overall[SEATTLE_KEYS[metric]])
-                    values[metric][controller] = value
-                    display[metric][controller] = fmt_number(value, metric)
-                    add_audit(audit, 3, grid=grid, condition="full-day", item=LABELS[controller], metric=metric, value=value, n=1)
-        ranks = {metric: rank_map(values[metric], BENEFIT[metric]) for metric in METRICS}
+                hourly = seattle["graph_data"][grid][controller]["hourly"]
+                for window, hours in SEATTLE_TIME_WINDOWS:
+                    for metric in ("average_travel_time", "average_waiting_time"):
+                        value = weighted_hourly_metric(hourly, metric, hours)
+                        values[metric][window][controller] = value
+                        display[metric][window][controller] = fmt_number(value, metric)
+                        add_audit(audit, 3, grid=grid, condition=window, item=LABELS[controller], metric=metric, value=value, n=1)
+
+        lines = [
+            r"\begin{table*}[htbp]",
+            r"\centering",
+            r"\scriptsize",
+            r"\setlength{\tabcolsep}{3pt}",
+            rf"\caption{{Seattle time-of-day travel and waiting time for all nine controllers on the ${grid[0]}\times{grid[2]}$ network, with full-day completed vehicles retained as the throughput measure. Time windows are Full day (00:00--24:00), Daytime (05:00--21:00), Night (21:00--05:00), AM commute (05:00--09:00), Midday (09:00--15:00), and Evening peak (15:00--20:00). TT and WT are completed-vehicle-weighted across the included hourly observations. QAOA entries report mean $\pm$ standard deviation across 20 independent runs; other controllers are single deterministic runs. Bold denotes the best value in each column.}}",
+            rf"\label{{tab:seattle-time-windows-{grid}}}",
+        ]
+        for metric, panel_label in (("average_travel_time", "Average travel time, TT (s)"), ("average_waiting_time", "Average waiting time, WT (s)")):
+            ranks = {window: rank_map(values[metric][window], False) for window in window_labels}
+            lines += [
+                rf"\textit{{{panel_label}}}\\[2pt]",
+                r"\resizebox{\textwidth}{!}{%",
+                r"\begin{tabular}{lrrrrrr}",
+                r"\toprule",
+                r"Controller & Full day & Daytime & Night & AM commute & Midday & Evening peak \\",
+                r"\midrule",
+            ]
+            for controller in TABLE_ORDER:
+                cells = [LABELS[controller]]
+                for window in window_labels:
+                    cells.append(wrap_best(display[metric][window][controller], 1 if ranks[window][controller] == 1 else 0))
+                lines.append(" & ".join(cells) + r" \\")
+            lines += [r"\bottomrule", r"\end{tabular}%", r"}", r"\vspace{5pt}"]
+
+        throughput_values: dict[str, float] = {}
+        throughput_display: dict[str, str] = {}
         for controller in TABLE_ORDER:
-            cells = [grid, LABELS[controller]]
-            for metric in METRICS:
-                cells.append(wrap_best(display[metric][controller], 1 if ranks[metric][controller] == 1 else 0))
-            rows.append(" & ".join(cells) + r" \\")
-        if grid_index == 0:
-            rows.append(r"\addlinespace")
-    caption = (
-        r"Full-day Seattle performance for all nine controllers on both networks. QAOA entries report mean $\pm$ standard deviation across 20 independent runs; "
-        r"other controllers are single deterministic runs. Completed vehicles is retained as the Seattle throughput measure. Bold denotes the best observed value within each network and metric."
-    )
-    return table_environment(
-        caption,
-        "tab:seattle-24h-all-controller-summary",
-        "llrrr",
-        [r"Grid & Controller & Full-day TT (s) & Full-day WT (s) & Completed Vehicles \\"],
-        rows,
-    )
+            if controller == "qaoa":
+                stats = qaoa_seattle[grid]["overall_traffic_statistics"]["completed_vehicles"]
+                mean = float(stats["mean"])
+                sd = float(stats["standard_deviation"])
+                throughput_values[controller] = mean
+                throughput_display[controller] = fmt_mean_sd(mean, sd, "throughput")
+                add_audit(audit, 3, grid=grid, condition="Full day", item=LABELS[controller], metric="throughput", value=mean, standard_deviation=sd, n=int(stats["count"]))
+            else:
+                value = float(seattle["graph_data"][grid][controller]["overall"]["completed_vehicles"])
+                throughput_values[controller] = value
+                throughput_display[controller] = fmt_number(value, "throughput")
+                add_audit(audit, 3, grid=grid, condition="Full day", item=LABELS[controller], metric="throughput", value=value, n=1)
+        throughput_ranks = rank_map(throughput_values, True)
+        lines += [
+            r"\textit{Full-day throughput}\\[2pt]",
+            r"\begin{tabular}{lr}",
+            r"\toprule",
+            r"Controller & Completed vehicles \\",
+            r"\midrule",
+        ]
+        for controller in TABLE_ORDER:
+            shown = wrap_best(throughput_display[controller], 1 if throughput_ranks[controller] == 1 else 0)
+            lines.append(f"{LABELS[controller]} & {shown}" + r" \\")
+        lines += [r"\bottomrule", r"\end{tabular}"]
+        lines += [r"\end{table*}", ""]
+        tables.append("\n".join(lines))
+    return "\n".join(tables)
 
 
 def build_qaoa_descriptive_table(
