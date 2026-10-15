@@ -1,4 +1,4 @@
-# QAOA GLOBAL
+# CLASSICAL STOCHASTIC GLOBAL
 
 import traci
 import json
@@ -70,7 +70,7 @@ NUM_LANES = 3       # Left=2, Straight=1, Right=0
 
 # Reviewer analysis settings. Defaults preserve the current QAOA behavior.
 ENERGY_LAMBDA = 10
-QAOA_SHOTS = int(os.environ.get("QAOA_SHOTS", "512"))
+optimizer_decisions = []
 
 # Initialize 4D queue_lengths: TLS x Side x Lane x Time
 queue_lengths = [[ [ [] for _ in range(NUM_LANES) ] for _ in range(NUM_SIDES) ] for _ in range(NUM_TLS)]
@@ -609,6 +609,7 @@ while traci.simulation.getTime() < END_TIME:
     )
 
     gap = selected_energy - exact_min_energy
+    optimizer_decisions.append({**optimizer_metadata, "time": traci.simulation.getTime(), "state": bitstring, "exact_min_energy": exact_min_energy, "optimality_gap": gap})
     energy_selected.append(selected_energy)
     energy_exact.append(exact_min_energy)
     energy_gaps.append(gap)
@@ -698,7 +699,9 @@ print(f"  Overall:   {thr_all}")
 # -----------------------
 if energy_selected:
     energy_summary = {
-        "shots": QAOA_SHOTS,
+        "optimizer": "simulated_annealing",
+        "evaluation_budget": STOCHASTIC_BUDGET,
+        "seed": STOCHASTIC_SEED,
         "num_decisions": len(energy_selected),
         "optimal_hits": energy_optimum_hits,
         "optimum_recovery_rate": energy_optimum_hits / len(energy_selected),
@@ -710,7 +713,9 @@ if energy_selected:
     }
 else:
     energy_summary = {
-        "shots": QAOA_SHOTS,
+        "optimizer": "simulated_annealing",
+        "evaluation_budget": STOCHASTIC_BUDGET,
+        "seed": STOCHASTIC_SEED,
         "num_decisions": 0,
         "optimal_hits": 0,
         "optimum_recovery_rate": 0.0,
@@ -722,7 +727,7 @@ else:
     }
 
 print("\n===== ENERGY BENCHMARK =====")
-print(f"QAOA Shots: {energy_summary['shots']}")
+print(f"Stochastic evaluation budget: {STOCHASTIC_BUDGET}")
 print(f"Energy Decisions: {energy_summary['num_decisions']}")
 print(f"Optimal Hits: {energy_summary['optimal_hits']}")
 print(f"Optimum Recovery Rate: {energy_summary['optimum_recovery_rate']:.6f}")
@@ -733,3 +738,4 @@ if energy_summary["average_selected_energy"] is not None:
     print(f"Maximum Optimality Gap: {energy_summary['maximum_optimality_gap']:.6f}")
     print(f"Average Energy Reduction: {energy_summary['average_energy_reduction']:.6f}")
 print("ENERGY_JSON: " + json.dumps(energy_summary))
+print("OPTIMIZER_DECISIONS_JSON: " + json.dumps(optimizer_decisions))
