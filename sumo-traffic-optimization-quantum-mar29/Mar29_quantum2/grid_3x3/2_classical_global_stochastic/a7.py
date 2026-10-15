@@ -5,7 +5,7 @@ import json
 import os
 from itertools import product
 from collections import defaultdict, Counter
-from annealer import quantum_decision
+from annealer_stochastic import quantum_decision
 
 SUMO_BINARY = "sumo"
 
