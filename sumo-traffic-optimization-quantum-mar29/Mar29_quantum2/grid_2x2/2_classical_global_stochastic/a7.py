@@ -13,6 +13,8 @@ SUMO_BINARY = "sumo"
 STOCHASTIC_SEED = int(os.environ.get("STOCHASTIC_SEED", "12345"))
 STOCHASTIC_BUDGET = int(os.environ.get("STOCHASTIC_BUDGET", "512"))
 
+STOCHASTIC_RESTARTS = int(os.environ.get("STOCHASTIC_RESTARTS", "8"))
+
 rng = np.random.default_rng(STOCHASTIC_SEED)
 
 import sys
@@ -577,7 +579,7 @@ while traci.simulation.getTime() < END_TIME:
         coupling_strength=2,
         rng=rng,
         evaluation_budget=STOCHASTIC_BUDGET,
-        restarts=8,
+        restarts=STOCHASTIC_RESTARTS,
         initial_temperature=5.0,
         final_temperature=0.01,
         return_metadata=True,

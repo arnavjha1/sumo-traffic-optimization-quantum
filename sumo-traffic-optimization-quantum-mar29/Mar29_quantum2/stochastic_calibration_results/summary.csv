@@ -1,0 +1,2 @@
+grid,alpha,budget,restarts,successful_runs,recovery_rate_mean,recovery_rate_sd,mean_gap_mean,mean_gap_sd,pooled_nonzero_gap_mean,pooled_nonzero_gap_median
+2x2,7,8,4,1,0.88,,0.7393666666666666,,6.161388888888888,4.82
