@@ -1,3 +1,7 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from supplementary_traffic_metrics import SupplementaryMetrics
 # CLASSICAL STOCHASTIC GLOBAL
 import sys
 import traci
@@ -20,6 +24,7 @@ rng = np.random.default_rng(STOCHASTIC_SEED)
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
 END_TIME = 600
+supplementary = SupplementaryMetrics(f"3x3_a{ALPHA_INDEX}_seed{STOCHASTIC_SEED}_budget{STOCHASTIC_BUDGET}")
 
 ROUTE_FILE = f"grid_3x3/routes_3x3/routes3x3_a{ALPHA_INDEX}.rou.xml"
 
@@ -66,7 +71,7 @@ sumo_cmd = [
     "--end", str(END_TIME),
 ]
 
-traci.start(sumo_cmd)
+traci.start(sumo_cmd + supplementary.sumo_args())
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -113,6 +118,7 @@ def simStep(num_times = 1):
 
     for _ in range(num_times):
         traci.simulationStep()
+        supplementary.step(traci)
         t = traci.simulation.getTime()
 
         # ====================================================
@@ -666,7 +672,9 @@ while traci.simulation.getTime() < END_TIME:
 
     # ====================================================
 
+supplementary.snapshot(traci)
 traci.close()
+supplementary.finish()
 
 # -----------------------
 # RESULTS

@@ -18,7 +18,7 @@ import time
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = 1
+VERSION = 2
 
 
 def save_json(path, data):
@@ -31,7 +31,7 @@ def fingerprint(grid, alpha):
     folder = ROOT / f'grid_{grid}' / '2_classical_global_stochastic'
     config = ROOT / (f'sim2x2_a{alpha}.sumocfg' if grid == '2x2'
                      else f'grid_3x3/sim3x3_a{alpha}.sumocfg')
-    paths = [folder / 'a7.py', folder / 'annealer_stochastic.py', config]
+    paths = [folder / 'a7.py', folder / 'annealer_stochastic.py', config, ROOT / 'supplementary_traffic_metrics.py']
     for node in ET.parse(config).findall('./input/*'):
         if node.tag in ('net-file', 'route-files', 'additional-files'):
             paths.extend(config.parent / name for name in node.attrib['value'].split(','))
@@ -70,7 +70,9 @@ def parse_output(path, budget, seed, restarts):
 def summarize(output, results):
     fields = ['grid', 'alpha', 'budget', 'restarts', 'successful_runs',
               'recovery_rate_mean', 'recovery_rate_sd', 'mean_gap_mean',
-              'mean_gap_sd', 'pooled_nonzero_gap_mean', 'pooled_nonzero_gap_median']
+              'mean_gap_sd', 'pooled_nonzero_gap_mean', 'pooled_nonzero_gap_median',
+              'completed_trips_mean', 'unfinished_trips_mean', 'network_time_loss_seconds_mean',
+              'network_waiting_seconds_mean', 'pending_insertion_at_cutoff_mean']
     rows = []
     keys = sorted({(r['grid'], r['alpha'], r['budget'], r['restarts']) for r in results})
     for key in keys:
@@ -86,7 +88,10 @@ def summarize(output, results):
             statistics.mean(gaps) if gaps else None,
             statistics.stdev(gaps) if len(gaps) > 1 else None,
             statistics.mean(nonzero) if nonzero else None,
-            statistics.median(nonzero) if nonzero else None])))
+            statistics.median(nonzero) if nonzero else None,
+            *[statistics.mean(r['supplementary'][metric] for r in runs) if runs else None
+              for metric in ('completed_trips', 'unfinished_trips', 'network_time_loss_seconds',
+                             'network_waiting_seconds', 'pending_insertion_at_cutoff')]])))
     with (output / 'summary.csv').open('w', newline='', encoding='utf-8') as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -144,8 +149,11 @@ def main():
             if completed.returncode:
                 raise RuntimeError(f'Controller exited with code {completed.returncode}; see {log_path}')
             result['energy'], result['decisions'] = parse_output(log_path, budget, seed, restarts)
+            result['supplementary'] = next(json.loads(line.split(': ', 1)[1]) for line in log_path.read_text(encoding='utf-8').splitlines() if line.startswith('SUPPLEMENTARY_JSON: '))
+            if not (result['supplementary']['departure_accounting_ok'] and result['supplementary']['arrival_accounting_ok']):
+                raise ValueError('Tripinfo and simulation vehicle counts disagree')
             result['status'] = 'success'
-        except (OSError, ValueError, KeyError, RuntimeError, subprocess.TimeoutExpired) as exc:
+        except (OSError, ValueError, KeyError, StopIteration, RuntimeError, subprocess.TimeoutExpired) as exc:
             result['error'] = str(exc)
         result['elapsed_seconds'] = time.perf_counter() - started
         save_json(result_path, result)

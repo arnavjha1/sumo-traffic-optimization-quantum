@@ -1,3 +1,7 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from supplementary_traffic_metrics import SupplementaryMetrics
 # CLASSICAL STOCHASTIC GLOBAL
 
 import traci
@@ -21,6 +25,7 @@ import sys
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 SUMO_CONFIG = f"sim2x2_a{ALPHA_INDEX}.sumocfg"
 END_TIME = 600
+supplementary = SupplementaryMetrics(f"2x2_a{ALPHA_INDEX}_seed{STOCHASTIC_SEED}_budget{STOCHASTIC_BUDGET}")
 
 # -----------------------
 # FIXED OUTPUT ORDER
@@ -46,7 +51,7 @@ TLS_NEIGHBORS = [
     ["B1", "A1", "B0"]   # B1 neighbors
 ]
 
-traci.start([SUMO_BINARY, "-c", SUMO_CONFIG])
+traci.start([SUMO_BINARY, "-c", SUMO_CONFIG] + supplementary.sumo_args())
 
 # -----------------------
 # FORCE MANUAL TLS CONTROL
@@ -91,6 +96,7 @@ for tls in TLS_INVERT:
 def simStep(num_times = 1):
     for _ in range(num_times):
         traci.simulationStep()
+        supplementary.step(traci)
         t = traci.simulation.getTime()
 
         # ====================================================
@@ -627,7 +633,9 @@ while traci.simulation.getTime() < END_TIME:
 
     # ====================================================
 
+supplementary.snapshot(traci)
 traci.close()
+supplementary.finish()
 
 # -----------------------
 # RESULTS

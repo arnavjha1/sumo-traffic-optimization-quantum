@@ -1,0 +1,202 @@
+[
+  {
+    "grid": "2x2",
+    "controller": "QAOA (512 shots)",
+    "budget": null,
+    "runs": 20,
+    "recovery_percent": 99.4,
+    "recovery_sd_percentage_points": 0.23817041419712465,
+    "mean_gap": 0.07354333333333334,
+    "mean_gap_sd": 0.06300288408881591,
+    "pooled_nonzero_gap_mean_approx": 12.257222222222222,
+    "decisions": 12000,
+    "sources": [
+      "quantum_data/quantum_simulation_results.json"
+    ]
+  },
+  {
+    "grid": "2x2",
+    "controller": "Classical stochastic",
+    "budget": 8,
+    "runs": 3,
+    "recovery_percent": 85.38888888888889,
+    "recovery_sd_percentage_points": 3.4332254567734206,
+    "mean_gap": 1.0898999999999999,
+    "mean_gap_sd": 0.6015499351213031,
+    "pooled_nonzero_gap_mean_approx": 7.459391634980988,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\2x2_a7_budget8_seed101.json",
+      "stochastic_calibration_results\\2x2_a7_budget8_seed102.json",
+      "stochastic_calibration_results\\2x2_a7_budget8_seed103.json"
+    ]
+  },
+  {
+    "grid": "2x2",
+    "controller": "Classical stochastic",
+    "budget": 16,
+    "runs": 3,
+    "recovery_percent": 96.61111111111111,
+    "recovery_sd_percentage_points": 0.94770678384622,
+    "mean_gap": 0.15056666666666665,
+    "mean_gap_sd": 0.046660916312381936,
+    "pooled_nonzero_gap_mean_approx": 4.442950819672131,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\2x2_a7_budget16_seed101.json",
+      "stochastic_calibration_results\\2x2_a7_budget16_seed102.json",
+      "stochastic_calibration_results\\2x2_a7_budget16_seed103.json"
+    ]
+  },
+  {
+    "grid": "2x2",
+    "controller": "Classical stochastic",
+    "budget": 32,
+    "runs": 3,
+    "recovery_percent": 99.33333333333333,
+    "recovery_sd_percentage_points": 0.16666666666666496,
+    "mean_gap": 0.020844444444444443,
+    "mean_gap_sd": 0.007573149450036799,
+    "pooled_nonzero_gap_mean_approx": 3.1266666666666665,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\2x2_a7_budget32_seed101.json",
+      "stochastic_calibration_results\\2x2_a7_budget32_seed102.json",
+      "stochastic_calibration_results\\2x2_a7_budget32_seed103.json"
+    ]
+  },
+  {
+    "grid": "2x2",
+    "controller": "Classical stochastic",
+    "budget": 64,
+    "runs": 3,
+    "recovery_percent": 99.83333333333333,
+    "recovery_sd_percentage_points": 0.16666666666666496,
+    "mean_gap": 0.004044444444444444,
+    "mean_gap_sd": 0.006352806320686003,
+    "pooled_nonzero_gap_mean_approx": 2.4266666666666663,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\2x2_a7_budget64_seed101.json",
+      "stochastic_calibration_results\\2x2_a7_budget64_seed102.json",
+      "stochastic_calibration_results\\2x2_a7_budget64_seed103.json"
+    ]
+  },
+  {
+    "grid": "2x2",
+    "controller": "Classical stochastic",
+    "budget": 128,
+    "runs": 3,
+    "recovery_percent": 99.88888888888889,
+    "recovery_sd_percentage_points": 0.09622504486493985,
+    "mean_gap": 0.00013333333333333838,
+    "mean_gap_sd": 0.00011547005383792952,
+    "pooled_nonzero_gap_mean_approx": 0.12000000000000455,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\2x2_a7_budget128_seed101.json",
+      "stochastic_calibration_results\\2x2_a7_budget128_seed102.json",
+      "stochastic_calibration_results\\2x2_a7_budget128_seed103.json"
+    ]
+  },
+  {
+    "grid": "3x3",
+    "controller": "QAOA (512 shots)",
+    "budget": null,
+    "runs": 20,
+    "recovery_percent": 41.41666666666667,
+    "recovery_sd_percentage_points": 3.754334726654788,
+    "mean_gap": 23.323446666666666,
+    "mean_gap_sd": 2.5439124291954713,
+    "pooled_nonzero_gap_mean_approx": 39.812426742532004,
+    "decisions": 12000,
+    "sources": [
+      "quantum_data_3x3/quantum_3x3_simulation_results.json"
+    ]
+  },
+  {
+    "grid": "3x3",
+    "controller": "Classical stochastic",
+    "budget": 8,
+    "runs": 3,
+    "recovery_percent": 19.333333333333332,
+    "recovery_sd_percentage_points": 1.0408329997330659,
+    "mean_gap": 22.055088888888886,
+    "mean_gap_sd": 2.7336790889717597,
+    "pooled_nonzero_gap_mean_approx": 27.341019283746554,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\3x3_a7_budget8_seed101.json",
+      "stochastic_calibration_results\\3x3_a7_budget8_seed102.json",
+      "stochastic_calibration_results\\3x3_a7_budget8_seed103.json"
+    ]
+  },
+  {
+    "grid": "3x3",
+    "controller": "Classical stochastic",
+    "budget": 16,
+    "runs": 3,
+    "recovery_percent": 44.5,
+    "recovery_sd_percentage_points": 3.013856886670854,
+    "mean_gap": 8.603155555555555,
+    "mean_gap_sd": 0.3926014042162786,
+    "pooled_nonzero_gap_mean_approx": 15.501181181181177,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\3x3_a7_budget16_seed101.json",
+      "stochastic_calibration_results\\3x3_a7_budget16_seed102.json",
+      "stochastic_calibration_results\\3x3_a7_budget16_seed103.json"
+    ]
+  },
+  {
+    "grid": "3x3",
+    "controller": "Classical stochastic",
+    "budget": 32,
+    "runs": 3,
+    "recovery_percent": 77.94444444444444,
+    "recovery_sd_percentage_points": 1.0844011831079547,
+    "mean_gap": 1.6791333333333334,
+    "mean_gap_sd": 0.1696780317084227,
+    "pooled_nonzero_gap_mean_approx": 7.613198992443324,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\3x3_a7_budget32_seed101.json",
+      "stochastic_calibration_results\\3x3_a7_budget32_seed102.json",
+      "stochastic_calibration_results\\3x3_a7_budget32_seed103.json"
+    ]
+  },
+  {
+    "grid": "3x3",
+    "controller": "Classical stochastic",
+    "budget": 64,
+    "runs": 3,
+    "recovery_percent": 95.83333333333334,
+    "recovery_sd_percentage_points": 1.4529663145135596,
+    "mean_gap": 0.18427777777777773,
+    "mean_gap_sd": 0.06061897698221551,
+    "pooled_nonzero_gap_mean_approx": 4.422666666666665,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\3x3_a7_budget64_seed101.json",
+      "stochastic_calibration_results\\3x3_a7_budget64_seed102.json",
+      "stochastic_calibration_results\\3x3_a7_budget64_seed103.json"
+    ]
+  },
+  {
+    "grid": "3x3",
+    "controller": "Classical stochastic",
+    "budget": 128,
+    "runs": 3,
+    "recovery_percent": 99.5,
+    "recovery_sd_percentage_points": 0.28867513459481314,
+    "mean_gap": 0.012311111111111116,
+    "mean_gap_sd": 0.0077568846361963295,
+    "pooled_nonzero_gap_mean_approx": 2.4622222222222234,
+    "decisions": 1800,
+    "sources": [
+      "stochastic_calibration_results\\3x3_a7_budget128_seed101.json",
+      "stochastic_calibration_results\\3x3_a7_budget128_seed102.json",
+      "stochastic_calibration_results\\3x3_a7_budget128_seed103.json"
+    ]
+  }
+]

@@ -1,0 +1,3 @@
+grid,alpha,budget,restarts,successful_runs,recovery_rate_mean,recovery_rate_sd,mean_gap_mean,mean_gap_sd,pooled_nonzero_gap_mean,pooled_nonzero_gap_median,completed_trips_mean,unfinished_trips_mean,network_time_loss_seconds_mean,network_waiting_seconds_mean,pending_insertion_at_cutoff_mean
+2x2,7,8,4,1,0.8566666666666667,,1.1437999999999997,,7.979999999999999,7.0,911,194,80907.85,50094.0,5567
+3x3,7,8,4,1,0.26166666666666666,,21.170966666666665,,28.67399548532731,24.45999999999998,1002,337,208548.23,145993.0,8889

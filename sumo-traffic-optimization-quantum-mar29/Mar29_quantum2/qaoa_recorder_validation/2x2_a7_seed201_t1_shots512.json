@@ -1,0 +1,63 @@
+{
+  "config": {
+    "grid": "2x2",
+    "seed": 201,
+    "alpha": 7,
+    "horizon": 1,
+    "shots": 512,
+    "python": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qiskit_env\\Scripts\\python.exe",
+    "source_hashes": {
+      "grid_2x2\\qaoa_calibration\\a7.py": "23a7c07a761d7255ac0d669ce467b1a7b28d6ac2a80d3937bda0dcdf78a807ac",
+      "grid_2x2\\qaoa_calibration\\annealer_quantum.py": "c865d24414fb082b04d91947eabbd5bc11e33a9ca265130475e31edb9d2b561f",
+      "qaoa_calibration_recorder.py": "62d95ba56867d752e626d81fc47ef005c8371d6eefb24f3f471683157ede0b91",
+      "supplementary_traffic_metrics.py": "6a7ab42cc3b45a4e2053535c95a7117c00f6dfcdb36054acbc2325ae6e0c1296",
+      "sim2x2_a7.sumocfg": "d1d81b5201449162eb5d6d7f06d9f267fbf6ea94016a64d7edc72e9dabdf5991",
+      "grid_2x2\\grid2x2_tls.net.xml": "b035067965281f86974b2b26079da012b3de4fcc1354c5e9fc8c28122dc21e45",
+      "routes_2x2\\routes2x2_a7.rou.xml": "b65d0095595cf1e0196e6a127349579a0249bbe13afca796132766f01945090d"
+    }
+  },
+  "status": "success",
+  "snapshot_path": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qaoa_recorder_validation\\2x2_a7_seed201_t1_shots512.snapshots.jsonl",
+  "supplementary": {
+    "schema_version": 1,
+    "undeparted_tripinfo_records": 48,
+    "completed_trips": 0,
+    "completed_time_loss_seconds": 0,
+    "completed_waiting_seconds": 0,
+    "unfinished_trips": 8,
+    "unfinished_time_loss_seconds": 0.0,
+    "unfinished_waiting_seconds": 0.0,
+    "removed_trips": 0,
+    "removed_time_loss_seconds": 0,
+    "removed_waiting_seconds": 0,
+    "departed_trips": 8,
+    "network_time_loss_seconds": 0.0,
+    "network_waiting_seconds": 0.0,
+    "departed_insertion_delay_seconds": 0.0,
+    "completed_mean_travel_seconds": null,
+    "completed_mean_waiting_seconds": null,
+    "cutoff_seconds": 1.0,
+    "active_vehicles_at_cutoff": 8,
+    "pending_insertion_at_cutoff": 48,
+    "pending_insertion_vehicle_seconds_sampled": 48.0,
+    "teleport_start_events": 0,
+    "departed_events": 8,
+    "arrived_events": 0,
+    "tripinfo_path": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qaoa_recorder_validation\\tripinfo\\qaoa_2x2_a7_seed201_c577742d0ccb.tripinfo.xml",
+    "departure_accounting_ok": true,
+    "arrival_accounting_ok": true,
+    "completion_fraction_of_departed": 0.0
+  },
+  "energy": {
+    "shots": 512,
+    "num_decisions": 1,
+    "optimal_hits": 1,
+    "optimum_recovery_rate": 1.0,
+    "average_selected_energy": -41.879999999999995,
+    "average_exact_min_energy": -41.879999999999995,
+    "average_optimality_gap": 0.0,
+    "maximum_optimality_gap": 0.0,
+    "average_energy_reduction": 0.0
+  },
+  "elapsed_seconds": 6.990681900002528
+}

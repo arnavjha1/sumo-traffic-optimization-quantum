@@ -1,0 +1,32 @@
+
+===== 3x3 QAOA CHECK =====
+TLS order: ['A0', 'A1', 'A2', 'B0', 'B1', 'B2', 'C0', 'C1', 'C2']
+Bias count: 9
+Previous state: [1, 0, 1, 1, 0, 0, 0, 0, 0]
+Neighbor indices: [[1, 3], [0, 2, 4], [1, 5], [0, 4, 6], [1, 3, 5, 7], [2, 4, 8], [3, 7], [4, 6, 8], [5, 7]]
+==========================
+
+BEST QAOA: expected_energy=-33.35 best_sample_energy=-99.64 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+1.0
+SUPPLEMENTARY_JSON: {"schema_version": 1, "undeparted_tripinfo_records": 432, "completed_trips": 0, "completed_time_loss_seconds": 0, "completed_waiting_seconds": 0, "unfinished_trips": 12, "unfinished_time_loss_seconds": 0.0, "unfinished_waiting_seconds": 0.0, "removed_trips": 0, "removed_time_loss_seconds": 0, "removed_waiting_seconds": 0, "departed_trips": 12, "network_time_loss_seconds": 0.0, "network_waiting_seconds": 0.0, "departed_insertion_delay_seconds": 0.0, "completed_mean_travel_seconds": null, "completed_mean_waiting_seconds": null, "cutoff_seconds": 1.0, "active_vehicles_at_cutoff": 12, "pending_insertion_at_cutoff": 432, "pending_insertion_vehicle_seconds_sampled": 432.0, "teleport_start_events": 0, "departed_events": 12, "arrived_events": 0, "tripinfo_path": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qaoa_recorder_validation\\tripinfo\\qaoa_3x3_a7_seed201_accba6974a42.tripinfo.xml", "departure_accounting_ok": true, "arrival_accounting_ok": true, "completion_fraction_of_departed": 0.0}
+SNAPSHOT_JSON: {"path": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qaoa_recorder_validation\\3x3_a7_seed201_t1_shots512.snapshots.jsonl", "decisions": 1}
+
+===== PERFORMANCE METRICS =====
+Alpha: 0.7
+Average Travel Time: 0.00 s
+Average Waiting Time: 0.00 s
+Throughput: 0
+Vehicles inserted: 12
+Vehicles still in network at t=1: 12
+
+===== ENERGY BENCHMARK =====
+QAOA Shots: 512
+Energy Decisions: 1
+Optimal Hits: 1
+Optimum Recovery Rate: 1.000000
+Average Selected Energy: -99.640000
+Average Exact Minimum Energy: -99.640000
+Average Optimality Gap: 0.000000
+Maximum Optimality Gap: 0.000000
+Average Energy Reduction: 0.000000
+ENERGY_JSON: {"shots": 512, "num_decisions": 1, "optimal_hits": 1, "optimum_recovery_rate": 1.0, "average_selected_energy": -99.64, "average_exact_min_energy": -99.64, "average_optimality_gap": 0.0, "maximum_optimality_gap": 0.0, "average_energy_reduction": 0.0}
