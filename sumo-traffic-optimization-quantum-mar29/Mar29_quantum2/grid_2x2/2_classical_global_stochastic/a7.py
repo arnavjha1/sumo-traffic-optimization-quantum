@@ -5,13 +5,19 @@ import json
 import os
 from itertools import product
 from collections import defaultdict
-from annealer_stochastic import quantum_decision
+from annealer_stochastic import stochastic_decision
+import numpy as np
 
 SUMO_BINARY = "sumo"
 
+STOCHASTIC_SEED = int(os.environ.get("STOCHASTIC_SEED", "12345"))
+STOCHASTIC_BUDGET = int(os.environ.get("STOCHASTIC_BUDGET", "512"))
+
+rng = np.random.default_rng(STOCHASTIC_SEED)
+
 import sys
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
-SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
+SUMO_CONFIG = f"sim2x2_a{ALPHA_INDEX}.sumocfg"
 END_TIME = 600
 
 # -----------------------
@@ -564,13 +570,20 @@ while traci.simulation.getTime() < END_TIME:
 
         neighbor_indices.append(curr_neighbors)
 
-    bitstring = quantum_decision(
+    bitstring, optimizer_metadata = stochastic_decision(
         bias_list,
         prev_state,
         neighbor_indices,
         coupling_strength=2,
-        shots=QAOA_SHOTS
+        rng=rng,
+        evaluation_budget=STOCHASTIC_BUDGET,
+        restarts=8,
+        initial_temperature=5.0,
+        final_temperature=0.01,
+        return_metadata=True,
     )
+
+    optimizer_metadata["seed"] = STOCHASTIC_SEED
 
     # Benchmark the selected QAOA state against all 16 possible global states.
     selected_energy = calculate_ising_energy(

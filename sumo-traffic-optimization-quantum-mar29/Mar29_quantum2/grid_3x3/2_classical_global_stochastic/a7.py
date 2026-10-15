@@ -5,9 +5,15 @@ import json
 import os
 from itertools import product
 from collections import defaultdict, Counter
-from annealer_stochastic import quantum_decision
+from annealer_stochastic import stochastic_decision
+import numpy as np
 
 SUMO_BINARY = "sumo"
+
+STOCHASTIC_SEED = int(os.environ.get("STOCHASTIC_SEED", "12345"))
+STOCHASTIC_BUDGET = int(os.environ.get("STOCHASTIC_BUDGET", "512"))
+
+rng = np.random.default_rng(STOCHASTIC_SEED)
 
 ALPHA_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 SUMO_CONFIG = f"grid_3x3/sim3x3_a{ALPHA_INDEX}.sumocfg"
@@ -607,67 +613,21 @@ while traci.simulation.getTime() < END_TIME:
         print("Neighbor indices:", neighbor_indices)
         print("==========================\n")
 
-    if current_time <= CALIBRATION_END:
 
-        (
-            bitstring,
-            best_gamma,
-            best_beta,
-            best_p,
-            best_expected_energy
-        ) = quantum_decision(
-            bias_list,
-            prev_state,
-            neighbor_indices,
-            coupling_strength=2,
-            shots=QAOA_SHOTS,
-            return_metadata=True
-        )
+    bitstring, optimizer_metadata = stochastic_decision(
+        bias_list,
+        prev_state,
+        neighbor_indices,
+        coupling_strength=2,
+        rng=rng,
+        evaluation_budget=STOCHASTIC_BUDGET,
+        restarts=8,
+        initial_temperature=5.0,
+        final_temperature=0.01,
+        return_metadata=True,
+    )
 
-        param_key = (
-            round(float(best_gamma), 12),
-            round(float(best_beta), 12),
-            int(best_p)
-        )
-
-        parameter_counts[param_key] += 1
-        parameter_energy_sum[param_key] += best_expected_energy
-
-        # Make the classical loop a fixed loop parameter selection
-        if current_time == CALIBRATION_END:
-
-            max_wins = max(parameter_counts.values())
-
-            candidates = [
-                params
-                for params, count in parameter_counts.items()
-                if count == max_wins
-            ]
-
-            fixed_params = min(
-                candidates,
-                key=lambda params:
-                    parameter_energy_sum[params]
-                    / parameter_counts[params]
-            )
-
-            print("\n===== QAOA CALIBRATION COMPLETE =====")
-            print(f"Fixed gamma: {fixed_params[0]:.6f}")
-            print(f"Fixed beta:  {fixed_params[1]:.6f}")
-            print(f"Fixed p:     {fixed_params[2]}")
-            print(f"Wins:        {parameter_counts[fixed_params]}/{CALIBRATION_END}")
-            print("===== FIXED-PARAMETER QAOA BEGINS =====\n")
-
-    else:
-
-        bitstring = quantum_decision(
-            bias_list,
-            prev_state,
-            neighbor_indices,
-            coupling_strength=2,
-            shots=QAOA_SHOTS,
-            fixed_params=fixed_params
-        )
+    optimizer_metadata["seed"] = STOCHASTIC_SEED
 
     assert len(bitstring) == 9
 
