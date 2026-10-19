@@ -1,0 +1,142 @@
+{
+  "validation_only": true,
+  "sources": {
+    "2x2_a7_seed201_t1_shots512.json": "8571790f1b99416891d12bd704ccaf445addb5413fb2cfb4ac36b9733103ae92",
+    "2x2_a7_seed201_t1_shots512.snapshots.jsonl": "1a0b34de312e1cd6d48d6e7c925ec9abbd36092f0471ec006653a79291a0a2b9",
+    "3x3_a7_seed201_t1_shots512.json": "73490888fea634921501030c238da2befdb062d92ce8f8c4d51a5bdd2612dabe",
+    "3x3_a7_seed201_t1_shots512.snapshots.jsonl": "66a48efea84014704cf70487dd15419072f750ebe3ed101964b12053c07b768b",
+    "grid_2x2\\2_classical_global_stochastic\\annealer_stochastic.py": "b5f15e23f414ad0ec672a8d61d7e56b58dae9737685e53bf58fcb5bd173db055",
+    "grid_3x3\\2_classical_global_stochastic\\annealer_stochastic.py": "b5f15e23f414ad0ec672a8d61d7e56b58dae9737685e53bf58fcb5bd173db055"
+  },
+  "summaries": [
+    {
+      "grid": "2x2",
+      "alpha": 7,
+      "budget": 8,
+      "seed": 101,
+      "stochastic": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      },
+      "qaoa": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      }
+    },
+    {
+      "grid": "2x2",
+      "alpha": 7,
+      "budget": 16,
+      "seed": 101,
+      "stochastic": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      },
+      "qaoa": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      }
+    },
+    {
+      "grid": "3x3",
+      "alpha": 7,
+      "budget": 8,
+      "seed": 101,
+      "stochastic": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      },
+      "qaoa": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      }
+    },
+    {
+      "grid": "3x3",
+      "alpha": 7,
+      "budget": 16,
+      "seed": 101,
+      "stochastic": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      },
+      "qaoa": {
+        "decisions": 1,
+        "recovery_rate": 1.0,
+        "mean_gap": 0.0,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q90": 0.0,
+          "q95": 0.0,
+          "q99": 0.0
+        }
+      }
+    }
+  ],
+  "interpretation": "Paired common-instance energy calibration only; decisions are dependent within trajectories. Energy evaluations are not equal-cost QAOA shots. No traffic-based setting selection."
+}

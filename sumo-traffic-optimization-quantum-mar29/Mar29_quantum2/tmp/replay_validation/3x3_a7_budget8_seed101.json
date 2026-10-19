@@ -1,0 +1,43 @@
+{
+  "summary": {
+    "grid": "3x3",
+    "alpha": 7,
+    "budget": 8,
+    "seed": 101,
+    "stochastic": {
+      "decisions": 1,
+      "recovery_rate": 1.0,
+      "mean_gap": 0.0,
+      "gap_quantiles": {
+        "q25": 0.0,
+        "q50": 0.0,
+        "q75": 0.0,
+        "q90": 0.0,
+        "q95": 0.0,
+        "q99": 0.0
+      }
+    },
+    "qaoa": {
+      "decisions": 1,
+      "recovery_rate": 1.0,
+      "mean_gap": 0.0,
+      "gap_quantiles": {
+        "q25": 0.0,
+        "q50": 0.0,
+        "q75": 0.0,
+        "q90": 0.0,
+        "q95": 0.0,
+        "q99": 0.0
+      }
+    }
+  },
+  "decisions": [
+    {
+      "qaoa_seed": 201,
+      "decision": 1,
+      "state": "101100000",
+      "gap": 0.0,
+      "qaoa_gap": 0.0
+    }
+  ]
+}
