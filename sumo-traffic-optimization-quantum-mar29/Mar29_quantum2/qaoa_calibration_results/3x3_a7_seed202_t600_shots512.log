@@ -1,0 +1,440 @@
+
+===== 3x3 QAOA CHECK =====
+TLS order: ['A0', 'A1', 'A2', 'B0', 'B1', 'B2', 'C0', 'C1', 'C2']
+Bias count: 9
+Previous state: [1, 0, 1, 1, 0, 0, 0, 0, 0]
+Neighbor indices: [[1, 3], [0, 2, 4], [1, 5], [0, 4, 6], [1, 3, 5, 7], [2, 4, 8], [3, 7], [4, 6, 8], [5, 7]]
+==========================
+
+BEST QAOA: expected_energy=-32.93 best_sample_energy=-99.64 gamma=1.396 beta=0.698 p=1 shots=512 state=101100000
+1.0
+BEST QAOA: expected_energy=-61.44 best_sample_energy=-97.82 gamma=2.443 beta=0.698 p=1 shots=512 state=101100000
+2.0
+BEST QAOA: expected_energy=-42.08 best_sample_energy=-102.23 gamma=2.443 beta=0.873 p=1 shots=512 state=101100000
+3.0
+BEST QAOA: expected_energy=-30.73 best_sample_energy=-100.29 gamma=0.698 beta=1.222 p=2 shots=512 state=101100000
+4.0
+BEST QAOA: expected_energy=-40.60 best_sample_energy=-104.17 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+5.0
+BEST QAOA: expected_energy=-24.07 best_sample_energy=-100.29 gamma=0.698 beta=1.222 p=2 shots=512 state=101100000
+6.0
+BEST QAOA: expected_energy=-42.21 best_sample_energy=-105.58 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+7.0
+BEST QAOA: expected_energy=-27.90 best_sample_energy=-106.11 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+8.0
+BEST QAOA: expected_energy=-34.76 best_sample_energy=-106.17 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+9.0
+BEST QAOA: expected_energy=-32.95 best_sample_energy=-109.52 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+10.0
+BEST QAOA: expected_energy=-49.31 best_sample_energy=-112.52 gamma=2.443 beta=0.873 p=1 shots=512 state=101100000
+11.0
+BEST QAOA: expected_energy=-43.23 best_sample_energy=-113.52 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+12.0
+BEST QAOA: expected_energy=-41.98 best_sample_energy=-114.93 gamma=0.698 beta=1.222 p=2 shots=512 state=101100000
+13.0
+BEST QAOA: expected_energy=-26.49 best_sample_energy=-119.46 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+14.0
+BEST QAOA: expected_energy=-48.98 best_sample_energy=-121.81 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+15.0
+BEST QAOA: expected_energy=-36.34 best_sample_energy=-124.75 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+16.0
+BEST QAOA: expected_energy=-25.89 best_sample_energy=-125.22 gamma=1.745 beta=0.698 p=1 shots=512 state=101100000
+17.0
+BEST QAOA: expected_energy=-47.69 best_sample_energy=-128.63 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+18.0
+BEST QAOA: expected_energy=-40.02 best_sample_energy=-131.04 gamma=2.443 beta=0.524 p=2 shots=512 state=101100000
+19.0
+BEST QAOA: expected_energy=-46.28 best_sample_energy=-98.93 gamma=2.443 beta=0.524 p=2 shots=512 state=101100000
+20.0
+BEST QAOA: expected_energy=-34.39 best_sample_energy=-97.40 gamma=2.443 beta=0.698 p=2 shots=512 state=101100000
+21.0
+BEST QAOA: expected_energy=-41.39 best_sample_energy=-93.34 gamma=2.443 beta=0.873 p=1 shots=512 state=101100000
+22.0
+BEST QAOA: expected_energy=-35.97 best_sample_energy=-88.40 gamma=2.443 beta=0.873 p=1 shots=512 state=101100000
+23.0
+BEST QAOA: expected_energy=-27.68 best_sample_energy=-80.40 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+24.0
+BEST QAOA: expected_energy=-48.15 best_sample_energy=-80.55 gamma=0.698 beta=0.873 p=1 shots=512 state=000100000
+25.0
+BEST QAOA: expected_energy=-31.92 best_sample_energy=-114.91 gamma=0.698 beta=0.524 p=1 shots=512 state=000000000
+26.0
+BEST QAOA: expected_energy=-35.68 best_sample_energy=-130.62 gamma=0.698 beta=0.698 p=1 shots=512 state=000000001
+27.0
+BEST QAOA: expected_energy=-26.78 best_sample_energy=-139.42 gamma=1.745 beta=0.698 p=1 shots=512 state=000001001
+28.0
+BEST QAOA: expected_energy=-30.31 best_sample_energy=-167.83 gamma=2.443 beta=0.873 p=1 shots=512 state=000001001
+29.0
+BEST QAOA: expected_energy=-61.23 best_sample_energy=-170.36 gamma=1.745 beta=0.698 p=1 shots=512 state=000001001
+30.0
+BEST QAOA: expected_energy=-42.50 best_sample_energy=-173.77 gamma=3.142 beta=0.698 p=1 shots=512 state=000001001
+31.0
+BEST QAOA: expected_energy=-77.80 best_sample_energy=-180.83 gamma=3.142 beta=0.698 p=1 shots=512 state=000001101
+32.0
+BEST QAOA: expected_energy=-45.76 best_sample_energy=-207.42 gamma=1.745 beta=0.873 p=1 shots=512 state=000001101
+33.0
+BEST QAOA: expected_energy=-37.80 best_sample_energy=-214.30 gamma=1.396 beta=0.873 p=1 shots=512 state=000001101
+34.0
+BEST QAOA: expected_energy=-23.75 best_sample_energy=-168.01 gamma=0.698 beta=1.222 p=2 shots=512 state=000001001
+35.0
+BEST QAOA: expected_energy=-23.75 best_sample_energy=-195.86 gamma=2.094 beta=0.698 p=1 shots=512 state=000001001
+36.0
+BEST QAOA: expected_energy=-16.51 best_sample_energy=-198.95 gamma=1.745 beta=1.047 p=2 shots=512 state=000001101
+37.0
+BEST QAOA: expected_energy=-28.39 best_sample_energy=-120.96 gamma=2.443 beta=0.698 p=2 shots=512 state=000001111
+38.0
+BEST QAOA: expected_energy=-35.65 best_sample_energy=-128.07 gamma=3.142 beta=0.873 p=1 shots=512 state=000001101
+39.0
+BEST QAOA: expected_energy=-28.72 best_sample_energy=-127.87 gamma=0.698 beta=0.698 p=1 shots=512 state=000001101
+40.0
+BEST QAOA: expected_energy=-31.48 best_sample_energy=-108.69 gamma=1.745 beta=0.698 p=1 shots=512 state=001001101
+41.0
+BEST QAOA: expected_energy=-46.07 best_sample_energy=-131.16 gamma=0.698 beta=1.047 p=2 shots=512 state=001001101
+42.0
+BEST QAOA: expected_energy=-37.52 best_sample_energy=-132.34 gamma=3.142 beta=0.349 p=2 shots=512 state=001001101
+43.0
+BEST QAOA: expected_energy=-37.14 best_sample_energy=-126.81 gamma=3.142 beta=0.873 p=2 shots=512 state=001001101
+44.0
+BEST QAOA: expected_energy=-54.05 best_sample_energy=-120.31 gamma=3.142 beta=0.524 p=2 shots=512 state=001001001
+45.0
+BEST QAOA: expected_energy=-40.72 best_sample_energy=-139.60 gamma=3.142 beta=0.698 p=2 shots=512 state=001001001
+46.0
+BEST QAOA: expected_energy=-49.41 best_sample_energy=-137.87 gamma=3.142 beta=0.524 p=2 shots=512 state=001001001
+47.0
+BEST QAOA: expected_energy=-52.80 best_sample_energy=-139.33 gamma=0.698 beta=0.698 p=1 shots=512 state=001000001
+48.0
+BEST QAOA: expected_energy=-45.47 best_sample_energy=-158.36 gamma=3.142 beta=0.524 p=2 shots=512 state=001000001
+49.0
+BEST QAOA: expected_energy=-63.93 best_sample_energy=-163.30 gamma=2.443 beta=1.047 p=1 shots=512 state=001000001
+
+===== QAOA CALIBRATION COMPLETE =====
+Fixed gamma: 3.141593
+Fixed beta:  0.523599
+Fixed p:     2
+Wins:        14/50
+===== FIXED-PARAMETER QAOA BEGINS =====
+
+50.0
+BEST QAOA: expected_energy=-11.44 best_sample_energy=-149.17 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001
+51.0
+BEST QAOA: expected_energy=-58.40 best_sample_energy=-168.58 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001
+52.0
+BEST QAOA: expected_energy=-60.28 best_sample_energy=-169.11 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001
+53.0
+BEST QAOA: expected_energy=-61.72 best_sample_energy=-170.11 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001
+54.0
+BEST QAOA: expected_energy=-82.94 best_sample_energy=-175.23 gamma=3.142 beta=0.524 p=2 shots=512 state=001100001
+55.0
+BEST QAOA: expected_energy=-26.73 best_sample_energy=-140.63 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+56.0
+BEST QAOA: expected_energy=-5.03 best_sample_energy=-148.50 gamma=3.142 beta=0.524 p=2 shots=512 state=100100000
+57.0
+BEST QAOA: expected_energy=33.91 best_sample_energy=-172.09 gamma=3.142 beta=0.524 p=2 shots=512 state=100100000
+58.0
+BEST QAOA: expected_energy=-42.82 best_sample_energy=-149.98 gamma=3.142 beta=0.524 p=2 shots=512 state=100100000
+59.0
+BEST QAOA: expected_energy=-7.15 best_sample_energy=-140.69 gamma=3.142 beta=0.524 p=2 shots=512 state=100000000
+60.0
+BEST QAOA: expected_energy=51.46 best_sample_energy=-99.26 gamma=3.142 beta=0.524 p=2 shots=512 state=010001000
+61.0
+BEST QAOA: expected_energy=-16.70 best_sample_energy=-165.76 gamma=3.142 beta=0.524 p=2 shots=512 state=010001000
+62.0
+BEST QAOA: expected_energy=-39.51 best_sample_energy=-170.41 gamma=3.142 beta=0.524 p=2 shots=512 state=010001000
+63.0
+BEST QAOA: expected_energy=-18.87 best_sample_energy=-131.28 gamma=3.142 beta=0.524 p=2 shots=512 state=110001001
+64.0
+BEST QAOA: expected_energy=-18.83 best_sample_energy=-152.64 gamma=3.142 beta=0.524 p=2 shots=512 state=110001001
+65.0
+BEST QAOA: expected_energy=-42.94 best_sample_energy=-158.73 gamma=3.142 beta=0.524 p=2 shots=512 state=110001001
+66.0
+BEST QAOA: expected_energy=-65.07 best_sample_energy=-158.67 gamma=3.142 beta=0.524 p=2 shots=512 state=110001001
+67.0
+BEST QAOA: expected_energy=-87.35 best_sample_energy=-156.93 gamma=3.142 beta=0.524 p=2 shots=512 state=110011101
+68.0
+BEST QAOA: expected_energy=-64.23 best_sample_energy=-173.02 gamma=3.142 beta=0.524 p=2 shots=512 state=010011101
+69.0
+BEST QAOA: expected_energy=-50.11 best_sample_energy=-195.16 gamma=3.142 beta=0.524 p=2 shots=512 state=000011101
+70.0
+BEST QAOA: expected_energy=-27.79 best_sample_energy=-220.72 gamma=3.142 beta=0.524 p=2 shots=512 state=000011101
+71.0
+BEST QAOA: expected_energy=-31.12 best_sample_energy=-190.89 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+72.0
+BEST QAOA: expected_energy=-41.34 best_sample_energy=-171.59 gamma=3.142 beta=0.524 p=2 shots=512 state=000011011
+73.0
+BEST QAOA: expected_energy=-92.36 best_sample_energy=-151.89 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+74.0
+BEST QAOA: expected_energy=-67.62 best_sample_energy=-183.80 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+75.0
+BEST QAOA: expected_energy=-40.38 best_sample_energy=-153.98 gamma=3.142 beta=0.524 p=2 shots=512 state=001011111
+76.0
+BEST QAOA: expected_energy=-33.77 best_sample_energy=-146.07 gamma=3.142 beta=0.524 p=2 shots=512 state=001011001
+77.0
+BEST QAOA: expected_energy=-22.73 best_sample_energy=-194.72 gamma=3.142 beta=0.524 p=2 shots=512 state=001011001
+78.0
+BEST QAOA: expected_energy=-24.22 best_sample_energy=-187.28 gamma=3.142 beta=0.524 p=2 shots=512 state=001011001
+79.0
+BEST QAOA: expected_energy=4.09 best_sample_energy=-174.22 gamma=3.142 beta=0.524 p=2 shots=512 state=001000001
+80.0
+BEST QAOA: expected_energy=-42.73 best_sample_energy=-166.04 gamma=3.142 beta=0.524 p=2 shots=512 state=001010001
+81.0
+BEST QAOA: expected_energy=-64.94 best_sample_energy=-186.04 gamma=3.142 beta=0.524 p=2 shots=512 state=001000000
+82.0
+BEST QAOA: expected_energy=21.88 best_sample_energy=-154.12 gamma=3.142 beta=0.524 p=2 shots=512 state=011000000
+83.0
+BEST QAOA: expected_energy=-46.62 best_sample_energy=-194.90 gamma=3.142 beta=0.524 p=2 shots=512 state=001000000
+84.0
+BEST QAOA: expected_energy=-51.96 best_sample_energy=-221.28 gamma=3.142 beta=0.524 p=2 shots=512 state=001000000
+85.0
+BEST QAOA: expected_energy=-103.07 best_sample_energy=-228.28 gamma=3.142 beta=0.524 p=2 shots=512 state=001000000
+86.0
+BEST QAOA: expected_energy=-77.90 best_sample_energy=-191.93 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+87.0
+BEST QAOA: expected_energy=-90.57 best_sample_energy=-216.37 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+88.0
+BEST QAOA: expected_energy=-68.86 best_sample_energy=-214.99 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+89.0
+BEST QAOA: expected_energy=-58.24 best_sample_energy=-208.55 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+90.0
+BEST QAOA: expected_energy=-83.99 best_sample_energy=-211.02 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+91.0
+BEST QAOA: expected_energy=-13.33 best_sample_energy=-165.17 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+92.0
+BEST QAOA: expected_energy=-38.77 best_sample_energy=-164.61 gamma=3.142 beta=0.524 p=2 shots=512 state=001100000
+93.0
+BEST QAOA: expected_energy=17.15 best_sample_energy=-98.84 gamma=3.142 beta=0.524 p=2 shots=512 state=111100100
+94.0
+BEST QAOA: expected_energy=-6.69 best_sample_energy=-141.35 gamma=3.142 beta=0.524 p=2 shots=512 state=111101100
+95.0
+BEST QAOA: expected_energy=-34.92 best_sample_energy=-162.17 gamma=3.142 beta=0.524 p=2 shots=512 state=111101100
+96.0
+BEST QAOA: expected_energy=-22.01 best_sample_energy=-166.20 gamma=3.142 beta=0.524 p=2 shots=512 state=111101100
+97.0
+BEST QAOA: expected_energy=-11.01 best_sample_energy=-157.43 gamma=3.142 beta=0.524 p=2 shots=512 state=111111100
+98.0
+BEST QAOA: expected_energy=12.01 best_sample_energy=-115.34 gamma=3.142 beta=0.524 p=2 shots=512 state=111111110
+99.0
+BEST QAOA: expected_energy=-9.79 best_sample_energy=-140.22 gamma=3.142 beta=0.524 p=2 shots=512 state=111011111
+100.0
+BEST QAOA: expected_energy=-19.99 best_sample_energy=-159.58 gamma=3.142 beta=0.524 p=2 shots=512 state=110011101
+101.0
+BEST QAOA: expected_energy=11.41 best_sample_energy=-155.42 gamma=3.142 beta=0.524 p=2 shots=512 state=110001101
+102.0
+BEST QAOA: expected_energy=-0.42 best_sample_energy=-162.96 gamma=3.142 beta=0.524 p=2 shots=512 state=010011101
+103.0
+BEST QAOA: expected_energy=-77.48 best_sample_energy=-211.49 gamma=3.142 beta=0.524 p=2 shots=512 state=010011101
+104.0
+BEST QAOA: expected_energy=-43.35 best_sample_energy=-194.40 gamma=3.142 beta=0.524 p=2 shots=512 state=000011101
+105.0
+BEST QAOA: expected_energy=-18.28 best_sample_energy=-203.46 gamma=3.142 beta=0.524 p=2 shots=512 state=001011101
+106.0
+BEST QAOA: expected_energy=-71.32 best_sample_energy=-215.93 gamma=3.142 beta=0.524 p=2 shots=512 state=001011101
+107.0
+BEST QAOA: expected_energy=-38.69 best_sample_energy=-210.92 gamma=3.142 beta=0.524 p=2 shots=512 state=001011111
+108.0
+BEST QAOA: expected_energy=-59.05 best_sample_energy=-239.21 gamma=3.142 beta=0.524 p=2 shots=512 state=001011111
+109.0
+BEST QAOA: expected_energy=-28.22 best_sample_energy=-244.12 gamma=3.142 beta=0.524 p=2 shots=512 state=001011111
+110.0
+BEST QAOA: expected_energy=-53.77 best_sample_energy=-198.22 gamma=3.142 beta=0.524 p=2 shots=512 state=001001111
+111.0
+BEST QAOA: expected_energy=-52.97 best_sample_energy=-236.07 gamma=3.142 beta=0.524 p=2 shots=512 state=001001011
+112.0
+BEST QAOA: expected_energy=-32.61 best_sample_energy=-185.06 gamma=3.142 beta=0.524 p=2 shots=512 state=001010011
+113.0
+BEST QAOA: expected_energy=16.73 best_sample_energy=-188.47 gamma=3.142 beta=0.524 p=2 shots=512 state=001100011
+114.0
+BEST QAOA: expected_energy=30.60 best_sample_energy=-201.89 gamma=3.142 beta=0.524 p=2 shots=512 state=001101011
+115.0
+BEST QAOA: expected_energy=36.96 best_sample_energy=-204.33 gamma=3.142 beta=0.524 p=2 shots=512 state=001111011
+116.0
+BEST QAOA: expected_energy=5.07 best_sample_energy=-215.92 gamma=3.142 beta=0.524 p=2 shots=512 state=001101011
+117.0
+BEST QAOA: expected_energy=-36.09 best_sample_energy=-210.01 gamma=3.142 beta=0.524 p=2 shots=512 state=001101001
+118.0
+BEST QAOA: expected_energy=-10.66 best_sample_energy=-235.22 gamma=3.142 beta=0.524 p=2 shots=512 state=001001001
+119.0
+BEST QAOA: expected_energy=27.80 best_sample_energy=-176.95 gamma=3.142 beta=0.524 p=2 shots=512 state=101001000
+120.0
+BEST QAOA: expected_energy=40.86 best_sample_energy=-196.79 gamma=3.142 beta=0.524 p=2 shots=512 state=101101001
+121.0
+BEST QAOA: expected_energy=67.59 best_sample_energy=-248.26 gamma=3.142 beta=0.524 p=2 shots=512 state=101101001
+122.0
+BEST QAOA: expected_energy=-33.51 best_sample_energy=-218.47 gamma=3.142 beta=0.524 p=2 shots=512 state=101101001
+123.0
+BEST QAOA: expected_energy=80.84 best_sample_energy=-137.48 gamma=3.142 beta=0.524 p=2 shots=512 state=101101010
+124.0
+BEST QAOA: expected_energy=-0.78 best_sample_energy=-183.00 gamma=3.142 beta=0.524 p=2 shots=512 state=101100010
+125.0
+BEST QAOA: expected_energy=-5.13 best_sample_energy=-220.48 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000
+126.0
+BEST QAOA: expected_energy=43.58 best_sample_energy=-179.80 gamma=3.142 beta=0.524 p=2 shots=512 state=111001000
+127.0
+BEST QAOA: expected_energy=-35.51 best_sample_energy=-216.85 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+128.0
+BEST QAOA: expected_energy=-30.95 best_sample_energy=-241.82 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+129.0
+BEST QAOA: expected_energy=-50.57 best_sample_energy=-190.08 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000
+130.0
+BEST QAOA: expected_energy=-38.97 best_sample_energy=-195.97 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+131.0
+BEST QAOA: expected_energy=-1.82 best_sample_energy=-175.77 gamma=3.142 beta=0.524 p=2 shots=512 state=111000100
+132.0
+BEST QAOA: expected_energy=-75.45 best_sample_energy=-180.01 gamma=3.142 beta=0.524 p=2 shots=512 state=111000100
+133.0
+BEST QAOA: expected_energy=-2.74 best_sample_energy=-183.89 gamma=3.142 beta=0.524 p=2 shots=512 state=111001100
+134.0
+BEST QAOA: expected_energy=-11.38 best_sample_energy=-185.36 gamma=3.142 beta=0.524 p=2 shots=512 state=111001000
+135.0
+BEST QAOA: expected_energy=-46.73 best_sample_energy=-152.55 gamma=3.142 beta=0.524 p=2 shots=512 state=111001000
+136.0
+BEST QAOA: expected_energy=-40.26 best_sample_energy=-147.58 gamma=3.142 beta=0.524 p=2 shots=512 state=111001000
+137.0
+BEST QAOA: expected_energy=-25.93 best_sample_energy=-113.96 gamma=3.142 beta=0.524 p=2 shots=512 state=011001001
+138.0
+BEST QAOA: expected_energy=-69.38 best_sample_energy=-150.43 gamma=3.142 beta=0.524 p=2 shots=512 state=011001001
+139.0
+BEST QAOA: expected_energy=-56.48 best_sample_energy=-156.19 gamma=3.142 beta=0.524 p=2 shots=512 state=011011001
+140.0
+BEST QAOA: expected_energy=-65.10 best_sample_energy=-166.04 gamma=3.142 beta=0.524 p=2 shots=512 state=000011001
+141.0
+BEST QAOA: expected_energy=-89.96 best_sample_energy=-219.18 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+142.0
+BEST QAOA: expected_energy=-38.09 best_sample_energy=-225.91 gamma=3.142 beta=0.524 p=2 shots=512 state=000011101
+143.0
+BEST QAOA: expected_energy=-38.58 best_sample_energy=-246.91 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+144.0
+BEST QAOA: expected_energy=-87.32 best_sample_energy=-266.73 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+145.0
+BEST QAOA: expected_energy=-112.92 best_sample_energy=-271.73 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+146.0
+BEST QAOA: expected_energy=-102.37 best_sample_energy=-276.32 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+147.0
+BEST QAOA: expected_energy=-24.47 best_sample_energy=-234.77 gamma=3.142 beta=0.524 p=2 shots=512 state=001011111
+148.0
+BEST QAOA: expected_energy=13.11 best_sample_energy=-246.68 gamma=3.142 beta=0.524 p=2 shots=512 state=001111111
+149.0
+BEST QAOA: expected_energy=-30.75 best_sample_energy=-238.24 gamma=3.142 beta=0.524 p=2 shots=512 state=001111111
+150.0
+BEST QAOA: expected_energy=-40.16 best_sample_energy=-164.30 gamma=3.142 beta=0.524 p=2 shots=512 state=001101011
+151.0
+BEST QAOA: expected_energy=-67.77 best_sample_energy=-212.24 gamma=3.142 beta=0.524 p=2 shots=512 state=001101011
+152.0
+BEST QAOA: expected_energy=-95.10 best_sample_energy=-211.21 gamma=3.142 beta=0.524 p=2 shots=512 state=001101011
+153.0
+BEST QAOA: expected_energy=-40.91 best_sample_energy=-113.60 gamma=3.142 beta=0.524 p=2 shots=512 state=001111001
+154.0
+BEST QAOA: expected_energy=-75.79 best_sample_energy=-176.18 gamma=3.142 beta=0.524 p=2 shots=512 state=001101001
+155.0
+BEST QAOA: expected_energy=45.54 best_sample_energy=-119.19 gamma=3.142 beta=0.524 p=2 shots=512 state=100101001
+156.0
+BEST QAOA: expected_energy=-2.03 best_sample_energy=-192.41 gamma=3.142 beta=0.524 p=2 shots=512 state=101101000
+157.0
+BEST QAOA: expected_energy=-7.76 best_sample_energy=-194.65 gamma=3.142 beta=0.524 p=2 shots=512 state=101101100
+158.0
+BEST QAOA: expected_energy=27.68 best_sample_energy=-202.03 gamma=3.142 beta=0.524 p=2 shots=512 state=101101000
+159.0
+BEST QAOA: expected_energy=-124.07 best_sample_energy=-225.88 gamma=3.142 beta=0.524 p=2 shots=512 state=111101000
+160.0
+BEST QAOA: expected_energy=-1.98 best_sample_energy=-189.27 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+161.0
+BEST QAOA: expected_energy=-23.71 best_sample_energy=-187.65 gamma=3.142 beta=0.524 p=2 shots=512 state=111110000
+162.0
+BEST QAOA: expected_energy=-34.90 best_sample_energy=-259.05 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000
+163.0
+BEST QAOA: expected_energy=31.72 best_sample_energy=-159.60 gamma=3.142 beta=0.524 p=2 shots=512 state=111010000
+164.0
+BEST QAOA: expected_energy=39.66 best_sample_energy=-124.29 gamma=3.142 beta=0.524 p=2 shots=512 state=110010000
+165.0
+BEST QAOA: expected_energy=-18.71 best_sample_energy=-194.42 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+166.0
+BEST QAOA: expected_energy=-8.60 best_sample_energy=-226.89 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+167.0
+BEST QAOA: expected_energy=30.58 best_sample_energy=-213.34 gamma=3.142 beta=0.524 p=2 shots=512 state=111000000
+168.0
+BEST QAOA: expected_energy=39.20 best_sample_energy=-182.02 gamma=3.142 beta=0.524 p=2 shots=512 state=111001000
+169.0
+BEST QAOA: expected_energy=-17.01 best_sample_energy=-188.90 gamma=3.142 beta=0.524 p=2 shots=512 state=111001000
+170.0
+BEST QAOA: expected_energy=18.61 best_sample_energy=-135.93 gamma=3.142 beta=0.524 p=2 shots=512 state=111001110
+171.0
+BEST QAOA: expected_energy=96.20 best_sample_energy=-98.60 gamma=3.142 beta=0.524 p=2 shots=512 state=101011110
+172.0
+BEST QAOA: expected_energy=37.98 best_sample_energy=-172.27 gamma=3.142 beta=0.524 p=2 shots=512 state=110011111
+173.0
+BEST QAOA: expected_energy=25.07 best_sample_energy=-209.57 gamma=3.142 beta=0.524 p=2 shots=512 state=110011111
+174.0
+BEST QAOA: expected_energy=8.15 best_sample_energy=-175.71 gamma=3.142 beta=0.524 p=2 shots=512 state=110111111
+175.0
+BEST QAOA: expected_energy=40.44 best_sample_energy=-186.01 gamma=3.142 beta=0.524 p=2 shots=512 state=010011111
+176.0
+BEST QAOA: expected_energy=79.88 best_sample_energy=-98.64 gamma=3.142 beta=0.524 p=2 shots=512 state=110010111
+177.0
+BEST QAOA: expected_energy=5.23 best_sample_energy=-138.36 gamma=3.142 beta=0.524 p=2 shots=512 state=100011011
+178.0
+BEST QAOA: expected_energy=54.05 best_sample_energy=-100.99 gamma=3.142 beta=0.524 p=2 shots=512 state=110011110
+179.0
+BEST QAOA: expected_energy=16.92 best_sample_energy=-164.83 gamma=3.142 beta=0.524 p=2 shots=512 state=100011110
+180.0
+BEST QAOA: expected_energy=1.55 best_sample_energy=-153.65 gamma=3.142 beta=0.524 p=2 shots=512 state=100010111
+181.0
+BEST QAOA: expected_energy=-13.94 best_sample_energy=-154.20 gamma=3.142 beta=0.524 p=2 shots=512 state=100110111
+182.0
+BEST QAOA: expected_energy=-60.19 best_sample_energy=-180.89 gamma=3.142 beta=0.524 p=2 shots=512 state=100111111
+183.0
+BEST QAOA: expected_energy=-73.03 best_sample_energy=-209.13 gamma=3.142 beta=0.524 p=2 shots=512 state=100011111
+184.0
+BEST QAOA: expected_energy=4.99 best_sample_energy=-144.64 gamma=3.142 beta=0.524 p=2 shots=512 state=101001111
+185.0
+BEST QAOA: expected_energy=-64.90 best_sample_energy=-202.79 gamma=3.142 beta=0.524 p=2 shots=512 state=001001111
+186.0
+BEST QAOA: expected_energy=-56.97 best_sample_energy=-178.77 gamma=3.142 beta=0.524 p=2 shots=512 state=001000111
+187.0
+BEST QAOA: expected_energy=-58.76 best_sample_energy=-204.12 gamma=3.142 beta=0.524 p=2 shots=512 state=001000111
+188.0
+BEST QAOA: expected_energy=-59.40 best_sample_energy=-199.85 gamma=3.142 beta=0.524 p=2 shots=512 state=001100111
+189.0
+BEST QAOA: expected_energy=-57.86 best_sample_energy=-164.02 gamma=3.142 beta=0.524 p=2 shots=512 state=001100110
+190.0
+BEST QAOA: expected_energy=-11.89 best_sample_energy=-188.69 gamma=3.142 beta=0.524 p=2 shots=512 state=001100100
+191.0
+BEST QAOA: expected_energy=3.63 best_sample_energy=-210.01 gamma=3.142 beta=0.524 p=2 shots=512 state=001100100
+192.0
+BEST QAOA: expected_energy=6.20 best_sample_energy=-195.09 gamma=3.142 beta=0.524 p=2 shots=512 state=101100100
+193.0
+BEST QAOA: expected_energy=14.41 best_sample_energy=-188.63 gamma=3.142 beta=0.524 p=2 shots=512 state=001100100
+194.0
+BEST QAOA: expected_energy=37.62 best_sample_energy=-203.15 gamma=3.142 beta=0.524 p=2 shots=512 state=101100100
+195.0
+BEST QAOA: expected_energy=11.12 best_sample_energy=-274.72 gamma=3.142 beta=0.524 p=2 shots=512 state=111100000
+196.0
+BEST QAOA: expected_energy=92.41 best_sample_energy=-177.00 gamma=3.142 beta=0.524 p=2 shots=512 state=101100100
+197.0
+BEST QAOA: expected_energy=24.78 best_sample_energy=-200.06 gamma=3.142 beta=0.524 p=2 shots=512 state=101100100
+198.0
+BEST QAOA: expected_energy=-30.25 best_sample_energy=-247.00 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+199.0
+BEST QAOA: expected_energy=-3.01 best_sample_energy=-258.12 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+200.0
+BEST QAOA: expected_energy=-54.16 best_sample_energy=-263.50 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+201.0
+BEST QAOA: expected_energy=-73.97 best_sample_energy=-231.56 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+202.0
+BEST QAOA: expected_energy=67.67 best_sample_energy=-75.50 gamma=3.142 beta=0.524 p=2 shots=512 state=100100100
+203.0
+BEST QAOA: expected_energy=52.98 best_sample_energy=-123.16 gamma=3.142 beta=0.524 p=2 shots=512 state=101100000
+204.0
+BEST QAOA: expected_energy=29.62 best_sample_energy=-120.90 gamma=3.142 beta=0.524 p=2 shots=512 state=100000000
+205.0
+BEST QAOA: expected_energy=82.51 best_sample_energy=-109.65 gamma=3.142 beta=0.524 p=2 shots=512 state=000000000
+206.0
+BEST QAOA: expected_energy=28.83 best_sample_energy=-123.30 gamma=3.142 beta=0.524 p=2 shots=512 state=010000000
+207.0
+BEST QAOA: expected_energy=22.46 best_sample_energy=-85.50 gamma=3.142 beta=0.524 p=2 shots=512 state=010000011
+208.0
+BEST QAOA: expected_energy=6.34 best_sample_energy=-128.78 gamma=3.142 beta=0.524 p=2 shots=512 state=010001111
+209.0
+BEST QAOA: expected_energy=-1.77 best_sample_energy=-120.23 gamma=3.142 beta=0.524 p=2 shots=512 state=110011110
+210.0
+BEST QAOA: expected_energy=38.06 best_sample_energy=-108.95 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+211.0
+BEST QAOA: expected_energy=9.23 best_sample_energy=-202.65 gamma=3.142 beta=0.524 p=2 shots=512 state=000011111
+212.0
