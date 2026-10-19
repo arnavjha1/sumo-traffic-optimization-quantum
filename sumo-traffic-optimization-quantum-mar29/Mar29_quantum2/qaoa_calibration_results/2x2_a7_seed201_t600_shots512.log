@@ -446,3 +446,41 @@ BEST QAOA: expected_energy=-81.95 best_sample_energy=-108.17 gamma=0.698 beta=0.
 223.0
 BEST QAOA: expected_energy=-28.29 best_sample_energy=-108.52 gamma=3.142 beta=0.698 p=2 shots=512 state=0000
 224.0
+BEST QAOA: expected_energy=-64.05 best_sample_energy=-122.43 gamma=3.142 beta=0.524 p=2 shots=512 state=0000
+225.0
+BEST QAOA: expected_energy=-70.55 best_sample_energy=-125.40 gamma=0.698 beta=1.222 p=2 shots=512 state=0000
+226.0
+BEST QAOA: expected_energy=-43.97 best_sample_energy=-129.87 gamma=3.142 beta=0.873 p=2 shots=512 state=0000
+227.0
+BEST QAOA: expected_energy=-71.74 best_sample_energy=-139.16 gamma=1.396 beta=0.873 p=1 shots=512 state=0000
+228.0
+BEST QAOA: expected_energy=-59.01 best_sample_energy=-120.40 gamma=3.142 beta=1.047 p=2 shots=512 state=0000
+229.0
+BEST QAOA: expected_energy=-62.43 best_sample_energy=-121.43 gamma=0.698 beta=0.698 p=1 shots=512 state=0000
+230.0
+BEST QAOA: expected_energy=-31.14 best_sample_energy=-116.81 gamma=1.396 beta=0.698 p=2 shots=512 state=0000
+231.0
+BEST QAOA: expected_energy=-89.38 best_sample_energy=-109.87 gamma=3.142 beta=0.698 p=1 shots=512 state=0000
+232.0
+BEST QAOA: expected_energy=-33.05 best_sample_energy=-107.78 gamma=2.443 beta=0.698 p=2 shots=512 state=0000
+233.0
+BEST QAOA: expected_energy=-49.63 best_sample_energy=-110.22 gamma=1.745 beta=0.698 p=2 shots=512 state=0000
+234.0
+BEST QAOA: expected_energy=-35.49 best_sample_energy=-103.78 gamma=1.745 beta=0.698 p=2 shots=512 state=0000
+235.0
+BEST QAOA: expected_energy=-10.09 best_sample_energy=-31.32 gamma=2.443 beta=0.698 p=2 shots=512 state=0001
+236.0
+BEST QAOA: expected_energy=-13.98 best_sample_energy=-52.76 gamma=0.698 beta=1.047 p=2 shots=512 state=0001
+237.0
+BEST QAOA: expected_energy=-22.58 best_sample_energy=-50.59 gamma=2.443 beta=0.524 p=2 shots=512 state=0011
+238.0
+BEST QAOA: expected_energy=-42.19 best_sample_energy=-68.62 gamma=0.698 beta=0.524 p=2 shots=512 state=0111
+239.0
+BEST QAOA: expected_energy=-43.08 best_sample_energy=-99.12 gamma=2.443 beta=0.698 p=1 shots=512 state=0111
+240.0
+BEST QAOA: expected_energy=-62.38 best_sample_energy=-103.09 gamma=2.443 beta=0.873 p=1 shots=512 state=0111
+241.0
+BEST QAOA: expected_energy=-44.18 best_sample_energy=-110.03 gamma=0.698 beta=1.047 p=2 shots=512 state=0111
+242.0
+BEST QAOA: expected_energy=-25.47 best_sample_energy=-111.91 gamma=1.396 beta=0.873 p=2 shots=512 state=0111
+243.0
