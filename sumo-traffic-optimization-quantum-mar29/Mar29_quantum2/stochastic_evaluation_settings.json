@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "alpha_index": 7,
+  "horizon_seconds": 600,
+  "calibration_optimizer_seeds": [101, 102, 103],
+  "calibration_qaoa_seeds": [201, 202, 203],
+  "interpretation": "Approximate stochastic control; energy-gap distributions are not validated as matched to QAOA.",
+  "selection_source": "stochastic_fine_matching_results; tuning-selected candidates, not selected by traffic outcomes",
+  "grids": {
+    "2x2": {"evaluation_budget": 32, "restarts": 2, "random_start_probability": 0.25, "initial_temperature": 50.0, "final_temperature": 0.01},
+    "3x3": {"evaluation_budget": 28, "restarts": 4, "random_start_probability": 0.5, "initial_temperature": 50.0, "final_temperature": 0.01}
+  }
+}

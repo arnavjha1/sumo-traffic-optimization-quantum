@@ -1,0 +1,103 @@
+[
+  {
+    "grid": "2x2",
+    "controller": "classical_global",
+    "mode": "saturated",
+    "source_script": "grid_2x2\\2_classical_global\\a7.py",
+    "started_at": "2026-08-28T05:38:05-07:00",
+    "alpha_index": 7,
+    "alpha": 0.7,
+    "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\sim2x2_a7.sumocfg",
+    "temporary_config_used": false,
+    "launch_rewrites": [
+      "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\sim2x2_a7.sumocfg",
+      "SUMO_BINARY -> sumo (headless batch mode)"
+    ],
+    "command": [
+      "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+      "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_2x2\\2_classical_global\\.__runner_o_727lav.py",
+      "7"
+    ],
+    "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+    "timeout_seconds": 21600,
+    "return_code": 0,
+    "stdout": "1.0\n2.0\n3.0\n4.0\n5.0\n6.0\n7.0\n8.0\n9.0\n10.0\n11.0\n12.0\n13.0\n14.0\n15.0\n16.0\n17.0\n18.0\n19.0\n20.0\n21.0\n22.0\n23.0\n24.0\n25.0\n26.0\n27.0\n28.0\n29.0\n30.0\n31.0\n32.0\n33.0\n34.0\n35.0\n36.0\n37.0\n38.0\n39.0\n40.0\n41.0\n42.0\n43.0\n44.0\n45.0\n46.0\n47.0\n48.0\n49.0\n50.0\n51.0\n52.0\n53.0\n54.0\n55.0\n56.0\n57.0\n58.0\n59.0\n60.0\n61.0\n62.0\n63.0\n64.0\n65.0\n66.0\n67.0\n68.0\n69.0\n70.0\n71.0\n72.0\n73.0\n74.0\n75.0\n76.0\n77.0\n78.0\n79.0\n80.0\n81.0\n82.0\n83.0\n84.0\n85.0\n86.0\n87.0\n88.0\n89.0\n90.0\n91.0\n92.0\n93.0\n94.0\n95.0\n96.0\n97.0\n98.0\n99.0\n100.0\n101.0\n102.0\n103.0\n104.0\n105.0\n106.0\n107.0\n108.0\n109.0\n110.0\n111.0\n112.0\n113.0\n114.0\n115.0\n116.0\n117.0\n118.0\n119.0\n120.0\n121.0\n122.0\n123.0\n124.0\n125.0\n126.0\n127.0\n128.0\n129.0\n130.0\n131.0\n132.0\n133.0\n134.0\n135.0\n136.0\n137.0\n138.0\n139.0\n140.0\n141.0\n142.0\n143.0\n144.0\n145.0\n146.0\n147.0\n148.0\n149.0\n150.0\n151.0\n152.0\n153.0\n154.0\n155.0\n156.0\n157.0\n158.0\n159.0\n160.0\n161.0\n162.0\n163.0\n164.0\n165.0\n166.0\n167.0\n168.0\n169.0\n170.0\n171.0\n172.0\n173.0\n174.0\n175.0\n176.0\n177.0\n178.0\n179.0\n180.0\n181.0\n182.0\n183.0\n184.0\n185.0\n186.0\n187.0\n188.0\n189.0\n190.0\n191.0\n192.0\n193.0\n194.0\n195.0\n196.0\n197.0\n198.0\n199.0\n200.0\n201.0\n202.0\n203.0\n204.0\n205.0\n206.0\n207.0\n208.0\n209.0\n210.0\n211.0\n212.0\n213.0\n214.0\n215.0\n216.0\n217.0\n218.0\n219.0\n220.0\n221.0\n222.0\n223.0\n224.0\n225.0\n226.0\n227.0\n228.0\n229.0\n230.0\n231.0\n232.0\n233.0\n234.0\n235.0\n236.0\n237.0\n238.0\n239.0\n240.0\n241.0\n242.0\n243.0\n244.0\n245.0\n246.0\n247.0\n248.0\n249.0\n250.0\n251.0\n252.0\n253.0\n254.0\n255.0\n256.0\n257.0\n258.0\n259.0\n260.0\n261.0\n262.0\n263.0\n264.0\n265.0\n266.0\n267.0\n268.0\n269.0\n270.0\n271.0\n272.0\n273.0\n274.0\n275.0\n276.0\n277.0\n278.0\n279.0\n280.0\n281.0\n282.0\n283.0\n284.0\n285.0\n286.0\n287.0\n288.0\n289.0\n290.0\n291.0\n292.0\n293.0\n294.0\n295.0\n296.0\n297.0\n298.0\n299.0\n300.0\n301.0\n302.0\n303.0\n304.0\n305.0\n306.0\n307.0\n308.0\n309.0\n310.0\n311.0\n312.0\n313.0\n314.0\n315.0\n316.0\n317.0\n318.0\n319.0\n320.0\n321.0\n322.0\n323.0\n324.0\n325.0\n326.0\n327.0\n328.0\n329.0\n330.0\n331.0\n332.0\n333.0\n334.0\n335.0\n336.0\n337.0\n338.0\n339.0\n340.0\n341.0\n342.0\n343.0\n344.0\n345.0\n346.0\n347.0\n348.0\n349.0\n350.0\n351.0\n352.0\n353.0\n354.0\n355.0\n356.0\n357.0\n358.0\n359.0\n360.0\n361.0\n362.0\n363.0\n364.0\n365.0\n366.0\n367.0\n368.0\n369.0\n370.0\n371.0\n372.0\n373.0\n374.0\n375.0\n376.0\n377.0\n378.0\n379.0\n380.0\n381.0\n382.0\n383.0\n384.0\n385.0\n386.0\n387.0\n388.0\n389.0\n390.0\n391.0\n392.0\n393.0\n394.0\n395.0\n396.0\n397.0\n398.0\n399.0\n400.0\n401.0\n402.0\n403.0\n404.0\n405.0\n406.0\n407.0\n408.0\n409.0\n410.0\n411.0\n412.0\n413.0\n414.0\n415.0\n416.0\n417.0\n418.0\n419.0\n420.0\n421.0\n422.0\n423.0\n424.0\n425.0\n426.0\n427.0\n428.0\n429.0\n430.0\n431.0\n432.0\n433.0\n434.0\n435.0\n436.0\n437.0\n438.0\n439.0\n440.0\n441.0\n442.0\n443.0\n444.0\n445.0\n446.0\n447.0\n448.0\n449.0\n450.0\n451.0\n452.0\n453.0\n454.0\n455.0\n456.0\n457.0\n458.0\n459.0\n460.0\n461.0\n462.0\n463.0\n464.0\n465.0\n466.0\n467.0\n468.0\n469.0\n470.0\n471.0\n472.0\n473.0\n474.0\n475.0\n476.0\n477.0\n478.0\n479.0\n480.0\n481.0\n482.0\n483.0\n484.0\n485.0\n486.0\n487.0\n488.0\n489.0\n490.0\n491.0\n492.0\n493.0\n494.0\n495.0\n496.0\n497.0\n498.0\n499.0\n500.0\n501.0\n502.0\n503.0\n504.0\n505.0\n506.0\n507.0\n508.0\n509.0\n510.0\n511.0\n512.0\n513.0\n514.0\n515.0\n516.0\n517.0\n518.0\n519.0\n520.0\n521.0\n522.0\n523.0\n524.0\n525.0\n526.0\n527.0\n528.0\n529.0\n530.0\n531.0\n532.0\n533.0\n534.0\n535.0\n536.0\n537.0\n538.0\n539.0\n540.0\n541.0\n542.0\n543.0\n544.0\n545.0\n546.0\n547.0\n548.0\n549.0\n550.0\n551.0\n552.0\n553.0\n554.0\n555.0\n556.0\n557.0\n558.0\n559.0\n560.0\n561.0\n562.0\n563.0\n564.0\n565.0\n566.0\n567.0\n568.0\n569.0\n570.0\n571.0\n572.0\n573.0\n574.0\n575.0\n576.0\n577.0\n578.0\n579.0\n580.0\n581.0\n582.0\n583.0\n584.0\n585.0\n586.0\n587.0\n588.0\n589.0\n590.0\n591.0\n592.0\n593.0\n594.0\n595.0\n596.0\n597.0\n598.0\n599.0\n600.0\n\n===== PERFORMANCE METRICS =====\n\nAverage Queue Length per TLS per Side/Lane:\n\n  A0:\n    Side 0: Right=0.6 Straight=2.7 Left=0.4 \n    Side 1: Right=0.4 Straight=2.3 Left=0.5 \n    Side 2: Right=2.6 Straight=3.7 Left=0.1 \n    Side 3: Right=1.4 Straight=3.5 Left=1.8 \n\n  A1:\n    Side 0: Right=2.0 Straight=3.9 Left=2.2 \n    Side 1: Right=0.5 Straight=3.5 Left=1.2 \n    Side 2: Right=0.4 Straight=2.0 Left=0.4 \n    Side 3: Right=1.9 Straight=3.6 Left=0.1 \n\n  B0:\n    Side 0: Right=0.4 Straight=2.8 Left=0.7 \n    Side 1: Right=2.2 Straight=3.9 Left=0.2 \n    Side 2: Right=1.4 Straight=3.7 Left=2.4 \n    Side 3: Right=0.4 Straight=2.1 Left=0.8 \n\n  B1:\n    Side 0: Right=2.1 Straight=4.0 Left=3.2 \n    Side 1: Right=0.3 Straight=2.6 Left=0.3 \n    Side 2: Right=0.1 Straight=1.5 Left=0.2 \n    Side 3: Right=2.5 Straight=4.2 Left=0.1 \n\nQUANTUM\n\nAverage Travel Time:\n  Two Turns: 85.81 s\n  One Turn:  101.62 s\n  No Turns:  98.74 s\n  Overall:   97.37 s\n\nAverage Waiting Time:\n  Two Turns: 33.27 s\n  One Turn:  39.77 s\n  No Turns:  41.45 s\n  Overall:   39.01 s\n\nThroughput:\n  Two Turns: 191\n  One Turn:  416\n  No Turns:  321\n  Overall:   928\n\n===== ENERGY BENCHMARK =====\nEnergy Decisions: 600\nOptimal Hits: 600\nOptimum Recovery Rate: 1.000000\nAverage Selected Energy: -92.054983\nAverage Exact Minimum Energy: -92.054983\nAverage Optimality Gap: 0.000000\nMaximum Optimality Gap: 0.000000\nAverage Energy Reduction: 0.715100\nENERGY_JSON: {\"num_decisions\": 600, \"optimal_hits\": 600, \"optimum_recovery_rate\": 1.0, \"average_selected_energy\": -92.05498333333333, \"average_exact_min_energy\": -92.05498333333333, \"average_optimality_gap\": 0.0, \"maximum_optimality_gap\": 0.0, \"average_energy_reduction\": 0.7150999999999998}\n",
+    "stderr": "",
+    "parsed": {
+      "tagged_json": {
+        "ENERGY_JSON": {
+          "num_decisions": 600,
+          "optimal_hits": 600,
+          "optimum_recovery_rate": 1.0,
+          "average_selected_energy": -92.05498333333333,
+          "average_exact_min_energy": -92.05498333333333,
+          "average_optimality_gap": 0.0,
+          "maximum_optimality_gap": 0.0,
+          "average_energy_reduction": 0.7150999999999998
+        }
+      },
+      "traffic": {
+        "average_travel_time": 97.37,
+        "average_waiting_time": 39.01,
+        "throughput": 928,
+        "vehicles_inserted": null,
+        "vehicles_still_in_network": null
+      }
+    },
+    "parse_warnings": [],
+    "status": "success",
+    "finished_at": "2026-08-28T05:38:36-07:00",
+    "duration_seconds": 30.366
+  },
+  {
+    "grid": "3x3",
+    "controller": "classical_global",
+    "mode": "saturated",
+    "source_script": "grid_3x3\\2_classical_global\\a7.py",
+    "started_at": "2026-08-28T06:26:45-07:00",
+    "alpha_index": 7,
+    "alpha": 0.7,
+    "resolved_config": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_3x3\\sim3x3_a7.sumocfg",
+    "temporary_config_used": false,
+    "launch_rewrites": [
+      "SUMO_CONFIG -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_3x3\\sim3x3_a7.sumocfg",
+      "ROUTE_FILE -> C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_3x3\\routes_3x3\\routes3x3_a7.rou.xml",
+      "SUMO_BINARY -> sumo (headless batch mode)"
+    ],
+    "command": [
+      "C:\\Users\\sujeetjh\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+      "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_3x3\\2_classical_global\\.__runner_o0ugwiol.py",
+      "7"
+    ],
+    "working_directory": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2",
+    "timeout_seconds": 21600,
+    "return_code": 0,
+    "stdout": "\n===== 3x3 CLASSICAL GLOBAL SATURATED TEST =====\nAlpha case: a7 (0.7)\nRoute file: C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\grid_3x3\\routes_3x3\\routes3x3_a7.rou.xml\nSimulation duration: 600 s\nt=100 s | departed=425 | arrived=30 | active=395\nt=200 s | departed=659 | arrived=170 | active=489\nt=300 s | departed=765 | arrived=316 | active=449\nt=400 s | departed=918 | arrived=474 | active=444\nt=500 s | departed=1080 | arrived=693 | active=387\nt=600 s | departed=1283 | arrived=940 | active=343\n\n===== PERFORMANCE METRICS =====\nAlpha: 0.7\nAverage Travel Time: 196.47 s\nAverage Waiting Time: 43.54 s\nThroughput: 940\nVehicles inserted: 1283\nVehicles still in network at t=600: 343\n\n===== ENERGY BENCHMARK =====\nEnergy Decisions: 600\nOptimal Hits: 600\nOptimum Recovery Rate: 1.000000\nAverage Selected Energy: -197.712600\nAverage Exact Minimum Energy: -197.712600\nAverage Optimality Gap: 0.000000\nMaximum Optimality Gap: 0.000000\nAverage Energy Reduction: 2.813600\nENERGY_JSON: {\"num_decisions\": 600, \"optimal_hits\": 600, \"optimum_recovery_rate\": 1.0, \"average_selected_energy\": -197.7126, \"average_exact_min_energy\": -197.7126, \"average_optimality_gap\": 2.3684757858670008e-17, \"maximum_optimality_gap\": 1.4210854715202004e-14, \"average_energy_reduction\": 2.8135999999999997}\n",
+    "stderr": "",
+    "parsed": {
+      "tagged_json": {
+        "ENERGY_JSON": {
+          "num_decisions": 600,
+          "optimal_hits": 600,
+          "optimum_recovery_rate": 1.0,
+          "average_selected_energy": -197.7126,
+          "average_exact_min_energy": -197.7126,
+          "average_optimality_gap": 2.3684757858670008e-17,
+          "maximum_optimality_gap": 1.4210854715202004e-14,
+          "average_energy_reduction": 2.8135999999999997
+        }
+      },
+      "traffic": {
+        "average_travel_time": 196.47,
+        "average_waiting_time": 43.54,
+        "throughput": 940,
+        "vehicles_inserted": 1283,
+        "vehicles_still_in_network": 343
+      }
+    },
+    "parse_warnings": [],
+    "status": "success",
+    "finished_at": "2026-08-28T06:28:09-07:00",
+    "duration_seconds": 83.518
+  }
+]

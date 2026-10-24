@@ -1,0 +1,71 @@
+{
+  "protocol": {
+    "schema_version": 1,
+    "alpha_index": 7,
+    "horizon_seconds": 600,
+    "calibration_optimizer_seeds": [
+      101,
+      102,
+      103
+    ],
+    "calibration_qaoa_seeds": [
+      201,
+      202,
+      203
+    ],
+    "interpretation": "Approximate stochastic control; energy-gap distributions are not validated as matched to QAOA.",
+    "selection_source": "stochastic_fine_matching_results; tuning-selected candidates, not selected by traffic outcomes",
+    "grids": {
+      "2x2": {
+        "evaluation_budget": 32,
+        "restarts": 2,
+        "random_start_probability": 0.25,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "3x3": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      }
+    }
+  },
+  "configurations": [
+    {
+      "grid": "2x2",
+      "seed": 901,
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 2,
+        "random_start_probability": 0.25,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "alpha_index": 7,
+      "horizon_seconds": 600,
+      "python": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qiskit_env\\Scripts\\python.exe",
+      "fingerprint": "91878da72f38c03e43365773b93614496fecb7333b7abcfe068c5bd9d56a3548",
+      "settings_hash": "59aa14aa10346bd718d2cf499505355a5f4fbab5bb99703bef02a97cd2217fdc",
+      "runner_hash": "a0c63e8d34506c456cc768e0caf5903fba263dc4d273ad4fe3ddccdb5b4422e1"
+    },
+    {
+      "grid": "3x3",
+      "seed": 901,
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "alpha_index": 7,
+      "horizon_seconds": 600,
+      "python": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\qiskit_env\\Scripts\\python.exe",
+      "fingerprint": "280473f627a01204dcec57f8aa88d2b576ece07c0c9318d31337b539e4c19121",
+      "settings_hash": "59aa14aa10346bd718d2cf499505355a5f4fbab5bb99703bef02a97cd2217fdc",
+      "runner_hash": "a0c63e8d34506c456cc768e0caf5903fba263dc4d273ad4fe3ddccdb5b4422e1"
+    }
+  ]
+}

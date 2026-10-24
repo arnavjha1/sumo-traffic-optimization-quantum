@@ -16,6 +16,7 @@ def stochastic_decision(
     initial_temperature=5.0,
     final_temperature=0.01,
     return_metadata=False,
+    random_start_probability=0.0,
 ):
     """Budget-limited classical simulated annealing.
 
@@ -36,6 +37,9 @@ def stochastic_decision(
         raise ValueError("prev_state must contain only 0 and 1")
     if not np.all(np.isfinite(biases)):
         raise ValueError("biases must be finite")
+
+    if not np.isfinite(random_start_probability) or not 0 <= random_start_probability <= 1:
+        raise ValueError("random_start_probability must be between 0 and 1")
 
     n = len(biases)
 
@@ -86,7 +90,9 @@ def stochastic_decision(
     for restart in range(restarts):
         restart_budget = base_budget + int(restart < extra)
 
-        if restart == 0:
+        random_start = (random_start_probability == 1 or
+                        (random_start_probability > 0 and rng.random() < random_start_probability)) if restart == 0 else True
+        if restart == 0 and not random_start:
             current = previous_spins.copy()
         else:
             current = rng.choice([-1, 1], size=n)
@@ -129,6 +135,7 @@ def stochastic_decision(
 
     metadata = {
         "optimizer": "simulated_annealing",
+        "random_start_probability": float(random_start_probability),
         "selected_energy": best_energy,
         "energy_evaluations": evaluations,
         "proposed_moves": proposed_moves,

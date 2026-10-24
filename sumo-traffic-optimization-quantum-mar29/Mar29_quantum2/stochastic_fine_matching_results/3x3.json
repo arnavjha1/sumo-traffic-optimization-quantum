@@ -1,0 +1,5222 @@
+{
+  "protocol": {
+    "tuning_seeds": [
+      201,
+      202
+    ],
+    "diagnostic_validation_seed": 203,
+    "classical_seeds": [
+      101,
+      102,
+      103
+    ],
+    "candidate_grid": {
+      "2x2": [
+        [
+          24,
+          1,
+          20.0,
+          0.0
+        ],
+        [
+          24,
+          1,
+          20.0,
+          0.25
+        ],
+        [
+          24,
+          1,
+          50.0,
+          0.0
+        ],
+        [
+          24,
+          1,
+          50.0,
+          0.25
+        ],
+        [
+          24,
+          2,
+          20.0,
+          0.0
+        ],
+        [
+          24,
+          2,
+          20.0,
+          0.25
+        ],
+        [
+          24,
+          2,
+          50.0,
+          0.0
+        ],
+        [
+          24,
+          2,
+          50.0,
+          0.25
+        ],
+        [
+          24,
+          4,
+          20.0,
+          0.0
+        ],
+        [
+          24,
+          4,
+          20.0,
+          0.25
+        ],
+        [
+          24,
+          4,
+          50.0,
+          0.0
+        ],
+        [
+          24,
+          4,
+          50.0,
+          0.25
+        ],
+        [
+          32,
+          1,
+          20.0,
+          0.0
+        ],
+        [
+          32,
+          1,
+          20.0,
+          0.25
+        ],
+        [
+          32,
+          1,
+          50.0,
+          0.0
+        ],
+        [
+          32,
+          1,
+          50.0,
+          0.25
+        ],
+        [
+          32,
+          2,
+          20.0,
+          0.0
+        ],
+        [
+          32,
+          2,
+          20.0,
+          0.25
+        ],
+        [
+          32,
+          2,
+          50.0,
+          0.0
+        ],
+        [
+          32,
+          2,
+          50.0,
+          0.25
+        ],
+        [
+          32,
+          4,
+          20.0,
+          0.0
+        ],
+        [
+          32,
+          4,
+          20.0,
+          0.25
+        ],
+        [
+          32,
+          4,
+          50.0,
+          0.0
+        ],
+        [
+          32,
+          4,
+          50.0,
+          0.25
+        ],
+        [
+          40,
+          1,
+          20.0,
+          0.0
+        ],
+        [
+          40,
+          1,
+          20.0,
+          0.25
+        ],
+        [
+          40,
+          1,
+          50.0,
+          0.0
+        ],
+        [
+          40,
+          1,
+          50.0,
+          0.25
+        ],
+        [
+          40,
+          2,
+          20.0,
+          0.0
+        ],
+        [
+          40,
+          2,
+          20.0,
+          0.25
+        ],
+        [
+          40,
+          2,
+          50.0,
+          0.0
+        ],
+        [
+          40,
+          2,
+          50.0,
+          0.25
+        ],
+        [
+          40,
+          4,
+          20.0,
+          0.0
+        ],
+        [
+          40,
+          4,
+          20.0,
+          0.25
+        ],
+        [
+          40,
+          4,
+          50.0,
+          0.0
+        ],
+        [
+          40,
+          4,
+          50.0,
+          0.25
+        ]
+      ],
+      "3x3": [
+        [
+          20,
+          2,
+          35.0,
+          0.5
+        ],
+        [
+          20,
+          2,
+          35.0,
+          0.75
+        ],
+        [
+          20,
+          2,
+          35.0,
+          1.0
+        ],
+        [
+          20,
+          2,
+          50.0,
+          0.5
+        ],
+        [
+          20,
+          2,
+          50.0,
+          0.75
+        ],
+        [
+          20,
+          2,
+          50.0,
+          1.0
+        ],
+        [
+          20,
+          2,
+          70.0,
+          0.5
+        ],
+        [
+          20,
+          2,
+          70.0,
+          0.75
+        ],
+        [
+          20,
+          2,
+          70.0,
+          1.0
+        ],
+        [
+          20,
+          3,
+          35.0,
+          0.5
+        ],
+        [
+          20,
+          3,
+          35.0,
+          0.75
+        ],
+        [
+          20,
+          3,
+          35.0,
+          1.0
+        ],
+        [
+          20,
+          3,
+          50.0,
+          0.5
+        ],
+        [
+          20,
+          3,
+          50.0,
+          0.75
+        ],
+        [
+          20,
+          3,
+          50.0,
+          1.0
+        ],
+        [
+          20,
+          3,
+          70.0,
+          0.5
+        ],
+        [
+          20,
+          3,
+          70.0,
+          0.75
+        ],
+        [
+          20,
+          3,
+          70.0,
+          1.0
+        ],
+        [
+          20,
+          4,
+          35.0,
+          0.5
+        ],
+        [
+          20,
+          4,
+          35.0,
+          0.75
+        ],
+        [
+          20,
+          4,
+          35.0,
+          1.0
+        ],
+        [
+          20,
+          4,
+          50.0,
+          0.5
+        ],
+        [
+          20,
+          4,
+          50.0,
+          0.75
+        ],
+        [
+          20,
+          4,
+          50.0,
+          1.0
+        ],
+        [
+          20,
+          4,
+          70.0,
+          0.5
+        ],
+        [
+          20,
+          4,
+          70.0,
+          0.75
+        ],
+        [
+          20,
+          4,
+          70.0,
+          1.0
+        ],
+        [
+          28,
+          2,
+          35.0,
+          0.5
+        ],
+        [
+          28,
+          2,
+          35.0,
+          0.75
+        ],
+        [
+          28,
+          2,
+          35.0,
+          1.0
+        ],
+        [
+          28,
+          2,
+          50.0,
+          0.5
+        ],
+        [
+          28,
+          2,
+          50.0,
+          0.75
+        ],
+        [
+          28,
+          2,
+          50.0,
+          1.0
+        ],
+        [
+          28,
+          2,
+          70.0,
+          0.5
+        ],
+        [
+          28,
+          2,
+          70.0,
+          0.75
+        ],
+        [
+          28,
+          2,
+          70.0,
+          1.0
+        ],
+        [
+          28,
+          3,
+          35.0,
+          0.5
+        ],
+        [
+          28,
+          3,
+          35.0,
+          0.75
+        ],
+        [
+          28,
+          3,
+          35.0,
+          1.0
+        ],
+        [
+          28,
+          3,
+          50.0,
+          0.5
+        ],
+        [
+          28,
+          3,
+          50.0,
+          0.75
+        ],
+        [
+          28,
+          3,
+          50.0,
+          1.0
+        ],
+        [
+          28,
+          3,
+          70.0,
+          0.5
+        ],
+        [
+          28,
+          3,
+          70.0,
+          0.75
+        ],
+        [
+          28,
+          3,
+          70.0,
+          1.0
+        ],
+        [
+          28,
+          4,
+          35.0,
+          0.5
+        ],
+        [
+          28,
+          4,
+          35.0,
+          0.75
+        ],
+        [
+          28,
+          4,
+          35.0,
+          1.0
+        ],
+        [
+          28,
+          4,
+          50.0,
+          0.5
+        ],
+        [
+          28,
+          4,
+          50.0,
+          0.75
+        ],
+        [
+          28,
+          4,
+          50.0,
+          1.0
+        ],
+        [
+          28,
+          4,
+          70.0,
+          0.5
+        ],
+        [
+          28,
+          4,
+          70.0,
+          0.75
+        ],
+        [
+          28,
+          4,
+          70.0,
+          1.0
+        ],
+        [
+          36,
+          2,
+          35.0,
+          0.5
+        ],
+        [
+          36,
+          2,
+          35.0,
+          0.75
+        ],
+        [
+          36,
+          2,
+          35.0,
+          1.0
+        ],
+        [
+          36,
+          2,
+          50.0,
+          0.5
+        ],
+        [
+          36,
+          2,
+          50.0,
+          0.75
+        ],
+        [
+          36,
+          2,
+          50.0,
+          1.0
+        ],
+        [
+          36,
+          2,
+          70.0,
+          0.5
+        ],
+        [
+          36,
+          2,
+          70.0,
+          0.75
+        ],
+        [
+          36,
+          2,
+          70.0,
+          1.0
+        ],
+        [
+          36,
+          3,
+          35.0,
+          0.5
+        ],
+        [
+          36,
+          3,
+          35.0,
+          0.75
+        ],
+        [
+          36,
+          3,
+          35.0,
+          1.0
+        ],
+        [
+          36,
+          3,
+          50.0,
+          0.5
+        ],
+        [
+          36,
+          3,
+          50.0,
+          0.75
+        ],
+        [
+          36,
+          3,
+          50.0,
+          1.0
+        ],
+        [
+          36,
+          3,
+          70.0,
+          0.5
+        ],
+        [
+          36,
+          3,
+          70.0,
+          0.75
+        ],
+        [
+          36,
+          3,
+          70.0,
+          1.0
+        ],
+        [
+          36,
+          4,
+          35.0,
+          0.5
+        ],
+        [
+          36,
+          4,
+          35.0,
+          0.75
+        ],
+        [
+          36,
+          4,
+          35.0,
+          1.0
+        ],
+        [
+          36,
+          4,
+          50.0,
+          0.5
+        ],
+        [
+          36,
+          4,
+          50.0,
+          0.75
+        ],
+        [
+          36,
+          4,
+          50.0,
+          1.0
+        ],
+        [
+          36,
+          4,
+          70.0,
+          0.5
+        ],
+        [
+          36,
+          4,
+          70.0,
+          0.75
+        ],
+        [
+          36,
+          4,
+          70.0,
+          1.0
+        ]
+      ]
+    },
+    "criteria": {
+      "recovery_absolute": 0.03,
+      "mean_gap_relative": 0.2,
+      "wasserstein_relative": 0.25,
+      "nonzero_quantile_distance_relative": 0.25
+    },
+    "selection": "Minimize worst threshold ratio, break ties with sum of ratios; tuning only.",
+    "caveats": "Exploratory tolerances, not proof of equivalence. Seed 203 has been inspected previously and is diagnostic only. Rare 2x2 mistakes limit precision. A passing candidate needs a fresh QAOA seed after settings freeze. No traffic outcomes used."
+  },
+  "sources": {
+    "2x2_a7_seed201_t600_shots512.json": "fbbd29445d119e3fffcc711e6e9aaf7a779c3e6775a0e14c6ad6535b8668d454",
+    "2x2_a7_seed201_t600_shots512.snapshots.jsonl": "9e0aa7d56901eceb36185faa9f84c36ec59517a891dbeea9da1aa52475b01fa3",
+    "2x2_a7_seed202_t600_shots512.json": "34429c734337420ce2d0b7678a97f4c13d27634f09dc92f97ddc6f10371f58bc",
+    "2x2_a7_seed202_t600_shots512.snapshots.jsonl": "d74fd68fa6b506a981743d392da95fa5b21bd6c5a72446d17b37e5c473277dc8",
+    "2x2_a7_seed203_t600_shots512.json": "012824738ad306f44a00619935c38075e2231ebef513ab66029a003cb3312cab",
+    "2x2_a7_seed203_t600_shots512.snapshots.jsonl": "07da5d8d2609313d7787fe63cde7284082557e5a2d4a2054a7ab391391217b57",
+    "3x3_a7_seed201_t600_shots512.json": "9e0b42b1941ff3a1926162732530f2fac2d875535d94b240eff251d96a7f59fe",
+    "3x3_a7_seed201_t600_shots512.snapshots.jsonl": "0404ff309ac05ff98a5dbc73a2481f306c34d9e96db8c405ecf12960d98d936f",
+    "3x3_a7_seed202_t600_shots512.json": "9ba19ab6c4d375d1b32ee99f6597b39cffd1cb50e1eb2fe9a422e8537978f932",
+    "3x3_a7_seed202_t600_shots512.snapshots.jsonl": "73fda6e735eb7b005a5d02d8a431a5401cad4d4287f33edd8799c67873fae547",
+    "3x3_a7_seed203_t600_shots512.json": "1eff2ffa09785be561b89f67cc002eab050d8ef506a4cb6883073aa8fee9dd63",
+    "3x3_a7_seed203_t600_shots512.snapshots.jsonl": "539074cdece4898cc9d9c28e82d4ca282dd4720a931600ae5a467df7692dd992",
+    "refine_stochastic_matching.py": "3f6a6e926e5c806d9ca3cf7ab72c5b616e5600f490f8b797250801cb31c5dbd2",
+    "grid_2x2\\2_classical_global_stochastic\\annealer_stochastic.py": "e009f3c31a303056c9928f417214417d7d33572549389d0497faac8d38fb2983",
+    "grid_3x3\\2_classical_global_stochastic\\annealer_stochastic.py": "e009f3c31a303056c9928f417214417d7d33572549389d0497faac8d38fb2983"
+  },
+  "winner": {
+    "settings": {
+      "evaluation_budget": 28,
+      "restarts": 4,
+      "initial_temperature": 50.0,
+      "final_temperature": 0.01,
+      "random_start_probability": 0.5
+    },
+    "tuning": {
+      "stochastic": {
+        "decisions": 3600,
+        "recovery_rate": 0.4166666666666667,
+        "mean_gap": 25.765516666666663,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 6.909999999999982,
+          "q75": 45.12000000000001,
+          "q90": 77.28599999999999,
+          "q95": 99.16600000000001,
+          "q99": 142.50139999999996
+        }
+      },
+      "qaoa": {
+        "decisions": 3600,
+        "recovery_rate": 0.4091666666666667,
+        "mean_gap": 25.2604,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 8.300000000000011,
+          "q75": 44.190000000000005,
+          "q90": 75.33399999999992,
+          "q95": 94.9579999999994,
+          "q99": 136.40319999999997
+        }
+      },
+      "stochastic_mistakes": 2100,
+      "qaoa_unique_mistakes": 709,
+      "recovery_difference": 0.007500000000000007,
+      "mean_relative_error": 0.019996384327511142,
+      "wasserstein_relative": 0.051488363868611275,
+      "nonzero_relative_distance": 0.055525124494682686,
+      "checks": {
+        "recovery": true,
+        "mean_gap": true,
+        "gap_distribution": true,
+        "mistake_sizes": true
+      },
+      "passes_screen": true,
+      "selection_score": [
+        0.2500000000000002,
+        0.7780358750907318
+      ]
+    },
+    "validation": {
+      "stochastic": {
+        "decisions": 1800,
+        "recovery_rate": 0.4211111111111111,
+        "mean_gap": 25.400100000000002,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 5.300000000000011,
+          "q75": 43.69999999999997,
+          "q90": 78.55000000000001,
+          "q95": 98.71499999999996,
+          "q99": 138.23540000000003
+        }
+      },
+      "qaoa": {
+        "decisions": 1800,
+        "recovery_rate": 0.345,
+        "mean_gap": 26.986233333333335,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 12.469999999999999,
+          "q75": 47.76000000000001,
+          "q90": 76.07800000000006,
+          "q95": 92.40499999999992,
+          "q99": 119.9646
+        }
+      },
+      "stochastic_mistakes": 1042,
+      "qaoa_unique_mistakes": 393,
+      "recovery_difference": 0.07611111111111113,
+      "mean_relative_error": 0.058775647336234374,
+      "wasserstein_relative": 0.12228868958287786,
+      "nonzero_relative_distance": 0.0811220996961817,
+      "checks": {
+        "recovery": false,
+        "mean_gap": true,
+        "gap_distribution": true,
+        "mistake_sizes": true
+      },
+      "passes_screen": false,
+      "selection_score": [
+        2.5370370370370376,
+        3.6445584308344476
+      ]
+    }
+  },
+  "candidates": [
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.49916666666666665,
+          "mean_gap": 23.785744444444443,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.05999999999997385,
+            "q75": 39.284999999999975,
+            "q90": 79.16399999999997,
+            "q95": 105.61099999999999,
+            "q99": 157.82099999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1803,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.08999999999999997,
+        "mean_relative_error": 0.05837815535603384,
+        "wasserstein_relative": 0.161008271180715,
+        "nonzero_relative_distance": 0.13652872537732783,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.999999999999999,
+          4.48203876301234
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.36527777777777776,
+          "mean_gap": 33.81728888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 16.17000000000001,
+            "q75": 58.460000000000015,
+            "q90": 91.47199999999998,
+            "q95": 113.82200000000006,
+            "q99": 163.10719999999984
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2285,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.04388888888888892,
+        "mean_relative_error": 0.3387471650840402,
+        "wasserstein_relative": 0.3387951101328561,
+        "nonzero_relative_distance": 0.2488536901939627,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.6937358254202008,
+          5.5072939896904405
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2225,
+          "mean_gap": 44.86840555555555,
+          "gap_quantiles": {
+            "q25": 3.654999999999994,
+            "q50": 39.22,
+            "q75": 70.66000000000001,
+            "q90": 102.22600000000001,
+            "q95": 126.41499999999992,
+            "q99": 175.7809999999995
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2799,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.18666666666666668,
+        "mean_relative_error": 0.7762349588904193,
+        "wasserstein_relative": 0.7764575294840056,
+        "nonzero_relative_distance": 0.35633740268296116,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          6.222222222222222,
+          14.634576745342185
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.47638888888888886,
+          "mean_gap": 25.423544444444442,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 1.9400000000000048,
+            "q75": 43.120000000000005,
+            "q90": 82.74000000000001,
+            "q95": 106.08100000000002,
+            "q99": 157.1093999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1885,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.06722222222222218,
+        "mean_relative_error": 0.006458505979495226,
+        "wasserstein_relative": 0.13853084054268516,
+        "nonzero_relative_distance": 0.14317760830254783,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.2407407407407396,
+          3.399867066019148
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3536111111111111,
+          "mean_gap": 34.67290555555555,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 17.759999999999998,
+            "q75": 60.19000000000001,
+            "q90": 95.12399999999994,
+            "q95": 116.78099999999988,
+            "q99": 164.9829999999999
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2327,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.05555555555555558,
+        "mean_relative_error": 0.3726190224840284,
+        "wasserstein_relative": 0.3745412230649993,
+        "nonzero_relative_distance": 0.25563781656862783,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.8630951124201418,
+          6.235663122806503
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.21305555555555555,
+          "mean_gap": 46.57246666666667,
+          "gap_quantiles": {
+            "q25": 4.804999999999993,
+            "q50": 40.879999999999995,
+            "q75": 72.655,
+            "q90": 103.82399999999998,
+            "q95": 131.78499999999997,
+            "q99": 173.1887999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2833,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.19611111111111112,
+        "mean_relative_error": 0.8436947422315826,
+        "wasserstein_relative": 0.8436947422315824,
+        "nonzero_relative_distance": 0.38844530917122366,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          6.537037037037038,
+          15.684070953806174
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4652777777777778,
+          "mean_gap": 25.74136111111111,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 3.049999999999983,
+            "q75": 44.955,
+            "q90": 80.69999999999999,
+            "q95": 104.75999999999998,
+            "q99": 154.16019999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1925,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.05611111111111111,
+        "mean_relative_error": 0.019040122528190775,
+        "wasserstein_relative": 0.11582798020265361,
+        "nonzero_relative_distance": 0.13007437070130973,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.8703703703703705,
+          2.9491803866271775
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.33444444444444443,
+          "mean_gap": 36.96038333333333,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 21.67,
+            "q75": 63.53499999999998,
+            "q90": 98.54399999999997,
+            "q95": 122.53099999999992,
+            "q99": 161.81839999999957
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2396,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.07472222222222225,
+        "mean_relative_error": 0.4631749035380806,
+        "wasserstein_relative": 0.46533155100913326,
+        "nonzero_relative_distance": 0.2999341684081314,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.490740740740742,
+          7.867678136100204
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.19527777777777777,
+          "mean_gap": 48.60557777777778,
+          "gap_quantiles": {
+            "q25": 7.719999999999992,
+            "q50": 43.39999999999998,
+            "q75": 75.94000000000001,
+            "q90": 106.162,
+            "q95": 132.26399999999998,
+            "q99": 176.7421999999999
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2897,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.2138888888888889,
+        "mean_relative_error": 0.92418084344578,
+        "wasserstein_relative": 0.9242023967246054,
+        "nonzero_relative_distance": 0.4324118429958305,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.129629629629631,
+          17.176990805740274
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3963888888888889,
+          "mean_gap": 31.056966666666668,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 9.539999999999978,
+            "q75": 54.82000000000001,
+            "q90": 91.71199999999997,
+            "q95": 116.99999999999989,
+            "q99": 160.95219999999972
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2173,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.012777777777777777,
+        "mean_relative_error": 0.22947248130143097,
+        "wasserstein_relative": 0.2329258444046808,
+        "nonzero_relative_distance": 0.2250821528764965,
+        "checks": {
+          "recovery": true,
+          "mean_gap": false,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.1473624065071548,
+          3.40532032155779
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2544444444444444,
+          "mean_gap": 45.04023333333333,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 35.08999999999999,
+            "q75": 72.945,
+            "q90": 108.42799999999998,
+            "q95": 135.28299999999996,
+            "q99": 183.41159999999977
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2684,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.15472222222222226,
+        "mean_relative_error": 0.7830372176740404,
+        "wasserstein_relative": 0.7830706472493618,
+        "nonzero_relative_distance": 0.41987088466728567,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          5.157407407407409,
+          13.884359623444201
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.11611111111111111,
+          "mean_gap": 57.80321111111111,
+          "gap_quantiles": {
+            "q25": 21.10499999999998,
+            "q50": 53.73999999999998,
+            "q75": 85.04499999999999,
+            "q90": 117.59799999999997,
+            "q95": 140.46200000000002,
+            "q99": 180.6875999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3182,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.29305555555555557,
+        "mean_relative_error": 1.2882935785304708,
+        "wasserstein_relative": 1.2882935785304708,
+        "nonzero_relative_distance": 0.5297040815603943,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          9.768518518518519,
+          23.481977051534333
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3788888888888889,
+          "mean_gap": 32.71283888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 12.29000000000002,
+            "q75": 56.56500000000001,
+            "q90": 95.39199999999997,
+            "q95": 120.21999999999997,
+            "q99": 165.69559999999964
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2236,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.030277777777777792,
+        "mean_relative_error": 0.29502457953511774,
+        "wasserstein_relative": 0.29502457953511774,
+        "nonzero_relative_distance": 0.2394697864012145,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.4751228976755886,
+          4.622359620680177
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.25527777777777777,
+          "mean_gap": 45.14522777777778,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 36.06,
+            "q75": 73.94999999999999,
+            "q90": 109.244,
+            "q95": 130.32999999999987,
+            "q99": 178.1511999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2681,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1538888888888889,
+        "mean_relative_error": 0.7871937015161191,
+        "wasserstein_relative": 0.7871937015161191,
+        "nonzero_relative_distance": 0.4250633068009813,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          5.129629629629631,
+          13.914626170478627
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.11666666666666667,
+          "mean_gap": 58.27715,
+          "gap_quantiles": {
+            "q25": 20.875,
+            "q50": 54.08,
+            "q75": 85.41499999999999,
+            "q90": 118.70599999999999,
+            "q95": 141.71199999999996,
+            "q99": 184.35739999999956
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3180,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.2925,
+        "mean_relative_error": 1.3070557077480958,
+        "wasserstein_relative": 1.3070557077480955,
+        "nonzero_relative_distance": 0.5439222439270576,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          9.75,
+          23.68919034544109
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3888888888888889,
+          "mean_gap": 31.083133333333333,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 10.93999999999997,
+            "q75": 53.60999999999999,
+            "q90": 91.74199999999998,
+            "q95": 116.186,
+            "q99": 160.40819999999982
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2200,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.020277777777777783,
+        "mean_relative_error": 0.23050835827355592,
+        "wasserstein_relative": 0.23276221543074002,
+        "nonzero_relative_distance": 0.20694628420340735,
+        "checks": {
+          "recovery": true,
+          "mean_gap": false,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.1525417913677796,
+          3.587301715830295
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.23694444444444446,
+          "mean_gap": 47.50420555555556,
+          "gap_quantiles": {
+            "q25": 1.0,
+            "q50": 39.40999999999998,
+            "q75": 78.11999999999998,
+            "q90": 112.23199999999999,
+            "q95": 134.94799999999995,
+            "q99": 180.80379999999982
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2747,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.17222222222222222,
+        "mean_relative_error": 0.8805800999016468,
+        "wasserstein_relative": 0.8805800999016465,
+        "nonzero_relative_distance": 0.4534907388143446,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          5.7407407407407405,
+          15.479924595112939
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.10444444444444445,
+          "mean_gap": 60.63151666666667,
+          "gap_quantiles": {
+            "q25": 23.884999999999998,
+            "q50": 56.59,
+            "q75": 86.83499999999997,
+            "q90": 122.80599999999998,
+            "q95": 146.46000000000004,
+            "q99": 192.4616
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3224,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.3047222222222222,
+        "mean_relative_error": 1.400259563057856,
+        "wasserstein_relative": 1.400259563057856,
+        "nonzero_relative_distance": 0.5846429349649821,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          10.157407407407408,
+          25.09831521478804
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.33916666666666667,
+          "mean_gap": 34.97884444444444,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 15.060000000000016,
+            "q75": 59.24000000000001,
+            "q90": 99.186,
+            "q95": 126.97999999999998,
+            "q99": 174.2227999999999
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2379,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.07,
+        "mean_relative_error": 0.38473042566406074,
+        "wasserstein_relative": 0.3847304256640608,
+        "nonzero_relative_distance": 0.24023738560931507,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.3333333333333335,
+          6.756856706747141
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.21944444444444444,
+          "mean_gap": 51.040688888888894,
+          "gap_quantiles": {
+            "q25": 3.3449999999999918,
+            "q50": 42.96999999999999,
+            "q75": 81.655,
+            "q90": 118.68599999999995,
+            "q95": 146.68599999999998,
+            "q99": 191.53159999999974
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2810,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.18972222222222224,
+        "mean_relative_error": 1.0205811819642165,
+        "wasserstein_relative": 1.020581181964216,
+        "nonzero_relative_distance": 0.5313554411311188,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          6.324074074074074,
+          17.634726476276498
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.07138888888888889,
+          "mean_gap": 66.88379444444443,
+          "gap_quantiles": {
+            "q25": 32.714999999999996,
+            "q50": 61.779999999999994,
+            "q75": 95.76000000000005,
+            "q90": 129.85999999999999,
+            "q95": 154.861,
+            "q99": 193.22059999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3343,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.3377777777777778,
+        "mean_relative_error": 1.647772578599089,
+        "wasserstein_relative": 1.6477725785990895,
+        "nonzero_relative_distance": 0.690146581458355,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          11.25925925925926,
+          28.849798792484485
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.33416666666666667,
+          "mean_gap": 37.144222222222226,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 17.36,
+            "q75": 62.23999999999998,
+            "q90": 105.28999999999992,
+            "q95": 132.70199999999997,
+            "q99": 177.46579999999977
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2397,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.07500000000000001,
+        "mean_relative_error": 0.47045265404436293,
+        "wasserstein_relative": 0.4704526540443627,
+        "nonzero_relative_distance": 0.3142355610757033,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.5000000000000004,
+          7.991016130702079
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.20166666666666666,
+          "mean_gap": 53.17900555555555,
+          "gap_quantiles": {
+            "q25": 6.2099999999999795,
+            "q50": 45.87999999999998,
+            "q75": 83.94000000000003,
+            "q90": 122.98399999999998,
+            "q95": 144.02399999999997,
+            "q99": 186.10959999999977
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2874,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.20750000000000002,
+        "mean_relative_error": 1.1052321244143224,
+        "wasserstein_relative": 1.1052321244143224,
+        "nonzero_relative_distance": 0.5610496225767848,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          6.916666666666668,
+          19.10795427670271
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.07722222222222222,
+          "mean_gap": 66.91387777777778,
+          "gap_quantiles": {
+            "q25": 31.04499999999998,
+            "q50": 62.37999999999997,
+            "q75": 95.50999999999999,
+            "q90": 130.564,
+            "q95": 153.34199999999996,
+            "q99": 190.5279999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3322,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.3319444444444445,
+        "mean_relative_error": 1.6489635072199087,
+        "wasserstein_relative": 1.6489635072199083,
+        "nonzero_relative_distance": 0.7007228044699608,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          11.064814814814817,
+          28.708377597673834
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.33111111111111113,
+          "mean_gap": 37.25118888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 17.999999999999993,
+            "q75": 62.805000000000014,
+            "q90": 103.60399999999996,
+            "q95": 129.38499999999996,
+            "q99": 173.56419999999991
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2408,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.07805555555555554,
+        "mean_relative_error": 0.4746872135393299,
+        "wasserstein_relative": 0.47468721353932986,
+        "nonzero_relative_distance": 0.3093018151971963,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.6018518518518516,
+          8.111244034494606
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.205,
+          "mean_gap": 53.172872222222225,
+          "gap_quantiles": {
+            "q25": 6.164999999999992,
+            "q50": 46.59000000000001,
+            "q75": 83.625,
+            "q90": 123.46199999999999,
+            "q95": 145.93199999999996,
+            "q99": 185.99059999999974
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2862,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.2041666666666667,
+        "mean_relative_error": 1.1049893201304106,
+        "wasserstein_relative": 1.1049893201304104,
+        "nonzero_relative_distance": 0.5681098864328166,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          6.805555555555556,
+          19.022898982460518
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 20,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.06972222222222223,
+          "mean_gap": 68.08699444444444,
+          "gap_quantiles": {
+            "q25": 32.74500000000004,
+            "q50": 62.25999999999998,
+            "q75": 97.22,
+            "q90": 132.23999999999998,
+            "q95": 154.00799999999995,
+            "q99": 195.5251999999999
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3349,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.33944444444444444,
+        "mean_relative_error": 1.6954044450778467,
+        "wasserstein_relative": 1.6954044450778467,
+        "nonzero_relative_distance": 0.7089939603610249,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          11.314814814814815,
+          29.409430661959533
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6619444444444444,
+          "mean_gap": 11.98061666666667,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 10.085,
+            "q90": 49.065999999999995,
+            "q95": 68.64599999999997,
+            "q99": 101.22639999999984
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1217,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.25277777777777777,
+        "mean_relative_error": 0.5257154808844409,
+        "wasserstein_relative": 0.525715480884441,
+        "nonzero_relative_distance": 0.17544595428015197,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          8.425925925925926,
+          13.859149071006502
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5391666666666667,
+          "mean_gap": 18.66807777777778,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 32.24000000000001,
+            "q90": 64.98200000000004,
+            "q95": 81.87999999999997,
+            "q99": 113.44139999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1659,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.13,
+        "mean_relative_error": 0.2609745776876939,
+        "wasserstein_relative": 0.2609745776876939,
+        "nonzero_relative_distance": 0.06969937905652612,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.333333333333334,
+          6.960902048748683
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.46416666666666667,
+          "mean_gap": 23.113877777777777,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 3.200000000000017,
+            "q75": 42.225,
+            "q90": 71.826,
+            "q95": 87.64699999999995,
+            "q99": 118.16060000000004
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1929,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.05499999999999999,
+        "mean_relative_error": 0.08497578115240549,
+        "wasserstein_relative": 0.09098122841373148,
+        "nonzero_relative_distance": 0.08535547571478976,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.8333333333333333,
+          2.9635590556094455
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6386111111111111,
+          "mean_gap": 13.34303888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 13.72999999999999,
+            "q90": 53.76000000000002,
+            "q95": 71.12300000000002,
+            "q99": 113.34179999999994
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1301,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.22944444444444445,
+        "mean_relative_error": 0.47178038000629885,
+        "wasserstein_relative": 0.47178038000629874,
+        "nonzero_relative_distance": 0.13920941728382918,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.648148148148149,
+          12.451009237340156
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5466666666666666,
+          "mean_gap": 18.00335,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 28.68500000000001,
+            "q90": 64.06399999999998,
+            "q95": 80.64299999999997,
+            "q99": 113.46579999999987
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1632,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.13749999999999996,
+        "mean_relative_error": 0.2872895916137511,
+        "wasserstein_relative": 0.2872895916137511,
+        "nonzero_relative_distance": 0.07895818265853764,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.583333333333332,
+          7.484772388491242
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4558333333333333,
+          "mean_gap": 22.60857222222222,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 3.819999999999993,
+            "q75": 42.315000000000005,
+            "q90": 70.51999999999998,
+            "q95": 84.82299999999998,
+            "q99": 111.75779999999959
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1959,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.046666666666666634,
+        "mean_relative_error": 0.10497964314808075,
+        "wasserstein_relative": 0.10740372722170319,
+        "nonzero_relative_distance": 0.0766529302729959,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.5555555555555545,
+          2.8166804012747546
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6219444444444444,
+          "mean_gap": 12.924850000000001,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 15.13000000000001,
+            "q90": 50.64600000000001,
+            "q95": 68.16099999999999,
+            "q99": 105.5208
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1361,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.21277777777777773,
+        "mean_relative_error": 0.48833549745847254,
+        "wasserstein_relative": 0.48833549745847254,
+        "nonzero_relative_distance": 0.2024690775992771,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.092592592592592,
+          12.297488380115952
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5261111111111111,
+          "mean_gap": 18.424055555555558,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 30.24000000000001,
+            "q90": 63.364000000000004,
+            "q95": 81.04299999999998,
+            "q99": 114.27159999999876
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1706,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1169444444444444,
+        "mean_relative_error": 0.2706348452298634,
+        "wasserstein_relative": 0.2706348452298635,
+        "nonzero_relative_distance": 0.09465156389789839,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.898148148148147,
+          6.712468010808512
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4305555555555556,
+          "mean_gap": 25.232944444444446,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 7.090000000000003,
+            "q75": 45.37499999999999,
+            "q90": 73.93199999999997,
+            "q95": 90.05499999999994,
+            "q99": 136.3406
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2050,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.0213888888888889,
+        "mean_relative_error": 0.0010869010607731913,
+        "wasserstein_relative": 0.05595715032224346,
+        "nonzero_relative_distance": 0.07230110175710129,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.7129629629629635,
+          1.2314304765842083
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5211111111111111,
+          "mean_gap": 19.719605555555557,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 32.77499999999999,
+            "q90": 66.71199999999997,
+            "q95": 85.12199999999999,
+            "q99": 126.94099999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1724,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1119444444444444,
+        "mean_relative_error": 0.21934705881317967,
+        "wasserstein_relative": 0.2193470588131797,
+        "nonzero_relative_distance": 0.053379061059737797,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.73148148148148,
+          5.919121255039048
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.37972222222222224,
+          "mean_gap": 27.64902777777778,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 11.969999999999992,
+            "q75": 48.81999999999999,
+            "q90": 78.4,
+            "q95": 94.88799999999995,
+            "q99": 140.2735999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2233,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.02944444444444444,
+        "mean_relative_error": 0.09456017235585255,
+        "wasserstein_relative": 0.11755620127419464,
+        "nonzero_relative_distance": 0.07230689128832754,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.9814814814814814,
+          2.2137347135108327
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2613888888888889,
+          "mean_gap": 35.63636111111111,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 28.000000000000004,
+            "q75": 59.45999999999998,
+            "q90": 84.12399999999998,
+            "q95": 99.71099999999996,
+            "q99": 147.73319999999967
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2659,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.14777777777777779,
+        "mean_relative_error": 0.410759968611388,
+        "wasserstein_relative": 0.41796448195594677,
+        "nonzero_relative_distance": 0.14608867723560368,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.9259259259259265,
+          9.235938405749069
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5033333333333333,
+          "mean_gap": 20.200083333333335,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 5.684341886080802e-14,
+            "q75": 34.18,
+            "q90": 66.30600000000001,
+            "q95": 86.40599999999996,
+            "q99": 132.3531999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1788,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.09416666666666662,
+        "mean_relative_error": 0.2003260703182319,
+        "wasserstein_relative": 0.20035070263688975,
+        "nonzero_relative_distance": 0.05486650742238482,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.1388888888888875,
+          5.1613880807171455
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.37666666666666665,
+          "mean_gap": 28.098799999999997,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 11.029999999999994,
+            "q75": 49.25000000000004,
+            "q90": 79.76799999999999,
+            "q95": 98.24799999999996,
+            "q99": 146.91999999999993
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2244,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.03250000000000003,
+        "mean_relative_error": 0.11236559991132351,
+        "wasserstein_relative": 0.11876252509417458,
+        "nonzero_relative_distance": 0.06684611280323285,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.0833333333333344,
+          2.3875958844795817
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.25527777777777777,
+          "mean_gap": 36.43064444444445,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 28.939999999999998,
+            "q75": 59.37500000000001,
+            "q90": 87.358,
+            "q95": 104.89499999999997,
+            "q99": 145.6321999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2681,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1538888888888889,
+        "mean_relative_error": 0.4422037831722556,
+        "wasserstein_relative": 0.4468544529074054,
+        "nonzero_relative_distance": 0.14788370981323865,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          5.129629629629631,
+          9.719601196373485
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5013888888888889,
+          "mean_gap": 20.569077777777775,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 5.684341886080802e-14,
+            "q75": 34.699999999999996,
+            "q90": 68.11999999999998,
+            "q95": 87.58599999999996,
+            "q99": 127.54079999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1795,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.0922222222222222,
+        "mean_relative_error": 0.18571844555993675,
+        "wasserstein_relative": 0.18571844555993658,
+        "nonzero_relative_distance": 0.04978190951824672,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.0740740740740735,
+          4.94466772218649
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3488888888888889,
+          "mean_gap": 29.96116111111111,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 14.939999999999998,
+            "q75": 53.285000000000004,
+            "q90": 81.28399999999999,
+            "q95": 97.48899999999992,
+            "q99": 140.22059999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2344,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.06027777777777776,
+        "mean_relative_error": 0.18609210903671794,
+        "wasserstein_relative": 0.198504598326058,
+        "nonzero_relative_distance": 0.09604068086219877,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          2.009259259259259,
+          4.117900921195876
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2427777777777778,
+          "mean_gap": 37.459361111111114,
+          "gap_quantiles": {
+            "q25": 0.8200000000000145,
+            "q50": 30.939999999999998,
+            "q75": 60.370000000000005,
+            "q90": 86.83000000000001,
+            "q95": 105.76899999999995,
+            "q99": 142.58199999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2726,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1663888888888889,
+        "mean_relative_error": 0.4829282636502634,
+        "wasserstein_relative": 0.4867647472812077,
+        "nonzero_relative_distance": 0.16063503654842037,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          5.546296296296297,
+          10.550536749866126
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.43027777777777776,
+          "mean_gap": 25.02530555555556,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 5.840000000000003,
+            "q75": 44.39999999999999,
+            "q90": 76.58600000000001,
+            "q95": 97.00300000000004,
+            "q99": 137.44439999999992
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2051,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.02111111111111108,
+        "mean_relative_error": 0.009306837755714172,
+        "wasserstein_relative": 0.0478660934374225,
+        "nonzero_relative_distance": 0.05295262734773745,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.7037037037037027,
+          1.1535127756229133
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.29305555555555557,
+          "mean_gap": 34.99457222222222,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 24.230000000000004,
+            "q75": 58.88,
+            "q90": 86.78399999999996,
+            "q95": 106.71999999999997,
+            "q99": 148.341
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2545,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.11611111111111111,
+        "mean_relative_error": 0.3853530515044186,
+        "wasserstein_relative": 0.3918704991035595,
+        "nonzero_relative_distance": 0.16722315255388961,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.8703703703703702,
+          8.033510234522259
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.17527777777777778,
+          "mean_gap": 43.74521111111111,
+          "gap_quantiles": {
+            "q25": 9.509999999999991,
+            "q50": 40.39999999999999,
+            "q75": 68.10000000000002,
+            "q90": 93.102,
+            "q95": 111.12699999999985,
+            "q99": 148.27899999999954
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2969,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.2338888888888889,
+        "mean_relative_error": 0.7317703247419324,
+        "wasserstein_relative": 0.7356103272755422,
+        "nonzero_relative_distance": 0.2461851331449117,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.796296296296297,
+          15.382329761687775
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4166666666666667,
+          "mean_gap": 25.765516666666663,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 6.909999999999982,
+            "q75": 45.12000000000001,
+            "q90": 77.28599999999999,
+            "q95": 99.16600000000001,
+            "q99": 142.50139999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2100,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.007500000000000007,
+        "mean_relative_error": 0.019996384327511142,
+        "wasserstein_relative": 0.051488363868611275,
+        "nonzero_relative_distance": 0.055525124494682686,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.2500000000000002,
+          0.7780358750907318
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2836111111111111,
+          "mean_gap": 36.47011111111111,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 26.439999999999984,
+            "q75": 60.38499999999999,
+            "q90": 91.28,
+            "q95": 109.36399999999988,
+            "q99": 148.58719999999977
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2579,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1255555555555556,
+        "mean_relative_error": 0.44376617595568985,
+        "wasserstein_relative": 0.447406920625872,
+        "nonzero_relative_distance": 0.19255610328494963,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.185185185185186,
+          8.963868160606921
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.16805555555555557,
+          "mean_gap": 45.29325555555555,
+          "gap_quantiles": {
+            "q25": 10.70000000000001,
+            "q50": 41.650000000000006,
+            "q75": 69.465,
+            "q90": 96.32199999999999,
+            "q95": 117.64499999999995,
+            "q99": 159.00299999999993
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2995,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.2411111111111111,
+        "mean_relative_error": 0.7930537741110808,
+        "wasserstein_relative": 0.7962753295012482,
+        "nonzero_relative_distance": 0.27905373772005293,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          8.037037037037038,
+          16.303622176477646
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.40444444444444444,
+          "mean_gap": 26.759044444444445,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 7.300000000000011,
+            "q75": 46.37000000000001,
+            "q90": 81.07199999999999,
+            "q95": 102.54100000000001,
+            "q99": 142.78639999999984
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2144,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.004722222222222239,
+        "mean_relative_error": 0.05932781921285666,
+        "wasserstein_relative": 0.07647851094114816,
+        "nonzero_relative_distance": 0.08065326476908263,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.32261305907633053,
+          1.0825736063126143
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2813888888888889,
+          "mean_gap": 36.14776666666666,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 24.699999999999974,
+            "q75": 60.99999999999998,
+            "q90": 91.63999999999999,
+            "q95": 110.78799999999998,
+            "q99": 151.09999999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2587,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.12777777777777777,
+        "mean_relative_error": 0.4310053153024759,
+        "wasserstein_relative": 0.4361402740169505,
+        "nonzero_relative_distance": 0.1806750588836969,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.2592592592592595,
+          8.881547167374228
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 28,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.16583333333333333,
+          "mean_gap": 45.546866666666666,
+          "gap_quantiles": {
+            "q25": 10.465000000000021,
+            "q50": 41.58000000000001,
+            "q75": 70.075,
+            "q90": 98.07199999999999,
+            "q95": 118.06200000000001,
+            "q99": 160.5663999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 3003,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.24333333333333335,
+        "mean_relative_error": 0.80309364327828,
+        "wasserstein_relative": 0.80875599752973,
+        "nonzero_relative_distance": 0.27973356763476376,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          8.111111111111112,
+          16.480537588160487
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.7905555555555556,
+          "mean_gap": 6.191272222222223,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 2.842170943040401e-14,
+            "q90": 23.429999999999954,
+            "q95": 48.639999999999986,
+            "q99": 80.52339999999992
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 754,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.3813888888888889,
+        "mean_relative_error": 0.7549020513443088,
+        "wasserstein_relative": 0.7549020513443088,
+        "nonzero_relative_distance": 0.30937258642690624,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          12.712962962962964,
+          20.74457177076937
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.7236111111111111,
+          "mean_gap": 8.60357777777778,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 2.255000000000006,
+            "q90": 36.28600000000002,
+            "q95": 57.22699999999996,
+            "q99": 88.0685999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 995,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.3144444444444444,
+        "mean_relative_error": 0.6594045312909622,
+        "wasserstein_relative": 0.6594045312909622,
+        "nonzero_relative_distance": 0.2766257472725152,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          10.481481481481481,
+          17.522625252190203
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6733333333333333,
+          "mean_gap": 10.837538888888888,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 7.765000000000015,
+            "q90": 46.30000000000001,
+            "q95": 64.34899999999993,
+            "q99": 90.98419999999986
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1176,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.26416666666666666,
+        "mean_relative_error": 0.5709672495728932,
+        "wasserstein_relative": 0.5709672495728931,
+        "nonzero_relative_distance": 0.22598059549031035,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          8.805555555555555,
+          14.848183183672836
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.7822222222222223,
+          "mean_gap": 6.154950000000002,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 2.842170943040401e-14,
+            "q90": 22.071999999999992,
+            "q95": 47.942999999999984,
+            "q99": 82.70059999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 784,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.3730555555555556,
+        "mean_relative_error": 0.7563399629459548,
+        "wasserstein_relative": 0.756339962945955,
+        "nonzero_relative_distance": 0.35001560511389956,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          12.435185185185187,
+          20.64230727215438
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.7305555555555555,
+          "mean_gap": 8.556738888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 1.5100000000000193,
+            "q90": 38.065999999999995,
+            "q95": 57.76299999999998,
+            "q99": 84.76179999999995
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 970,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.32138888888888884,
+        "mean_relative_error": 0.6612587730642076,
+        "wasserstein_relative": 0.6612587730642076,
+        "nonzero_relative_distance": 0.2671048863290789,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          10.712962962962962,
+          17.732711465857147
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6588888888888889,
+          "mean_gap": 11.511033333333334,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 10.820000000000007,
+            "q90": 47.81999999999999,
+            "q95": 64.36799999999997,
+            "q99": 91.98479999999991
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1228,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.24972222222222218,
+        "mean_relative_error": 0.5443051838714615,
+        "wasserstein_relative": 0.5443051838714614,
+        "nonzero_relative_distance": 0.21117606940105274,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          8.324074074074073,
+          14.067525006521437
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.7586111111111111,
+          "mean_gap": 6.6763166666666685,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 5.684341886080802e-14,
+            "q90": 24.75999999999999,
+            "q95": 49.04099999999996,
+            "q99": 83.98019999999998
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 869,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.34944444444444445,
+        "mean_relative_error": 0.7357002792249264,
+        "wasserstein_relative": 0.7357002792249264,
+        "nonzero_relative_distance": 0.350877272625364,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          11.648148148148149,
+          19.672959751673943
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6952777777777778,
+          "mean_gap": 9.691555555555556,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 5.074999999999989,
+            "q90": 42.07799999999999,
+            "q95": 59.94599999999999,
+            "q99": 87.24099999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1097,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.2861111111111111,
+        "mean_relative_error": 0.6163340423922203,
+        "wasserstein_relative": 0.6163340423922203,
+        "nonzero_relative_distance": 0.26134536803271013,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          9.537037037037036,
+          16.12942489069786
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 2,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6466666666666666,
+          "mean_gap": 11.962472222222223,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 12.555,
+            "q90": 49.348,
+            "q95": 64.88899999999995,
+            "q99": 90.00699999999983
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1272,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.23749999999999993,
+        "mean_relative_error": 0.5264337768910143,
+        "wasserstein_relative": 0.5264337768910143,
+        "nonzero_relative_distance": 0.20850760498450135,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.916666666666664,
+          13.488601078623798
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6483333333333333,
+          "mean_gap": 11.171050000000001,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 10.420000000000016,
+            "q90": 45.89200000000001,
+            "q95": 63.13099999999994,
+            "q99": 93.98119999999993
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1266,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.23916666666666664,
+        "mean_relative_error": 0.5577643267723393,
+        "wasserstein_relative": 0.5577643267723393,
+        "nonzero_relative_distance": 0.2652975336289944,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.972222222222221,
+          14.053291297689253
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5516666666666666,
+          "mean_gap": 15.923005555555557,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 24.20499999999999,
+            "q90": 57.825999999999986,
+            "q95": 74.12800000000001,
+            "q99": 103.40659999999983
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1614,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.14249999999999996,
+        "mean_relative_error": 0.3696455497317716,
+        "wasserstein_relative": 0.36964554973177166,
+        "nonzero_relative_distance": 0.17720967707291552,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.749999999999999,
+          8.785648655877605
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4469444444444444,
+          "mean_gap": 21.09241666666667,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 4.230000000000004,
+            "q75": 37.655,
+            "q90": 63.07800000000001,
+            "q95": 79.04399999999997,
+            "q99": 115.92379999999942
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1991,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.037777777777777743,
+        "mean_relative_error": 0.1650006861860197,
+        "wasserstein_relative": 0.16500068618601973,
+        "nonzero_relative_distance": 0.11366331917114378,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.2592592592592582,
+          3.1989187116180107
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6252777777777778,
+          "mean_gap": 11.780216666666666,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 12.105000000000018,
+            "q90": 46.92200000000001,
+            "q95": 64.54499999999999,
+            "q99": 93.58939999999981
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1349,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.21611111111111114,
+        "mean_relative_error": 0.5336488469435692,
+        "wasserstein_relative": 0.5336488469435691,
+        "nonzero_relative_distance": 0.2669199918598375,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          7.203703703703705,
+          13.074223293635177
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5455555555555556,
+          "mean_gap": 16.289844444444444,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 25.684999999999985,
+            "q90": 58.22600000000002,
+            "q95": 74.02199999999995,
+            "q99": 105.41059999999976
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1636,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1363888888888889,
+        "mean_relative_error": 0.3551232583631121,
+        "wasserstein_relative": 0.3551232583631121,
+        "nonzero_relative_distance": 0.162204045826983,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.546296296296297,
+          8.391221804872238
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.44472222222222224,
+          "mean_gap": 21.031916666666664,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 4.579999999999984,
+            "q75": 37.459999999999965,
+            "q90": 63.943999999999996,
+            "q95": 79.88199999999999,
+            "q99": 112.82219999999988
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1999,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.03555555555555556,
+        "mean_relative_error": 0.16739573931265286,
+        "wasserstein_relative": 0.16739573931265275,
+        "nonzero_relative_distance": 0.1217653281179015,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          1.1851851851851856,
+          3.1788081514706668
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.6125,
+          "mean_gap": 12.405766666666665,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 14.130000000000003,
+            "q90": 48.88599999999999,
+            "q95": 66.76300000000003,
+            "q99": 95.9439999999999
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1395,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.20333333333333337,
+        "mean_relative_error": 0.5088847893672838,
+        "wasserstein_relative": 0.5088847893672838,
+        "nonzero_relative_distance": 0.2559668472072778,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": false
+        },
+        "passes_screen": false,
+        "selection_score": [
+          6.7777777777777795,
+          12.381608270912444
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5247222222222222,
+          "mean_gap": 16.8125,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 27.645000000000007,
+            "q90": 57.306000000000004,
+            "q95": 72.88599999999997,
+            "q99": 100.88699999999983
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1711,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.11555555555555552,
+        "mean_relative_error": 0.33443255055343546,
+        "wasserstein_relative": 0.33443255055343546,
+        "nonzero_relative_distance": 0.17510404772405483,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.8518518518518507,
+          7.562160997728989
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 3,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4311111111111111,
+          "mean_gap": 22.38176666666667,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 5.820000000000007,
+            "q75": 39.71500000000001,
+            "q90": 67.06400000000001,
+            "q95": 82.64399999999996,
+            "q99": 117.03039999999922
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2048,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.021944444444444433,
+        "mean_relative_error": 0.11395834323024692,
+        "wasserstein_relative": 0.11395834323024712,
+        "nonzero_relative_distance": 0.08382263942732895,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.7314814814814812,
+          2.09239712826302
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5394444444444444,
+          "mean_gap": 16.261950000000002,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 24.399999999999977,
+            "q90": 59.24000000000001,
+            "q95": 74.76899999999995,
+            "q99": 108.70119999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1658,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.13027777777777771,
+        "mean_relative_error": 0.35622753400579554,
+        "wasserstein_relative": 0.3562275340057956,
+        "nonzero_relative_distance": 0.17320938889307858,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.342592592592591,
+          8.241477954217064
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.42,
+          "mean_gap": 23.429755555555555,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 7.459999999999994,
+            "q75": 40.94000000000001,
+            "q90": 70.0,
+            "q95": 87.29199999999993,
+            "q99": 126.32139999999994
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2088,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.010833333333333306,
+        "mean_relative_error": 0.07247092066809889,
+        "wasserstein_relative": 0.07247092066809892,
+        "nonzero_relative_distance": 0.05917498392845733,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.3623546033404944,
+          1.2500493328378297
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 35.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3038888888888889,
+          "mean_gap": 29.703055555555554,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 20.24000000000001,
+            "q75": 50.565,
+            "q90": 75.88999999999999,
+            "q95": 90.52899999999991,
+            "q99": 126.8804
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2506,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.1052777777777778,
+        "mean_relative_error": 0.1758743153535001,
+        "wasserstein_relative": 0.23781931842374268,
+        "nonzero_relative_distance": 0.09341640214796595,
+        "checks": {
+          "recovery": false,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.5092592592592604,
+          5.7135737183135955
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5380555555555555,
+          "mean_gap": 16.603133333333332,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 26.105000000000008,
+            "q90": 58.123999999999995,
+            "q95": 77.75999999999999,
+            "q99": 112.28179999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1663,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.12888888888888883,
+        "mean_relative_error": 0.3427208859189351,
+        "wasserstein_relative": 0.342720885918935,
+        "nonzero_relative_distance": 0.15897895272021562,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.296296296296295,
+          8.016700080447572
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.39944444444444444,
+          "mean_gap": 23.43704444444445,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.169999999999987,
+            "q75": 40.894999999999996,
+            "q90": 70.36199999999998,
+            "q95": 85.42399999999999,
+            "q99": 116.66279999999946
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2162,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.009722222222222243,
+        "mean_relative_error": 0.07218237064953648,
+        "wasserstein_relative": 0.07733052524900642,
+        "nonzero_relative_distance": 0.09261499207750434,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.3704599683100174,
+          1.3647679966278004
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.2838888888888889,
+          "mean_gap": 31.29767222222222,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 22.0,
+            "q75": 52.7,
+            "q90": 77.40799999999997,
+            "q95": 94.18899999999996,
+            "q99": 129.65059999999974
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2578,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.12527777777777777,
+        "mean_relative_error": 0.23900144978789808,
+        "wasserstein_relative": 0.2718710797224993,
+        "nonzero_relative_distance": 0.08814288026085304,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.175925925925926,
+          6.8109890147988255
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.5
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5130555555555556,
+          "mean_gap": 17.38016111111111,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 28.12000000000001,
+            "q90": 60.58199999999999,
+            "q95": 77.23799999999987,
+            "q99": 107.46299999999991
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 1753,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.10388888888888892,
+        "mean_relative_error": 0.3119601783379871,
+        "wasserstein_relative": 0.31196017833798706,
+        "nonzero_relative_distance": 0.17006159760724385,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          3.462962962962964,
+          6.950850958433823
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 0.75
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4022222222222222,
+          "mean_gap": 24.249161111111114,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.640000000000043,
+            "q75": 43.879999999999995,
+            "q90": 70.71199999999996,
+            "q95": 86.86399999999996,
+            "q99": 123.21139999999971
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2152,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.006944444444444475,
+        "mean_relative_error": 0.04003257624142478,
+        "wasserstein_relative": 0.06350761578509355,
+        "nonzero_relative_distance": 0.06029875509759657,
+        "checks": {
+          "recovery": true,
+          "mean_gap": true,
+          "gap_distribution": true,
+          "mistake_sizes": true
+        },
+        "passes_screen": true,
+        "selection_score": [
+          0.2540304631403742,
+          0.926869846219367
+        ]
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 36,
+        "restarts": 4,
+        "initial_temperature": 70.0,
+        "final_temperature": 0.01,
+        "random_start_probability": 1.0
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.27,
+          "mean_gap": 31.601405555555555,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 22.429999999999993,
+            "q75": 53.17999999999999,
+            "q90": 76.424,
+            "q95": 91.75999999999999,
+            "q99": 132.23339999999965
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "stochastic_mistakes": 2628,
+        "qaoa_unique_mistakes": 709,
+        "recovery_difference": 0.13916666666666666,
+        "mean_relative_error": 0.25102554019554535,
+        "wasserstein_relative": 0.28599771447271877,
+        "nonzero_relative_distance": 0.0893935579544715,
+        "checks": {
+          "recovery": false,
+          "mean_gap": false,
+          "gap_distribution": false,
+          "mistake_sizes": true
+        },
+        "passes_screen": false,
+        "selection_score": [
+          4.638888888888889,
+          7.395581679575377
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "source_hashes": {
+    "grid_2x2\\2_classical_global\\a7.py": "ce1aef5f407f1affb4793dffeda3f39959ad2380edbb3aa128685c0bd3631f79",
+    "grid_2x2\\2_classical_global\\annealer_classical.py": "a571b05cbdc524a8b0bc311d19565185d92a5f8d5b310e7a0833a0af760a4ea0",
+    "grid_3x3\\2_classical_global\\a7.py": "2f86d4f93a514734ce4535caace366228c64a1fc24a25161f99c3f436359150c",
+    "grid_3x3\\2_classical_global\\annealer_classical.py": "a571b05cbdc524a8b0bc311d19565185d92a5f8d5b310e7a0833a0af760a4ea0"
+  },
+  "changes": [
+    "Supplementary tripinfo instrumentation",
+    "2x2 config path corrected to sim2x2_a7",
+    "Seeded independent per-decision annealing generators; original search settings preserved"
+  ],
+  "label": "Classical global simulated annealing, not verified exact",
+  "historical_equivalence": false
+}

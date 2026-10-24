@@ -28,8 +28,8 @@ class StochasticOptimizerTests(unittest.TestCase):
                         2 * spins[i] * spins[j] for i in range(n) for j in neighbors[i] if i < j)
 
                 exact = min(energy(bits) for bits in itertools.product([0, 1], repeat=n))
-                for budget in [2, 8, 17, 64]:
-                    kwargs = dict(evaluation_budget=budget, restarts=min(4, budget // 2), return_metadata=True)
+                for budget, probability in itertools.product([2, 8, 17, 64], [0., .5, 1.]):
+                    kwargs = dict(random_start_probability=probability, evaluation_budget=budget, restarts=min(4, budget // 2), return_metadata=True)
                     state, meta = module.stochastic_decision(biases, previous, neighbors,
                         rng=np.random.default_rng(101), **kwargs)
                     repeat, repeat_meta = module.stochastic_decision(biases, previous, neighbors,

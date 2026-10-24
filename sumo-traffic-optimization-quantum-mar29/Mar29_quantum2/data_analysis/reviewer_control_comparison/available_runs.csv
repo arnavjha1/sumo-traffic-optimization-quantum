@@ -1,0 +1,87 @@
+grid,controller,role,seed_or_run,source,metric_basis,travel_seconds,waiting_seconds,completed_trips,unfinished_trips,network_time_loss_seconds,network_waiting_seconds,pending_insertion_at_cutoff
+2x2,Classical stochastic,evaluation,301,stochastic_evaluation_results\2x2_a7_seed301.json,SUMO tripinfo; completed-trip duration and full-trip waiting,93.75286757038582,44.55370177267987,959,174,79195.17,48272.0,5539
+2x2,Classical stochastic,evaluation,302,stochastic_evaluation_results\2x2_a7_seed302.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,303,stochastic_evaluation_results\2x2_a7_seed303.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,304,stochastic_evaluation_results\2x2_a7_seed304.json,SUMO tripinfo; completed-trip duration and full-trip waiting,96.72677595628416,47.41530054644809,915,183,78662.97,48933.0,5574
+2x2,Classical stochastic,evaluation,305,stochastic_evaluation_results\2x2_a7_seed305.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,306,stochastic_evaluation_results\2x2_a7_seed306.json,SUMO tripinfo; completed-trip duration and full-trip waiting,97.54769560557342,47.19828510182208,933,169,81877.75,50406.0,5570
+2x2,Classical stochastic,evaluation,307,stochastic_evaluation_results\2x2_a7_seed307.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,308,stochastic_evaluation_results\2x2_a7_seed308.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,309,stochastic_evaluation_results\2x2_a7_seed309.json,SUMO tripinfo; completed-trip duration and full-trip waiting,96.72677595628416,47.41530054644809,915,183,78662.97,48933.0,5574
+2x2,Classical stochastic,evaluation,310,stochastic_evaluation_results\2x2_a7_seed310.json,SUMO tripinfo; completed-trip duration and full-trip waiting,96.72677595628416,47.41530054644809,915,183,78662.97,48933.0,5574
+2x2,Classical stochastic,evaluation,311,stochastic_evaluation_results\2x2_a7_seed311.json,SUMO tripinfo; completed-trip duration and full-trip waiting,97.21875,47.578663793103445,928,158,79407.67,49461.0,5586
+2x2,Classical stochastic,evaluation,312,stochastic_evaluation_results\2x2_a7_seed312.json,SUMO tripinfo; completed-trip duration and full-trip waiting,97.54769560557342,47.19828510182208,933,169,81877.75,50406.0,5570
+2x2,Classical stochastic,evaluation,313,stochastic_evaluation_results\2x2_a7_seed313.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,314,stochastic_evaluation_results\2x2_a7_seed314.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,315,stochastic_evaluation_results\2x2_a7_seed315.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,316,stochastic_evaluation_results\2x2_a7_seed316.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,317,stochastic_evaluation_results\2x2_a7_seed317.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,318,stochastic_evaluation_results\2x2_a7_seed318.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,319,stochastic_evaluation_results\2x2_a7_seed319.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,Classical stochastic,evaluation,320,stochastic_evaluation_results\2x2_a7_seed320.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+3x3,Classical stochastic,evaluation,301,stochastic_evaluation_results\3x3_a7_seed301.json,SUMO tripinfo; completed-trip duration and full-trip waiting,190.70184426229508,105.57684426229508,976,318,197793.08,135756.0,8934
+3x3,Classical stochastic,evaluation,302,stochastic_evaluation_results\3x3_a7_seed302.json,SUMO tripinfo; completed-trip duration and full-trip waiting,189.9121756487026,106.65169660678643,1002,353,201974.78,138373.0,8873
+3x3,Classical stochastic,evaluation,303,stochastic_evaluation_results\3x3_a7_seed303.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.45320715036803,113.38801261829653,951,341,210815.93,147427.0,8936
+3x3,Classical stochastic,evaluation,304,stochastic_evaluation_results\3x3_a7_seed304.json,SUMO tripinfo; completed-trip duration and full-trip waiting,207.31938775510204,119.9704081632653,980,330,203885.67,140626.0,8918
+3x3,Classical stochastic,evaluation,305,stochastic_evaluation_results\3x3_a7_seed305.json,SUMO tripinfo; completed-trip duration and full-trip waiting,191.46329365079364,105.96527777777777,1008,339,198177.83,133854.0,8881
+3x3,Classical stochastic,evaluation,306,stochastic_evaluation_results\3x3_a7_seed306.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.09957627118644,112.16843220338983,944,336,207802.79,144277.0,8948
+3x3,Classical stochastic,evaluation,307,stochastic_evaluation_results\3x3_a7_seed307.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.99390862944162,114.55634517766498,985,341,207997.11,144305.0,8902
+3x3,Classical stochastic,evaluation,308,stochastic_evaluation_results\3x3_a7_seed308.json,SUMO tripinfo; completed-trip duration and full-trip waiting,188.404549950544,104.0484668644906,1011,347,206513.53,142046.0,8870
+3x3,Classical stochastic,evaluation,309,stochastic_evaluation_results\3x3_a7_seed309.json,SUMO tripinfo; completed-trip duration and full-trip waiting,202.48884381338743,114.9604462474645,986,331,208262.97,142673.0,8911
+3x3,Classical stochastic,evaluation,310,stochastic_evaluation_results\3x3_a7_seed310.json,SUMO tripinfo; completed-trip duration and full-trip waiting,202.53495762711864,114.60805084745763,944,332,211459.22,147151.0,8952
+3x3,Classical stochastic,evaluation,311,stochastic_evaluation_results\3x3_a7_seed311.json,SUMO tripinfo; completed-trip duration and full-trip waiting,191.10476190476192,105.92095238095239,1050,328,196636.56,132354.0,8850
+3x3,Classical stochastic,evaluation,312,stochastic_evaluation_results\3x3_a7_seed312.json,SUMO tripinfo; completed-trip duration and full-trip waiting,205.09100101112236,115.9474216380182,989,335,207730.4,141271.0,8904
+3x3,Classical stochastic,evaluation,313,stochastic_evaluation_results\3x3_a7_seed313.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.56646216768917,112.9478527607362,978,349,203074.47,139892.0,8901
+3x3,Classical stochastic,evaluation,314,stochastic_evaluation_results\3x3_a7_seed314.json,SUMO tripinfo; completed-trip duration and full-trip waiting,197.89060642092747,114.2282996432818,841,393,225458.27,165033.0,8994
+3x3,Classical stochastic,evaluation,315,stochastic_evaluation_results\3x3_a7_seed315.json,SUMO tripinfo; completed-trip duration and full-trip waiting,200.16491596638656,113.6029411764706,952,333,208239.23,144199.0,8943
+3x3,Classical stochastic,evaluation,316,stochastic_evaluation_results\3x3_a7_seed316.json,SUMO tripinfo; completed-trip duration and full-trip waiting,207.41089670828603,120.30646992054484,881,370,216334.94,153789.0,8977
+3x3,Classical stochastic,evaluation,317,stochastic_evaluation_results\3x3_a7_seed317.json,SUMO tripinfo; completed-trip duration and full-trip waiting,192.46777546777548,108.06652806652806,962,337,209429.12,147202.0,8929
+3x3,Classical stochastic,evaluation,318,stochastic_evaluation_results\3x3_a7_seed318.json,SUMO tripinfo; completed-trip duration and full-trip waiting,198.3425238600212,113.0625662778367,943,339,208708.99,146253.0,8946
+3x3,Classical stochastic,evaluation,319,stochastic_evaluation_results\3x3_a7_seed319.json,SUMO tripinfo; completed-trip duration and full-trip waiting,191.3170189098999,106.8186874304783,899,378,213126.14,151601.0,8951
+3x3,Classical stochastic,evaluation,320,stochastic_evaluation_results\3x3_a7_seed320.json,SUMO tripinfo; completed-trip duration and full-trip waiting,210.73615635179152,122.3528773072747,921,354,211385.35,147757.0,8953
+2x2,QAOA,calibration_descriptive_only,201,qaoa_calibration_results\2x2_a7_seed201_t600_shots512.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,calibration_descriptive_only,202,qaoa_calibration_results\2x2_a7_seed202_t600_shots512.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,calibration_descriptive_only,203,qaoa_calibration_results\2x2_a7_seed203_t600_shots512.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+3x3,QAOA,calibration_descriptive_only,201,qaoa_calibration_results\3x3_a7_seed201_t600_shots512.json,SUMO tripinfo; completed-trip duration and full-trip waiting,186.84860557768926,101.52091633466135,1004,338,195767.78,132697.0,8886
+3x3,QAOA,calibration_descriptive_only,202,qaoa_calibration_results\3x3_a7_seed202_t600_shots512.json,SUMO tripinfo; completed-trip duration and full-trip waiting,206.87458745874588,119.95489548954896,909,340,213345.78,151237.0,8979
+3x3,QAOA,calibration_descriptive_only,203,qaoa_calibration_results\3x3_a7_seed203_t600_shots512.json,SUMO tripinfo; completed-trip duration and full-trip waiting,188.55795454545455,105.79545454545455,880,399,216939.28,156066.0,8949
+2x2,QAOA,historical_evaluation,1,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,2,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,98.59,39.66,908,,,,
+2x2,QAOA,historical_evaluation,3,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,4,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,5,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,96.47,38.73,943,,,,
+2x2,QAOA,historical_evaluation,6,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,97.55,38.63,933,,,,
+2x2,QAOA,historical_evaluation,7,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,8,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,9,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,98.59,39.66,908,,,,
+2x2,QAOA,historical_evaluation,10,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,11,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,99.35,39.14,911,,,,
+2x2,QAOA,historical_evaluation,12,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,13,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,14,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,15,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,99.59,39.22,918,,,,
+2x2,QAOA,historical_evaluation,16,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,17,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,18,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,19,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,95.26,38.39,955,,,,
+2x2,QAOA,historical_evaluation,20,quantum_data/quantum_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,99.35,39.14,911,,,,
+3x3,QAOA,historical_evaluation,1,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,191.86,43.78,1001,,,,
+3x3,QAOA,historical_evaluation,2,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,197.57,44.25,957,,,,
+3x3,QAOA,historical_evaluation,3,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,196.78,43.69,997,,,,
+3x3,QAOA,historical_evaluation,4,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,202.67,44.48,950,,,,
+3x3,QAOA,historical_evaluation,5,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,206.31,44.21,976,,,,
+3x3,QAOA,historical_evaluation,6,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,196.21,44.52,926,,,,
+3x3,QAOA,historical_evaluation,7,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,194.26,44.06,964,,,,
+3x3,QAOA,historical_evaluation,8,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,181.35,41.73,1060,,,,
+3x3,QAOA,historical_evaluation,9,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,199.5,44.05,946,,,,
+3x3,QAOA,historical_evaluation,10,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,201.82,44.51,968,,,,
+3x3,QAOA,historical_evaluation,11,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,202.9,43.93,945,,,,
+3x3,QAOA,historical_evaluation,12,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,193.13,42.33,1026,,,,
+3x3,QAOA,historical_evaluation,13,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,199.2,43.46,977,,,,
+3x3,QAOA,historical_evaluation,14,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,190.69,42.87,1005,,,,
+3x3,QAOA,historical_evaluation,15,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,201.47,44.24,969,,,,
+3x3,QAOA,historical_evaluation,16,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,201.7,44.26,971,,,,
+3x3,QAOA,historical_evaluation,17,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,199.85,44.07,975,,,,
+3x3,QAOA,historical_evaluation,18,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,197.61,43.37,1018,,,,
+3x3,QAOA,historical_evaluation,19,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,203.59,44.17,990,,,,
+3x3,QAOA,historical_evaluation,20,quantum_data_3x3/quantum_3x3_simulation_results.json,Legacy printed metrics; not interchangeable with full-trip waiting,191.45,42.94,977,,,,

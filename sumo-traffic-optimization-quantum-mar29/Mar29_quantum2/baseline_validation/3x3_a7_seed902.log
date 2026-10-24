@@ -1,0 +1,31 @@
+
+===== 3x3 CLASSICAL GLOBAL SATURATED TEST =====
+Alpha case: a7 (0.7)
+Route file: grid_3x3/routes_3x3/routes3x3_a7.rou.xml
+Simulation duration: 600 s
+t=100 s | departed=416 | arrived=34 | active=382
+t=200 s | departed=645 | arrived=169 | active=476
+t=300 s | departed=797 | arrived=304 | active=493
+t=400 s | departed=948 | arrived=468 | active=480
+t=500 s | departed=1078 | arrived=703 | active=375
+t=600 s | departed=1315 | arrived=947 | active=368
+SUPPLEMENTARY_JSON: {"schema_version": 1, "undeparted_tripinfo_records": 8913, "completed_trips": 947, "completed_time_loss_seconds": 156351.78, "completed_waiting_seconds": 107281.0, "unfinished_trips": 368, "unfinished_time_loss_seconds": 52983.4, "unfinished_waiting_seconds": 38715.0, "removed_trips": 0, "removed_time_loss_seconds": 0, "removed_waiting_seconds": 0, "departed_trips": 1315, "network_time_loss_seconds": 209335.18, "network_waiting_seconds": 145996.0, "departed_insertion_delay_seconds": 298690.84, "completed_mean_travel_seconds": 197.95776135163675, "completed_mean_waiting_seconds": 113.28511087645195, "cutoff_seconds": 600.0, "active_vehicles_at_cutoff": 368, "pending_insertion_at_cutoff": 8913, "pending_insertion_vehicle_seconds_sampled": 2678885.0, "teleport_start_events": 0, "departed_events": 1315, "arrived_events": 947, "tripinfo_path": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\baseline_validation\\tripinfo\\cg_3x3_s902_ddc0f0e4ba50.tripinfo.xml", "departure_accounting_ok": true, "arrival_accounting_ok": true, "completion_fraction_of_departed": 0.7201520912547529}
+
+===== PERFORMANCE METRICS =====
+Alpha: 0.7
+Average Travel Time: 197.96 s
+Average Waiting Time: 43.84 s
+Throughput: 947
+Vehicles inserted: 1315
+Vehicles still in network at t=600: 368
+
+===== ENERGY BENCHMARK =====
+Energy Decisions: 600
+Optimal Hits: 600
+Optimum Recovery Rate: 1.000000
+Average Selected Energy: -200.336133
+Average Exact Minimum Energy: -200.336133
+Average Optimality Gap: -0.000000
+Maximum Optimality Gap: 0.000000
+Average Energy Reduction: 3.101733
+ENERGY_JSON: {"num_decisions": 600, "optimal_hits": 600, "optimum_recovery_rate": 1.0, "average_selected_energy": -200.33613333333332, "average_exact_min_energy": -200.33613333333332, "average_optimality_gap": -2.3684757858670008e-17, "maximum_optimality_gap": 1.4210854715202004e-14, "average_energy_reduction": 3.101733333333333}

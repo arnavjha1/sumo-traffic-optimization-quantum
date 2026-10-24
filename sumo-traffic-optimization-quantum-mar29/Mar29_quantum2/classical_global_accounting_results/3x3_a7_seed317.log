@@ -1,0 +1,31 @@
+
+===== 3x3 CLASSICAL GLOBAL SATURATED TEST =====
+Alpha case: a7 (0.7)
+Route file: grid_3x3/routes_3x3/routes3x3_a7.rou.xml
+Simulation duration: 600 s
+t=100 s | departed=425 | arrived=30 | active=395
+t=200 s | departed=659 | arrived=170 | active=489
+t=300 s | departed=765 | arrived=316 | active=449
+t=400 s | departed=918 | arrived=474 | active=444
+t=500 s | departed=1080 | arrived=693 | active=387
+t=600 s | departed=1283 | arrived=940 | active=343
+SUPPLEMENTARY_JSON: {"schema_version": 1, "undeparted_tripinfo_records": 8945, "completed_trips": 940, "completed_time_loss_seconds": 153748.45, "completed_waiting_seconds": 105015.0, "unfinished_trips": 343, "unfinished_time_loss_seconds": 52140.340000000004, "unfinished_waiting_seconds": 39816.0, "removed_trips": 0, "removed_time_loss_seconds": 0, "removed_waiting_seconds": 0, "departed_trips": 1283, "network_time_loss_seconds": 205888.79, "network_waiting_seconds": 144831.0, "departed_insertion_delay_seconds": 286473.15, "completed_mean_travel_seconds": 196.47340425531914, "completed_mean_waiting_seconds": 111.71808510638297, "cutoff_seconds": 600.0, "active_vehicles_at_cutoff": 343, "pending_insertion_at_cutoff": 8945, "pending_insertion_vehicle_seconds_sampled": 2683224.0, "teleport_start_events": 0, "departed_events": 1283, "arrived_events": 940, "tripinfo_path": "C:\\Users\\sujeetjh\\OneDrive - Microsoft\\Documents\\GitHub\\VRC-LemLib-Starter\\sumo-traffic-optimization-quantum\\sumo-traffic-optimization-quantum-mar29\\Mar29_quantum2\\classical_global_accounting_results\\tripinfo\\cg_3x3_s317_ce7dc2ccfe0c.tripinfo.xml", "departure_accounting_ok": true, "arrival_accounting_ok": true, "completion_fraction_of_departed": 0.7326578332034295}
+
+===== PERFORMANCE METRICS =====
+Alpha: 0.7
+Average Travel Time: 196.47 s
+Average Waiting Time: 43.54 s
+Throughput: 940
+Vehicles inserted: 1283
+Vehicles still in network at t=600: 343
+
+===== ENERGY BENCHMARK =====
+Energy Decisions: 600
+Optimal Hits: 600
+Optimum Recovery Rate: 1.000000
+Average Selected Energy: -197.712600
+Average Exact Minimum Energy: -197.712600
+Average Optimality Gap: 0.000000
+Maximum Optimality Gap: 0.000000
+Average Energy Reduction: 2.813600
+ENERGY_JSON: {"num_decisions": 600, "optimal_hits": 600, "optimum_recovery_rate": 1.0, "average_selected_energy": -197.7126, "average_exact_min_energy": -197.7126, "average_optimality_gap": 2.3684757858670008e-17, "maximum_optimality_gap": 1.4210854715202004e-14, "average_energy_reduction": 2.8135999999999997}

@@ -1,0 +1,1455 @@
+{
+  "protocol": {
+    "tuning_qaoa_seeds": [
+      201,
+      202
+    ],
+    "validation_qaoa_seeds": [
+      203
+    ],
+    "classical_seeds": [
+      101,
+      102,
+      103
+    ],
+    "budgets": [
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "random_start_probabilities": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "temperatures": [
+      5.0,
+      50.0
+    ],
+    "selection": "minimum normalized Wasserstein distance plus absolute recovery-rate difference",
+    "acceptance": "recovery difference <= .03; mean difference / scale <= .20; Wasserstein / scale <= .25",
+    "scale": "max(QAOA mean gap, 1 energy unit)",
+    "caveat": "Exploratory screen, not a statistical equivalence test. Seed 203 was previously included in baseline replay summaries; it was not fully unseen. No traffic outcomes used."
+  },
+  "sources": {
+    "2x2_a7_seed201_t600_shots512.json": "fbbd29445d119e3fffcc711e6e9aaf7a779c3e6775a0e14c6ad6535b8668d454",
+    "2x2_a7_seed201_t600_shots512.snapshots.jsonl": "9e0aa7d56901eceb36185faa9f84c36ec59517a891dbeea9da1aa52475b01fa3",
+    "2x2_a7_seed202_t600_shots512.json": "34429c734337420ce2d0b7678a97f4c13d27634f09dc92f97ddc6f10371f58bc",
+    "2x2_a7_seed202_t600_shots512.snapshots.jsonl": "d74fd68fa6b506a981743d392da95fa5b21bd6c5a72446d17b37e5c473277dc8",
+    "2x2_a7_seed203_t600_shots512.json": "012824738ad306f44a00619935c38075e2231ebef513ab66029a003cb3312cab",
+    "2x2_a7_seed203_t600_shots512.snapshots.jsonl": "07da5d8d2609313d7787fe63cde7284082557e5a2d4a2054a7ab391391217b57",
+    "3x3_a7_seed201_t600_shots512.json": "9e0b42b1941ff3a1926162732530f2fac2d875535d94b240eff251d96a7f59fe",
+    "3x3_a7_seed201_t600_shots512.snapshots.jsonl": "0404ff309ac05ff98a5dbc73a2481f306c34d9e96db8c405ecf12960d98d936f",
+    "3x3_a7_seed202_t600_shots512.json": "9ba19ab6c4d375d1b32ee99f6597b39cffd1cb50e1eb2fe9a422e8537978f932",
+    "3x3_a7_seed202_t600_shots512.snapshots.jsonl": "73fda6e735eb7b005a5d02d8a431a5401cad4d4287f33edd8799c67873fae547",
+    "3x3_a7_seed203_t600_shots512.json": "1eff2ffa09785be561b89f67cc002eab050d8ef506a4cb6883073aa8fee9dd63",
+    "3x3_a7_seed203_t600_shots512.snapshots.jsonl": "539074cdece4898cc9d9c28e82d4ca282dd4720a931600ae5a467df7692dd992",
+    "grid_2x2\\2_classical_global_stochastic\\annealer_stochastic.py": "e009f3c31a303056c9928f417214417d7d33572549389d0497faac8d38fb2983",
+    "grid_3x3\\2_classical_global_stochastic\\annealer_stochastic.py": "e009f3c31a303056c9928f417214417d7d33572549389d0497faac8d38fb2983"
+  },
+  "winner": {
+    "settings": {
+      "evaluation_budget": 32,
+      "restarts": 4,
+      "random_start_probability": 0.5,
+      "initial_temperature": 50.0,
+      "final_temperature": 0.01
+    },
+    "tuning": {
+      "stochastic": {
+        "decisions": 3600,
+        "recovery_rate": 0.4575,
+        "mean_gap": 21.336794444444443,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 3.0,
+          "q75": 37.18000000000001,
+          "q90": 69.00799999999997,
+          "q95": 86.82299999999998,
+          "q99": 123.97999999999999
+        }
+      },
+      "qaoa": {
+        "decisions": 3600,
+        "recovery_rate": 0.4091666666666667,
+        "mean_gap": 25.2604,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 8.300000000000011,
+          "q75": 44.190000000000005,
+          "q90": 75.33399999999992,
+          "q95": 94.9579999999994,
+          "q99": 136.40319999999997
+        }
+      },
+      "wasserstein_gap": 3.9236055555555556,
+      "scale": 25.2604,
+      "recovery_difference": 0.04833333333333334,
+      "normalized_mean_difference": 0.1553263430331886,
+      "score": 0.20365967636652188,
+      "passes_screen": false
+    },
+    "validation": {
+      "stochastic": {
+        "decisions": 1800,
+        "recovery_rate": 0.4672222222222222,
+        "mean_gap": 19.836111111111112,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 2.809999999999974,
+          "q75": 30.73,
+          "q90": 64.71399999999998,
+          "q95": 81.57999999999993,
+          "q99": 123.25779999999996
+        }
+      },
+      "qaoa": {
+        "decisions": 1800,
+        "recovery_rate": 0.345,
+        "mean_gap": 26.986233333333335,
+        "gap_quantiles": {
+          "q25": 0.0,
+          "q50": 12.469999999999999,
+          "q75": 47.76000000000001,
+          "q90": 76.07800000000006,
+          "q95": 92.40499999999992,
+          "q99": 119.9646
+        }
+      },
+      "wasserstein_gap": 7.393833333333334,
+      "scale": 26.986233333333335,
+      "recovery_difference": 0.12222222222222223,
+      "normalized_mean_difference": 0.2649544356155258,
+      "score": 0.3962075999518548,
+      "passes_screen": false
+    }
+  },
+  "candidates": [
+    {
+      "settings": {
+        "evaluation_budget": 2,
+        "restarts": 1,
+        "random_start_probability": 0.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5138888888888888,
+          "mean_gap": 10.03763888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 14.360000000000014,
+            "q90": 34.47999999999999,
+            "q95": 47.53999999999999,
+            "q99": 74.99999999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 15.222761111111112,
+        "scale": 25.2604,
+        "recovery_difference": 0.10472222222222216,
+        "normalized_mean_difference": 0.60263341479593,
+        "score": 0.7073556370181522,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 2,
+        "restarts": 1,
+        "random_start_probability": 0.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5138888888888888,
+          "mean_gap": 10.03763888888889,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 14.360000000000014,
+            "q90": 34.47999999999999,
+            "q95": 47.53999999999999,
+            "q99": 74.99999999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 15.222761111111112,
+        "scale": 25.2604,
+        "recovery_difference": 0.10472222222222216,
+        "normalized_mean_difference": 0.60263341479593,
+        "score": 0.7073556370181522,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 2,
+        "restarts": 1,
+        "random_start_probability": 0.5,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.26555555555555554,
+          "mean_gap": 95.08738888888888,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 46.66000000000001,
+            "q75": 173.125,
+            "q90": 260.928,
+            "q95": 305.25799999999987,
+            "q99": 387.20059999999995
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 69.82698888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.14361111111111113,
+        "normalized_mean_difference": 2.7642867448214945,
+        "score": 2.907897855932606,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 2,
+        "restarts": 1,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.26555555555555554,
+          "mean_gap": 95.08738888888888,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 46.66000000000001,
+            "q75": 173.125,
+            "q90": 260.928,
+            "q95": 305.25799999999987,
+            "q99": 387.20059999999995
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 69.82698888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.14361111111111113,
+        "normalized_mean_difference": 2.7642867448214945,
+        "score": 2.907897855932606,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 2,
+        "restarts": 1,
+        "random_start_probability": 1.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.0019444444444444444,
+          "mean_gap": 184.0221944444444,
+          "gap_quantiles": {
+            "q25": 119.42000000000002,
+            "q50": 174.7,
+            "q75": 239.78500000000003,
+            "q90": 305.16200000000003,
+            "q95": 344.99499999999983,
+            "q99": 417.39379999999977
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 158.76179444444443,
+        "scale": 25.2604,
+        "recovery_difference": 0.4072222222222222,
+        "normalized_mean_difference": 6.285007143372409,
+        "score": 6.692229365594632,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 2,
+        "restarts": 1,
+        "random_start_probability": 1.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.0019444444444444444,
+          "mean_gap": 184.0221944444444,
+          "gap_quantiles": {
+            "q25": 119.42000000000002,
+            "q50": 174.7,
+            "q75": 239.78500000000003,
+            "q90": 305.16200000000003,
+            "q95": 344.99499999999983,
+            "q99": 417.39379999999977
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 158.76179444444443,
+        "scale": 25.2604,
+        "recovery_difference": 0.4072222222222222,
+        "normalized_mean_difference": 6.285007143372409,
+        "score": 6.692229365594632,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 4,
+        "restarts": 2,
+        "random_start_probability": 0.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5116666666666667,
+          "mean_gap": 9.798111111111112,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 14.315000000000012,
+            "q90": 33.660000000000025,
+            "q95": 47.27999999999997,
+            "q99": 68.71579999999965
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 15.462288888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.10250000000000004,
+        "normalized_mean_difference": 0.6121157578220807,
+        "score": 0.7146157578220808,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 4,
+        "restarts": 2,
+        "random_start_probability": 0.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5116666666666667,
+          "mean_gap": 9.798111111111112,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 14.315000000000012,
+            "q90": 33.660000000000025,
+            "q95": 47.27999999999997,
+            "q99": 68.71579999999965
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 15.462288888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.10250000000000004,
+        "normalized_mean_difference": 0.6121157578220807,
+        "score": 0.7146157578220808,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 4,
+        "restarts": 2,
+        "random_start_probability": 0.5,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.25472222222222224,
+          "mean_gap": 76.66213888888888,
+          "gap_quantiles": {
+            "q25": 3.907985046680551e-14,
+            "q50": 42.40000000000002,
+            "q75": 138.54,
+            "q90": 202.54399999999995,
+            "q95": 240.783,
+            "q99": 310.18639999999994
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 51.401738888888886,
+        "scale": 25.2604,
+        "recovery_difference": 0.15444444444444444,
+        "normalized_mean_difference": 2.0348743047967917,
+        "score": 2.1893187492412367,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 4,
+        "restarts": 2,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.25472222222222224,
+          "mean_gap": 76.66213888888888,
+          "gap_quantiles": {
+            "q25": 3.907985046680551e-14,
+            "q50": 42.40000000000002,
+            "q75": 138.54,
+            "q90": 202.54399999999995,
+            "q95": 240.783,
+            "q99": 310.18639999999994
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 51.401738888888886,
+        "scale": 25.2604,
+        "recovery_difference": 0.15444444444444444,
+        "normalized_mean_difference": 2.0348743047967917,
+        "score": 2.1893187492412367,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 4,
+        "restarts": 2,
+        "random_start_probability": 1.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.007222222222222222,
+          "mean_gap": 142.71986666666666,
+          "gap_quantiles": {
+            "q25": 89.63999999999999,
+            "q50": 136.08,
+            "q75": 189.12499999999997,
+            "q90": 238.636,
+            "q95": 269.32099999999997,
+            "q99": 340.3453999999994
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 117.45946666666667,
+        "scale": 25.2604,
+        "recovery_difference": 0.40194444444444444,
+        "normalized_mean_difference": 4.649944841200719,
+        "score": 5.0518892856451645,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 4,
+        "restarts": 2,
+        "random_start_probability": 1.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.007222222222222222,
+          "mean_gap": 142.71986666666666,
+          "gap_quantiles": {
+            "q25": 89.63999999999999,
+            "q50": 136.08,
+            "q75": 189.12499999999997,
+            "q90": 238.636,
+            "q95": 269.32099999999997,
+            "q99": 340.3453999999994
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 117.45946666666667,
+        "scale": 25.2604,
+        "recovery_difference": 0.40194444444444444,
+        "normalized_mean_difference": 4.649944841200719,
+        "score": 5.0518892856451645,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 8,
+        "restarts": 4,
+        "random_start_probability": 0.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5163888888888889,
+          "mean_gap": 9.71275,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 13.834999999999994,
+            "q90": 32.70000000000002,
+            "q95": 47.21999999999997,
+            "q99": 73.6535999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 15.54765,
+        "scale": 25.2604,
+        "recovery_difference": 0.10722222222222222,
+        "normalized_mean_difference": 0.6154950040379408,
+        "score": 0.722717226260163,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 8,
+        "restarts": 4,
+        "random_start_probability": 0.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5163888888888889,
+          "mean_gap": 9.71275,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.842170943040401e-14,
+            "q75": 13.834999999999994,
+            "q90": 32.70000000000002,
+            "q95": 47.21999999999997,
+            "q99": 73.6535999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 15.54765,
+        "scale": 25.2604,
+        "recovery_difference": 0.10722222222222222,
+        "normalized_mean_difference": 0.6154950040379408,
+        "score": 0.722717226260163,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 8,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.26666666666666666,
+          "mean_gap": 58.690105555555554,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 34.27000000000001,
+            "q75": 100.75999999999999,
+            "q90": 157.01,
+            "q95": 190.1179999999999,
+            "q99": 242.98399999999995
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 33.42970555555555,
+        "scale": 25.2604,
+        "recovery_difference": 0.14250000000000002,
+        "normalized_mean_difference": 1.3234036498058446,
+        "score": 1.4659036498058444,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 8,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.26666666666666666,
+          "mean_gap": 58.690105555555554,
+          "gap_quantiles": {
+            "q25": 2.842170943040401e-14,
+            "q50": 34.27000000000001,
+            "q75": 100.75999999999999,
+            "q90": 157.01,
+            "q95": 190.1179999999999,
+            "q99": 242.98399999999995
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 33.42970555555555,
+        "scale": 25.2604,
+        "recovery_difference": 0.14250000000000002,
+        "normalized_mean_difference": 1.3234036498058446,
+        "score": 1.4659036498058444,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 8,
+        "restarts": 4,
+        "random_start_probability": 1.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.015555555555555555,
+          "mean_gap": 109.39533333333333,
+          "gap_quantiles": {
+            "q25": 66.39999999999999,
+            "q50": 104.35,
+            "q75": 146.045,
+            "q90": 186.62599999999998,
+            "q95": 215.90699999999995,
+            "q99": 266.32819999999987
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 84.13493333333334,
+        "scale": 25.2604,
+        "recovery_difference": 0.39361111111111113,
+        "normalized_mean_difference": 3.330704713042284,
+        "score": 3.724315824153396,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 8,
+        "restarts": 4,
+        "random_start_probability": 1.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.015555555555555555,
+          "mean_gap": 109.39533333333333,
+          "gap_quantiles": {
+            "q25": 66.39999999999999,
+            "q50": 104.35,
+            "q75": 146.045,
+            "q90": 186.62599999999998,
+            "q95": 215.90699999999995,
+            "q99": 266.32819999999987
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 84.13493333333334,
+        "scale": 25.2604,
+        "recovery_difference": 0.39361111111111113,
+        "normalized_mean_difference": 3.330704713042284,
+        "score": 3.724315824153396,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 16,
+        "restarts": 4,
+        "random_start_probability": 0.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5941666666666666,
+          "mean_gap": 7.321111111111111,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 8.46500000000001,
+            "q90": 25.507999999999967,
+            "q95": 38.24499999999998,
+            "q99": 60.70379999999989
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 17.93928888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.18499999999999994,
+        "normalized_mean_difference": 0.7101743792215836,
+        "score": 0.8951743792215835,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 16,
+        "restarts": 4,
+        "random_start_probability": 0.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.5688888888888889,
+          "mean_gap": 7.842911111111112,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 9.565000000000005,
+            "q90": 27.58599999999993,
+            "q95": 41.190999999999946,
+            "q99": 61.639999999999986
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 17.41748888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.1597222222222222,
+        "normalized_mean_difference": 0.6895175408500613,
+        "score": 0.8492397630722835,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 16,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3333333333333333,
+          "mean_gap": 42.20014444444445,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 20.58999999999999,
+            "q75": 73.99000000000001,
+            "q90": 116.48400000000001,
+            "q95": 142.26399999999998,
+            "q99": 193.3412
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 16.939744444444443,
+        "scale": 25.2604,
+        "recovery_difference": 0.07583333333333336,
+        "normalized_mean_difference": 0.6706047586120745,
+        "score": 0.7464380919454077,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 16,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.3138888888888889,
+          "mean_gap": 43.4376111111111,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 22.120000000000005,
+            "q75": 74.52000000000001,
+            "q90": 120.06599999999999,
+            "q95": 145.60699999999994,
+            "q99": 199.34319999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 18.17721111111111,
+        "scale": 25.2604,
+        "recovery_difference": 0.0952777777777778,
+        "normalized_mean_difference": 0.7195931620683402,
+        "score": 0.8148709398461184,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 16,
+        "restarts": 4,
+        "random_start_probability": 1.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.051944444444444446,
+          "mean_gap": 76.65598888888888,
+          "gap_quantiles": {
+            "q25": 40.639999999999986,
+            "q50": 71.47,
+            "q75": 107.49000000000001,
+            "q90": 142.462,
+            "q95": 165.465,
+            "q99": 210.74279999999993
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 51.39558888888889,
+        "scale": 25.2604,
+        "recovery_difference": 0.3572222222222222,
+        "normalized_mean_difference": 2.0346308407186298,
+        "score": 2.3918530629408523,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 16,
+        "restarts": 4,
+        "random_start_probability": 1.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.04777777777777778,
+          "mean_gap": 79.70817777777776,
+          "gap_quantiles": {
+            "q25": 43.864999999999995,
+            "q50": 74.42999999999999,
+            "q75": 110.73000000000002,
+            "q90": 146.96399999999997,
+            "q95": 169.86799999999988,
+            "q99": 214.53239999999968
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 54.44777777777778,
+        "scale": 25.2604,
+        "recovery_difference": 0.36138888888888887,
+        "normalized_mean_difference": 2.155459841403056,
+        "score": 2.516848730291946,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 4,
+        "random_start_probability": 0.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.765,
+          "mean_gap": 3.5587888888888908,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 2.842170943040401e-14,
+            "q90": 13.262000000000015,
+            "q95": 24.42999999999996,
+            "q99": 48.369799999999756
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 21.701611111111113,
+        "scale": 25.2604,
+        "recovery_difference": 0.35583333333333333,
+        "normalized_mean_difference": 0.8591158932998333,
+        "score": 1.2149492266331667,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 4,
+        "random_start_probability": 0.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.7272222222222222,
+          "mean_gap": 4.270605555555557,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 1.240000000000009,
+            "q90": 16.22399999999997,
+            "q95": 28.010999999999942,
+            "q99": 49.82039999999947
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 20.989794444444446,
+        "scale": 25.2604,
+        "recovery_difference": 0.31805555555555554,
+        "normalized_mean_difference": 0.8309367406867841,
+        "score": 1.1489922962423398,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4986111111111111,
+          "mean_gap": 19.686200000000003,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 0.060000000000002274,
+            "q75": 32.775000000000034,
+            "q90": 66.28599999999997,
+            "q95": 83.17999999999995,
+            "q99": 117.52059999999997
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 5.574200000000001,
+        "scale": 25.2604,
+        "recovery_difference": 0.08944444444444444,
+        "normalized_mean_difference": 0.22066950642111754,
+        "score": 0.31011395086556215,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 4,
+        "random_start_probability": 0.5,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.4575,
+          "mean_gap": 21.336794444444443,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 3.0,
+            "q75": 37.18000000000001,
+            "q90": 69.00799999999997,
+            "q95": 86.82299999999998,
+            "q99": 123.97999999999999
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 3.9236055555555556,
+        "scale": 25.2604,
+        "recovery_difference": 0.04833333333333334,
+        "normalized_mean_difference": 0.1553263430331886,
+        "score": 0.20365967636652188,
+        "passes_screen": false
+      },
+      "validation": {
+        "stochastic": {
+          "decisions": 1800,
+          "recovery_rate": 0.4672222222222222,
+          "mean_gap": 19.836111111111112,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 2.809999999999974,
+            "q75": 30.73,
+            "q90": 64.71399999999998,
+            "q95": 81.57999999999993,
+            "q99": 123.25779999999996
+          }
+        },
+        "qaoa": {
+          "decisions": 1800,
+          "recovery_rate": 0.345,
+          "mean_gap": 26.986233333333335,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 12.469999999999999,
+            "q75": 47.76000000000001,
+            "q90": 76.07800000000006,
+            "q95": 92.40499999999992,
+            "q99": 119.9646
+          }
+        },
+        "wasserstein_gap": 7.393833333333334,
+        "scale": 26.986233333333335,
+        "recovery_difference": 0.12222222222222223,
+        "normalized_mean_difference": 0.2649544356155258,
+        "score": 0.3962075999518548,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 4,
+        "random_start_probability": 1.0,
+        "initial_temperature": 5.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.245,
+          "mean_gap": 35.14082777777778,
+          "gap_quantiles": {
+            "q25": 0.38999999999998636,
+            "q50": 28.33999999999999,
+            "q75": 56.51999999999998,
+            "q90": 83.64199999999998,
+            "q95": 100.47199999999991,
+            "q99": 143.42539999999943
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 10.066105555555554,
+        "scale": 25.2604,
+        "recovery_difference": 0.16416666666666668,
+        "normalized_mean_difference": 0.3911429659774896,
+        "score": 0.5626601804493286,
+        "passes_screen": false
+      }
+    },
+    {
+      "settings": {
+        "evaluation_budget": 32,
+        "restarts": 4,
+        "random_start_probability": 1.0,
+        "initial_temperature": 50.0,
+        "final_temperature": 0.01
+      },
+      "tuning": {
+        "stochastic": {
+          "decisions": 3600,
+          "recovery_rate": 0.22194444444444444,
+          "mean_gap": 37.53624444444445,
+          "gap_quantiles": {
+            "q25": 2.3149999999999977,
+            "q50": 30.75999999999999,
+            "q75": 60.579999999999984,
+            "q90": 86.47599999999997,
+            "q95": 103.76799999999997,
+            "q99": 141.87599999999966
+          }
+        },
+        "qaoa": {
+          "decisions": 3600,
+          "recovery_rate": 0.4091666666666667,
+          "mean_gap": 25.2604,
+          "gap_quantiles": {
+            "q25": 0.0,
+            "q50": 8.300000000000011,
+            "q75": 44.190000000000005,
+            "q90": 75.33399999999992,
+            "q95": 94.9579999999994,
+            "q99": 136.40319999999997
+          }
+        },
+        "wasserstein_gap": 12.46362222222222,
+        "scale": 25.2604,
+        "recovery_difference": 0.18722222222222223,
+        "normalized_mean_difference": 0.48597189452441164,
+        "score": 0.680627798627276,
+        "passes_screen": false
+      }
+    }
+  ]
+}

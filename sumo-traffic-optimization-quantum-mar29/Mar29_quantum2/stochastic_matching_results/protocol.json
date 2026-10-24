@@ -1,0 +1,34 @@
+{
+  "tuning_qaoa_seeds": [
+    201,
+    202
+  ],
+  "validation_qaoa_seeds": [
+    203
+  ],
+  "classical_seeds": [
+    101,
+    102,
+    103
+  ],
+  "budgets": [
+    2,
+    4,
+    8,
+    16,
+    32
+  ],
+  "random_start_probabilities": [
+    0.0,
+    0.5,
+    1.0
+  ],
+  "temperatures": [
+    5.0,
+    50.0
+  ],
+  "selection": "minimum normalized Wasserstein distance plus absolute recovery-rate difference",
+  "acceptance": "recovery difference <= .03; mean difference / scale <= .20; Wasserstein / scale <= .25",
+  "scale": "max(QAOA mean gap, 1 energy unit)",
+  "caveat": "Exploratory screen, not a statistical equivalence test. Seed 203 was previously included in baseline replay summaries; it was not fully unseen. No traffic outcomes used."
+}

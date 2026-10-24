@@ -1,0 +1,3 @@
+grid,seed,status,error,completed_mean_travel_seconds,completed_mean_waiting_seconds,completed_trips,unfinished_trips,removed_trips,network_time_loss_seconds,network_waiting_seconds,pending_insertion_at_cutoff,pending_insertion_vehicle_seconds_sampled,optimum_recovery_rate,average_optimality_gap
+2x2,902,success,,97.37068965517241,47.32650862068966,928,178,0,83515.37,51877.0,5566,1643862.0,1.0,0.0
+3x3,902,success,,197.95776135163675,113.28511087645195,947,368,0,209335.18,145996.0,8913,2678885.0,1.0,-2.3684757858670008e-17

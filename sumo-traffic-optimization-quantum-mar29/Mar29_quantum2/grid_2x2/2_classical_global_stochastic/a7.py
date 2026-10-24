@@ -19,6 +19,9 @@ STOCHASTIC_BUDGET = int(os.environ.get("STOCHASTIC_BUDGET", "512"))
 
 STOCHASTIC_RESTARTS = int(os.environ.get("STOCHASTIC_RESTARTS", "8"))
 
+STOCHASTIC_RANDOM_START = float(os.environ.get("STOCHASTIC_RANDOM_START", "0"))
+STOCHASTIC_INITIAL_TEMPERATURE = float(os.environ.get("STOCHASTIC_INITIAL_TEMPERATURE", "5"))
+
 rng = np.random.default_rng(STOCHASTIC_SEED)
 
 import sys
@@ -586,7 +589,8 @@ while traci.simulation.getTime() < END_TIME:
         rng=rng,
         evaluation_budget=STOCHASTIC_BUDGET,
         restarts=STOCHASTIC_RESTARTS,
-        initial_temperature=5.0,
+        initial_temperature=STOCHASTIC_INITIAL_TEMPERATURE,
+        random_start_probability=STOCHASTIC_RANDOM_START,
         final_temperature=0.01,
         return_metadata=True,
     )

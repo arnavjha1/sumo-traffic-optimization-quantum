@@ -1,0 +1,19 @@
+Error: Could not build output file 'C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\classical_global_accounting_validation\tripinfo\classical_global_sa_2x2_seed902_631dd2c22315.tripinfo.xml' (No such file or directory).
+Quitting (on error).
+Traceback (most recent call last):
+  File "C:\Users\sujeetjh\OneDrive - Microsoft\Documents\GitHub\VRC-LemLib-Starter\sumo-traffic-optimization-quantum\sumo-traffic-optimization-quantum-mar29\Mar29_quantum2\grid_2x2\classical_global_accounting\a7.py", line 46, in <module>
+    traci.start([SUMO_BINARY, "-c", SUMO_CONFIG] + supplementary.sumo_args())
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Eclipse\Sumo\tools\traci\main.py", line 147, in start
+    result = init(sumoPort, numRetries, "localhost", label, sumoProcess, doSwitch, traceFile, traceGetters)
+  File "C:\Program Files (x86)\Eclipse\Sumo\tools\traci\main.py", line 119, in init
+    return con.getVersion()
+           ~~~~~~~~~~~~~~^^
+  File "C:\Program Files (x86)\Eclipse\Sumo\tools\traci\connection.py", line 383, in getVersion
+    result = self._sendCmd(command, None, None)
+  File "C:\Program Files (x86)\Eclipse\Sumo\tools\traci\connection.py", line 232, in _sendCmd
+    return self._sendExact()
+           ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files (x86)\Eclipse\Sumo\tools\traci\connection.py", line 137, in _sendExact
+    raise FatalTraCIError("Connection closed by SUMO.")
+traci.exceptions.FatalTraCIError: Connection closed by SUMO.
