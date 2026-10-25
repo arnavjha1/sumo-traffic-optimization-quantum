@@ -12,6 +12,7 @@ FIELDS = ['grid', 'controller', 'role', 'seed_or_run', 'source', 'metric_basis',
 def main():
     rows = []
     for folder, controller, role in [
+        ('qaoa_evaluation_results', 'QAOA', 'evaluation'),
         ('stochastic_evaluation_results', 'Classical stochastic', 'evaluation'),
         ('classical_global_accounting_results', 'Classical global SA', 'evaluation'),
         ('qaoa_calibration_results', 'QAOA', 'calibration_descriptive_only')]:
@@ -53,7 +54,7 @@ def main():
         'available_runs.csv separates fresh evaluation, calibration, and historical data. '
         'Do not pool these roles or compare legacy waiting means directly with full-trip waiting.\n\n'
         'QAOA calibration recordings provide descriptive supplementary metrics only; '
-        'fresh QAOA evaluation accounting remains missing. Current baseline scripts implement '
+        'fresh QAOA evaluation is read from qaoa_evaluation_results when available. Current baseline scripts implement '
         'simulated annealing, not exact action selection. Their new accounting runs must be '
         'labeled accordingly; historical equivalence has not been established.\n\n'
         'New baseline output is picked up from classical_global_accounting_results on rerun. '

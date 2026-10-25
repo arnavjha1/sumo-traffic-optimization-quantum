@@ -1,0 +1,10 @@
+grid,metric,successful_runs,failed_runs,nonnull_runs,mean,sd
+2x2,completed_mean_travel_seconds,5,0,5,96.59205756855872,1.820123608039391
+2x2,completed_mean_waiting_seconds,5,0,5,46.911201882049035,1.76102523217407
+2x2,completed_trips,5,0,5,936.2,25.742960202742807
+2x2,unfinished_trips,5,0,5,185,5.477225575051661
+2x2,removed_trips,5,0,5,0,0.0
+2x2,network_time_loss_seconds,5,0,5,80862.23,266.6039548656396
+2x2,network_waiting_seconds,5,0,5,49898.2,664.3874622537664
+2x2,pending_insertion_at_cutoff,5,0,5,5550.8,31.22018577779447
+2x2,pending_insertion_vehicle_seconds_sampled,5,0,5,1647485.4,7479.699245290549
