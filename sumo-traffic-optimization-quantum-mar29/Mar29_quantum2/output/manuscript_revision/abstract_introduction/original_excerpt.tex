@@ -1,0 +1,278 @@
+\textbf{\emph{Abstract} - 
+Urban traffic signal control is often dominated by fixed cycles and local decisions that fail to account for fluctuations in demand and optimize network-wide delay. This study developed and evaluated two novel contributions: Pressure-Based Energy Optimization framework and a QAOA Optimization framework. Energy optimization converts signal control into an Ising-style energy minimization problem, where balancing pressure alignment and neighbor coupling are rewarded and switching phases is penalized. QAOA Optimization encodes each binary traffic-signal phase as a qubit and uses a parameterized QAOA circuit to sample complete network-wide signal configurations from the same Ising Hamiltonian optimized by Classical Global, a network-wide version of the Pressure-Based Energy Optimization framework. The proposed controllers were evaluated against six additional classical and learned traffic-control strategies: Fixed-Time, Max-Pressure, SCOOT, PressLight, MPLight, and CoLight. Testing was performed on both $2\times2$ (four-intersection) and $3\times3$ (nine-intersection) grids using two
+complementary experiments: (1) 600-second saturated trials and (2) a 24-hour Seattle case study. Performance was evaluated using throughput, travel time, and waiting time.
+}
+
+\textbf{
+The energy optimization controllers showed the clearest value when compared to the Max-Pressure controller, since Max-Pressure was similar to these controllers just without many of the energy-specific components. This advantage became most visible as network
+size and coordination complexity increased. On the $3\times3$ saturated
+network at $\alpha=0.7$, all three energy-based controllers exceeded
+Max-Pressure in throughput: 944, 940, and a mean of 980 vehicles completed respectively for the Classical Local, Classical Global, and QAOA controllers compared to 925 vehicles completed for Max-Pressure as well as reduced stopped delay with waiting times of
+44.21~s, 43.54~s, and 43.75~s, respectively, compared with 47.16~s for
+Max-Pressure. This pattern extended across much of the intermediate
+$\alpha$ range with mixed-traffic, where one or more energy-based controllers surpassed
+Max-Pressure in throughput as traffic interactions propagated through the
+larger network. The 24-hour Seattle case study provided a second test of the first contribution under
+time-varying traffic demand. On the smaller $2\times2$ network, Max-Pressure remained particularly strong during sparse periods; however, on the larger $3\times3$ network, the energy-based controllers became substantially more competitive during sustained daytime traffic. During the AM
+commute, Classical Global and QAOA achieved average travel times of
+76.62~s and 74.93~s, respectively, compared with 79.39~s for Max-Pressure.
+During midday, Exact Classical Global and QAOA achieved 81.49~s and
+82.03~s, compared with 89.33~s for Max-Pressure. Waiting time showed the
+same shift: QAOA achieved 24.95~s during midday compared with 28.37~s for
+Max-Pressure, while Exact Classical Global reached 26.06~s. These results indicated that the proposed energy framework was most useful when traffic demand was sufficiently high and the
+network sufficiently interconnected for switching stability and neighboring
+signal interactions to matter, while its advantage narrowed when the control
+problem could be solved primarily from an immediate local pressure imbalance.
+}
+
+\textbf{
+The value of the second contribution, QAOA Optimization, was evaluated through comparison with Classical Global Optimization, which optimized the same network-wide energy objective classically rather than through a QAOA circuit. On the $2\times2$ saturated
+network at $\alpha=0.7$, QAOA reduced travel time by 0.98~s
+[95\% CI: $-1.67$ to $-0.21$~s], reduced waiting time by 0.35~s
+[95\% CI: $-0.52$ to $-0.14$~s], and completed 14 additional vehicles
+[95\% CI: 6-22] relative to Classical Global. On the $3\times3$ saturated network at $\alpha=0.7$, QAOA completed 980 vehicles compared with 940 for Classical Global, an improvement of 40 vehicles
+[95\% CI: 27-54]. At $\alpha=0.5$, QAOA completed 1,139 vehicles compared with
+1,017 under Classical Global, a substantial increase of 122 vehicles
+[95\% CI: 106-138], although this additional discharge came with
+13.31~s greater travel time and 1.61~s greater waiting time. Additionally, the 24-hour Seattle case study revealed a complementary QAOA advantage focused on
+reducing driver delay. Across the full day on the
+$2\times2$ network, QAOA reduced average travel time from 55.67~s under
+Classical Global to mean of 53.99~s, a reduction of 1.68~s
+[95\% CI: $-1.95$ to $-1.38$~s], and reduced waiting time from 20.19~s
+to a mean of 18.81~s, a reduction of 1.38~s
+[95\% CI: $-1.55$ to $-1.20$~s]. On the $3\times3$ network, QAOA reduced
+full-day travel time from 94.45~s to a mean of 92.96~s
+[difference $-1.49$~s; 95\% CI: $-1.78$ to $-1.18$~s] and waiting time
+from 30.18~s to a mean of 28.39~s
+[difference $-1.78$~s; 95\% CI: $-1.95$ to $-1.61$~s].
+Together with the saturated results, these findings showed that QAOA's effect was
+regime-dependent: its strongest larger-grid saturated advantage appeared in
+vehicle completion, whereas under realistic time-varying Seattle demand its
+clearest improvement over Exact Classical Global appeared in waiting
+time.
+}
+
+\textbf{
+The relationship between optimization quality and traffic
+quality was tested directly using within-condition energy-traffic
+correlations. On the $2\times2$ network, smaller optimality gaps were
+significantly associated with lower travel time ($r=0.29$, $p<0.001$), lower
+waiting time ($r=0.28$, $p<0.001$), and greater throughput
+($r=-0.28$, $p<0.001$); however, on the larger $3\times3$ network, this relationship
+became weaker (for example, $r=-0.15$, $p=0.032$ for throughput). In addition, QAOA was subject
+to additional validation tests including dedicated
+hyperparameter experiments that varied the QAOA mixer angle, cost angle,
+circuit depth, and measurement-shot count. Increasing circuit depth from
+$p=1$ to $p=3$ raised exact-optimum recovery from 27.23\% to 44.35\%, while
+increasing shots from 200 to 1,000 raised recovery from 27.63\% to 48.13\%,
+demonstrating that the circuit's approximation quality could be systematically
+improved even when corresponding traffic changes remained smaller. Finally,
+controlled Gaussian angle perturbation, depolarizing noise, and readout error
+were introduced to assess robustness under non-ideal QAOA sampling. Across the
+tested low-to-moderate perturbations, travel time and waiting time remained
+comparatively stable even when optimality gap and recovery probability changed
+more substantially, providing evidence that the closed-loop traffic behavior was
+not excessively sensitive to modest changes in QAOA solution quality and
+supporting the robustness of the proposed QAOA Optimization framework under
+the tested synthetic perturbations.
+}
+
+\textbf{
+Taken together, the experiments supported two distinct but complementary
+contributions to adaptive traffic-signal control. First,
+Pressure-Based Energy Optimization extended conventional
+pressure-based decision making by combining upstream-downstream traffic
+pressure with switching stability and explicit neighbor
+coupling in a single interpretable objective. Its strongest advantages emerged when traffic demand was sustained and network interaction
+was high, particularly on the larger $3\times3$ grid, indicating that the added
+energy terms became increasingly valuable when local queue imbalance alone was
+insufficient to evaluate the consequences of a signal decision. Second,
+QAOA Global Optimization demonstrated that replacing exact
+deterministic minimization of this same network-wide objective with stochastic
+sampling of near-optimal global configurations could produce meaningful
+closed-loop traffic improvements. On the larger saturated network this benefit
+appeared most clearly in vehicle completion, while under Seattle-derived
+time-varying demand it appeared most clearly in travel-time and especially waiting-time
+reductions relative to Exact Classical Global. This study established where each contribution added value and provided a rigorously tested framework for future traffic control in which the optimization could be matched to network size, traffic demand, and the performance objective (e.g., throughput, travel time, or waiting time) being prioritized.
+}
+
+\textbf{\textit{Keywords:}} \textit{Quantum Approximate Optimization Algorithm; traffic signal control; pressure-based control; Ising Hamiltonian; energy minimization; microscopic traffic simulation; SUMO; network-wide optimization; urban traffic congestion; quantum annealer}
+
+
+\section{Introduction}
+
+Urban traffic congestion is one of the most persistent and costly challenges facing modern cities. In the United States, the 2025 Urban Mobility Report had estimated that the average driver lost 63 hours to traffic congestion in 2024, with nationwide congestion costs reaching approximately \$269 billion annually \cite{schrank2025}. Beyond economic damage, inefficient traffic flow elevates greenhouse gas emissions and lowers air quality for urban residents. Cities and towns together now house 81\% of the world's 8.2 billion people, with two-thirds of future population growth projected to occur in cities through 2050 \cite{un2025}. As global urbanization continues to intensify, the need to develop smarter traffic management has never been greater. At the heart of this problem lies signalized intersections, which are major sources of delay and capacity constraint in urban road networks, where signal timing directly influences vehicle delay \cite{varaiya2013}.
+
+For the purposes of this study, three primary failure modes had been considered:
+\textbf{starvation}, where high-demand approaches receive insufficient green
+time; \textbf{overflow}, where downstream queues spill back into upstream
+approaches and waste available green time; and \textbf{congestion}, where long
+queues and repeated acceleration delays reduce vehicle discharge efficiency
+through the network.
+
+Traditional fixed-time signal systems operate on predetermined cycle lengths derived from historical patterns and remain widely used for their simplicity and predictability. However, the fundamental limitation of fixed-time systems is that they use predetermined timing plans and therefore cannot react directly to unanticipated real-time demand fluctuations. Although coordinated fixed-time systems can synchronize offsets across intersections, their timing plans remain pre-established rather than continuously optimized from observed traffic conditions. Adaptive traffic control systems improve upon fixed-time signals by adjusting phase timing in response to real-time traffic conditions such as queue lengths. Some systems use local vehicle detectors to modify signal timing at individual intersections, while coordinated systems such as SCOOT coordinate multiple intersections along major roadways to improve traffic flow across a larger network \cite{hunt1981}. Max-pressure control had used queue lengths to select signal phases that minimize the imbalance between upstream and downstream vehicle queues at each intersection \cite{varaiya2013}. Reinforcement learning approaches treat signal control as a sequential decision-making problem, enabling intersections to learn signal timing strategies that reduce congestion through repeated interaction with the traffic environment \cite{agrahari2024}. These adaptive approaches substantially expand beyond static timing, but they
+differ in the scope and mechanism of coordination they provide. Max-Pressure,
+PressLight, and MPLight primarily generate decisions from local or immediately
+downstream traffic conditions, whereas systems such as SCOOT coordinate timing across multiple
+intersections and CoLight explicitly exchanges learned information between
+neighboring signals \cite{hunt1981,wei2019presslight,chen2020mplight,wei2019colight}. Even in coordinated methods, however,
+the complete set of network-wide binary phase assignments is not generally
+evaluated as a single shared optimization problem at every decision.
+
+Achieving efficient traffic flow at the network level had remained challenging, however. Neighboring intersections are inherently coupled since vehicles outflow from one intersection to all neighboring ones. This means that it is important to also consider downstream queues as well as upstream queues but also means that signal timing decisions cannot be optimized at the local level without potentially sacrificing the performance of the overall network. For the binary two-phase representation used in this study, simultaneous
+optimization of $N$ intersections had required consideration of up to $2^N$
+network-wide phase configurations. Exhaustive enumeration is therefore practical
+for the $2\times2$ and $3\times3$ networks studied here (16 and 512
+configurations, respectively), but its cost had grown exponentially with network
+size and becomes increasingly unattractive for larger networks \cite{garey1979}. Pressure-based traffic control had provided a natural basis for such a global
+formulation because queue imbalance can be represented as a cost associated with
+different signal configurations. In the proposed framework, these traffic-state
+costs had been encoded in an Ising-style Hamiltonian containing pressure bias,
+downstream-congestion information, switching penalties, and
+inter-intersection coupling. Inoue et al. formalize this approach through modeling a $50 \times 50$ intersection lattice with binary signal states and demonstrating that minimizing network-wide flow imbalance is equivalent to minimizing an Ising energy function \cite{inoue2021}. Solving this with a D-Wave 2000Q quantum annealer on a $50 \times 50$ grid, they show that global quantum optimization had outperformed conventional local control, particularly when vehicles travel mostly straight. They further show, analytically, strong spatial correlations between neighboring signals under optimal control, which strongly had supported the idea that network-level coordination becomes increasingly necessary as directional flow starts to dominate. Because Inoue et al. used quantum annealing on a much larger macroscopic
+lattice, their observed operating regimes had not been assumed to transfer directly
+to the gate-based QAOA controller studied here. The present work instead had tested
+QAOA within a microscopic closed-loop SUMO environment and separately had examined
+the sensitivity of the QAOA solution to circuit angles, depth, shot count, and
+synthetic perturbations. More recent work has continued to apply QAOA to Ising-style traffic congestion
+formulations \cite{villanueva2025}, and a 2025 systematic review situates this
+line of research within the broader landscape of quantum-assisted traffic
+signal control, traffic-flow optimization, and routing \cite{mohammed2025}.
+However, an important methodological question had remained unresolved: do
+reported traffic benefits arise from network-wide optimization itself, from the
+particular quantum search procedure used to approximate that objective, or from
+the structure of the objective function being optimized. Addressing this
+had required a matched classical global optimizer that had minimized the same
+Hamiltonian, together with direct evaluation of how energy quality relates to
+downstream traffic performance.
+
+Despite these contributions, several important gaps remain:
+
+\begin{enumerate}
+\item Prior quantum traffic-control formulations such as the Inoue et al. model have often emphasized
+macroscopic or stylized network models, leaving a need for microscopic
+closed-loop evaluation in which individual vehicles, queues, travel times,
+waiting times, and vehicle completion had been measured directly.
+
+\item Quantum and energy-based traffic controllers should be evaluated against
+strong established adaptive alternatives rather than only Fixed-Time or simple
+queue-based baselines. Comparisons with Max-Pressure, SCOOT, and modern
+reinforcement-learning methods are needed to determine whether any observed
+benefit persists against competitive classical control strategies.
+
+\item A matched exact global optimizer is needed to separate the benefit of
+network-wide optimization from the benefit of the QAOA search procedure itself.
+Without such a benchmark, improved traffic performance cannot be attributed
+specifically to QAOA rather than to the transition from local to global
+optimization.
+
+\item Evaluation on a single small network cannot establish whether controller
+behavior persists as coordination complexity had increased. Comparing $2\times2$
+and $3\times3$ networks had provided an initial controlled scaling test while
+retaining a tractable exact-global benchmark.
+
+\item Minimizing an Ising objective is only useful if lower energy had been associated
+with improved downstream traffic performance. The relationship between
+optimized energy, travel time, waiting time, and throughput therefore had required
+direct statistical validation rather than being assumed.
+
+\item QAOA traffic-control results can depend on circuit angles, circuit depth,
+measurement shots, stochastic sampling, and quantum noise. Hyperparameter
+sensitivity, repeated-run uncertainty, and controlled noise perturbations are
+therefore necessary to determine whether observed traffic effects are robust.
+
+\item Finally, synthetic saturated traffic alone had not shown whether the same
+controller behavior persists under realistic time-varying urban demand.
+A Seattle-derived 24-hour case study had provided a complementary test using
+empirical hourly demand and directional-flow information.
+\end{enumerate}
+
+Throughout this paper, these gaps had been addressed through two linked scientific
+contributions. The first is a \textbf{Pressure-Based Energy Optimization}
+framework that had represented traffic-signal selection through a shared Ising-style
+objective incorporating traffic pressure, downstream congestion, phase-switching
+cost, and neighboring-intersection coupling. This framework had been evaluated using
+both Classical Local and Exact Classical Global optimization in order to isolate
+the effect of optimization scope. The second contribution is a
+\textbf{QAOA-Based Global Optimization} controller that had searched the same
+network-wide energy landscape through a parameterized quantum circuit and
+stochastic measurement sampling.
+
+Rather than treating QAOA as a standalone replacement for classical traffic
+control, the study had evaluated three separate questions: whether the proposed
+energy formulation had improved traffic control relative to established adaptive
+baselines, whether global energy optimization had improved on local optimization,
+and whether QAOA had produced useful downstream traffic behavior relative to an
+exact matched-objective global optimizer. The study further had tested whether
+optimization quality had predicted traffic quality and how these relationships change
+with network size, traffic regime, QAOA configuration, and synthetic noise.
+
+Classical Local Optimization had applied the same energy formulation independently
+at each signal, whereas Exact Classical Global Optimization exhaustively
+had evaluated the complete network configuration. Their comparison had isolated the
+effect of network-wide coordination. Exact Classical Global also serves as a
+matched-objective benchmark for QAOA because it had minimized the same Ising
+Hamiltonian exactly; differences between the two global controllers therefore
+reflect QAOA's approximate stochastic search and the resulting closed-loop
+traffic trajectory rather than merely the use of a global objective.
+
+Because the Ising Hamiltonian is a surrogate control objective rather than a
+direct measure of future vehicle delay, the study had not assume that lower
+energy necessarily had produced better traffic performance. Instead, this
+relationship had been tested explicitly by comparing QAOA optimality gap with
+downstream travel time, waiting time, and throughput within matched traffic
+conditions.
+
+The study also had examined whether the observed QAOA behavior is robust to its
+own stochasticity and implementation choices by evaluating repeated-run
+variability, circuit-angle sensitivity, circuit depth, measurement-shot count,
+and three controlled synthetic perturbation mechanisms.
+
+\begin{itemize}
+\item \textbf{RQ1:} Under which traffic regimes and network sizes does
+Pressure-Based Energy Optimization provide advantages relative to established
+adaptive traffic-signal controllers?
+
+\item \textbf{RQ2:} When the same network-wide Ising objective had been optimized,
+how does QAOA compare with Exact Classical Global Optimization in optimization
+quality, downstream traffic performance, statistical variability, and
+sensitivity to circuit configuration and synthetic noise?
+
+\item \textbf{Hypothesis:} Pressure-Based Energy Optimization had been expected to
+be most competitive under moderate-to-high demand and larger-network conditions
+where downstream congestion, switching stability, and neighboring-intersection
+coordination become important. Exact Classical Global Optimization had been expected
+to provide greater benefit over Classical Local Optimization when traffic
+movements create stronger interactions across intersections. QAOA Global
+Optimization had been expected to produce traffic outcomes that differ from Exact
+Classical Global Optimization because its stochastic search can select
+near-optimal global configurations rather than repeatedly selecting the exact
+instantaneous energy minimum. These differences had been expected to be
+regime-dependent rather than universally favorable: under sparse demand,
+highly predictable directional flow, or traffic dominated by a clear local
+pressure imbalance, Max-Pressure, cycle-based control, or learned adaptive
+controllers may remain competitive or outperform the energy-based approaches.
+As network size had increased, the QAOA search had been expected to face a more difficult
+optimization landscape, making both exact-optimum recovery and the relationship
+between energy quality and downstream traffic performance important empirical
+questions.
+
+\item \textbf{Aim:} This study had aimed to comparatively evaluate nine
+traffic-signal controllers---Fixed-Time, Max-Pressure, SCOOT, PressLight,
+MPLight, CoLight, Classical Local Optimization, Exact Classical Global
+Optimization, and QAOA Global Optimization---in SUMO microsimulations of both
+$2\times2$ and $3\times3$ urban grids. Two complementary traffic experiments
+are used: (1) 600-second saturated trials in which $\alpha$ had been varied from
+0.0 to 1.0 to characterize controller behavior across turning regimes and
+network sizes; and (2) a 24-hour Seattle-derived case study using empirical
+hourly demand and directional-flow data.
+
+Traffic performance had been evaluated using completed-vehicle throughput, average
+travel time, and average waiting time. QAOA had additionally been assessed through
+repeated-run variability, bootstrap confidence intervals, and effect-size
+comparisons with Exact Classical Global Optimization. Exact enumeration is used
+to quantify optimality gap and exact-optimum recovery, correlation analysis is
+used to test whether improved Ising optimization had predicted better downstream
+traffic, and dedicated sensitivity experiments examine circuit parameters,
+depth, shot count, and synthetic quantum perturbations.
+\end{itemize}
