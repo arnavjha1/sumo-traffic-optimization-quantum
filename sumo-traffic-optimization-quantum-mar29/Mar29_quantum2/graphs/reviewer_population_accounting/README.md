@@ -4,8 +4,8 @@ All files are built from the 120 completed evaluations at alpha 0.7, 600 seconds
 
 ## Start here
 
-- `revised_tables.tex`: 12 tables (two population/delay tables, demand audit, energy statistics, budget accounting, matching diagnostics, and six adjusted comparison tables).
-- `revised_figures.tex`: all 10 figure PDFs with captions.
+- `revised_tables.tex`: 17 tables (two population/delay tables, demand audit, energy statistics, budget accounting, matching diagnostics, six adjusted comparison tables, three common-state replay tables, and two outlier-audit/sensitivity tables).
+- `revised_figures.tex`: all 12 figure PDFs with captions.
 - `preview_revised_tables.tex` and `preview_revised_figures.tex`: standalone previews.
 - Each figure has a `.pdf`, `.png`, and reproducible Python plotting script.
 
@@ -78,3 +78,19 @@ Include the revised sets:
 ```
 
 Select individual tables/figures if space is limited. Caption labels and uncertainty descriptions are included. The original study's historical waiting-time accounting must remain distinct from these full-trip SUMO waitingTime measurements. Grammar, reference formatting, and manuscript provenance still require a separate editing pass.
+
+
+## Mentor follow-up: common states and the outlier
+
+Read MENTOR_FEEDBACK_IMPLEMENTATION.md for the follow-up findings and limitations.
+
+- `figure_common_hamiltonian_gaps.pdf`: frozen classical stochastic replay on the SAME evaluation Hamiltonians as recorded QAOA, not merely similar closed-loop state distributions.
+- `figure_common_hamiltonian_differences.pdf`: paired source-trajectory differences with 95% cluster bootstrap intervals.
+- `table_common_hamiltonian_energy.tex`, `table_common_hamiltonian_paired.tex`, `table_common_hamiltonian_screen.tex`: common-state statistics and screening limits.
+- `table_qaoa_outlier_audit.tex`, `table_qaoa_outlier_sensitivity.tex`: seed 312 investigation and post-hoc leave-one-out checks. The run is retained in all primary analyses.
+
+The common-state replay has 12,000 unique QAOA-origin states per grid and three classical replay seeds (701--703) per state. The original stochastic settings are frozen; QAOA is not resampled and no SUMO run is repeated. The 3x3 replay passes the earlier descriptive engineering screen; 2x2 does not. Passing is not an equivalence certificate, and no computational-budget matching is claimed. The earlier calibration-validation failures remain reported. Reverse replay on classical-origin states cannot be reconstructed from the current recordings because their per-decision Hamiltonian coefficients were not saved.
+
+Seed 312 used different final fixed QAOA angles after the existing within-run calibration. All 600 recorded energies and exact minima were checked, and accounting passes. This observation explains a configuration difference, not a proven causal explanation of traffic performance. Sensitivity estimates excluding it are supplementary only.
+
+Both the own-trajectory and common-state 2x2 ECDFs now explicitly label the truncated vertical range (0.985 to 1.0005).

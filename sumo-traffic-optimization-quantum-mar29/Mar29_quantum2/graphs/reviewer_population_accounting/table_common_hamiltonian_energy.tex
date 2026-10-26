@@ -1,0 +1,17 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Common-instance energy comparison on fresh QAOA-evaluation recordings. The frozen classical stochastic optimizer is replayed on the same 12,000 Hamiltonians per grid using three fresh replay seeds (701--703) per state. QAOA energies are the recorded selected energies, not new QAOA draws. All exact minima and selected energies were independently checked. Pooled decisions/replays are descriptive; the inference unit is a full source trajectory. No retuning, traffic simulations or computational-budget matching is performed.}
+\label{tab:common-hamiltonian-energy}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+Grid & Method & Selected states & Mean gap & Median & $[Q_{25},Q_{75}]$ & Recovery \\
+\midrule
+2x2 & Classical replay & 36,000 & 0.02573 & 0.0000 & [0.0000, 0.0000] & 99.286\%  \\
+2x2 & Recorded QAOA & 12,000 & 0.05468 & 0.0000 & [0.0000, 0.0000] & 99.367\%  \\
+3x3 & Classical replay & 36,000 & 24.69659 & 5.4400 & [0.0000, 42.8900] & 43.156\%  \\
+3x3 & Recorded QAOA & 12,000 & 22.81081 & 6.8700 & [0.0000, 38.3700] & 41.692\%  \\
+\bottomrule
+\end{tabular}}
+\end{table}

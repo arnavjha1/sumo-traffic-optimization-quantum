@@ -1,0 +1,18 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Post-hoc sensitivity analysis: 3x3 QAOA minus classical stochastic, using either all 20 QAOA runs or the other 19 runs after omitting seed 312. The comparator retains all 20 runs. Pointwise independent-run bootstrap 95\% intervals are descriptive and not multiplicity-adjusted; omission was not prespecified and does not replace any primary result. Energy summaries here are from each controller\textquotesingle s own trajectories, not the common-state replay.}
+\label{tab:qaoa-outlier-sensitivity}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Measure & Full difference & Full 95\% CI & Without 312 & Without 312 95\% CI \\
+\midrule
+Run-average energy gap & -1.4878 & [-3.5680, +0.0419] & -0.6482 & [-1.5633, +0.2765] \\
+Optimum recovery (fraction) & -0.0010 & [-0.0279, +0.0347] & -0.0150 & [-0.0321, +0.0025] \\
+Completed trips & +12.1500 & [-14.0500, +38.8000] & +11.7447 & [-14.8186, +38.8555] \\
+In-network time loss (vehicle-s) & -2556.6575 & [-6415.3294, +1204.5482] & -2648.4437 & [-6589.7754, +1198.5048] \\
+Time loss plus pre-entry delay (vehicle-s) & -4571.5075 & [-10894.0706, +1707.1492] & -4674.6069 & [-11110.6314, +1829.1888] \\
+\bottomrule
+\end{tabular}}
+\end{table}

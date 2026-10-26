@@ -1,5 +1,26 @@
 \begin{figure}[tbp]
 \centering
+\includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_energy_run_summary.pdf}
+\caption{Run-level mean energy gaps and exact-optimum recovery on the controllers\textquotesingle{} respective traffic trajectories. Small dots represent individual runs; large markers and bars show means and pointwise 95\% bootstrap confidence intervals across 20 runs. Seed 312 is explicitly identified and retained; the outlier-audit and leave-one-out tables document its distinct within-run calibrated angles and sensitivity. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
+\label{fig:revised-energy-run-summary}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_common_hamiltonian_gaps.pdf}
+\caption{Common-Hamiltonian replay using the frozen classical stochastic settings on the 12,000 recorded QAOA evaluation states per grid, with three separate classical replay seeds per state. QAOA selected energies are retained from the recordings; the classical replay does not change the traffic trajectory. Pooled ECDFs are descriptive. The 2x2 panels explicitly truncate the vertical axis at 0.985. Neither visual agreement nor an engineering screening pass certifies distribution equivalence. Only QAOA-origin states are available. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
+\label{fig:revised-common-hamiltonian-gaps}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_common_hamiltonian_differences.pdf}
+\caption{Classical replay minus recorded QAOA on identical Hamiltonians. Dots show 20 paired source-trajectory differences per grid, averaging three classical replays within each source trajectory. Solid horizontal lines show mean differences and shaded bands show pointwise 95\% paired trajectory-cluster bootstrap intervals of those means from 50,000 resamples, not prediction intervals. Decisions within a trajectory are not independent replications. No equivalence test or matched-budget claim is made. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
+\label{fig:revised-common-hamiltonian-differences}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
 \includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_effects_qaoa_vs_global.pdf}
 \caption{QAOA minus global SA: relative mean differences with pointwise 95\% independent run-level bootstrap confidence intervals. Positive values mean more and negative values mean less; larger completed counts are favorable, while smaller travel, waiting and delay values are favorable. Intervals are not multiplicity-adjusted; corresponding Welch and Holm-adjusted tests are reported in the statistical tables. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
 \label{fig:revised-effects-qaoa-vs-global}
@@ -21,21 +42,14 @@
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_energy_gaps.pdf}
-\caption{Raw and normalized energy-gap ECDFs along each controller\textquotesingle s own closed-loop trajectories. Normalization divides each gap by the absolute exact minimum energy for that decision (nonzero for all retained decisions). The symmetric-log horizontal scales preserve zero and display positive tails. The 2x2 panels zoom to ECDF values above 0.985 because almost all decisions recover the optimum. Pooled decisions are descriptive and not independent replications. These trajectories visit different Hamiltonians, so visual similarity does not certify distribution matching; saved common-state diagnostics are reported separately. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
-\label{fig:revised-energy-gaps}
-\end{figure}
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_energy_run_summary.pdf}
-\caption{Run-level mean energy gaps and exact-optimum recovery on the controllers\textquotesingle{} respective traffic trajectories. Small dots represent individual runs; large markers and bars show means and pointwise 95\% bootstrap confidence intervals across 20 runs. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
-\label{fig:revised-energy-run-summary}
-\end{figure}
-
-\begin{figure}[tbp]
-\centering
 \includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_total_delay.pdf}
 \caption{Pre-entry delay and the supplementary sum of in-network time loss plus pre-entry delay. Pre-entry delay sums the SUMO departDelay field across entered and undeparted vehicles through the cutoff. The sum joins disjoint pre-entry and in-network phases. It does not add stopped waiting to time loss or add the sampled backlog integral again. Small dots show runs; mean markers have pointwise 95\% bootstrap confidence intervals. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
 \label{fig:revised-total-delay}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{graphs/reviewer_population_accounting/figure_energy_gaps.pdf}
+\caption{Raw and normalized energy-gap ECDFs along each controller\textquotesingle s own closed-loop trajectories. Normalization divides each gap by the absolute exact minimum energy for that decision (nonzero for all retained decisions). The symmetric-log horizontal scales preserve zero and display positive tails. The 2x2 panels zoom to ECDF values above 0.985 because almost all decisions recover the optimum. Pooled decisions are descriptive and not independent replications. These trajectories visit different Hamiltonians, so visual similarity does not certify distribution matching; saved common-state diagnostics are reported separately. All traffic results use fixed demand, $\alpha=0.7$ and a 600-s cutoff; uncertainty concerns optimizer randomness, not traffic-demand scenarios.}
+\label{fig:revised-energy-gaps}
 \end{figure}

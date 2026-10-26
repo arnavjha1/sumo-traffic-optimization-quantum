@@ -1,0 +1,5 @@
+{
+  "reason": "Convert NumPy screen booleans to native Python bools for summary JSON; replay computation/settings/records unchanged.",
+  "original_runner_sha256": "d4be5cdf83085121a3b282b866b95efcb4f16d3c64223fbdd46b3322c4fa8924",
+  "summary_runner_sha256": "f70e86d52005840922dd02a158b42db749e163c6878e4a78d8b8ab6088a58340"
+}

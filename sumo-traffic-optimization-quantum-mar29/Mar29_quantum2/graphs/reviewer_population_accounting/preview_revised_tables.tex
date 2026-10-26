@@ -135,6 +135,93 @@ Grid & Stage & SA recovery & QAOA recovery & SA gap & QAOA gap & Four checks & A
 \begin{table}[tbp]
 \centering
 \small
+\caption{Common-instance energy comparison on fresh QAOA-evaluation recordings. The frozen classical stochastic optimizer is replayed on the same 12,000 Hamiltonians per grid using three fresh replay seeds (701--703) per state. QAOA energies are the recorded selected energies, not new QAOA draws. All exact minima and selected energies were independently checked. Pooled decisions/replays are descriptive; the inference unit is a full source trajectory. No retuning, traffic simulations or computational-budget matching is performed.}
+\label{tab:common-hamiltonian-energy}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+Grid & Method & Selected states & Mean gap & Median & $[Q_{25},Q_{75}]$ & Recovery \\
+\midrule
+2x2 & Classical replay & 36,000 & 0.02573 & 0.0000 & [0.0000, 0.0000] & 99.286\%  \\
+2x2 & Recorded QAOA & 12,000 & 0.05468 & 0.0000 & [0.0000, 0.0000] & 99.367\%  \\
+3x3 & Classical replay & 36,000 & 24.69659 & 5.4400 & [0.0000, 42.8900] & 43.156\%  \\
+3x3 & Recorded QAOA & 12,000 & 22.81081 & 6.8700 & [0.0000, 38.3700] & 41.692\%  \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Classical replay minus recorded QAOA on identical states. Pointwise 95\% paired trajectory-cluster bootstrap intervals use 50,000 resamples of 20 complete QAOA source trajectories per grid. The three classical replays are averaged within each trajectory; they do not create 60 independent traffic replications. This post-hoc analysis characterizes quality on QAOA-visited states, not a symmetric sample from both controllers or an equivalence test.}
+\label{tab:common-hamiltonian-paired}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+Grid & Measure & Mean difference & 95\% CI & Trajectories \\
+\midrule
+2x2 & Mean energy gap & -0.02895 & [-0.04357, -0.01562] & 20 \\
+2x2 & Recovery (percentage points) & -0.08056 & [-0.20833, +0.05278] & 20 \\
+3x3 & Mean energy gap & +1.88579 & [+0.49166, +3.79476] & 20 \\
+3x3 & Recovery (percentage points) & +1.46389 & [-1.15278, +3.45563] & 20 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Post-hoc application of the earlier engineering tolerances to common-state evaluation replay: recovery within 3 percentage points, relative mean-gap error at most 20\%, Wasserstein distance divided by QAOA mean gap at most 25\%, and mean distance across 101 nonzero-gap quantiles divided by QAOA mean nonzero gap at most 25\%. These descriptive screens are not statistical equivalence bounds and do not certify matched distributions. Earlier diagnostic calibration validation failed on both grids; the new 3x3 screen does not erase that history.}
+\label{tab:common-hamiltonian-screen}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrl}
+\toprule
+Grid & Recovery diff. (pp) & Mean error & Relative W1 & Tail distance & Checks: recovery/mean/W1/tail \\
+\midrule
+2x2 & -0.081 & 52.94\% & 57.36\% & 60.03\% & Pass/Fail/Fail/Fail \\
+3x3 & +1.464 & 8.27\% & 9.84\% & 11.89\% & Pass/Pass/Pass/Pass \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Investigation of the 3x3 QAOA energy-quality outlier. Seed 312 completed all 600 decisions with valid vehicle accounting and independently verified selected/exact energies. It selected different fixed circuit angles during the existing within-run calibration; the other 19 runs share another parameter set. This association does not establish the cause of its energy or traffic outcomes. Seed 312 remains in every primary result.}
+\label{tab:qaoa-outlier-audit}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Runs & $n$ & Final $\gamma$ & Final $\beta$ & $p$ & Mean run gap & Recovery \\
+\midrule
+Other 19 runs & 19 & 3.141593 & 0.523599 & 2 & 23.6504 & 40.29\%  \\
+312 (retained) & 1 & 0.698132 & 1.221730 & 2 & 6.8586 & 68.33\%  \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Post-hoc sensitivity analysis: 3x3 QAOA minus classical stochastic, using either all 20 QAOA runs or the other 19 runs after omitting seed 312. The comparator retains all 20 runs. Pointwise independent-run bootstrap 95\% intervals are descriptive and not multiplicity-adjusted; omission was not prespecified and does not replace any primary result. Energy summaries here are from each controller\textquotesingle s own trajectories, not the common-state replay.}
+\label{tab:qaoa-outlier-sensitivity}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Measure & Full difference & Full 95\% CI & Without 312 & Without 312 95\% CI \\
+\midrule
+Run-average energy gap & -1.4878 & [-3.5680, +0.0419] & -0.6482 & [-1.5633, +0.2765] \\
+Optimum recovery (fraction) & -0.0010 & [-0.0279, +0.0347] & -0.0150 & [-0.0321, +0.0025] \\
+Completed trips & +12.1500 & [-14.0500, +38.8000] & +11.7447 & [-14.8186, +38.8555] \\
+In-network time loss (vehicle-s) & -2556.6575 & [-6415.3294, +1204.5482] & -2648.4437 & [-6589.7754, +1198.5048] \\
+Time loss plus pre-entry delay (vehicle-s) & -4571.5075 & [-10894.0706, +1707.1492] & -4674.6069 & [-11110.6314, +1829.1888] \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
 \caption{2x2: QAOA minus Global SA. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
 \label{tab:adjusted-effects-2x2-qaoa_global}
 \resizebox{\linewidth}{!}{%

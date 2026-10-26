@@ -1,0 +1,15 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Post-hoc application of the earlier engineering tolerances to common-state evaluation replay: recovery within 3 percentage points, relative mean-gap error at most 20\%, Wasserstein distance divided by QAOA mean gap at most 25\%, and mean distance across 101 nonzero-gap quantiles divided by QAOA mean nonzero gap at most 25\%. These descriptive screens are not statistical equivalence bounds and do not certify matched distributions. Earlier diagnostic calibration validation failed on both grids; the new 3x3 screen does not erase that history.}
+\label{tab:common-hamiltonian-screen}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrl}
+\toprule
+Grid & Recovery diff. (pp) & Mean error & Relative W1 & Tail distance & Checks: recovery/mean/W1/tail \\
+\midrule
+2x2 & -0.081 & 52.94\% & 57.36\% & 60.03\% & Pass/Fail/Fail/Fail \\
+3x3 & +1.464 & 8.27\% & 9.84\% & 11.89\% & Pass/Pass/Pass/Pass \\
+\bottomrule
+\end{tabular}}
+\end{table}

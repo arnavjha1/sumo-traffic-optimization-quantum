@@ -1,0 +1,17 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Classical replay minus recorded QAOA on identical states. Pointwise 95\% paired trajectory-cluster bootstrap intervals use 50,000 resamples of 20 complete QAOA source trajectories per grid. The three classical replays are averaged within each trajectory; they do not create 60 independent traffic replications. This post-hoc analysis characterizes quality on QAOA-visited states, not a symmetric sample from both controllers or an equivalence test.}
+\label{tab:common-hamiltonian-paired}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+Grid & Measure & Mean difference & 95\% CI & Trajectories \\
+\midrule
+2x2 & Mean energy gap & -0.02895 & [-0.04357, -0.01562] & 20 \\
+2x2 & Recovery (percentage points) & -0.08056 & [-0.20833, +0.05278] & 20 \\
+3x3 & Mean energy gap & +1.88579 & [+0.49166, +3.79476] & 20 \\
+3x3 & Recovery (percentage points) & +1.46389 & [-1.15278, +3.45563] & 20 \\
+\bottomrule
+\end{tabular}}
+\end{table}

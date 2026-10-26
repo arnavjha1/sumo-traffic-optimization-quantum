@@ -17,7 +17,10 @@ def main(show=False):
             ax.set_xscale('symlog',linthresh=threshold)
             ax.set_ylim(0,1.03);ax.set_ylabel('Fraction of decisions');ax.set_xlabel(label)
             ax.set_title(grid.replace('x',' × ')+' network'+(' (upper-tail zoom)' if grid=='2x2' else ''))
-            if grid=='2x2': ax.set_ylim(.985,1.0005)
+            if grid=='2x2':
+                ax.set_ylim(.985,1.0005)
+                ax.text(.02,.04,'Truncated y-axis: 0.985 to 1.0005',transform=ax.transAxes,fontsize=8,
+                        bbox=dict(facecolor='white',alpha=.85,edgecolor='none'))
             ax.grid(alpha=.25);ax.legend(fontsize=9)
     fig.suptitle('Energy quality on each controller’s own closed-loop trajectories',fontsize=13)
     fig.supxlabel('12,000 decisions per controller/grid; pooled ECDFs are descriptive, not independent replications.\nDifferent visited states: these curves do not establish matched energy-gap distributions.',fontsize=9)
@@ -35,6 +38,11 @@ def main(show=False):
                 ci=np.quantile(values[rng.integers(len(values),size=(50000,len(values)))].mean(axis=1),[.025,.975])
                 ax.scatter(x+np.linspace(-.13,.13,len(values)),values,color=color,alpha=.3,s=25)
                 ax.errorbar(x,values.mean(),yerr=[[values.mean()-ci[0]],[ci[1]-values.mean()]],fmt='o',color=color,capsize=5,elinewidth=2.5,markersize=8)
+                if grid=='3x3' and controller=='QAOA':
+                    j=next(i for i,r in enumerate(g['runs']) if r['seed']==312)
+                    text_y=values[j]+(5 if metric=='mean' else -6)
+                    ax.annotate('Seed 312 (retained)',xy=(1+np.linspace(-.13,.13,len(values))[j],values[j]),
+                                xytext=(.25,text_y),fontsize=8,arrowprops=dict(arrowstyle='->',color='.35'))
             ax.set_xticks([0,1],['Stochastic','QAOA']);ax.set_xlim(-.5,1.5)
             ax.set_ylabel(label);ax.set_title(grid.replace('x',' × ')+' network');ax.grid(axis='y',alpha=.25);ax.margins(y=.15)
     fig.suptitle('Run-level energy quality under fixed demand',fontsize=14)

@@ -1,0 +1,9607 @@
+{
+  "status": "success",
+  "grid": "2x2",
+  "qaoa_seed": 301,
+  "decisions": [
+    {
+      "decision": 1,
+      "exact_min_energy": -41.88,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 2,
+      "exact_min_energy": -40.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 3,
+      "exact_min_energy": -40.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 4,
+      "exact_min_energy": -41.879999999999995,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 5,
+      "exact_min_energy": -40.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 6,
+      "exact_min_energy": -41.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 7,
+      "exact_min_energy": -40.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 8,
+      "exact_min_energy": -42.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 9,
+      "exact_min_energy": -43.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 10,
+      "exact_min_energy": -45.88,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 11,
+      "exact_min_energy": -46.88,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 12,
+      "exact_min_energy": -48.349999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 13,
+      "exact_min_energy": -52.82,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 14,
+      "exact_min_energy": -55.29,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 15,
+      "exact_min_energy": -54.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 16,
+      "exact_min_energy": -54.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 17,
+      "exact_min_energy": -57.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 18,
+      "exact_min_energy": -54.53,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 19,
+      "exact_min_energy": -53.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 20,
+      "exact_min_energy": -22.77,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 21,
+      "exact_min_energy": -22.240000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 22,
+      "exact_min_energy": -21.800000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 23,
+      "exact_min_energy": -13.450000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 24,
+      "exact_min_energy": -12.440000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 25,
+      "exact_min_energy": -28.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 26,
+      "exact_min_energy": -23.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 27,
+      "exact_min_energy": -43.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 28,
+      "exact_min_energy": -51.400000000000006,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 29,
+      "exact_min_energy": -92.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 30,
+      "exact_min_energy": -94.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 31,
+      "exact_min_energy": -101.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 32,
+      "exact_min_energy": -110.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 33,
+      "exact_min_energy": -109.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 34,
+      "exact_min_energy": -109.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 35,
+      "exact_min_energy": -109.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 36,
+      "exact_min_energy": -108.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 37,
+      "exact_min_energy": -111.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 38,
+      "exact_min_energy": -30.530000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 39,
+      "exact_min_energy": -24.120000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 40,
+      "exact_min_energy": -19.269999999999996,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 41,
+      "exact_min_energy": -24.419999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 42,
+      "exact_min_energy": -27.67,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 43,
+      "exact_min_energy": -92.23000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 44,
+      "exact_min_energy": -101.17000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 45,
+      "exact_min_energy": -98.63999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 46,
+      "exact_min_energy": -109.64,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 47,
+      "exact_min_energy": -109.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 48,
+      "exact_min_energy": -117.49000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 49,
+      "exact_min_energy": -122.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 50,
+      "exact_min_energy": -130.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 51,
+      "exact_min_energy": -132.95999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 52,
+      "exact_min_energy": -127.49,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 53,
+      "exact_min_energy": -130.45999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 54,
+      "exact_min_energy": -135.78,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 55,
+      "exact_min_energy": -135.39999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 56,
+      "exact_min_energy": -52.21,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 57,
+      "exact_min_energy": -40.24,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 58,
+      "exact_min_energy": -35.769999999999996,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 59,
+      "exact_min_energy": -17.800000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 60,
+      "exact_min_energy": -12.710000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 61,
+      "exact_min_energy": -33.32,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 62,
+      "exact_min_energy": -77.23,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 63,
+      "exact_min_energy": -81.75999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 64,
+      "exact_min_energy": -84.29,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 65,
+      "exact_min_energy": -87.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 66,
+      "exact_min_energy": -92.36999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 67,
+      "exact_min_energy": -117.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 68,
+      "exact_min_energy": -121.93,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 69,
+      "exact_min_energy": -108.05000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 70,
+      "exact_min_energy": -112.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 71,
+      "exact_min_energy": -110.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 72,
+      "exact_min_energy": -114.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 73,
+      "exact_min_energy": -115.28,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 74,
+      "exact_min_energy": -34.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 75,
+      "exact_min_energy": -47.53,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 76,
+      "exact_min_energy": -48.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 77,
+      "exact_min_energy": -36.62,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 78,
+      "exact_min_energy": -38.12,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 79,
+      "exact_min_energy": -36.849999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 80,
+      "exact_min_energy": -83.19999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 81,
+      "exact_min_energy": -106.25999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 82,
+      "exact_min_energy": -112.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 83,
+      "exact_min_energy": -114.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 84,
+      "exact_min_energy": -123.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 85,
+      "exact_min_energy": -125.49000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 86,
+      "exact_min_energy": -132.49,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 87,
+      "exact_min_energy": -122.61000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 88,
+      "exact_min_energy": -119.55000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 89,
+      "exact_min_energy": -120.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 90,
+      "exact_min_energy": -123.78,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 91,
+      "exact_min_energy": -120.57,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 92,
+      "exact_min_energy": -37.230000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 93,
+      "exact_min_energy": -35.760000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 94,
+      "exact_min_energy": -25.380000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 95,
+      "exact_min_energy": -43.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 96,
+      "exact_min_energy": -43.64999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 97,
+      "exact_min_energy": -86.09,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 98,
+      "exact_min_energy": -91.15,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 99,
+      "exact_min_energy": -95.09,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 100,
+      "exact_min_energy": -100.0,
+      "qaoa_gap": 14.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 101,
+      "exact_min_energy": -106.38,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 102,
+      "exact_min_energy": -113.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 103,
+      "exact_min_energy": -117.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 104,
+      "exact_min_energy": -122.66999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 105,
+      "exact_min_energy": -111.32,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 106,
+      "exact_min_energy": -107.76,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 107,
+      "exact_min_energy": -113.57999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 108,
+      "exact_min_energy": -110.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 109,
+      "exact_min_energy": -115.75,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 110,
+      "exact_min_energy": -34.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 111,
+      "exact_min_energy": -52.35000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 112,
+      "exact_min_energy": -52.91000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 113,
+      "exact_min_energy": -46.029999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 114,
+      "exact_min_energy": -39.589999999999996,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 115,
+      "exact_min_energy": -36.709999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 116,
+      "exact_min_energy": -88.82,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 117,
+      "exact_min_energy": -113.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 118,
+      "exact_min_energy": -119.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 119,
+      "exact_min_energy": -123.29,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 120,
+      "exact_min_energy": -129.70000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 121,
+      "exact_min_energy": -129.76,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 122,
+      "exact_min_energy": -140.64000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 123,
+      "exact_min_energy": -118.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 124,
+      "exact_min_energy": -117.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 125,
+      "exact_min_energy": -120.11,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 126,
+      "exact_min_energy": -115.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 127,
+      "exact_min_energy": -117.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 128,
+      "exact_min_energy": -17.090000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 129,
+      "exact_min_energy": -10.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 130,
+      "exact_min_energy": -31.70999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 131,
+      "exact_min_energy": -35.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 132,
+      "exact_min_energy": -86.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 133,
+      "exact_min_energy": -87.56,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 134,
+      "exact_min_energy": -91.63999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 135,
+      "exact_min_energy": -115.13999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 136,
+      "exact_min_energy": -116.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 137,
+      "exact_min_energy": -122.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 138,
+      "exact_min_energy": -130.04999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 139,
+      "exact_min_energy": -132.14,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 140,
+      "exact_min_energy": -139.45999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 141,
+      "exact_min_energy": -120.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 142,
+      "exact_min_energy": -111.70000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 143,
+      "exact_min_energy": -114.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 144,
+      "exact_min_energy": -116.55000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 145,
+      "exact_min_energy": -119.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 146,
+      "exact_min_energy": -26.18,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 147,
+      "exact_min_energy": -17.65,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 148,
+      "exact_min_energy": -8.610000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        1.220000000000006,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "1111",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 149,
+      "exact_min_energy": -68.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 150,
+      "exact_min_energy": -75.57999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 151,
+      "exact_min_energy": -79.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 152,
+      "exact_min_energy": -79.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 153,
+      "exact_min_energy": -103.7,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 154,
+      "exact_min_energy": -107.32,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 155,
+      "exact_min_energy": -110.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 156,
+      "exact_min_energy": -109.79,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 157,
+      "exact_min_energy": -110.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 158,
+      "exact_min_energy": -113.82,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 159,
+      "exact_min_energy": -93.96999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 160,
+      "exact_min_energy": -96.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 161,
+      "exact_min_energy": -97.03,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 162,
+      "exact_min_energy": -92.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 163,
+      "exact_min_energy": -90.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 164,
+      "exact_min_energy": -28.910000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 165,
+      "exact_min_energy": -43.029999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 166,
+      "exact_min_energy": -44.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 167,
+      "exact_min_energy": -41.080000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1010",
+        "1010",
+        "1010"
+      ],
+      "qaoa_state": "1010"
+    },
+    {
+      "decision": 168,
+      "exact_min_energy": -83.55000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1010",
+        "1010",
+        "1010"
+      ],
+      "qaoa_state": "1010"
+    },
+    {
+      "decision": 169,
+      "exact_min_energy": -82.72,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 170,
+      "exact_min_energy": -106.75,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 171,
+      "exact_min_energy": -113.25,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 172,
+      "exact_min_energy": -119.69,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 173,
+      "exact_min_energy": -118.69,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 174,
+      "exact_min_energy": -126.13,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 175,
+      "exact_min_energy": -124.6,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 176,
+      "exact_min_energy": -125.63,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 177,
+      "exact_min_energy": -106.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 178,
+      "exact_min_energy": -109.84000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 179,
+      "exact_min_energy": -111.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 180,
+      "exact_min_energy": -107.78,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 181,
+      "exact_min_energy": -110.22000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 182,
+      "exact_min_energy": -21.999999999999993,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 183,
+      "exact_min_energy": -39.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 184,
+      "exact_min_energy": -34.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 185,
+      "exact_min_energy": -28.529999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 186,
+      "exact_min_energy": -72.06,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 187,
+      "exact_min_energy": -79.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 188,
+      "exact_min_energy": -86.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 189,
+      "exact_min_energy": -109.16999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 190,
+      "exact_min_energy": -113.22999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 191,
+      "exact_min_energy": -114.19999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 192,
+      "exact_min_energy": -120.63999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 193,
+      "exact_min_energy": -127.60999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 194,
+      "exact_min_energy": -132.60999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 195,
+      "exact_min_energy": -110.56,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 196,
+      "exact_min_energy": -114.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 197,
+      "exact_min_energy": -115.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 198,
+      "exact_min_energy": -110.53,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 199,
+      "exact_min_energy": -112.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 200,
+      "exact_min_energy": -25.650000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 201,
+      "exact_min_energy": -41.21,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 202,
+      "exact_min_energy": -38.06,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 203,
+      "exact_min_energy": -34.620000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 204,
+      "exact_min_energy": -28.399999999999995,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 205,
+      "exact_min_energy": -90.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 206,
+      "exact_min_energy": -102.4,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 207,
+      "exact_min_energy": -103.4,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 208,
+      "exact_min_energy": -108.99000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 209,
+      "exact_min_energy": -106.99000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 210,
+      "exact_min_energy": -115.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 211,
+      "exact_min_energy": -123.10000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 212,
+      "exact_min_energy": -126.07000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 213,
+      "exact_min_energy": -114.66,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 214,
+      "exact_min_energy": -114.12999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 215,
+      "exact_min_energy": -113.59999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 216,
+      "exact_min_energy": -109.57,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 217,
+      "exact_min_energy": -115.03999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 218,
+      "exact_min_energy": -33.46999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 219,
+      "exact_min_energy": -23.46999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 220,
+      "exact_min_energy": -21.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 221,
+      "exact_min_energy": -11.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.7600000000000016
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "1100"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 222,
+      "exact_min_energy": -70.09,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 223,
+      "exact_min_energy": -68.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 224,
+      "exact_min_energy": -71.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 225,
+      "exact_min_energy": -74.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 226,
+      "exact_min_energy": -102.7,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 227,
+      "exact_min_energy": -107.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 228,
+      "exact_min_energy": -114.61000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 229,
+      "exact_min_energy": -118.46,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        40.519999999999996,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0101",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 230,
+      "exact_min_energy": -117.99,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 231,
+      "exact_min_energy": -101.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 232,
+      "exact_min_energy": -96.75999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 233,
+      "exact_min_energy": -91.25999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 234,
+      "exact_min_energy": -92.64000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 235,
+      "exact_min_energy": -95.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 236,
+      "exact_min_energy": -14.450000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 237,
+      "exact_min_energy": -36.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 238,
+      "exact_min_energy": -55.620000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 239,
+      "exact_min_energy": -53.15,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 240,
+      "exact_min_energy": -58.65,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 241,
+      "exact_min_energy": -61.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 242,
+      "exact_min_energy": -82.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 243,
+      "exact_min_energy": -102.84,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 244,
+      "exact_min_energy": -114.30999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 245,
+      "exact_min_energy": -113.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 246,
+      "exact_min_energy": -118.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 247,
+      "exact_min_energy": -118.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 248,
+      "exact_min_energy": -125.19,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 249,
+      "exact_min_energy": -115.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 250,
+      "exact_min_energy": -112.81,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 251,
+      "exact_min_energy": -109.22,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 252,
+      "exact_min_energy": -105.69,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 253,
+      "exact_min_energy": -105.28,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 254,
+      "exact_min_energy": -19.759999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0110",
+        "0110",
+        "0110"
+      ],
+      "qaoa_state": "0110"
+    },
+    {
+      "decision": 255,
+      "exact_min_energy": -42.849999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 256,
+      "exact_min_energy": -63.31999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 257,
+      "exact_min_energy": -61.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 258,
+      "exact_min_energy": -63.879999999999995,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 259,
+      "exact_min_energy": -58.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 260,
+      "exact_min_energy": -59.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 261,
+      "exact_min_energy": -81.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 262,
+      "exact_min_energy": -89.72999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 263,
+      "exact_min_energy": -111.69999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 264,
+      "exact_min_energy": -120.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 265,
+      "exact_min_energy": -121.96000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 266,
+      "exact_min_energy": -128.48999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 267,
+      "exact_min_energy": -116.67,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 268,
+      "exact_min_energy": -114.16999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 269,
+      "exact_min_energy": -113.22999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 270,
+      "exact_min_energy": -112.72999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 271,
+      "exact_min_energy": -111.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 272,
+      "exact_min_energy": -19.880000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 273,
+      "exact_min_energy": -33.88000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 274,
+      "exact_min_energy": -30.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 275,
+      "exact_min_energy": -32.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 276,
+      "exact_min_energy": -77.4,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 277,
+      "exact_min_energy": -97.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 278,
+      "exact_min_energy": -111.81,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 279,
+      "exact_min_energy": -106.39999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 280,
+      "exact_min_energy": -114.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 281,
+      "exact_min_energy": -113.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 282,
+      "exact_min_energy": -117.84,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 283,
+      "exact_min_energy": -126.89999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 284,
+      "exact_min_energy": -127.25,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 285,
+      "exact_min_energy": -115.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 286,
+      "exact_min_energy": -121.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 287,
+      "exact_min_energy": -119.81,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 288,
+      "exact_min_energy": -121.81,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 289,
+      "exact_min_energy": -125.22,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 290,
+      "exact_min_energy": -33.589999999999996,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 291,
+      "exact_min_energy": -31.150000000000006,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 292,
+      "exact_min_energy": -18.83,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 293,
+      "exact_min_energy": -14.500000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 294,
+      "exact_min_energy": -50.61000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 295,
+      "exact_min_energy": -73.58000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 296,
+      "exact_min_energy": -74.11000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 297,
+      "exact_min_energy": -74.11,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 298,
+      "exact_min_energy": -79.23,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 299,
+      "exact_min_energy": -77.63999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 300,
+      "exact_min_energy": -101.66999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 301,
+      "exact_min_energy": -108.05000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 302,
+      "exact_min_energy": -109.58000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 303,
+      "exact_min_energy": -100.14,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 304,
+      "exact_min_energy": -101.11,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 305,
+      "exact_min_energy": -101.58,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 306,
+      "exact_min_energy": -104.99000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 307,
+      "exact_min_energy": -106.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 308,
+      "exact_min_energy": -19.090000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 309,
+      "exact_min_energy": -19.650000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 310,
+      "exact_min_energy": -16.18,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 311,
+      "exact_min_energy": -35.82,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 312,
+      "exact_min_energy": -79.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 313,
+      "exact_min_energy": -83.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 314,
+      "exact_min_energy": -85.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 315,
+      "exact_min_energy": -111.95999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 316,
+      "exact_min_energy": -119.42999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 317,
+      "exact_min_energy": -119.92999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 318,
+      "exact_min_energy": -127.86999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 319,
+      "exact_min_energy": -129.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 320,
+      "exact_min_energy": -135.72,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 321,
+      "exact_min_energy": -124.72,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 322,
+      "exact_min_energy": -128.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 323,
+      "exact_min_energy": -124.84,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 324,
+      "exact_min_energy": -124.75,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 325,
+      "exact_min_energy": -120.22,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 326,
+      "exact_min_energy": -32.38,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 327,
+      "exact_min_energy": -22.62,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 328,
+      "exact_min_energy": -18.06,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 329,
+      "exact_min_energy": -11.649999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 330,
+      "exact_min_energy": -9.259999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        2.519999999999996,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 331,
+      "exact_min_energy": -68.25999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 332,
+      "exact_min_energy": -74.22999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 333,
+      "exact_min_energy": -72.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 334,
+      "exact_min_energy": -76.72999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 335,
+      "exact_min_energy": -102.19999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 336,
+      "exact_min_energy": -111.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 337,
+      "exact_min_energy": -117.51999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 338,
+      "exact_min_energy": -121.52,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 339,
+      "exact_min_energy": -104.96,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 340,
+      "exact_min_energy": -104.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 341,
+      "exact_min_energy": -107.52,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 342,
+      "exact_min_energy": -104.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 343,
+      "exact_min_energy": -104.02,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 344,
+      "exact_min_energy": -35.09,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 345,
+      "exact_min_energy": -49.65,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 346,
+      "exact_min_energy": -43.620000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 347,
+      "exact_min_energy": -37.27000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 348,
+      "exact_min_energy": -38.3,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 349,
+      "exact_min_energy": -57.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 350,
+      "exact_min_energy": -85.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 351,
+      "exact_min_energy": -84.96999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 352,
+      "exact_min_energy": -84.03,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 353,
+      "exact_min_energy": -88.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 354,
+      "exact_min_energy": -93.16999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 355,
+      "exact_min_energy": -118.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 356,
+      "exact_min_energy": -123.52,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 357,
+      "exact_min_energy": -105.75999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 358,
+      "exact_min_energy": -105.66999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 359,
+      "exact_min_energy": -102.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 360,
+      "exact_min_energy": -102.35000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 361,
+      "exact_min_energy": -102.26,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 362,
+      "exact_min_energy": -32.459999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 363,
+      "exact_min_energy": -50.959999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 364,
+      "exact_min_energy": -44.14,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1101",
+        "1101",
+        "1101"
+      ],
+      "qaoa_state": "1101"
+    },
+    {
+      "decision": 365,
+      "exact_min_energy": -61.199999999999996,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1101",
+        "1101",
+        "1101"
+      ],
+      "qaoa_state": "1101"
+    },
+    {
+      "decision": 366,
+      "exact_min_energy": -62.349999999999994,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 367,
+      "exact_min_energy": -85.82,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 368,
+      "exact_min_energy": -84.79,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 369,
+      "exact_min_energy": -84.7,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 370,
+      "exact_min_energy": -87.64,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 371,
+      "exact_min_energy": -90.7,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 372,
+      "exact_min_energy": -90.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 373,
+      "exact_min_energy": -101.05000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 374,
+      "exact_min_energy": -101.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 375,
+      "exact_min_energy": -90.32000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0101",
+        "0101",
+        "0101"
+      ],
+      "qaoa_state": "0101"
+    },
+    {
+      "decision": 376,
+      "exact_min_energy": -92.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 377,
+      "exact_min_energy": -112.4,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 378,
+      "exact_min_energy": -109.4,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 379,
+      "exact_min_energy": -103.81,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 380,
+      "exact_min_energy": -39.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 381,
+      "exact_min_energy": -40.31999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 382,
+      "exact_min_energy": -36.290000000000006,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 383,
+      "exact_min_energy": -26.820000000000007,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 384,
+      "exact_min_energy": -33.300000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0111",
+        "0111",
+        "0111"
+      ],
+      "qaoa_state": "0111"
+    },
+    {
+      "decision": 385,
+      "exact_min_energy": -63.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 386,
+      "exact_min_energy": -84.53,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 387,
+      "exact_min_energy": -91.06,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 388,
+      "exact_min_energy": -99.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 389,
+      "exact_min_energy": -99.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 390,
+      "exact_min_energy": -104.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 391,
+      "exact_min_energy": -106.75999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 392,
+      "exact_min_energy": -111.79,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 393,
+      "exact_min_energy": -112.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 394,
+      "exact_min_energy": -111.32,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 395,
+      "exact_min_energy": -111.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 396,
+      "exact_min_energy": -108.4,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 397,
+      "exact_min_energy": -129.89999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 398,
+      "exact_min_energy": -74.72999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 399,
+      "exact_min_energy": -69.22999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0110",
+        "0110",
+        "0110"
+      ],
+      "qaoa_state": "0110"
+    },
+    {
+      "decision": 400,
+      "exact_min_energy": -88.85000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0110",
+        "0110",
+        "0110"
+      ],
+      "qaoa_state": "0110"
+    },
+    {
+      "decision": 401,
+      "exact_min_energy": -93.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 402,
+      "exact_min_energy": -94.05000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 403,
+      "exact_min_energy": -91.11000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 404,
+      "exact_min_energy": -76.11,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 405,
+      "exact_min_energy": -76.11000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 406,
+      "exact_min_energy": -69.49,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 407,
+      "exact_min_energy": -91.52,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 408,
+      "exact_min_energy": -88.02,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 409,
+      "exact_min_energy": -89.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 410,
+      "exact_min_energy": -90.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 411,
+      "exact_min_energy": -85.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 412,
+      "exact_min_energy": -89.55000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 413,
+      "exact_min_energy": -107.99000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 414,
+      "exact_min_energy": -109.58,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 415,
+      "exact_min_energy": -101.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 416,
+      "exact_min_energy": -66.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 417,
+      "exact_min_energy": -97.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 418,
+      "exact_min_energy": -100.03,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 419,
+      "exact_min_energy": -112.38,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 420,
+      "exact_min_energy": -92.11999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 421,
+      "exact_min_energy": -92.64999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 422,
+      "exact_min_energy": -93.06,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 423,
+      "exact_min_energy": -91.53,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 424,
+      "exact_min_energy": -93.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 425,
+      "exact_min_energy": -94.91000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 426,
+      "exact_min_energy": -93.03,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 427,
+      "exact_min_energy": -96.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 428,
+      "exact_min_energy": -98.28,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 429,
+      "exact_min_energy": -108.22,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 430,
+      "exact_min_energy": -116.16,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 431,
+      "exact_min_energy": -118.72,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 432,
+      "exact_min_energy": -123.72,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 433,
+      "exact_min_energy": -122.19,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 434,
+      "exact_min_energy": -78.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 435,
+      "exact_min_energy": -90.69999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 436,
+      "exact_min_energy": -92.14,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 437,
+      "exact_min_energy": -87.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 438,
+      "exact_min_energy": -60.730000000000004,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "1100",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 439,
+      "exact_min_energy": -68.17,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        3.3000000000000114,
+        0.0
+      ],
+      "classical_states": [
+        "1100",
+        "0000",
+        "1100"
+      ],
+      "qaoa_state": "1100"
+    },
+    {
+      "decision": 440,
+      "exact_min_energy": -47.08,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 441,
+      "exact_min_energy": -85.07999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 442,
+      "exact_min_energy": -90.46,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 443,
+      "exact_min_energy": -91.57999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 444,
+      "exact_min_energy": -85.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 445,
+      "exact_min_energy": -87.55,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 446,
+      "exact_min_energy": -93.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 447,
+      "exact_min_energy": -105.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 448,
+      "exact_min_energy": -113.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 449,
+      "exact_min_energy": -112.26,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 450,
+      "exact_min_energy": -114.26,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 451,
+      "exact_min_energy": -119.23,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 452,
+      "exact_min_energy": -74.03,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 453,
+      "exact_min_energy": -70.59,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 454,
+      "exact_min_energy": -65.11999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 455,
+      "exact_min_energy": -63.32000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 456,
+      "exact_min_energy": -91.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 457,
+      "exact_min_energy": -114.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 458,
+      "exact_min_energy": -89.67999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 459,
+      "exact_min_energy": -94.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 460,
+      "exact_min_energy": -99.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 461,
+      "exact_min_energy": -100.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 462,
+      "exact_min_energy": -100.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 463,
+      "exact_min_energy": -104.71,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 464,
+      "exact_min_energy": -102.58999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 465,
+      "exact_min_energy": -97.24000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 466,
+      "exact_min_energy": -95.27000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 467,
+      "exact_min_energy": -90.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 468,
+      "exact_min_energy": -94.15,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 469,
+      "exact_min_energy": -90.83000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 470,
+      "exact_min_energy": -47.29,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 471,
+      "exact_min_energy": -64.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 472,
+      "exact_min_energy": -67.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 473,
+      "exact_min_energy": -58.790000000000006,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 474,
+      "exact_min_energy": -77.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 475,
+      "exact_min_energy": -77.32,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 476,
+      "exact_min_energy": -84.16999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 477,
+      "exact_min_energy": -84.10999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 478,
+      "exact_min_energy": -66.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 479,
+      "exact_min_energy": -68.22999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 480,
+      "exact_min_energy": -68.66999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 481,
+      "exact_min_energy": -88.58,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 482,
+      "exact_min_energy": -90.39999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 483,
+      "exact_min_energy": -84.25999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 484,
+      "exact_min_energy": -82.14,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 485,
+      "exact_min_energy": -84.76,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 486,
+      "exact_min_energy": -109.35,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 487,
+      "exact_min_energy": -100.32,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 488,
+      "exact_min_energy": -60.12,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 489,
+      "exact_min_energy": -52.65,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 490,
+      "exact_min_energy": -54.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 491,
+      "exact_min_energy": -60.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0011",
+        "0011",
+        "0011"
+      ],
+      "qaoa_state": "0011"
+    },
+    {
+      "decision": 492,
+      "exact_min_energy": -78.17,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 493,
+      "exact_min_energy": -124.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 494,
+      "exact_min_energy": -132.11,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 495,
+      "exact_min_energy": -135.05,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 496,
+      "exact_min_energy": -122.49000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 497,
+      "exact_min_energy": -127.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 498,
+      "exact_min_energy": -129.43,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 499,
+      "exact_min_energy": -127.84,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 500,
+      "exact_min_energy": -129.25,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 501,
+      "exact_min_energy": -122.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 502,
+      "exact_min_energy": -122.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 503,
+      "exact_min_energy": -121.28,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 504,
+      "exact_min_energy": -113.93,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 505,
+      "exact_min_energy": -110.93,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 506,
+      "exact_min_energy": -59.44000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 507,
+      "exact_min_energy": -55.73,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 508,
+      "exact_min_energy": -72.29,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 509,
+      "exact_min_energy": -66.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 510,
+      "exact_min_energy": -83.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 511,
+      "exact_min_energy": -85.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 512,
+      "exact_min_energy": -86.88,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 513,
+      "exact_min_energy": -92.25999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 514,
+      "exact_min_energy": -90.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 515,
+      "exact_min_energy": -75.49000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 516,
+      "exact_min_energy": -96.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 517,
+      "exact_min_energy": -105.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 518,
+      "exact_min_energy": -105.93,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 519,
+      "exact_min_energy": -99.99,
+      "qaoa_gap": 13.759999999999977,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 520,
+      "exact_min_energy": -118.54999999999998,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 521,
+      "exact_min_energy": -120.99000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 522,
+      "exact_min_energy": -123.55000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 523,
+      "exact_min_energy": -121.40000000000002,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 524,
+      "exact_min_energy": -72.26,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 525,
+      "exact_min_energy": -68.35000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 526,
+      "exact_min_energy": -63.760000000000005,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 527,
+      "exact_min_energy": -58.790000000000006,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 528,
+      "exact_min_energy": -31.380000000000003,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 529,
+      "exact_min_energy": -67.06,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 530,
+      "exact_min_energy": -97.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 531,
+      "exact_min_energy": -101.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 532,
+      "exact_min_energy": -109.88,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 533,
+      "exact_min_energy": -94.28999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 534,
+      "exact_min_energy": -98.32000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 535,
+      "exact_min_energy": -99.79,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 536,
+      "exact_min_energy": -102.32000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 537,
+      "exact_min_energy": -94.85000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 538,
+      "exact_min_energy": -95.35000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 539,
+      "exact_min_energy": -93.91,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 540,
+      "exact_min_energy": -92.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 541,
+      "exact_min_energy": -89.94,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 542,
+      "exact_min_energy": -49.059999999999995,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 543,
+      "exact_min_energy": -61.65,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 544,
+      "exact_min_energy": -64.61,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0110",
+        "0110",
+        "0110"
+      ],
+      "qaoa_state": "0110"
+    },
+    {
+      "decision": 545,
+      "exact_min_energy": -84.58,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 546,
+      "exact_min_energy": -87.60999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 547,
+      "exact_min_energy": -82.58,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 548,
+      "exact_min_energy": -84.99,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 549,
+      "exact_min_energy": -84.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 550,
+      "exact_min_energy": -87.28,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 551,
+      "exact_min_energy": -93.9,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 552,
+      "exact_min_energy": -98.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 553,
+      "exact_min_energy": -101.75,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 554,
+      "exact_min_energy": -103.31,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 555,
+      "exact_min_energy": -98.34,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 556,
+      "exact_min_energy": -95.87,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 557,
+      "exact_min_energy": -96.84,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 558,
+      "exact_min_energy": -96.37,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 559,
+      "exact_min_energy": -91.58000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 560,
+      "exact_min_energy": -68.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 561,
+      "exact_min_energy": -68.29,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 562,
+      "exact_min_energy": -66.85000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 563,
+      "exact_min_energy": -58.47,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0001",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "0001"
+    },
+    {
+      "decision": 564,
+      "exact_min_energy": -22.299999999999997,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.120000000000001,
+        0.120000000000001
+      ],
+      "classical_states": [
+        "1011",
+        "0001",
+        "0001"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 565,
+      "exact_min_energy": -59.59,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 566,
+      "exact_min_energy": -93.03,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 567,
+      "exact_min_energy": -96.55999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 568,
+      "exact_min_energy": -104.0,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 569,
+      "exact_min_energy": -90.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 570,
+      "exact_min_energy": -90.97,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 571,
+      "exact_min_energy": -95.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 572,
+      "exact_min_energy": -106.72999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1111"
+      ],
+      "qaoa_state": "1111"
+    },
+    {
+      "decision": 573,
+      "exact_min_energy": -99.00000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1111",
+        "1111",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 574,
+      "exact_min_energy": -121.09,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 575,
+      "exact_min_energy": -124.44,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 576,
+      "exact_min_energy": -126.5,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 577,
+      "exact_min_energy": -126.41,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 578,
+      "exact_min_energy": -83.15,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 579,
+      "exact_min_energy": -85.59,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 580,
+      "exact_min_energy": -81.15,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 581,
+      "exact_min_energy": -75.68,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 582,
+      "exact_min_energy": -40.39,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 583,
+      "exact_min_energy": -39.83,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1110",
+        "1110",
+        "1110"
+      ],
+      "qaoa_state": "1110"
+    },
+    {
+      "decision": 584,
+      "exact_min_energy": -42.35000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 585,
+      "exact_min_energy": -82.97000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0100",
+        "0100",
+        "0100"
+      ],
+      "qaoa_state": "0100"
+    },
+    {
+      "decision": 586,
+      "exact_min_energy": -90.11000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 587,
+      "exact_min_energy": -83.23,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 588,
+      "exact_min_energy": -88.23,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 589,
+      "exact_min_energy": -88.2,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 590,
+      "exact_min_energy": -95.55000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 591,
+      "exact_min_energy": -81.19999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 592,
+      "exact_min_energy": -88.08000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 593,
+      "exact_min_energy": -84.49000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 594,
+      "exact_min_energy": -86.96000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 595,
+      "exact_min_energy": -83.46000000000001,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "0000",
+        "0000",
+        "0000"
+      ],
+      "qaoa_state": "0000"
+    },
+    {
+      "decision": 596,
+      "exact_min_energy": -38.85,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1000",
+        "1000",
+        "1000"
+      ],
+      "qaoa_state": "1000"
+    },
+    {
+      "decision": 597,
+      "exact_min_energy": -61.05,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 598,
+      "exact_min_energy": -106.11,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 599,
+      "exact_min_energy": -110.58,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    },
+    {
+      "decision": 600,
+      "exact_min_energy": -90.78999999999999,
+      "qaoa_gap": 0.0,
+      "classical_gaps": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "classical_states": [
+        "1011",
+        "1011",
+        "1011"
+      ],
+      "qaoa_state": "1011"
+    }
+  ]
+}

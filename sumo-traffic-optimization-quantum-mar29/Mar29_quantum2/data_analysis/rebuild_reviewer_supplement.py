@@ -8,10 +8,13 @@ SCRIPTS=[
  'data_analysis/extend_population_accounting.py',
  'data_analysis/analyze_population_accounting_effects.py',
  'data_analysis/build_optimizer_diagnostics.py',
+ 'data_analysis/replay_frozen_common_hamiltonians.py',
  'data_analysis/make_population_accounting_artifacts.py',
  'data_analysis/make_additional_reviewer_tables.py',
+ 'data_analysis/make_mentor_followup.py',
  'graphs/reviewer_population_accounting/plot_effects.py',
  'graphs/reviewer_population_accounting/plot_energy.py',
+ 'graphs/reviewer_population_accounting/plot_common_hamiltonians.py',
  'graphs/reviewer_population_accounting/plot_total_delay.py',
  'data_analysis/package_reviewer_supplement.py',
 ]

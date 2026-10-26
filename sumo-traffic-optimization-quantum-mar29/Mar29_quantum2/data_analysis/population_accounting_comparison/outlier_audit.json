@@ -1,0 +1,331 @@
+{
+  "runs": [
+    {
+      "seed": 301,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 21.80746666666667,
+      "recovery": 0.42333333333333334,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 302,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 25.66493333333333,
+      "recovery": 0.365,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 303,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 25.20536666666667,
+      "recovery": 0.35,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 304,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 27.6919,
+      "recovery": 0.36666666666666664,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 305,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 23.966866666666665,
+      "recovery": 0.37333333333333335,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 306,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 21.056,
+      "recovery": 0.43666666666666665,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 307,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 23.920266666666667,
+      "recovery": 0.4,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 308,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 22.170533333333335,
+      "recovery": 0.395,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 309,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 22.74826666666667,
+      "recovery": 0.44166666666666665,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 310,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 22.447300000000002,
+      "recovery": 0.39,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 311,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 21.51816666666667,
+      "recovery": 0.4583333333333333,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 312,
+      "final_params": {
+        "gamma": 0.698131700798,
+        "beta": 1.221730476396,
+        "p": 2
+      },
+      "mean_gap": 6.858600000000001,
+      "recovery": 0.6833333333333333,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 313,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 23.848766666666666,
+      "recovery": 0.41,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 314,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 24.412033333333337,
+      "recovery": 0.385,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 315,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 21.812633333333334,
+      "recovery": 0.42,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 316,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 25.045266666666667,
+      "recovery": 0.3883333333333333,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 317,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 25.783866666666665,
+      "recovery": 0.3983333333333333,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 318,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 24.330433333333335,
+      "recovery": 0.38666666666666666,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 319,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 22.036966666666665,
+      "recovery": 0.4666666666666667,
+      "status": "success",
+      "decisions": 600
+    },
+    {
+      "seed": 320,
+      "final_params": {
+        "gamma": 3.14159265359,
+        "beta": 0.523598775598,
+        "p": 2
+      },
+      "mean_gap": 23.890533333333334,
+      "recovery": 0.4,
+      "status": "success",
+      "decisions": 600
+    }
+  ],
+  "sensitivity": [
+    {
+      "metric": "mean",
+      "full": {
+        "mean": -1.4877749999999992,
+        "ci95": [
+          -3.5679885833333325,
+          0.041933416666666196
+        ]
+      },
+      "without_seed312": {
+        "mean": -0.6481850877192983,
+        "ci95": [
+          -1.5633393969298237,
+          0.2765041644736787
+        ]
+      }
+    },
+    {
+      "metric": "recovery",
+      "full": {
+        "mean": -0.0010000000000000009,
+        "ci95": [
+          -0.027916666666666756,
+          0.03474999999999989
+        ]
+      },
+      "without_seed312": {
+        "mean": -0.015021929824561464,
+        "ci95": [
+          -0.03209210526315781,
+          0.002482565789473678
+        ]
+      }
+    },
+    {
+      "metric": "completed_trips",
+      "full": {
+        "mean": 12.149999999999977,
+        "ci95": [
+          -14.049999999999955,
+          38.799999999999955
+        ]
+      },
+      "without_seed312": {
+        "mean": 11.74473684210534,
+        "ci95": [
+          -14.818618421052655,
+          38.85552631578943
+        ]
+      }
+    },
+    {
+      "metric": "network_time_loss_seconds",
+      "full": {
+        "mean": -2556.6575000000594,
+        "ci95": [
+          -6415.329412500019,
+          1204.5481750000536
+        ]
+      },
+      "without_seed312": {
+        "mean": -2648.443736842135,
+        "ci95": [
+          -6589.775425657901,
+          1198.5048000000058
+        ]
+      }
+    },
+    {
+      "metric": "time_loss_plus_insertion_delay_seconds",
+      "full": {
+        "mean": -4571.507500000298,
+        "ci95": [
+          -10894.07064999981,
+          1707.1491749988534
+        ]
+      },
+      "without_seed312": {
+        "mean": -4674.606894736644,
+        "ci95": [
+          -11110.631426973652,
+          1829.1888315782426
+        ]
+      }
+    }
+  ]
+}

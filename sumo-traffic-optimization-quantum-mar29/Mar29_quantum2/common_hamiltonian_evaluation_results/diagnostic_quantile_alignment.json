@@ -1,0 +1,5 @@
+{
+  "reason": "Align nonzero-gap distance with the original calibration protocol: 101 equally spaced quantiles; no replay samples, settings or controller decisions changed.",
+  "prior_analysis_runner_sha256": "f70e86d52005840922dd02a158b42db749e163c6878e4a78d8b8ab6088a58340",
+  "final_analysis_runner_sha256": "96865957e0e6ec7b8f73f94ea62231a1cbe271e88d3262dd9719b5afef8a2c56"
+}

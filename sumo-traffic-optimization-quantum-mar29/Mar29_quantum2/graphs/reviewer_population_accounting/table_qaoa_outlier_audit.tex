@@ -1,0 +1,15 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Investigation of the 3x3 QAOA energy-quality outlier. Seed 312 completed all 600 decisions with valid vehicle accounting and independently verified selected/exact energies. It selected different fixed circuit angles during the existing within-run calibration; the other 19 runs share another parameter set. This association does not establish the cause of its energy or traffic outcomes. Seed 312 remains in every primary result.}
+\label{tab:qaoa-outlier-audit}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Runs & $n$ & Final $\gamma$ & Final $\beta$ & $p$ & Mean run gap & Recovery \\
+\midrule
+Other 19 runs & 19 & 3.141593 & 0.523599 & 2 & 23.6504 & 40.29\%  \\
+312 (retained) & 1 & 0.698132 & 1.221730 & 2 & 6.8586 & 68.33\%  \\
+\bottomrule
+\end{tabular}}
+\end{table}
