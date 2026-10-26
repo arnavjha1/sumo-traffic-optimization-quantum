@@ -1,0 +1,17 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Energy gaps along the respective closed-loop trajectories of each controller. Each controller/grid contributes 20 runs of 600 decisions. Pooled decision distributions are descriptive, not independent replications for inference. Gap is selected energy minus exact minimum energy. Recovery uses a numerical tolerance of $10^{-8}$. Different visited Hamiltonians mean these summaries do not demonstrate distribution matching.}
+\label{tab:optimizer-energy-summary}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+Grid & Controller & Mean gap & Median & SD & $[Q_{25},Q_{75}]$ & Recovery & Decisions \\
+\midrule
+2x2 & Stochastic & 0.0274 & 0.0000 & 0.8480 & [0.0000, 0.0000] & 99.31\% & 12,000 \\
+2x2 & QAOA & 0.0547 & 0.0000 & 1.0670 & [0.0000, 0.0000] & 99.37\% & 12,000 \\
+3x3 & Stochastic & 24.2986 & 5.7000 & 34.1164 & [0.0000, 41.4050] & 41.79\% & 12,000 \\
+3x3 & QAOA & 22.8108 & 6.8700 & 31.4446 & [0.0000, 38.3700] & 41.69\% & 12,000 \\
+\bottomrule
+\end{tabular}}
+\end{table}

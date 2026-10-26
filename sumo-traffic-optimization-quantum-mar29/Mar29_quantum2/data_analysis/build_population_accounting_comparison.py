@@ -59,6 +59,8 @@ def main():
     lines = ['# Supplementary traffic population and delay comparison', '',
              'WORKING RESULTS: QAOA collection may be incomplete. This report reads only completed, successful evaluation runs; calibration and validation runs are excluded.', '',
              'All runs use alpha 0.7 and a 600-second cutoff. Entries are the mean ± sample SD across optimizer seeds. These are fixed-demand optimizer replications, not independent traffic-demand replications. No controller decisions are modified.', '']
+    if all(g['successful'] == g['expected'] == 20 for g in groups.values()):
+        lines[2] = 'COMPLETE EVALUATION: 20 successful runs per controller and grid. Calibration and validation runs are excluded. Confidence intervals for controller differences are provided in effect_estimates.md.'
     records = []
     for grid in ('2x2','3x3'):
         labels = [label for _,label in SOURCES]
@@ -83,7 +85,7 @@ def main():
               '- Completion fraction uses entered vehicles as its denominator; it excludes vehicles pending insertion and future demand.',
               '- Assess trip averages together with completions, unfinished trips, total delay, and backlog. Lower completed-trip means alone do not establish a system-level improvement.',
               '- The current instrumented global baseline is labeled simulated annealing according to its implementation. Exhaustive energy diagnostics do not make action selection exact.',
-              '- Final effect estimates and claims await the complete QAOA batch. A zero SD describes the observed seeds only; it does not imply certainty under other demand scenarios.', '']
+              '- Controller differences and uncertainty are reported separately in effect_estimates.md; interpret pointwise intervals alongside multiplicity-adjusted tests. A zero SD describes the observed seeds only; it does not imply certainty under other demand scenarios.', '']
     (output/'comparison.md').write_text('\n'.join(lines),encoding='utf-8')
     (output/'comparison.json').write_text(json.dumps(dict(summary=records,groups=[dict(grid=g,controller=l,**v) for (g,l),v in groups.items()]),indent=2),encoding='utf-8')
     print(output/'comparison.md')

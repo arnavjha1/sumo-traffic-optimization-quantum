@@ -1,4 +1,44 @@
 grid,controller,role,seed_or_run,source,metric_basis,travel_seconds,waiting_seconds,completed_trips,unfinished_trips,network_time_loss_seconds,network_waiting_seconds,pending_insertion_at_cutoff
+2x2,QAOA,evaluation,301,qaoa_evaluation_results\2x2_a7_seed301.json,SUMO tripinfo; completed-trip duration and full-trip waiting,98.58590308370044,48.840308370044056,908,179,80570.18,50626.0,5585
+2x2,QAOA,evaluation,302,qaoa_evaluation_results\2x2_a7_seed302.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,303,qaoa_evaluation_results\2x2_a7_seed303.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,304,qaoa_evaluation_results\2x2_a7_seed304.json,SUMO tripinfo; completed-trip duration and full-trip waiting,98.58590308370044,48.840308370044056,908,179,80570.18,50626.0,5585
+2x2,QAOA,evaluation,305,qaoa_evaluation_results\2x2_a7_seed305.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,306,qaoa_evaluation_results\2x2_a7_seed306.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,307,qaoa_evaluation_results\2x2_a7_seed307.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,308,qaoa_evaluation_results\2x2_a7_seed308.json,SUMO tripinfo; completed-trip duration and full-trip waiting,94.52783725910064,45.54175588865096,934,182,78781.6,48674.0,5556
+2x2,QAOA,evaluation,309,qaoa_evaluation_results\2x2_a7_seed309.json,SUMO tripinfo; completed-trip duration and full-trip waiting,97.90021691973969,48.539045553145336,922,169,79572.09,49917.0,5581
+2x2,QAOA,evaluation,310,qaoa_evaluation_results\2x2_a7_seed310.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,311,qaoa_evaluation_results\2x2_a7_seed311.json,SUMO tripinfo; completed-trip duration and full-trip waiting,98.58590308370044,48.840308370044056,908,179,80570.18,50626.0,5585
+2x2,QAOA,evaluation,312,qaoa_evaluation_results\2x2_a7_seed312.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,313,qaoa_evaluation_results\2x2_a7_seed313.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,314,qaoa_evaluation_results\2x2_a7_seed314.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,315,qaoa_evaluation_results\2x2_a7_seed315.json,SUMO tripinfo; completed-trip duration and full-trip waiting,98.58590308370044,48.840308370044056,908,179,80570.18,50626.0,5585
+2x2,QAOA,evaluation,316,qaoa_evaluation_results\2x2_a7_seed316.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,317,qaoa_evaluation_results\2x2_a7_seed317.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,318,qaoa_evaluation_results\2x2_a7_seed318.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,319,qaoa_evaluation_results\2x2_a7_seed319.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+2x2,QAOA,evaluation,320,qaoa_evaluation_results\2x2_a7_seed320.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
+3x3,QAOA,evaluation,301,qaoa_evaluation_results\3x3_a7_seed301.json,SUMO tripinfo; completed-trip duration and full-trip waiting,198.28982528263103,110.6988694758479,973,339,202641.97,138302.0,8916
+3x3,QAOA,evaluation,302,qaoa_evaluation_results\3x3_a7_seed302.json,SUMO tripinfo; completed-trip duration and full-trip waiting,201.20649895178198,113.69811320754717,954,340,211223.81,145626.0,8934
+3x3,QAOA,evaluation,303,qaoa_evaluation_results\3x3_a7_seed303.json,SUMO tripinfo; completed-trip duration and full-trip waiting,208.6228765571914,122.4144960362401,883,369,215617.85,154770.0,8976
+3x3,QAOA,evaluation,304,qaoa_evaluation_results\3x3_a7_seed304.json,SUMO tripinfo; completed-trip duration and full-trip waiting,194.28571428571428,107.90719499478624,959,362,205195.82,140720.0,8907
+3x3,QAOA,evaluation,305,qaoa_evaluation_results\3x3_a7_seed305.json,SUMO tripinfo; completed-trip duration and full-trip waiting,192.0895983522142,107.78681771369722,971,369,203185.95,139774.0,8888
+3x3,QAOA,evaluation,306,qaoa_evaluation_results\3x3_a7_seed306.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.07035175879398,111.33869346733668,995,325,205248.66,139392.0,8908
+3x3,QAOA,evaluation,307,qaoa_evaluation_results\3x3_a7_seed307.json,SUMO tripinfo; completed-trip duration and full-trip waiting,200.55830753353973,112.04024767801857,969,344,203177.2,137957.0,8915
+3x3,QAOA,evaluation,308,qaoa_evaluation_results\3x3_a7_seed308.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.68249258160236,112.11572700296736,1011,334,200771.62,135625.0,8883
+3x3,QAOA,evaluation,309,qaoa_evaluation_results\3x3_a7_seed309.json,SUMO tripinfo; completed-trip duration and full-trip waiting,203.69254658385094,116.83850931677019,966,350,203685.67,140485.0,8912
+3x3,QAOA,evaluation,310,qaoa_evaluation_results\3x3_a7_seed310.json,SUMO tripinfo; completed-trip duration and full-trip waiting,184.99666666666667,103.77333333333333,900,386,216099.44,156283.0,8942
+3x3,QAOA,evaluation,311,qaoa_evaluation_results\3x3_a7_seed311.json,SUMO tripinfo; completed-trip duration and full-trip waiting,195.16265640038498,107.47641963426372,1039,309,191070.89,126822.0,8880
+3x3,QAOA,evaluation,312,qaoa_evaluation_results\3x3_a7_seed312.json,SUMO tripinfo; completed-trip duration and full-trip waiting,201.96224489795918,115.04591836734694,980,336,206927.6,142258.0,8912
+3x3,QAOA,evaluation,313,qaoa_evaluation_results\3x3_a7_seed313.json,SUMO tripinfo; completed-trip duration and full-trip waiting,190.94123606889565,105.41641337386018,987,343,204348.03,140542.0,8898
+3x3,QAOA,evaluation,314,qaoa_evaluation_results\3x3_a7_seed314.json,SUMO tripinfo; completed-trip duration and full-trip waiting,199.84384384384384,113.22622622622623,999,324,200187.85,137329.0,8905
+3x3,QAOA,evaluation,315,qaoa_evaluation_results\3x3_a7_seed315.json,SUMO tripinfo; completed-trip duration and full-trip waiting,191.83960396039603,106.66237623762376,1010,347,199942.12,135564.0,8871
+3x3,QAOA,evaluation,316,qaoa_evaluation_results\3x3_a7_seed316.json,SUMO tripinfo; completed-trip duration and full-trip waiting,204.16332982086408,117.48050579557429,949,357,209090.28,145219.0,8922
+3x3,QAOA,evaluation,317,qaoa_evaluation_results\3x3_a7_seed317.json,SUMO tripinfo; completed-trip duration and full-trip waiting,195.13946587537092,108.59841740850644,1011,335,201485.54,136004.0,8882
+3x3,QAOA,evaluation,318,qaoa_evaluation_results\3x3_a7_seed318.json,SUMO tripinfo; completed-trip duration and full-trip waiting,190.95891891891893,106.11027027027028,925,360,213495.18,150304.0,8943
+3x3,QAOA,evaluation,319,qaoa_evaluation_results\3x3_a7_seed319.json,SUMO tripinfo; completed-trip duration and full-trip waiting,209.42665289256198,119.17768595041322,968,340,206534.93,140303.0,8920
+3x3,QAOA,evaluation,320,qaoa_evaluation_results\3x3_a7_seed320.json,SUMO tripinfo; completed-trip duration and full-trip waiting,201.22166499498496,112.99498495486459,997,332,203742.82,138114.0,8899
 2x2,Classical stochastic,evaluation,301,stochastic_evaluation_results\2x2_a7_seed301.json,SUMO tripinfo; completed-trip duration and full-trip waiting,93.75286757038582,44.55370177267987,959,174,79195.17,48272.0,5539
 2x2,Classical stochastic,evaluation,302,stochastic_evaluation_results\2x2_a7_seed302.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528
 2x2,Classical stochastic,evaluation,303,stochastic_evaluation_results\2x2_a7_seed303.json,SUMO tripinfo; completed-trip duration and full-trip waiting,95.26282722513089,45.625130890052354,955,189,81056.93,49413.0,5528

@@ -1,0 +1,273 @@
+\documentclass{article}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{booktabs,graphicx,textcomp}
+\begin{document}
+\begin{table}[tbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Supplementary population and delay accounting for the 2 $\times$ 2 network at $\alpha=0.7$ and a 600-s cutoff. Values are means $\pm$ sample SD across 20 optimizer seeds per controller under fixed demand. Travel and waiting means describe completed trips. Network-wide time loss and stopped waiting include all entered vehicles, including unfinished trips, accumulated through the cutoff. Pending insertion and its sampled backlog integral are reported separately. Pre-entry delay sums departDelay over entered and undeparted vehicles; the supplementary composite adds it to in-network time loss over disjoint phases. The sampled backlog integral is not added again. The global SA controller uses simulated annealing.}
+\label{tab:population-accounting-2x2}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Measure & Global SA & Stochastic & QAOA \\
+\midrule
+Completed-trip travel time (s) & $97.37 \pm 0.00$ & $95.73 \pm 0.99$ & $96.02 \pm 1.45$ \\
+Completed-trip waiting time (s) & $47.33 \pm 0.00$ & $46.10 \pm 0.89$ & $46.41 \pm 1.41$ \\
+Completed trips & $928.0 \pm 0.0$ & $945.6 \pm 15.8$ & $942.9 \pm 19.8$ \\
+Unfinished trips at cutoff & $178.0 \pm 0.0$ & $183.8 \pm 9.0$ & $185.7 \pm 5.7$ \\
+Removed trips & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ \\
+Completion fraction of entered vehicles & $0.839 \pm 0.000$ & $0.837 \pm 0.006$ & $0.836 \pm 0.002$ \\
+Network-wide time loss (vehicle-s) & $83,515.4 \pm 0.0$ & $80,604.4 \pm 1,042.0$ & $80,771.6 \pm 593.9$ \\
+Network-wide stopped waiting (vehicle-s) & $51,877.0 \pm 0.0$ & $49,385.7 \pm 456.1$ & $49,643.8 \pm 543.9$ \\
+Pending insertion at cutoff & $5,566.0 \pm 0.0$ & $5,542.6 \pm 21.9$ & $5,543.4 \pm 24.9$ \\
+Sampled insertion backlog integral (vehicle-s) & $1,643,862.0 \pm 0.0$ & $1,644,455.7 \pm 4,099.2$ & $1,645,684.3 \pm 6,020.4$ \\
+Total pre-entry delay (vehicle-s) & $1,647,122.7 \pm 0.0$ & $1,647,716.4 \pm 4,099.2$ & $1,648,945.0 \pm 6,020.4$ \\
+Time loss plus pre-entry delay (vehicle-s) & $1,730,638.1 \pm 0.0$ & $1,728,320.8 \pm 3,398.3$ & $1,729,716.6 \pm 5,716.6$ \\
+Realized demand by cutoff (vehicles) & $6,672.0 \pm 0.0$ & $6,672.0 \pm 0.0$ & $6,672.0 \pm 0.0$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Supplementary population and delay accounting for the 3 $\times$ 3 network at $\alpha=0.7$ and a 600-s cutoff. Values are means $\pm$ sample SD across 20 optimizer seeds per controller under fixed demand. Travel and waiting means describe completed trips. Network-wide time loss and stopped waiting include all entered vehicles, including unfinished trips, accumulated through the cutoff. Pending insertion and its sampled backlog integral are reported separately. Pre-entry delay sums departDelay over entered and undeparted vehicles; the supplementary composite adds it to in-network time loss over disjoint phases. The sampled backlog integral is not added again. The global SA controller uses simulated annealing.}
+\label{tab:population-accounting-3x3}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Measure & Global SA & Stochastic & QAOA \\
+\midrule
+Completed-trip travel time (s) & $197.52 \pm 0.83$ & $198.27 \pm 6.56$ & $198.16 \pm 6.22$ \\
+Completed-trip waiting time (s) & $112.88 \pm 0.72$ & $112.26 \pm 5.31$ & $111.54 \pm 4.96$ \\
+Completed trips & $944.7 \pm 4.7$ & $960.1 \pm 48.4$ & $972.3 \pm 38.1$ \\
+Unfinished trips at cutoff & $362.3 \pm 10.4$ & $344.2 \pm 18.2$ & $345.1 \pm 18.1$ \\
+Removed trips & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ \\
+Completion fraction of entered vehicles & $0.723 \pm 0.005$ & $0.736 \pm 0.019$ & $0.738 \pm 0.017$ \\
+Network-wide time loss (vehicle-s) & $208,535.7 \pm 1,443.4$ & $207,740.3 \pm 6,660.2$ & $205,183.7 \pm 5,884.7$ \\
+Network-wide stopped waiting (vehicle-s) & $145,787.9 \pm 503.1$ & $144,292.0 \pm 7,345.2$ & $141,069.6 \pm 6,799.1$ \\
+Pending insertion at cutoff & $8,921.0 \pm 14.2$ & $8,923.6 \pm 37.1$ & $8,910.6 \pm 25.2$ \\
+Sampled insertion backlog integral (vehicle-s) & $2,679,943.0 \pm 1,883.2$ & $2,677,132.9 \pm 7,234.8$ & $2,675,118.0 \pm 5,187.0$ \\
+Total pre-entry delay (vehicle-s) & $2,684,839.2 \pm 1,883.2$ & $2,682,029.1 \pm 7,234.8$ & $2,680,014.3 \pm 5,187.0$ \\
+Time loss plus pre-entry delay (vehicle-s) & $2,893,374.9 \pm 481.5$ & $2,889,769.5 \pm 12,139.4$ & $2,885,198.0 \pm 8,519.1$ \\
+Realized demand by cutoff (vehicles) & $10,228.0 \pm 0.0$ & $10,228.0 \pm 0.0$ & $10,228.0 \pm 0.0$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Demand and vehicle accounting at 600 s. Counts are means over 20 runs. Realized demand equals completed plus unfinished plus removed plus pending vehicles in every individual run (residual zero). Effective network/route hashes, vehicle identities, types and speed factors match across controllers within each grid. Intended departure times match within 0.021 s of XML rounding. This is realized demand, not a continuous-rate estimate of generated flows.}
+\label{tab:demand-accounting-audit}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrrr}
+\toprule
+Grid & Controller & Runs & Demand & Completed & Unfinished & Removed & Pending & Max residual \\
+\midrule
+2x2 & Global SA & 20 & 6672 & 928.00 & 178.00 & 0 & 5566.00 & 0 \\
+3x3 & Global SA & 20 & 10228 & 944.70 & 362.30 & 0 & 8921.00 & 0 \\
+2x2 & Stochastic & 20 & 6672 & 945.65 & 183.80 & 0 & 5542.55 & 0 \\
+3x3 & Stochastic & 20 & 10228 & 960.15 & 344.20 & 0 & 8923.65 & 0 \\
+2x2 & QAOA & 20 & 6672 & 942.90 & 185.65 & 0 & 5543.45 & 0 \\
+3x3 & QAOA & 20 & 10228 & 972.30 & 345.05 & 0 & 8910.65 & 0 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Energy gaps along the respective closed-loop trajectories of each controller. Each controller/grid contributes 20 runs of 600 decisions. Pooled decision distributions are descriptive, not independent replications for inference. Gap is selected energy minus exact minimum energy. Recovery uses a numerical tolerance of $10^{-8}$. Different visited Hamiltonians mean these summaries do not demonstrate distribution matching.}
+\label{tab:optimizer-energy-summary}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+Grid & Controller & Mean gap & Median & SD & $[Q_{25},Q_{75}]$ & Recovery & Decisions \\
+\midrule
+2x2 & Stochastic & 0.0274 & 0.0000 & 0.8480 & [0.0000, 0.0000] & 99.31\% & 12,000 \\
+2x2 & QAOA & 0.0547 & 0.0000 & 1.0670 & [0.0000, 0.0000] & 99.37\% & 12,000 \\
+3x3 & Stochastic & 24.2986 & 5.7000 & 34.1164 & [0.0000, 41.4050] & 41.79\% & 12,000 \\
+3x3 & QAOA & 22.8108 & 6.8700 & 31.4446 & [0.0000, 38.3700] & 41.69\% & 12,000 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Observed work counters per decision. SA counts each restart initialization and proposed state as an energy evaluation. QAOA uses 512 shots per circuit; total shots include every circuit evaluated during parameter search, not just the selected circuit. The 3x3 controller retains its within-run parameter calibration. Counts exclude exhaustive diagnostic enumeration. Circuit shots and classical evaluations are different costs; this table does not establish matched budgets, equal runtime or a quantum speedup.}
+\label{tab:optimizer-budget-accounting}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrr}
+\toprule
+Grid & Controller & SA evaluations & QAOA circuits & Total shots & Mean shots \\
+\midrule
+2x2 & Stochastic & 32 & -- & -- & -- \\
+2x2 & QAOA & -- & 200 & 102,400 & 102,400.0 \\
+3x3 & Stochastic & 28 & -- & -- & -- \\
+3x3 & QAOA & -- & 1--200 & 512--102,400 & 9,002.7 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{Saved common-Hamiltonian calibration diagnostics for the tuning-selected stochastic settings. Tuning used QAOA seeds 201/202; diagnostic validation used seed 203, which had previously been inspected. Classical seeds were 101--103. The four checks are recovery, mean gap, full gap distribution and nonzero-gap tails, in that order. Engineering tolerances are not an equivalence test. Neither grid passed all validation checks; no alternative candidate was substituted after validation.}
+\label{tab:common-state-matching}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrll}
+\toprule
+Grid & Stage & SA recovery & QAOA recovery & SA gap & QAOA gap & Four checks & All pass \\
+\midrule
+2x2 & tuning & 99.56\% & 99.75\% & 0.0190 & 0.0171 & Pass/Pass/Fail/Fail & No \\
+2x2 & validation & 99.56\% & 99.33\% & 0.0403 & 0.0736 & Pass/Fail/Fail/Fail & No \\
+3x3 & tuning & 41.67\% & 40.92\% & 25.7655 & 25.2604 & Pass/Pass/Pass/Pass & Yes \\
+3x3 & validation & 42.11\% & 34.50\% & 25.4001 & 26.9862 & Fail/Pass/Pass/Pass & No \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{2x2: QAOA minus Global SA. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-2x2-qaoa_global}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & -1.35 & [-1.94, -0.68] & -1.38\% & [-1.99, -0.70] & 0.0005 & 0.0298 \\
+Waiting time (s) & -0.92 & [-1.54, -0.27] & -1.94\% & [-3.01, -0.59] & 0.0088 & 0.3801 \\
+Completed trips & +14.90 & [+6.10, +22.65] & +1.61\% & [+0.66, +2.43] & 0.0032 & 0.1551 \\
+Unfinished trips & +7.65 & [+5.00, +10.00] & +4.30\% & [+2.81, +5.62] & $<0.0001$ & 0.0006 \\
+Time loss (vehicle-s) & -2743.80 & [-3030.39, -2531.45] & -3.29\% & [-3.63, -3.03] & $<0.0001$ & $<0.0001$ \\
+Network waiting (vehicle-s) & -2233.15 & [-2452.05, -1989.05] & -4.30\% & [-4.73, -3.83] & $<0.0001$ & $<0.0001$ \\
+Pending insertion & -22.55 & [-32.35, -11.35] & -0.41\% & [-0.58, -0.20] & 0.0007 & 0.0353 \\
+Pre-entry delay (vehicle-s) & +1822.30 & [-473.75, +4553.15] & +0.11\% & [-0.03, +0.28] & 0.1917 & 1.0000 \\
+Time loss + pre-entry delay (vehicle-s) & -921.50 & [-3030.77, +1662.10] & -0.05\% & [-0.18, +0.10] & 0.4798 & 1.0000 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{2x2: Stochastic minus Global SA. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-2x2-stochastic_global}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & -1.64 & [-2.04, -1.20] & -1.68\% & [-2.09, -1.24] & $<0.0001$ & $<0.0001$ \\
+Waiting time (s) & -1.23 & [-1.60, -0.83] & -2.60\% & [-3.37, -1.76] & $<0.0001$ & 0.0004 \\
+Completed trips & +17.65 & [+10.50, +23.90] & +1.90\% & [+1.14, +2.58] & $<0.0001$ & 0.0048 \\
+Unfinished trips & +5.80 & [+1.55, +9.35] & +3.26\% & [+0.90, +5.25] & 0.0098 & 0.4128 \\
+Time loss (vehicle-s) & -2911.00 & [-3378.79, -2496.06] & -3.49\% & [-4.05, -2.99] & $<0.0001$ & $<0.0001$ \\
+Network waiting (vehicle-s) & -2491.35 & [-2681.50, -2289.40] & -4.80\% & [-5.17, -4.42] & $<0.0001$ & $<0.0001$ \\
+Pending insertion & -23.45 & [-32.45, -13.75] & -0.42\% & [-0.58, -0.25] & 0.0001 & 0.0073 \\
+Pre-entry delay (vehicle-s) & +593.70 & [-1081.15, +2465.55] & +0.04\% & [-0.07, +0.15] & 0.5249 & 1.0000 \\
+Time loss + pre-entry delay (vehicle-s) & -2317.30 & [-3692.20, -794.73] & -0.13\% & [-0.21, -0.05] & 0.0066 & 0.2968 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{2x2: QAOA minus Stochastic. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-2x2-qaoa_stochastic}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & +0.29 & [-0.44, +1.06] & +0.30\% & [-0.46, +1.12] & 0.4666 & 1.0000 \\
+Waiting time (s) & +0.31 & [-0.37, +1.05] & +0.68\% & [-0.80, +2.29] & 0.4042 & 1.0000 \\
+Completed trips & -2.75 & [-13.65, +7.90] & -0.29\% & [-1.44, +0.83] & 0.6304 & 1.0000 \\
+Unfinished trips & +1.85 & [-2.55, +6.65] & +1.01\% & [-1.35, +3.67] & 0.4453 & 1.0000 \\
+Time loss (vehicle-s) & +167.20 & [-335.24, +689.46] & +0.21\% & [-0.42, +0.86] & 0.5377 & 1.0000 \\
+Network waiting (vehicle-s) & +258.20 & [-40.55, +568.45] & +0.52\% & [-0.09, +1.15] & 0.1123 & 1.0000 \\
+Pending insertion & +0.90 & [-13.15, +15.00] & +0.02\% & [-0.24, +0.27] & 0.9042 & 1.0000 \\
+Pre-entry delay (vehicle-s) & +1228.60 & [-1816.39, +4401.25] & +0.07\% & [-0.11, +0.27] & 0.4559 & 1.0000 \\
+Time loss + pre-entry delay (vehicle-s) & +1395.80 & [-1348.21, +4322.54] & +0.08\% & [-0.08, +0.25] & 0.3552 & 1.0000 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{3x3: QAOA minus Global SA. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-3x3-qaoa_global}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & +0.64 & [-2.07, +3.30] & +0.32\% & [-1.04, +1.68] & 0.6542 & 1.0000 \\
+Waiting time (s) & -1.34 & [-3.42, +0.84] & -1.19\% & [-3.02, +0.75] & 0.2457 & 1.0000 \\
+Completed trips & +27.60 & [+10.70, +43.30] & +2.92\% & [+1.12, +4.58] & 0.0044 & 0.2071 \\
+Unfinished trips & -17.25 & [-25.95, -8.20] & -4.76\% & [-7.14, -2.25] & 0.0009 & 0.0429 \\
+Time loss (vehicle-s) & -3352.01 & [-5929.16, -764.81] & -1.61\% & [-2.84, -0.37] & 0.0219 & 0.8960 \\
+Network waiting (vehicle-s) & -4718.20 & [-7539.76, -1703.19] & -3.24\% & [-5.17, -1.17] & 0.0059 & 0.2717 \\
+Pending insertion & -10.35 & [-22.35, +2.20] & -0.12\% & [-0.25, +0.03] & 0.1202 & 1.0000 \\
+Pre-entry delay (vehicle-s) & -4824.90 & [-7155.35, -2426.39] & -0.18\% & [-0.27, -0.09] & 0.0007 & 0.0352 \\
+Time loss + pre-entry delay (vehicle-s) & -8176.91 & [-11738.95, -4487.67] & -0.28\% & [-0.41, -0.15] & 0.0004 & 0.0221 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{3x3: Stochastic minus Global SA. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-3x3-stochastic_global}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & +0.75 & [-2.04, +3.59] & +0.38\% & [-1.02, +1.83] & 0.6160 & 1.0000 \\
+Waiting time (s) & -0.62 & [-2.91, +1.66] & -0.55\% & [-2.56, +1.48] & 0.6094 & 1.0000 \\
+Completed trips & +15.45 & [-5.80, +35.50] & +1.64\% & [-0.64, +3.76] & 0.1711 & 1.0000 \\
+Unfinished trips & -18.10 & [-26.50, -8.65] & -5.00\% & [-7.28, -2.41] & 0.0005 & 0.0298 \\
+Time loss (vehicle-s) & -795.35 & [-3641.47, +2155.22] & -0.38\% & [-1.74, +1.05] & 0.6072 & 1.0000 \\
+Network waiting (vehicle-s) & -1495.90 & [-4495.71, +1783.96] & -1.03\% & [-3.09, +1.25] & 0.3748 & 1.0000 \\
+Pending insertion & +2.65 & [-14.50, +19.30] & +0.03\% & [-0.16, +0.22] & 0.7682 & 1.0000 \\
+Pre-entry delay (vehicle-s) & -2810.05 & [-6003.90, +355.32] & -0.10\% & [-0.22, +0.01] & 0.1072 & 1.0000 \\
+Time loss + pre-entry delay (vehicle-s) & -3605.40 & [-8714.29, +1620.30] & -0.12\% & [-0.30, +0.06] & 0.2001 & 1.0000 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\caption{3x3: QAOA minus Stochastic. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-3x3-qaoa_stochastic}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & -0.12 & [-4.02, +3.73] & -0.06\% & [-2.00, +1.89] & 0.9548 & 1.0000 \\
+Waiting time (s) & -0.72 & [-3.76, +2.39] & -0.64\% & [-3.32, +2.17] & 0.6613 & 1.0000 \\
+Completed trips & +12.15 & [-13.90, +38.70] & +1.27\% & [-1.44, +4.10] & 0.3834 & 1.0000 \\
+Unfinished trips & +0.85 & [-10.30, +11.60] & +0.25\% & [-2.92, +3.41] & 0.8829 & 1.0000 \\
+Time loss (vehicle-s) & -2556.66 & [-6423.77, +1199.48] & -1.23\% & [-3.05, +0.58] & 0.2062 & 1.0000 \\
+Network waiting (vehicle-s) & -3222.30 & [-7563.56, +1063.30] & -2.23\% & [-5.12, +0.74] & 0.1582 & 1.0000 \\
+Pending insertion & -13.00 & [-32.10, +6.35] & -0.15\% & [-0.36, +0.07] & 0.2041 & 1.0000 \\
+Pre-entry delay (vehicle-s) & -2014.85 & [-5792.30, +1825.95] & -0.08\% & [-0.22, +0.07] & 0.3185 & 1.0000 \\
+Time loss + pre-entry delay (vehicle-s) & -4571.51 & [-10949.87, +1727.18] & -0.16\% & [-0.38, +0.06] & 0.1770 & 1.0000 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\end{document}

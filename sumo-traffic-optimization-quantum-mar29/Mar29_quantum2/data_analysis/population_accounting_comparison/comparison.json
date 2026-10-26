@@ -22,10 +22,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "completed_mean_travel_seconds",
-      "n": 5,
-      "mean": 96.59205756855872,
-      "sd": 1.820123608039391,
-      "complete": false
+      "n": 20,
+      "mean": 96.02256238327372,
+      "sd": 1.4531891804300179,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -49,10 +49,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "completed_mean_waiting_seconds",
-      "n": 5,
-      "mean": 46.911201882049035,
-      "sd": 1.76102523217407,
-      "complete": false
+      "n": 20,
+      "mean": 46.409693369135276,
+      "sd": 1.4055631816452079,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -76,10 +76,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "completed_trips",
-      "n": 5,
-      "mean": 936.2,
-      "sd": 25.742960202742807,
-      "complete": false
+      "n": 20,
+      "mean": 942.9,
+      "sd": 19.78542791790809,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -103,10 +103,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "unfinished_trips",
-      "n": 5,
-      "mean": 185,
-      "sd": 5.477225575051661,
-      "complete": false
+      "n": 20,
+      "mean": 185.65,
+      "sd": 5.733328233371865,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -130,10 +130,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "removed_trips",
-      "n": 5,
+      "n": 20,
       "mean": 0,
       "sd": 0.0,
-      "complete": false
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -157,10 +157,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "completion_fraction_of_departed",
-      "n": 5,
-      "mean": 0.8350047606487349,
-      "sd": 0.0002937858623657238,
-      "complete": false
+      "n": 20,
+      "mean": 0.8355191544756438,
+      "sd": 0.002308605465170124,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -184,10 +184,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "network_time_loss_seconds",
-      "n": 5,
-      "mean": 80862.23,
-      "sd": 266.6039548656396,
-      "complete": false
+      "n": 20,
+      "mean": 80771.57149999999,
+      "sd": 593.8717393890678,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -211,10 +211,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "network_waiting_seconds",
-      "n": 5,
-      "mean": 49898.2,
-      "sd": 664.3874622537664,
-      "complete": false
+      "n": 20,
+      "mean": 49643.85,
+      "sd": 543.8545930862887,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -238,10 +238,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "pending_insertion_at_cutoff",
-      "n": 5,
-      "mean": 5550.8,
-      "sd": 31.22018577779447,
-      "complete": false
+      "n": 20,
+      "mean": 5543.45,
+      "sd": 24.936709359580917,
+      "complete": true
     },
     {
       "grid": "2x2",
@@ -265,10 +265,10 @@
       "grid": "2x2",
       "controller": "QAOA",
       "metric": "pending_insertion_vehicle_seconds_sampled",
-      "n": 5,
-      "mean": 1647485.4,
-      "sd": 7479.699245290549,
-      "complete": false
+      "n": 20,
+      "mean": 1645684.3,
+      "sd": 6020.449363365006,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -292,10 +292,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "completed_mean_travel_seconds",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 198.15772481140834,
+      "sd": 6.219982339298873,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -319,10 +319,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "completed_mean_waiting_seconds",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 111.54006102227471,
+      "sd": 4.9563014491799535,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -346,10 +346,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "completed_trips",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 972.3,
+      "sd": 38.074857016699426,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -373,10 +373,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "unfinished_trips",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 345.05,
+      "sd": 18.091798083516654,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -400,10 +400,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "removed_trips",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 0,
+      "sd": 0.0,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -427,10 +427,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "completion_fraction_of_departed",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 0.7378441740066812,
+      "sd": 0.017116475020186345,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -454,10 +454,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "network_time_loss_seconds",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 205183.66150000002,
+      "sd": 5884.699929276251,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -481,10 +481,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "network_waiting_seconds",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 141069.65,
+      "sd": 6799.076688670385,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -508,10 +508,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "pending_insertion_at_cutoff",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 8910.65,
+      "sd": 25.205001592207008,
+      "complete": true
     },
     {
       "grid": "3x3",
@@ -535,10 +535,10 @@
       "grid": "3x3",
       "controller": "QAOA",
       "metric": "pending_insertion_vehicle_seconds_sampled",
-      "n": 0,
-      "mean": null,
-      "sd": null,
-      "complete": false
+      "n": 20,
+      "mean": 2675118.05,
+      "sd": 5186.98080191875,
+      "complete": true
     }
   ],
   "groups": [
@@ -1862,7 +1862,7 @@
       "grid": "2x2",
       "controller": "QAOA",
       "expected": 20,
-      "successful": 5,
+      "successful": 20,
       "failed_seeds": [],
       "runs": [
         {
@@ -1944,6 +1944,246 @@
             "pending_insertion_at_cutoff": 5528,
             "pending_insertion_vehicle_seconds_sampled": 1642023.0
           }
+        },
+        {
+          "seed": 306,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed306.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 307,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed307.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 308,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed308.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 94.52783725910064,
+            "completed_mean_waiting_seconds": 45.54175588865096,
+            "completed_trips": 934,
+            "unfinished_trips": 182,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8369175627240143,
+            "network_time_loss_seconds": 78781.6,
+            "network_waiting_seconds": 48674.0,
+            "pending_insertion_at_cutoff": 5556,
+            "pending_insertion_vehicle_seconds_sampled": 1646976.0
+          }
+        },
+        {
+          "seed": 309,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed309.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 97.90021691973969,
+            "completed_mean_waiting_seconds": 48.539045553145336,
+            "completed_trips": 922,
+            "unfinished_trips": 169,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.845096241979835,
+            "network_time_loss_seconds": 79572.09,
+            "network_waiting_seconds": 49917.0,
+            "pending_insertion_at_cutoff": 5581,
+            "pending_insertion_vehicle_seconds_sampled": 1655672.0
+          }
+        },
+        {
+          "seed": 310,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed310.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 311,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed311.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 98.58590308370044,
+            "completed_mean_waiting_seconds": 48.840308370044056,
+            "completed_trips": 908,
+            "unfinished_trips": 179,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8353265869365225,
+            "network_time_loss_seconds": 80570.18,
+            "network_waiting_seconds": 50626.0,
+            "pending_insertion_at_cutoff": 5585,
+            "pending_insertion_vehicle_seconds_sampled": 1655679.0
+          }
+        },
+        {
+          "seed": 312,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed312.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 313,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed313.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 314,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed314.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 315,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed315.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 98.58590308370044,
+            "completed_mean_waiting_seconds": 48.840308370044056,
+            "completed_trips": 908,
+            "unfinished_trips": 179,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8353265869365225,
+            "network_time_loss_seconds": 80570.18,
+            "network_waiting_seconds": 50626.0,
+            "pending_insertion_at_cutoff": 5585,
+            "pending_insertion_vehicle_seconds_sampled": 1655679.0
+          }
+        },
+        {
+          "seed": 316,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed316.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 317,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed317.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 318,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed318.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 319,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed319.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
+        },
+        {
+          "seed": 320,
+          "source": "qaoa_evaluation_results\\2x2_a7_seed320.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 95.26282722513089,
+            "completed_mean_waiting_seconds": 45.625130890052354,
+            "completed_trips": 955,
+            "unfinished_trips": 189,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.8347902097902098,
+            "network_time_loss_seconds": 81056.93,
+            "network_waiting_seconds": 49413.0,
+            "pending_insertion_at_cutoff": 5528,
+            "pending_insertion_vehicle_seconds_sampled": 1642023.0
+          }
         }
       ]
     },
@@ -1951,9 +2191,330 @@
       "grid": "3x3",
       "controller": "QAOA",
       "expected": 20,
-      "successful": 0,
+      "successful": 20,
       "failed_seeds": [],
-      "runs": []
+      "runs": [
+        {
+          "seed": 301,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed301.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 198.28982528263103,
+            "completed_mean_waiting_seconds": 110.6988694758479,
+            "completed_trips": 973,
+            "unfinished_trips": 339,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7416158536585366,
+            "network_time_loss_seconds": 202641.97,
+            "network_waiting_seconds": 138302.0,
+            "pending_insertion_at_cutoff": 8916,
+            "pending_insertion_vehicle_seconds_sampled": 2676101.0
+          }
+        },
+        {
+          "seed": 302,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed302.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 201.20649895178198,
+            "completed_mean_waiting_seconds": 113.69811320754717,
+            "completed_trips": 954,
+            "unfinished_trips": 340,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7372488408037094,
+            "network_time_loss_seconds": 211223.81,
+            "network_waiting_seconds": 145626.0,
+            "pending_insertion_at_cutoff": 8934,
+            "pending_insertion_vehicle_seconds_sampled": 2672171.0
+          }
+        },
+        {
+          "seed": 303,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed303.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 208.6228765571914,
+            "completed_mean_waiting_seconds": 122.4144960362401,
+            "completed_trips": 883,
+            "unfinished_trips": 369,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7052715654952076,
+            "network_time_loss_seconds": 215617.85,
+            "network_waiting_seconds": 154770.0,
+            "pending_insertion_at_cutoff": 8976,
+            "pending_insertion_vehicle_seconds_sampled": 2687094.0
+          }
+        },
+        {
+          "seed": 304,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed304.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 194.28571428571428,
+            "completed_mean_waiting_seconds": 107.90719499478624,
+            "completed_trips": 959,
+            "unfinished_trips": 362,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7259651778955337,
+            "network_time_loss_seconds": 205195.82,
+            "network_waiting_seconds": 140720.0,
+            "pending_insertion_at_cutoff": 8907,
+            "pending_insertion_vehicle_seconds_sampled": 2675785.0
+          }
+        },
+        {
+          "seed": 305,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed305.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 192.0895983522142,
+            "completed_mean_waiting_seconds": 107.78681771369722,
+            "completed_trips": 971,
+            "unfinished_trips": 369,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7246268656716418,
+            "network_time_loss_seconds": 203185.95,
+            "network_waiting_seconds": 139774.0,
+            "pending_insertion_at_cutoff": 8888,
+            "pending_insertion_vehicle_seconds_sampled": 2670806.0
+          }
+        },
+        {
+          "seed": 306,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed306.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 199.07035175879398,
+            "completed_mean_waiting_seconds": 111.33869346733668,
+            "completed_trips": 995,
+            "unfinished_trips": 325,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7537878787878788,
+            "network_time_loss_seconds": 205248.66,
+            "network_waiting_seconds": 139392.0,
+            "pending_insertion_at_cutoff": 8908,
+            "pending_insertion_vehicle_seconds_sampled": 2673812.0
+          }
+        },
+        {
+          "seed": 307,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed307.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 200.55830753353973,
+            "completed_mean_waiting_seconds": 112.04024767801857,
+            "completed_trips": 969,
+            "unfinished_trips": 344,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.738004569687738,
+            "network_time_loss_seconds": 203177.2,
+            "network_waiting_seconds": 137957.0,
+            "pending_insertion_at_cutoff": 8915,
+            "pending_insertion_vehicle_seconds_sampled": 2679496.0
+          }
+        },
+        {
+          "seed": 308,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed308.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 199.68249258160236,
+            "completed_mean_waiting_seconds": 112.11572700296736,
+            "completed_trips": 1011,
+            "unfinished_trips": 334,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7516728624535316,
+            "network_time_loss_seconds": 200771.62,
+            "network_waiting_seconds": 135625.0,
+            "pending_insertion_at_cutoff": 8883,
+            "pending_insertion_vehicle_seconds_sampled": 2673675.0
+          }
+        },
+        {
+          "seed": 309,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed309.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 203.69254658385094,
+            "completed_mean_waiting_seconds": 116.83850931677019,
+            "completed_trips": 966,
+            "unfinished_trips": 350,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7340425531914894,
+            "network_time_loss_seconds": 203685.67,
+            "network_waiting_seconds": 140485.0,
+            "pending_insertion_at_cutoff": 8912,
+            "pending_insertion_vehicle_seconds_sampled": 2681949.0
+          }
+        },
+        {
+          "seed": 310,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed310.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 184.99666666666667,
+            "completed_mean_waiting_seconds": 103.77333333333333,
+            "completed_trips": 900,
+            "unfinished_trips": 386,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.6998444790046656,
+            "network_time_loss_seconds": 216099.44,
+            "network_waiting_seconds": 156283.0,
+            "pending_insertion_at_cutoff": 8942,
+            "pending_insertion_vehicle_seconds_sampled": 2671770.0
+          }
+        },
+        {
+          "seed": 311,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed311.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 195.16265640038498,
+            "completed_mean_waiting_seconds": 107.47641963426372,
+            "completed_trips": 1039,
+            "unfinished_trips": 309,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7707715133531158,
+            "network_time_loss_seconds": 191070.89,
+            "network_waiting_seconds": 126822.0,
+            "pending_insertion_at_cutoff": 8880,
+            "pending_insertion_vehicle_seconds_sampled": 2676187.0
+          }
+        },
+        {
+          "seed": 312,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed312.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 201.96224489795918,
+            "completed_mean_waiting_seconds": 115.04591836734694,
+            "completed_trips": 980,
+            "unfinished_trips": 336,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7446808510638298,
+            "network_time_loss_seconds": 206927.6,
+            "network_waiting_seconds": 142258.0,
+            "pending_insertion_at_cutoff": 8912,
+            "pending_insertion_vehicle_seconds_sampled": 2675333.0
+          }
+        },
+        {
+          "seed": 313,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed313.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 190.94123606889565,
+            "completed_mean_waiting_seconds": 105.41641337386018,
+            "completed_trips": 987,
+            "unfinished_trips": 343,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7421052631578947,
+            "network_time_loss_seconds": 204348.03,
+            "network_waiting_seconds": 140542.0,
+            "pending_insertion_at_cutoff": 8898,
+            "pending_insertion_vehicle_seconds_sampled": 2671412.0
+          }
+        },
+        {
+          "seed": 314,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed314.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 199.84384384384384,
+            "completed_mean_waiting_seconds": 113.22622622622623,
+            "completed_trips": 999,
+            "unfinished_trips": 324,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7551020408163265,
+            "network_time_loss_seconds": 200187.85,
+            "network_waiting_seconds": 137329.0,
+            "pending_insertion_at_cutoff": 8905,
+            "pending_insertion_vehicle_seconds_sampled": 2680395.0
+          }
+        },
+        {
+          "seed": 315,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed315.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 191.83960396039603,
+            "completed_mean_waiting_seconds": 106.66237623762376,
+            "completed_trips": 1010,
+            "unfinished_trips": 347,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7442888725128961,
+            "network_time_loss_seconds": 199942.12,
+            "network_waiting_seconds": 135564.0,
+            "pending_insertion_at_cutoff": 8871,
+            "pending_insertion_vehicle_seconds_sampled": 2667565.0
+          }
+        },
+        {
+          "seed": 316,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed316.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 204.16332982086408,
+            "completed_mean_waiting_seconds": 117.48050579557429,
+            "completed_trips": 949,
+            "unfinished_trips": 357,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7266462480857581,
+            "network_time_loss_seconds": 209090.28,
+            "network_waiting_seconds": 145219.0,
+            "pending_insertion_at_cutoff": 8922,
+            "pending_insertion_vehicle_seconds_sampled": 2678039.0
+          }
+        },
+        {
+          "seed": 317,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed317.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 195.13946587537092,
+            "completed_mean_waiting_seconds": 108.59841740850644,
+            "completed_trips": 1011,
+            "unfinished_trips": 335,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7511144130757801,
+            "network_time_loss_seconds": 201485.54,
+            "network_waiting_seconds": 136004.0,
+            "pending_insertion_at_cutoff": 8882,
+            "pending_insertion_vehicle_seconds_sampled": 2664436.0
+          }
+        },
+        {
+          "seed": 318,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed318.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 190.95891891891893,
+            "completed_mean_waiting_seconds": 106.11027027027028,
+            "completed_trips": 925,
+            "unfinished_trips": 360,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7198443579766537,
+            "network_time_loss_seconds": 213495.18,
+            "network_waiting_seconds": 150304.0,
+            "pending_insertion_at_cutoff": 8943,
+            "pending_insertion_vehicle_seconds_sampled": 2672591.0
+          }
+        },
+        {
+          "seed": 319,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed319.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 209.42665289256198,
+            "completed_mean_waiting_seconds": 119.17768595041322,
+            "completed_trips": 968,
+            "unfinished_trips": 340,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7400611620795107,
+            "network_time_loss_seconds": 206534.93,
+            "network_waiting_seconds": 140303.0,
+            "pending_insertion_at_cutoff": 8920,
+            "pending_insertion_vehicle_seconds_sampled": 2680282.0
+          }
+        },
+        {
+          "seed": 320,
+          "source": "qaoa_evaluation_results\\3x3_a7_seed320.json",
+          "metrics": {
+            "completed_mean_travel_seconds": 201.22166499498496,
+            "completed_mean_waiting_seconds": 112.99498495486459,
+            "completed_trips": 997,
+            "unfinished_trips": 332,
+            "removed_trips": 0,
+            "completion_fraction_of_departed": 0.7501881113619263,
+            "network_time_loss_seconds": 203742.82,
+            "network_waiting_seconds": 138114.0,
+            "pending_insertion_at_cutoff": 8899,
+            "pending_insertion_vehicle_seconds_sampled": 2673462.0
+          }
+        }
+      ]
     }
   ]
 }

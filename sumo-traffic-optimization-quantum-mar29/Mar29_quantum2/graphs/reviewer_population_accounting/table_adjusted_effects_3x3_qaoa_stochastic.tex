@@ -1,0 +1,22 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{3x3: QAOA minus Stochastic. Absolute and relative mean differences have pointwise 95\% independent run-level percentile-bootstrap intervals (50,000 resamples). Relative intervals bootstrap the ratio of means. Welch tests are approximate; Holm adjustment spans all 66 nonconstant comparisons in the exploratory family, including outcomes not shown here. No outcome was prespecified as primary. Positive differences favor the first controller only for completed trips; fewer unfinished vehicles must be interpreted jointly with entry and completion counts. Pointwise intervals are not multiplicity-adjusted. Demand is fixed; $n=20$ per group.}
+\label{tab:adjusted-effects-3x3-qaoa_stochastic}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Metric & Difference & 95\% CI & Relative & Relative 95\% CI (\%) & $p$ & Holm $p$ \\
+\midrule
+Travel time (s) & -0.12 & [-4.02, +3.73] & -0.06\% & [-2.00, +1.89] & 0.9548 & 1.0000 \\
+Waiting time (s) & -0.72 & [-3.76, +2.39] & -0.64\% & [-3.32, +2.17] & 0.6613 & 1.0000 \\
+Completed trips & +12.15 & [-13.90, +38.70] & +1.27\% & [-1.44, +4.10] & 0.3834 & 1.0000 \\
+Unfinished trips & +0.85 & [-10.30, +11.60] & +0.25\% & [-2.92, +3.41] & 0.8829 & 1.0000 \\
+Time loss (vehicle-s) & -2556.66 & [-6423.77, +1199.48] & -1.23\% & [-3.05, +0.58] & 0.2062 & 1.0000 \\
+Network waiting (vehicle-s) & -3222.30 & [-7563.56, +1063.30] & -2.23\% & [-5.12, +0.74] & 0.1582 & 1.0000 \\
+Pending insertion & -13.00 & [-32.10, +6.35] & -0.15\% & [-0.36, +0.07] & 0.2041 & 1.0000 \\
+Pre-entry delay (vehicle-s) & -2014.85 & [-5792.30, +1825.95] & -0.08\% & [-0.22, +0.07] & 0.3185 & 1.0000 \\
+Time loss + pre-entry delay (vehicle-s) & -4571.51 & [-10949.87, +1727.18] & -0.16\% & [-0.38, +0.06] & 0.1770 & 1.0000 \\
+\bottomrule
+\end{tabular}}
+\end{table}

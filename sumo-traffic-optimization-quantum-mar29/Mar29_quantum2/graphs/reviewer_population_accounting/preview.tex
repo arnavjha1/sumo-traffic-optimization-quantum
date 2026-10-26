@@ -1,0 +1,128 @@
+\documentclass{article}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{booktabs,graphicx}
+\begin{document}
+\begin{table}[tbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Supplementary population and delay accounting for the 2 $\times$ 2 network at $\alpha=0.7$ and a 600-s cutoff. Values are means $\pm$ sample SD across 20 optimizer seeds per controller under fixed demand. Travel and waiting means describe completed trips. Network-wide time loss and stopped waiting include all entered vehicles, including unfinished trips, accumulated through the cutoff. Pending insertion and its sampled backlog integral are reported separately. The global SA controller uses simulated annealing.}
+\label{tab:population-accounting-2x2}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Measure & Global SA & Stochastic & QAOA \\
+\midrule
+Completed-trip travel time (s) & $97.37 \pm 0.00$ & $95.73 \pm 0.99$ & $96.02 \pm 1.45$ \\
+Completed-trip waiting time (s) & $47.33 \pm 0.00$ & $46.10 \pm 0.89$ & $46.41 \pm 1.41$ \\
+Completed trips & $928.0 \pm 0.0$ & $945.6 \pm 15.8$ & $942.9 \pm 19.8$ \\
+Unfinished trips at cutoff & $178.0 \pm 0.0$ & $183.8 \pm 9.0$ & $185.7 \pm 5.7$ \\
+Removed trips & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ \\
+Completion fraction of entered vehicles & $0.839 \pm 0.000$ & $0.837 \pm 0.006$ & $0.836 \pm 0.002$ \\
+Network-wide time loss (vehicle-s) & $83,515.4 \pm 0.0$ & $80,604.4 \pm 1,042.0$ & $80,771.6 \pm 593.9$ \\
+Network-wide stopped waiting (vehicle-s) & $51,877.0 \pm 0.0$ & $49,385.7 \pm 456.1$ & $49,643.8 \pm 543.9$ \\
+Pending insertion at cutoff & $5,566.0 \pm 0.0$ & $5,542.6 \pm 21.9$ & $5,543.4 \pm 24.9$ \\
+Sampled insertion backlog integral (vehicle-s) & $1,643,862.0 \pm 0.0$ & $1,644,455.7 \pm 4,099.2$ & $1,645,684.3 \pm 6,020.4$ \\
+Total pre-entry delay (vehicle-s) & $1,647,122.7 \pm 0.0$ & $1,647,716.4 \pm 4,099.2$ & $1,648,945.0 \pm 6,020.4$ \\
+Time loss plus pre-entry delay (vehicle-s) & $1,730,638.1 \pm 0.0$ & $1,728,320.8 \pm 3,398.3$ & $1,729,716.6 \pm 5,716.6$ \\
+Realized demand by cutoff (vehicles) & $6,672.0 \pm 0.0$ & $6,672.0 \pm 0.0$ & $6,672.0 \pm 0.0$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\scriptsize
+\caption{Run-level controller differences for the 2 $\times$ 2 network. Differences are first controller minus comparator in native metric units; negative differences favor the first controller except for completed trips. Intervals are pointwise exploratory 95\% independent two-sample percentile-bootstrap confidence intervals from 50,000 resamples of whole runs, without multiplicity adjustment. Demand is fixed; intervals quantify optimizer randomness.}
+\label{tab:population-effects-2x2}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Comparison & Measure & Difference & 95\% CI \\
+\midrule
+QAOA minus Global SA & Completed-trip travel time (s) & $-1.35$ & $[-1.94, -0.68]$ \\
+QAOA minus Global SA & Completed-trip waiting time (s) & $-0.92$ & $[-1.54, -0.27]$ \\
+QAOA minus Global SA & Completed trips & $+14.90$ & $[+6.10, +22.65]$ \\
+QAOA minus Global SA & Unfinished trips at cutoff & $+7.65$ & $[+5.00, +10.00]$ \\
+QAOA minus Global SA & Network-wide time loss (vehicle-s) & $-2743.80$ & $[-3030.39, -2531.45]$ \\
+QAOA minus Global SA & Network-wide stopped waiting (vehicle-s) & $-2233.15$ & $[-2452.05, -1989.05]$ \\
+\addlinespace
+Stochastic minus Global SA & Completed-trip travel time (s) & $-1.64$ & $[-2.04, -1.20]$ \\
+Stochastic minus Global SA & Completed-trip waiting time (s) & $-1.23$ & $[-1.60, -0.83]$ \\
+Stochastic minus Global SA & Completed trips & $+17.65$ & $[+10.50, +23.90]$ \\
+Stochastic minus Global SA & Unfinished trips at cutoff & $+5.80$ & $[+1.55, +9.35]$ \\
+Stochastic minus Global SA & Network-wide time loss (vehicle-s) & $-2911.00$ & $[-3378.79, -2496.06]$ \\
+Stochastic minus Global SA & Network-wide stopped waiting (vehicle-s) & $-2491.35$ & $[-2681.50, -2289.40]$ \\
+\addlinespace
+QAOA minus Stochastic & Completed-trip travel time (s) & $+0.29$ & $[-0.44, +1.06]$ \\
+QAOA minus Stochastic & Completed-trip waiting time (s) & $+0.31$ & $[-0.37, +1.05]$ \\
+QAOA minus Stochastic & Completed trips & $-2.75$ & $[-13.65, +7.90]$ \\
+QAOA minus Stochastic & Unfinished trips at cutoff & $+1.85$ & $[-2.55, +6.65]$ \\
+QAOA minus Stochastic & Network-wide time loss (vehicle-s) & $+167.20$ & $[-335.24, +689.46]$ \\
+QAOA minus Stochastic & Network-wide stopped waiting (vehicle-s) & $+258.20$ & $[-40.55, +568.45]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Supplementary population and delay accounting for the 3 $\times$ 3 network at $\alpha=0.7$ and a 600-s cutoff. Values are means $\pm$ sample SD across 20 optimizer seeds per controller under fixed demand. Travel and waiting means describe completed trips. Network-wide time loss and stopped waiting include all entered vehicles, including unfinished trips, accumulated through the cutoff. Pending insertion and its sampled backlog integral are reported separately. The global SA controller uses simulated annealing.}
+\label{tab:population-accounting-3x3}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Measure & Global SA & Stochastic & QAOA \\
+\midrule
+Completed-trip travel time (s) & $197.52 \pm 0.83$ & $198.27 \pm 6.56$ & $198.16 \pm 6.22$ \\
+Completed-trip waiting time (s) & $112.88 \pm 0.72$ & $112.26 \pm 5.31$ & $111.54 \pm 4.96$ \\
+Completed trips & $944.7 \pm 4.7$ & $960.1 \pm 48.4$ & $972.3 \pm 38.1$ \\
+Unfinished trips at cutoff & $362.3 \pm 10.4$ & $344.2 \pm 18.2$ & $345.1 \pm 18.1$ \\
+Removed trips & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ \\
+Completion fraction of entered vehicles & $0.723 \pm 0.005$ & $0.736 \pm 0.019$ & $0.738 \pm 0.017$ \\
+Network-wide time loss (vehicle-s) & $208,535.7 \pm 1,443.4$ & $207,740.3 \pm 6,660.2$ & $205,183.7 \pm 5,884.7$ \\
+Network-wide stopped waiting (vehicle-s) & $145,787.9 \pm 503.1$ & $144,292.0 \pm 7,345.2$ & $141,069.6 \pm 6,799.1$ \\
+Pending insertion at cutoff & $8,921.0 \pm 14.2$ & $8,923.6 \pm 37.1$ & $8,910.6 \pm 25.2$ \\
+Sampled insertion backlog integral (vehicle-s) & $2,679,943.0 \pm 1,883.2$ & $2,677,132.9 \pm 7,234.8$ & $2,675,118.0 \pm 5,187.0$ \\
+Total pre-entry delay (vehicle-s) & $2,684,839.2 \pm 1,883.2$ & $2,682,029.1 \pm 7,234.8$ & $2,680,014.3 \pm 5,187.0$ \\
+Time loss plus pre-entry delay (vehicle-s) & $2,893,374.9 \pm 481.5$ & $2,889,769.5 \pm 12,139.4$ & $2,885,198.0 \pm 8,519.1$ \\
+Realized demand by cutoff (vehicles) & $10,228.0 \pm 0.0$ & $10,228.0 \pm 0.0$ & $10,228.0 \pm 0.0$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\scriptsize
+\caption{Run-level controller differences for the 3 $\times$ 3 network. Differences are first controller minus comparator in native metric units; negative differences favor the first controller except for completed trips. Intervals are pointwise exploratory 95\% independent two-sample percentile-bootstrap confidence intervals from 50,000 resamples of whole runs, without multiplicity adjustment. Demand is fixed; intervals quantify optimizer randomness.}
+\label{tab:population-effects-3x3}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Comparison & Measure & Difference & 95\% CI \\
+\midrule
+QAOA minus Global SA & Completed-trip travel time (s) & $+0.64$ & $[-2.07, +3.30]$ \\
+QAOA minus Global SA & Completed-trip waiting time (s) & $-1.34$ & $[-3.42, +0.84]$ \\
+QAOA minus Global SA & Completed trips & $+27.60$ & $[+10.70, +43.30]$ \\
+QAOA minus Global SA & Unfinished trips at cutoff & $-17.25$ & $[-25.95, -8.20]$ \\
+QAOA minus Global SA & Network-wide time loss (vehicle-s) & $-3352.01$ & $[-5929.16, -764.81]$ \\
+QAOA minus Global SA & Network-wide stopped waiting (vehicle-s) & $-4718.20$ & $[-7539.76, -1703.19]$ \\
+\addlinespace
+Stochastic minus Global SA & Completed-trip travel time (s) & $+0.75$ & $[-2.04, +3.59]$ \\
+Stochastic minus Global SA & Completed-trip waiting time (s) & $-0.62$ & $[-2.91, +1.66]$ \\
+Stochastic minus Global SA & Completed trips & $+15.45$ & $[-5.80, +35.50]$ \\
+Stochastic minus Global SA & Unfinished trips at cutoff & $-18.10$ & $[-26.50, -8.65]$ \\
+Stochastic minus Global SA & Network-wide time loss (vehicle-s) & $-795.35$ & $[-3641.47, +2155.22]$ \\
+Stochastic minus Global SA & Network-wide stopped waiting (vehicle-s) & $-1495.90$ & $[-4495.71, +1783.96]$ \\
+\addlinespace
+QAOA minus Stochastic & Completed-trip travel time (s) & $-0.12$ & $[-4.02, +3.73]$ \\
+QAOA minus Stochastic & Completed-trip waiting time (s) & $-0.72$ & $[-3.76, +2.39]$ \\
+QAOA minus Stochastic & Completed trips & $+12.15$ & $[-13.90, +38.70]$ \\
+QAOA minus Stochastic & Unfinished trips at cutoff & $+0.85$ & $[-10.30, +11.60]$ \\
+QAOA minus Stochastic & Network-wide time loss (vehicle-s) & $-2556.66$ & $[-6423.77, +1199.48]$ \\
+QAOA minus Stochastic & Network-wide stopped waiting (vehicle-s) & $-3222.30$ & $[-7563.56, +1063.30]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+\end{document}

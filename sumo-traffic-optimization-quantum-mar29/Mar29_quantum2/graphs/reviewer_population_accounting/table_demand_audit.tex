@@ -1,0 +1,19 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Demand and vehicle accounting at 600 s. Counts are means over 20 runs. Realized demand equals completed plus unfinished plus removed plus pending vehicles in every individual run (residual zero). Effective network/route hashes, vehicle identities, types and speed factors match across controllers within each grid. Intended departure times match within 0.021 s of XML rounding. This is realized demand, not a continuous-rate estimate of generated flows.}
+\label{tab:demand-accounting-audit}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrrr}
+\toprule
+Grid & Controller & Runs & Demand & Completed & Unfinished & Removed & Pending & Max residual \\
+\midrule
+2x2 & Global SA & 20 & 6672 & 928.00 & 178.00 & 0 & 5566.00 & 0 \\
+3x3 & Global SA & 20 & 10228 & 944.70 & 362.30 & 0 & 8921.00 & 0 \\
+2x2 & Stochastic & 20 & 6672 & 945.65 & 183.80 & 0 & 5542.55 & 0 \\
+3x3 & Stochastic & 20 & 10228 & 960.15 & 344.20 & 0 & 8923.65 & 0 \\
+2x2 & QAOA & 20 & 6672 & 942.90 & 185.65 & 0 & 5543.45 & 0 \\
+3x3 & QAOA & 20 & 10228 & 972.30 & 345.05 & 0 & 8910.65 & 0 \\
+\bottomrule
+\end{tabular}}
+\end{table}

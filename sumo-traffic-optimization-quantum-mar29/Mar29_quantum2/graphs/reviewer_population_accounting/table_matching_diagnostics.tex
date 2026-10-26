@@ -1,0 +1,17 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Saved common-Hamiltonian calibration diagnostics for the tuning-selected stochastic settings. Tuning used QAOA seeds 201/202; diagnostic validation used seed 203, which had previously been inspected. Classical seeds were 101--103. The four checks are recovery, mean gap, full gap distribution and nonzero-gap tails, in that order. Engineering tolerances are not an equivalence test. Neither grid passed all validation checks; no alternative candidate was substituted after validation.}
+\label{tab:common-state-matching}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrll}
+\toprule
+Grid & Stage & SA recovery & QAOA recovery & SA gap & QAOA gap & Four checks & All pass \\
+\midrule
+2x2 & tuning & 99.56\% & 99.75\% & 0.0190 & 0.0171 & Pass/Pass/Fail/Fail & No \\
+2x2 & validation & 99.56\% & 99.33\% & 0.0403 & 0.0736 & Pass/Fail/Fail/Fail & No \\
+3x3 & tuning & 41.67\% & 40.92\% & 25.7655 & 25.2604 & Pass/Pass/Pass/Pass & Yes \\
+3x3 & validation & 42.11\% & 34.50\% & 25.4001 & 26.9862 & Fail/Pass/Pass/Pass & No \\
+\bottomrule
+\end{tabular}}
+\end{table}

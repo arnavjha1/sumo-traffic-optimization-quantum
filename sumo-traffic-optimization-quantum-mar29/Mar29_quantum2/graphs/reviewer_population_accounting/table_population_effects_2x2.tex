@@ -1,0 +1,33 @@
+\begin{table}[tbp]
+\centering
+\scriptsize
+\caption{Run-level controller differences for the 2 $\times$ 2 network. Differences are first controller minus comparator in native metric units; negative differences favor the first controller except for completed trips. Intervals are pointwise exploratory 95\% independent two-sample percentile-bootstrap confidence intervals from 50,000 resamples of whole runs, without multiplicity adjustment. Demand is fixed; intervals quantify optimizer randomness.}
+\label{tab:population-effects-2x2}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Comparison & Measure & Difference & 95\% CI \\
+\midrule
+QAOA minus Global SA & Completed-trip travel time (s) & $-1.35$ & $[-1.94, -0.68]$ \\
+QAOA minus Global SA & Completed-trip waiting time (s) & $-0.92$ & $[-1.54, -0.27]$ \\
+QAOA minus Global SA & Completed trips & $+14.90$ & $[+6.10, +22.65]$ \\
+QAOA minus Global SA & Unfinished trips at cutoff & $+7.65$ & $[+5.00, +10.00]$ \\
+QAOA minus Global SA & Network-wide time loss (vehicle-s) & $-2743.80$ & $[-3030.39, -2531.45]$ \\
+QAOA minus Global SA & Network-wide stopped waiting (vehicle-s) & $-2233.15$ & $[-2452.05, -1989.05]$ \\
+\addlinespace
+Stochastic minus Global SA & Completed-trip travel time (s) & $-1.64$ & $[-2.04, -1.20]$ \\
+Stochastic minus Global SA & Completed-trip waiting time (s) & $-1.23$ & $[-1.60, -0.83]$ \\
+Stochastic minus Global SA & Completed trips & $+17.65$ & $[+10.50, +23.90]$ \\
+Stochastic minus Global SA & Unfinished trips at cutoff & $+5.80$ & $[+1.55, +9.35]$ \\
+Stochastic minus Global SA & Network-wide time loss (vehicle-s) & $-2911.00$ & $[-3378.79, -2496.06]$ \\
+Stochastic minus Global SA & Network-wide stopped waiting (vehicle-s) & $-2491.35$ & $[-2681.50, -2289.40]$ \\
+\addlinespace
+QAOA minus Stochastic & Completed-trip travel time (s) & $+0.29$ & $[-0.44, +1.06]$ \\
+QAOA minus Stochastic & Completed-trip waiting time (s) & $+0.31$ & $[-0.37, +1.05]$ \\
+QAOA minus Stochastic & Completed trips & $-2.75$ & $[-13.65, +7.90]$ \\
+QAOA minus Stochastic & Unfinished trips at cutoff & $+1.85$ & $[-2.55, +6.65]$ \\
+QAOA minus Stochastic & Network-wide time loss (vehicle-s) & $+167.20$ & $[-335.24, +689.46]$ \\
+QAOA minus Stochastic & Network-wide stopped waiting (vehicle-s) & $+258.20$ & $[-40.55, +568.45]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}

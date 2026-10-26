@@ -1,0 +1,27 @@
+\begin{table}[tbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Supplementary population and delay accounting for the 3 $\times$ 3 network at $\alpha=0.7$ and a 600-s cutoff. Values are means $\pm$ sample SD across 20 optimizer seeds per controller under fixed demand. Travel and waiting means describe completed trips. Network-wide time loss and stopped waiting include all entered vehicles, including unfinished trips, accumulated through the cutoff. Pending insertion and its sampled backlog integral are reported separately. Pre-entry delay sums departDelay over entered and undeparted vehicles; the supplementary composite adds it to in-network time loss over disjoint phases. The sampled backlog integral is not added again. The global SA controller uses simulated annealing.}
+\label{tab:population-accounting-3x3}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Measure & Global SA & Stochastic & QAOA \\
+\midrule
+Completed-trip travel time (s) & $197.52 \pm 0.83$ & $198.27 \pm 6.56$ & $198.16 \pm 6.22$ \\
+Completed-trip waiting time (s) & $112.88 \pm 0.72$ & $112.26 \pm 5.31$ & $111.54 \pm 4.96$ \\
+Completed trips & $944.7 \pm 4.7$ & $960.1 \pm 48.4$ & $972.3 \pm 38.1$ \\
+Unfinished trips at cutoff & $362.3 \pm 10.4$ & $344.2 \pm 18.2$ & $345.1 \pm 18.1$ \\
+Removed trips & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ & $0.0 \pm 0.0$ \\
+Completion fraction of entered vehicles & $0.723 \pm 0.005$ & $0.736 \pm 0.019$ & $0.738 \pm 0.017$ \\
+Network-wide time loss (vehicle-s) & $208,535.7 \pm 1,443.4$ & $207,740.3 \pm 6,660.2$ & $205,183.7 \pm 5,884.7$ \\
+Network-wide stopped waiting (vehicle-s) & $145,787.9 \pm 503.1$ & $144,292.0 \pm 7,345.2$ & $141,069.6 \pm 6,799.1$ \\
+Pending insertion at cutoff & $8,921.0 \pm 14.2$ & $8,923.6 \pm 37.1$ & $8,910.6 \pm 25.2$ \\
+Sampled insertion backlog integral (vehicle-s) & $2,679,943.0 \pm 1,883.2$ & $2,677,132.9 \pm 7,234.8$ & $2,675,118.0 \pm 5,187.0$ \\
+Total pre-entry delay (vehicle-s) & $2,684,839.2 \pm 1,883.2$ & $2,682,029.1 \pm 7,234.8$ & $2,680,014.3 \pm 5,187.0$ \\
+Time loss plus pre-entry delay (vehicle-s) & $2,893,374.9 \pm 481.5$ & $2,889,769.5 \pm 12,139.4$ & $2,885,198.0 \pm 8,519.1$ \\
+Realized demand by cutoff (vehicles) & $10,228.0 \pm 0.0$ & $10,228.0 \pm 0.0$ & $10,228.0 \pm 0.0$ \\
+\bottomrule
+\end{tabular}}
+\end{table}

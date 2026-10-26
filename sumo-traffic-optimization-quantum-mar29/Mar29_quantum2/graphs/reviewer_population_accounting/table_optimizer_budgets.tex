@@ -1,0 +1,17 @@
+\begin{table}[tbp]
+\centering
+\small
+\caption{Observed work counters per decision. SA counts each restart initialization and proposed state as an energy evaluation. QAOA uses 512 shots per circuit; total shots include every circuit evaluated during parameter search, not just the selected circuit. The 3x3 controller retains its within-run parameter calibration. Counts exclude exhaustive diagnostic enumeration. Circuit shots and classical evaluations are different costs; this table does not establish matched budgets, equal runtime or a quantum speedup.}
+\label{tab:optimizer-budget-accounting}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrr}
+\toprule
+Grid & Controller & SA evaluations & QAOA circuits & Total shots & Mean shots \\
+\midrule
+2x2 & Stochastic & 32 & -- & -- & -- \\
+2x2 & QAOA & -- & 200 & 102,400 & 102,400.0 \\
+3x3 & Stochastic & 28 & -- & -- & -- \\
+3x3 & QAOA & -- & 1--200 & 512--102,400 & 9,002.7 \\
+\bottomrule
+\end{tabular}}
+\end{table}
